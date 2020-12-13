@@ -1,7 +1,3 @@
-#include <QObject>
-#include <QString>
-#include <vector>
-
 #include "drug.h"
 
 Drug::Drug(QObject *parent) : QObject(parent) {
