@@ -1,9 +1,11 @@
-#ifndef DRUG_H
-#define DRUG_H
+#pragma once
 
 #include <QObject>
 #include <QString>
+
 #include <vector>
+
+namespace drugs {
 
 enum class ReleaseForms {
     PILLS,
@@ -24,8 +26,8 @@ enum class ReleaseForms {
 class Drug : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString actSubst READ actSubst WRITE setActSubst);
-    Q_PROPERTY(QString actSubstLat READ actSubstLat WRITE setActSubstLat);
+    Q_PROPERTY(QString activeSubstance READ activeSubstance WRITE setaAtiveSubstance );
+    Q_PROPERTY(QString activeSubstanceLat READ activeSubstancetLat WRITE setActiveSubstanceLat);
     Q_PROPERTY(unsigned short price READ price WRITE setPrice);
     Q_PROPERTY(std::vector<ReleaseForms> releaseForms READ releaseForms WRITE setReleaseForms);
     Q_PROPERTY(std::vector<QString> brandNames READ brandNames WRITE setBrandNames);
@@ -33,24 +35,24 @@ class Drug : public QObject
 
 public:
     explicit Drug(QObject *parent = nullptr);
-    QString actSubst() const;
-    void setActSubst(QString);
-    QString actSubstLat() const;
-    void setActSubstLat(QString);
+    QString activeSubstance() const;
+    void setaAtiveSubstance(const QString&);
+    QString activeSubstancetLat() const;
+    void setActiveSubstanceLat(const QString&);
     unsigned short price() const;
     void setPrice(unsigned short);
     std::vector<ReleaseForms> releaseForms() const;
-    void setReleaseForms(std::vector<ReleaseForms>);
+    void setReleaseForms(const std::vector<ReleaseForms>&);
     std::vector<QString> brandNames() const;
-    void setBrandNames(std::vector<QString>);
+    void setBrandNames(const std::vector<QString>&);
     std::vector<QString> dosages() const;
-    void setDosages(std::vector<QString>);
+    void setDosages(const std::vector<QString>&);
 
-    QString view() const;
+    QString getFullName() const;
 
 private:
-    QString actSubst_;
-    QString actSubstLat_;
+    QString activeSubstance_;
+    QString activeSubstancetLat_;
     unsigned short price_;
     std::vector<ReleaseForms> releaseForms_;
     std::vector<QString> brandNames_;
@@ -58,4 +60,4 @@ private:
 
 };
 
-#endif // DRUG_H
+}
