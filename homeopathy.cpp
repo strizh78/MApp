@@ -1,6 +1,6 @@
 #include "homeopathy.h"
 
-using namespace homeopathy;
+namespace homeopathy {
 
 QString Drug::name() const {
     return name_;
@@ -41,4 +41,6 @@ QString Drug::getFullName() const {
         fullName += " (" + nameLat_ + ")";
 
     return fullName;
+}
+
 }

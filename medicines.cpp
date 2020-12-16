@@ -1,6 +1,6 @@
 #include "medicines.h"
 
-using namespace drugs;
+namespace drugs {
 
 Drug::Drug() {
     price_ = 0.0;
@@ -63,6 +63,7 @@ QString Drug::getFullName() const {
     return fullName;
 }
 
+}
 
 
 
