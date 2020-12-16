@@ -5,6 +5,7 @@ namespace drugs {
 Drug::Drug() {
     price_ = 0.0;
 }
+
 QString Drug::activeSubstance() const {
     return activeSubstance_;
 }
