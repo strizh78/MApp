@@ -45,7 +45,7 @@ public:
 private:
     QString activeSubstance_;
     QString activeSubstancetLat_;
-    unsigned short price_;
+    float price_;
     std::vector<ReleaseForms> releaseForms_;
     std::vector<QString> brandNames_;
     std::vector<QString> dosages_;
