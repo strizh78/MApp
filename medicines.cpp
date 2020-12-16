@@ -22,11 +22,11 @@ void Drug::setActiveSubstanceLat(const QString& activeSubstancetLat) {
     activeSubstancetLat_ = activeSubstancetLat;
 }
 
-unsigned short Drug::price() const {
+float Drug::price() const {
     return price_;
 }
 
-void Drug::setPrice(unsigned short price) {
+void Drug::setPrice(float price) {
     price_ = price;
 }
 

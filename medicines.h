@@ -28,7 +28,7 @@ class Drug : public QObject
     Q_OBJECT
     Q_PROPERTY(QString activeSubstance READ activeSubstance WRITE setaAtiveSubstance );
     Q_PROPERTY(QString activeSubstanceLat READ activeSubstancetLat WRITE setActiveSubstanceLat);
-    Q_PROPERTY(unsigned short price READ price WRITE setPrice);
+    Q_PROPERTY(float price READ price WRITE setPrice);
     Q_PROPERTY(std::vector<ReleaseForms> releaseForms READ releaseForms WRITE setReleaseForms);
     Q_PROPERTY(std::vector<QString> brandNames READ brandNames WRITE setBrandNames);
     Q_PROPERTY(std::vector<QString> dosages READ dosages WRITE setDosages);
@@ -39,8 +39,8 @@ public:
     void setaAtiveSubstance(const QString&);
     QString activeSubstancetLat() const;
     void setActiveSubstanceLat(const QString&);
-    unsigned short price() const;
-    void setPrice(unsigned short);
+    float price() const;
+    void setPrice(float);
     std::vector<ReleaseForms> releaseForms() const;
     void setReleaseForms(const std::vector<ReleaseForms>&);
     std::vector<QString> brandNames() const;
