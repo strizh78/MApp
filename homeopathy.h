@@ -40,16 +40,9 @@ enum class Dilutions {
     LM12
 };
 
-class Drug : public QObject
+class Drug
 {
-    Q_OBJECT
-    Q_PROPERTY(QString name READ name WRITE setName);
-    Q_PROPERTY(QString nameLat READ nameLat WRITE setNameLat);
-    Q_PROPERTY(Groups group READ group WRITE setGroup);
-    Q_PROPERTY(std::vector<Dilutions> availableDilutions READ availableDilutions WRITE setAvailableDilutions);
-
 public:
-    explicit Drug(QObject *parent = nullptr);
     QString name() const;
     void setName(const QString&);
     QString nameLat() const;

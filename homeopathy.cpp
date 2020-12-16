@@ -2,9 +2,6 @@
 
 using namespace homeopathy;
 
-Drug::Drug(QObject *parent) : QObject(parent){
-}
-
 QString Drug::name() const {
     return name_;
 }

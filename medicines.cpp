@@ -2,9 +2,9 @@
 
 using namespace drugs;
 
-Drug::Drug(QObject *parent) : QObject(parent) {
+Drug::Drug() {
+    price_ = 0.0;
 }
-
 QString Drug::activeSubstance() const {
     return activeSubstance_;
 }
