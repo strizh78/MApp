@@ -42,6 +42,8 @@ enum class Dilutions {
 class Drug
 {
 public:
+    bool isAvailable() const;
+    void setAvailable(bool);
     QString name() const;
     void setName(const QString&);
     QString nameLat() const;
@@ -54,6 +56,7 @@ public:
     QString getFullName() const;
 
 private:
+    bool isAvailable_;
     QString name_;
     QString nameLat_;
     Groups group_;

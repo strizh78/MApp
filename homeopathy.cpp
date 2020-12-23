@@ -2,6 +2,14 @@
 
 namespace homeopathy {
 
+bool Drug::isAvailable() const {
+    return isAvailable_;
+}
+
+void Drug::setAvailable(bool available) {
+    isAvailable_ = available;
+}
+
 QString Drug::name() const {
     return name_;
 }
