@@ -12,7 +12,7 @@ QString Patient::NameInfo::getInitials() const {
     return initials;
 }
 
-Patient::Patient(const Patient::NameInfo& nameInfo, QDate birthDate, const QString& address)
+Patient::Patient(const NameInfo& nameInfo, QDate birthDate, const QString& address)
     : nameInfo_(nameInfo)
     , birthDate_(birthDate)
     , address_(address)
