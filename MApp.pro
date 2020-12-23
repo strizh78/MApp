@@ -2,7 +2,10 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11
+CONFIG += c++17
+
+# Temporary solution because qt does not support sdk=11.1
+macx: CONFIG += sdk_no_version_check
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -12,12 +15,14 @@ SOURCES += \
     homeopathy.cpp \
     main.cpp \
     mainwindow.cpp \
-    medicines.cpp
+    medicines.cpp \
+    service.cpp
 
 HEADERS += \
     homeopathy.h \
     mainwindow.h \
-    medicines.h
+    medicines.h \
+    service.h
 
 FORMS += \
     mainwindow.ui
