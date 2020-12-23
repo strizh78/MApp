@@ -8,11 +8,20 @@
 class Patient
 {
 public:
-    Patient() = default;
-    Patient(const QString& fullName, QDate birthDate, const QString& address);
+    struct NameInfo {
+        QString getFullName() const;
+        QString getInitials() const;
 
-    QString fullName() const;
-    void setFullName(const QString& fullName);
+        QString name;
+        QString surname;
+        QString patronymic;
+    };
+
+    Patient() = default;
+    Patient(const NameInfo& nameInfo, QDate birthDate, const QString& address);
+
+    NameInfo nameInfo() const;
+    void setNameInfo(const NameInfo& nameInfo);
 
     QDate birthDate() const;
     void setBirthDate(QDate birthDate);
@@ -25,7 +34,7 @@ public:
     void addAdditionalInfo(const QString& key, const QVariant& value);
 
 private:
-    QString fullName_;
+    NameInfo nameInfo_;
     QDate birthDate_;
     QString address_;
     QHash<QString, QVariant> additionalInfo_;

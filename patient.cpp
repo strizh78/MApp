@@ -1,18 +1,30 @@
 #include "patient.h"
 
-Patient::Patient(const QString& fullName, QDate birthDate, const QString& address)
-    : fullName_(fullName)
+QString Patient::NameInfo::getFullName() const {
+    return surname + ' ' + name + ' ' + patronymic;
+}
+
+QString Patient::NameInfo::getInitials() const {
+    QString initials = surname + ' ' + name[0] + '.';
+    if (!patronymic.isEmpty()) {
+        initials += patronymic[0] + '.';
+    }
+    return initials;
+}
+
+Patient::Patient(const Patient::NameInfo& nameInfo, QDate birthDate, const QString& address)
+    : nameInfo_(nameInfo)
     , birthDate_(birthDate)
     , address_(address)
 {
 }
 
-QString Patient::fullName() const {
-    return fullName_;
+Patient::NameInfo Patient::nameInfo() const {
+    return nameInfo_;
 }
 
-void Patient::setFullName(const QString& fullName) {
-    fullName_ = fullName;
+void Patient::setNameInfo(const NameInfo& nameInfo) {
+    nameInfo_ = nameInfo;
 }
 
 QDate Patient::birthDate() const {
