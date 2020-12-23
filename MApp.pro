@@ -16,12 +16,14 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     medicines.cpp \
+    patient.cpp \
     service.cpp
 
 HEADERS += \
     homeopathy.h \
     mainwindow.h \
     medicines.h \
+    patient.h \
     service.h
 
 FORMS += \
