@@ -53,7 +53,7 @@ public:
     void setName(const QString& name);
 
     QString nameLat() const;
-    void setNameLat(const QString& nameLat_);
+    void setNameLat(const QString& nameLat);
 
     Groups group() const;
     void setGroup(Groups group);
