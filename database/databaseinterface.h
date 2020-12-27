@@ -1,8 +1,9 @@
 #pragma once
 
-#include "homeopathy.h"
-#include "medicines.h"
-#include "service.h"
+#include "drugs/homeopathy.h"
+#include "drugs/medicines.h"
+
+#include "service/service.h"
 
 #include <vector>
 
