@@ -1,5 +1,4 @@
-#ifndef DATABASEINTERFACE_H
-#define DATABASEINTERFACE_H
+#pragma once
 
 #include "homeopathy.h"
 #include "medicines.h"
@@ -12,11 +11,9 @@ class DatabaseInterface
 public:
     DatabaseInterface() = default;
 
-    virtual std::vector<homeopathy::Drug> homeopathyDrugs() = 0;
-    virtual std::vector<homeopathy::Drug> availableHomeopathyDrugs() = 0;
-    virtual std::vector<medicine::Drug> medicineDrugs() = 0;
-    virtual std::vector<Service> services() = 0;
-    virtual std::vector<Service> notDeprecatedServices() = 0;
+    virtual void homeopathyDrugs(std::vector<homeopathy::Drug>& ) = 0;
+    virtual void availableHomeopathyDrugs(std::vector<homeopathy::Drug>& ) = 0;
+    virtual void medicineDrugs(std::vector<medicine::Drug>&) = 0;
+    virtual void services(std::vector<Service>& ) = 0;
+    virtual void notDeprecatedServices(std::vector<Service>& ) = 0;
 };
-
-#endif // DATABASEINTERFACE_H

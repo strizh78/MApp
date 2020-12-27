@@ -1,5 +1,4 @@
-#ifndef DATABASETEST_H
-#define DATABASETEST_H
+#pragma once
 
 #include "databaseinterface.h"
 
@@ -7,11 +6,10 @@ class DatabaseTest : public DatabaseInterface
 {
 public:
     DatabaseTest() = default;
-    std::vector<homeopathy::Drug> homeopathyDrugs() override;
-    std::vector<homeopathy::Drug> availableHomeopathyDrugs() override;
-    std::vector<medicine::Drug> medicineDrugs() override;
-    std::vector<Service> services() override;
-    std::vector<Service> notDeprecatedServices() override;
+    void homeopathyDrugs(std::vector<homeopathy::Drug>& receiver) override;
+    void availableHomeopathyDrugs(std::vector<homeopathy::Drug>& receiver) override;
+    void medicineDrugs(std::vector<medicine::Drug>& receiver) override;
+    void services(std::vector<Service>& receiver) override;
+    void notDeprecatedServices(std::vector<Service>& receiver) override;
 };
 
-#endif // DATABASETEST_H
