@@ -35,25 +35,25 @@ public:
          float price);
 
     QString activeSubstance() const;
-    void setaAtiveSubstance(const QString&);
+    void setaAtiveSubstance(const QString& activeSubstance);
 
     QString activeSubstancetLat() const;
-    void setActiveSubstanceLat(const QString&);
+    void setActiveSubstanceLat(const QString& activeSubstanceLat);
 
     bool isPrescription() const;
-    void setIsPrescription(bool);
+    void setIsPrescription(bool isPrescription);
 
     std::vector<ReleaseForms> releaseForms() const;
-    void setReleaseForms(const std::vector<ReleaseForms>&);
+    void setReleaseForms(const std::vector<ReleaseForms>& releaseForms);
 
     std::vector<QString> brandNames() const;
-    void setBrandNames(const std::vector<QString>&);
+    void setBrandNames(const std::vector<QString>& brandNames);
 
     std::vector<QString> dosages() const;
-    void setDosages(const std::vector<QString>&);
+    void setDosages(const std::vector<QString>& dosages);
 
     float price() const;
-    void setPrice(float);
+    void setPrice(float price);
 
     QString getFullName() const;
 

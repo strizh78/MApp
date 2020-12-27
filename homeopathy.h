@@ -50,19 +50,19 @@ public:
          bool available);
 
     QString name() const;
-    void setName(const QString&);
+    void setName(const QString& name);
 
     QString nameLat() const;
-    void setNameLat(const QString&);
+    void setNameLat(const QString& nameLat_);
 
     Groups group() const;
-    void setGroup(Groups);
+    void setGroup(Groups group);
 
     std::vector<Dilutions> availableDilutions() const;
-    void setAvailableDilutions(const std::vector<Dilutions>&);
+    void setAvailableDilutions(const std::vector<Dilutions>& availableDilutions);
 
     bool isAvailable() const;
-    void setAvailable(bool);
+    void setAvailable(bool available);
 
     QString getFullName() const;
 
@@ -72,7 +72,6 @@ private:
     Groups group_;
     std::vector<Dilutions> availableDilutions_;
     bool isAvailable_;
-
 };
 
 }

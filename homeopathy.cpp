@@ -15,14 +15,6 @@ Drug::Drug(const QString& name,
 {
 }
 
-bool Drug::isAvailable() const {
-    return isAvailable_;
-}
-
-void Drug::setAvailable(bool available) {
-    isAvailable_ = available;
-}
-
 QString Drug::name() const {
     return name_;
 }
@@ -53,6 +45,14 @@ std::vector<Dilutions> Drug::availableDilutions() const {
 
 void Drug::setAvailableDilutions(const std::vector<Dilutions>& availableDilutions) {
     availableDilutions_ = availableDilutions;
+}
+
+bool Drug::isAvailable() const {
+    return isAvailable_;
+}
+
+void Drug::setAvailable(bool available) {
+    isAvailable_ = available;
 }
 
 QString Drug::getFullName() const {
