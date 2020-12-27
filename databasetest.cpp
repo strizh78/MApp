@@ -117,3 +117,15 @@ std::vector<medicine::Drug> DatabaseTest::medicineDrugs() {
 
     return drugs;
 }
+
+std::vector<Service> DatabaseTest::services()
+{
+    std::vector<Service> services;
+    return services;
+}
+
+std::vector<Service> DatabaseTest::notDeprecatedServices()
+{
+    std::vector<Service> services;
+    return services;
+}
