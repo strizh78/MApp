@@ -1,9 +1,22 @@
 #include "medicines.h"
 
-namespace drugs {
+namespace medicine {
 
-Drug::Drug() {
-    price_ = 0.0;
+Drug::Drug(const QString& activeSubstance,
+           const QString& activeSubstanceLat,
+           bool isPrescription,
+           const std::vector<ReleaseForms>& releaseForms,
+           const std::vector<QString>& brandNames,
+           const std::vector<QString>& dosages,
+           float price)
+    : activeSubstance_(activeSubstance)
+    , activeSubstancetLat_(activeSubstanceLat)
+    , isPrescription_(isPrescription)
+    , releaseForms_(releaseForms)
+    , brandNames_(brandNames)
+    , dosages_(dosages)
+    , price_(price)
+{
 }
 
 QString Drug::activeSubstance() const {
@@ -23,12 +36,12 @@ void Drug::setActiveSubstanceLat(const QString& activeSubstancetLat) {
     activeSubstancetLat_ = activeSubstancetLat;
 }
 
-float Drug::price() const {
-    return price_;
+bool Drug::isPrescription() const {
+    return isPrescription_;
 }
 
-void Drug::setPrice(float price) {
-    price_ = price;
+void Drug::setIsPrescription(bool isPrescription) {
+    isPrescription_ = isPrescription;
 }
 
 std::vector<ReleaseForms> Drug::releaseForms() const {
@@ -53,6 +66,14 @@ std::vector<QString> Drug::dosages() const {
 
 void Drug::setDosages(const std::vector<QString>& dosages) {
     dosages_ = dosages;
+}
+
+float Drug::price() const {
+    return price_;
+}
+
+void Drug::setPrice(float price) {
+    price_ = price;
 }
 
 QString Drug::getFullName() const {
