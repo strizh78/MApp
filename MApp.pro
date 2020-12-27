@@ -12,6 +12,8 @@ macx: CONFIG += sdk_no_version_check
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    databaseinterface.cpp \
+    databasetest.cpp \
     homeopathy.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -19,6 +21,8 @@ SOURCES += \
     service.cpp
 
 HEADERS += \
+    databaseinterface.h \
+    databasetest.h \
     homeopathy.h \
     mainwindow.h \
     medicines.h \
