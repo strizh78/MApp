@@ -2,6 +2,19 @@
 
 namespace homeopathy {
 
+Drug::Drug(const QString& name,
+           const QString& nameLat,
+           Groups group,
+           const std::vector<Dilutions>& dilutions,
+           bool available)
+    : name_(name)
+    , nameLat_(nameLat)
+    , group_(group)
+    , availableDilutions_(dilutions)
+    , isAvailable_(available)
+{
+}
+
 bool Drug::isAvailable() const {
     return isAvailable_;
 }

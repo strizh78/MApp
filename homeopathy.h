@@ -42,25 +42,36 @@ enum class Dilutions {
 class Drug
 {
 public:
-    bool isAvailable() const;
-    void setAvailable(bool);
+    Drug() = default;
+    Drug(const QString& name,
+         const QString& nameLat,
+         Groups group,
+         const std::vector<Dilutions>& dilutions,
+         bool available);
+
     QString name() const;
     void setName(const QString&);
+
     QString nameLat() const;
     void setNameLat(const QString&);
+
     Groups group() const;
     void setGroup(Groups);
+
     std::vector<Dilutions> availableDilutions() const;
     void setAvailableDilutions(const std::vector<Dilutions>&);
+
+    bool isAvailable() const;
+    void setAvailable(bool);
 
     QString getFullName() const;
 
 private:
-    bool isAvailable_;
     QString name_;
     QString nameLat_;
     Groups group_;
     std::vector<Dilutions> availableDilutions_;
+    bool isAvailable_;
 
 };
 
