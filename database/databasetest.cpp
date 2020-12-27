@@ -1,7 +1,7 @@
 #include "databasetest.h"
 
-#include "../drugs/homeopathy.h"
-#include "../drugs/medicines.h"
+#include "drugs/homeopathy.h"
+#include "drugs/medicines.h"
 
 void DatabaseTest::homeopathyDrugs(std::vector<homeopathy::Drug>& receiver) {
     using namespace homeopathy;
