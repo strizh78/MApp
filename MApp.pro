@@ -12,26 +12,26 @@ macx: CONFIG += sdk_no_version_check
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    databaseinterface.cpp \
-    databasetest.cpp \
-    homeopathy.cpp \
+    database/databaseinterface.cpp \
+    database/databasetest.cpp \
+    drugs/homeopathy.cpp \
+    drugs/medicines.cpp \
+    interface/mainwindow.cpp \
     main.cpp \
-    mainwindow.cpp \
-    medicines.cpp \
-    patient.cpp \
-    service.cpp
+    patient/patient.cpp \
+    service/service.cpp
 
 HEADERS += \
-    databaseinterface.h \
-    databasetest.h \
-    homeopathy.h \
-    mainwindow.h \
-    medicines.h \
-    patient.h \
-    service.h
+    database/databaseinterface.h \
+    database/databasetest.h \
+    drugs/homeopathy.h \
+    drugs/medicines.h \
+    interface/mainwindow.h \
+    patient/patient.h \
+    service/service.h
 
 FORMS += \
-    mainwindow.ui
+    interface/mainwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
