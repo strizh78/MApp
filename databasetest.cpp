@@ -3,7 +3,7 @@
 #include "homeopathy.h"
 #include "medicines.h"
 
-void homeopathyDrugs(std::vector<homeopathy::Drug>& receiver) {
+void DatabaseTest::homeopathyDrugs(std::vector<homeopathy::Drug>& receiver) {
     using namespace homeopathy;
 
     static const std::vector<Dilutions> d1 = {
@@ -36,7 +36,7 @@ void homeopathyDrugs(std::vector<homeopathy::Drug>& receiver) {
         Drug("nameK", "nameLatK", Groups::MINERALS, d3, true)};
 }
 
-void availableHomeopathyDrugs(std::vector<homeopathy::Drug>& receiver) {
+void DatabaseTest::availableHomeopathyDrugs(std::vector<homeopathy::Drug>& receiver) {
     using namespace homeopathy;
 
     static const std::vector<Dilutions> d1 = {
@@ -68,7 +68,7 @@ void availableHomeopathyDrugs(std::vector<homeopathy::Drug>& receiver) {
 
 }
 
-void medicineDrugs(std::vector<medicine::Drug>& receiver) {
+void DatabaseTest::medicineDrugs(std::vector<medicine::Drug>& receiver) {
     using namespace medicine;
 
     static const std::vector<ReleaseForms> relForms1 = {
@@ -126,4 +126,14 @@ void medicineDrugs(std::vector<medicine::Drug>& receiver) {
         Drug("actSubsM", "actSubsLatM", false, relForms4, brands1, dosages3, 139),
         Drug("actSubsO", "", false, relForms4, brands2, dosages4, 525),
         Drug("actSubsP", "actSubsLatO", true, relForms1, brands3, dosages4, 636)};
+}
+
+void DatabaseTest::services(std::vector<Service>& receiver)
+{
+
+}
+
+void DatabaseTest::notDeprecatedServices(std::vector<Service>& receiver)
+{
+
 }
