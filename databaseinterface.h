@@ -14,7 +14,7 @@ public:
 
     virtual std::vector<homeopathy::Drug> homeopathyDrugs() = 0;
     virtual std::vector<homeopathy::Drug> availableHomeopathyDrugs() = 0;
-    virtual std::vector<medicine::Drug()> medicineDrugs() = 0;
+    virtual std::vector<medicine::Drug> medicineDrugs() = 0;
     virtual std::vector<Service> services() = 0;
     virtual std::vector<Service> notDeprecatedServices() = 0;
 };
