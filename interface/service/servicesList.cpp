@@ -24,7 +24,15 @@ ServicesList::ServicesList(QWidget *parent)
 
 ServicesList::~ServicesList() {
     delete ui;
-    delete tableSettingsForm_;
+
+    if (tableViewModel_ != ui->tableView->model()) {
+        delete ui->tableView->model();
+    }
+    delete tableViewModel_;
+
+    if (tableSettingsForm_) {
+        delete tableSettingsForm_;
+    }
 }
 
 void ServicesList::resizeEvent(QResizeEvent *event) {
@@ -125,6 +133,10 @@ void ServicesList::on_tableSettings_clicked() {
 }
 
 void ServicesList::searchInTable(const QString& searchRequest) {
+    if (tableViewModel_ != ui->tableView->model()) {
+        delete ui->tableView->model();
+    }
+
     auto* proxyModel = new QSortFilterProxyModel();
     proxyModel->setSourceModel(tableViewModel_);
     ui->tableView->setModel(proxyModel);
