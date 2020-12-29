@@ -23,12 +23,13 @@ ServicesList::ServicesList(QWidget *parent)
 }
 
 ServicesList::~ServicesList() {
-    delete ui;
-
     if (tableViewModel_ != ui->tableView->model()) {
         delete ui->tableView->model();
     }
     delete tableViewModel_;
+
+    delete ui;
+    delete databaseInterface_;
 
     if (tableSettingsForm_) {
         delete tableSettingsForm_;
