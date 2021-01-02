@@ -128,12 +128,28 @@ void DatabaseTest::medicineDrugs(std::vector<medicine::Drug>& receiver) {
         Drug("actSubsP", "actSubsLatO", true, relForms1, brands3, dosages4, 636)};
 }
 
-void DatabaseTest::services(std::vector<Service>& receiver)
-{
+void DatabaseTest::services(std::vector<Service>& receiver) {
+    static const QTime duration1(/*hours*/ 1, /*mins*/ 30);
+    static const QTime duration2(0, 45);
+    static const QTime duration3(2, 0);
 
+    static const std::vector<Service> servicesList = {
+        Service("nameA", 1000, duration1, false),
+        Service("nameB", 100.99, duration2, true),
+        Service("nameC", 200.5, duration3, true),
+        Service("long long long long nameD", 1.0, duration1, false),
+        Service("really long long long long long long long nameE", 5000, duration2, false),
+        Service("nameF", 2.5, duration3, true),
+        Service("nameG", 10000, duration1, false)
+    };
+
+    receiver = servicesList;
 }
 
-void DatabaseTest::notDeprecatedServices(std::vector<Service>& receiver)
-{
+void DatabaseTest::notDeprecatedServices(std::vector<Service>& receiver) {
+    Q_UNUSED(receiver);
+}
 
+void DatabaseTest::addService(const Service& newService) {
+    Q_UNUSED(newService);
 }

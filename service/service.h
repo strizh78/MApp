@@ -2,6 +2,7 @@
 
 #include <QTime>
 #include <QString>
+#include <QMetaType>
 
 class Service
 {
@@ -27,3 +28,5 @@ private:
     QTime duration_;
     bool isDeprecated_;
 };
+
+Q_DECLARE_METATYPE( Service ); // for QVariant
