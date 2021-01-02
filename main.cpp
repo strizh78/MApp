@@ -23,9 +23,9 @@ int main(int argc, char *argv[])
     qtTranslator.load(":/qtbase_ru.qm");
     a.installTranslator(&qtTranslator);
 
-    std::shared_ptr<DatabaseInterface> database_ = std::make_shared<DatabaseTest>();
+    std::shared_ptr<DatabaseInterface> database = std::make_shared<DatabaseTest>();
 
-    MainWindow w(database_);
+    MainWindow w(database);
     w.show();
     return a.exec();
 }

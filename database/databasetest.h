@@ -4,7 +4,7 @@
 
 class DatabaseTest : public DatabaseInterface {
 public:
-    DatabaseTest();
+    DatabaseTest() = default;
 
     void homeopathyDrugs(std::vector<homeopathy::Drug>& receiver) override;
     void availableHomeopathyDrugs(std::vector<homeopathy::Drug>& receiver) override;
@@ -15,7 +15,7 @@ public:
     void addService(const Service& newService) override;
 
 private:
-    void initServices();
+    static const std::vector<Service> initServices();
 
     static std::vector<Service> servicesList_;
 };
