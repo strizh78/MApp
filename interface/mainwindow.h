@@ -1,5 +1,7 @@
 #pragma once
 
+#include "database/databaseinterface.h"
+
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -10,7 +12,8 @@ class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    MainWindow(std::shared_ptr<DatabaseInterface> database,
+               QWidget *parent = nullptr);
     ~MainWindow();
 
 private slots:
@@ -18,4 +21,5 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    std::shared_ptr<DatabaseInterface> database_;
 };

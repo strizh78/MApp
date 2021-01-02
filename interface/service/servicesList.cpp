@@ -9,16 +9,16 @@
 
 #include <algorithm>
 
-ServicesList::ServicesList(QWidget *parent)
+ServicesList::ServicesList(std::shared_ptr<DatabaseInterface> database,
+                           QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::ServicesList)
+    , database_(database)
 {
     ui->setupUi(this);
 
-    databaseInterface_ = std::make_shared<DatabaseTest>();
-
     std::vector<Service> servicesList;
-    databaseInterface_->services(servicesList);
+    database_->services(servicesList);
     fillServicesTable(servicesList);
 }
 
@@ -81,7 +81,7 @@ void ServicesList::addService(const Service& service) {
 }
 
 void ServicesList::showServiceInfo(const Service& service) {
-    auto* serviceViewForm = new ServiceEdit(service);
+    auto* serviceViewForm = new ServiceEdit(database_, service);
 
     serviceViewForm->setAttribute(Qt::WA_DeleteOnClose, true);
     serviceViewForm->show();
@@ -89,7 +89,7 @@ void ServicesList::showServiceInfo(const Service& service) {
 
 void ServicesList::on_createService_clicked()
 {
-    auto* serviceCreateForm = new ServiceEdit;
+    auto* serviceCreateForm = new ServiceEdit(database_);
     connect(serviceCreateForm, SIGNAL(serviceCreateSignal(const Service&)), this, SLOT(addService(const Service&)));
 
     serviceCreateForm->setAttribute(Qt::WA_DeleteOnClose, true);

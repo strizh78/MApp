@@ -3,6 +3,12 @@
 #include "drugs/homeopathy.h"
 #include "drugs/medicines.h"
 
+std::vector<Service> DatabaseTest::servicesList_ = {};
+
+DatabaseTest::DatabaseTest() {
+    initServices();
+}
+
 void DatabaseTest::homeopathyDrugs(std::vector<homeopathy::Drug>& receiver) {
     using namespace homeopathy;
 
@@ -128,12 +134,12 @@ void DatabaseTest::medicineDrugs(std::vector<medicine::Drug>& receiver) {
         Drug("actSubsP", "actSubsLatO", true, relForms1, brands3, dosages4, 636)};
 }
 
-void DatabaseTest::services(std::vector<Service>& receiver) {
+void DatabaseTest::initServices() {
     static const QTime duration1(/*hours*/ 1, /*mins*/ 30);
     static const QTime duration2(0, 45);
     static const QTime duration3(2, 0);
 
-    static const std::vector<Service> servicesList = {
+    servicesList_ = {
         Service("nameA", 1000, duration1, false),
         Service("nameB", 100.99, duration2, true),
         Service("nameC", 200.5, duration3, true),
@@ -142,8 +148,10 @@ void DatabaseTest::services(std::vector<Service>& receiver) {
         Service("nameF", 2.5, duration3, true),
         Service("nameG", 10000, duration1, false)
     };
+}
 
-    receiver = servicesList;
+void DatabaseTest::services(std::vector<Service>& receiver) {
+    receiver = servicesList_;
 }
 
 void DatabaseTest::notDeprecatedServices(std::vector<Service>& receiver) {
@@ -151,5 +159,5 @@ void DatabaseTest::notDeprecatedServices(std::vector<Service>& receiver) {
 }
 
 void DatabaseTest::addService(const Service& newService) {
-    Q_UNUSED(newService);
+    servicesList_.push_back(newService);
 }

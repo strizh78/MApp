@@ -22,6 +22,8 @@ public:
     bool isDeprecated() const;
     void setDeprecated(bool deprecated);
 
+    bool operator==(const Service& other) const;
+
 private:
     QString name_;
     float price_;

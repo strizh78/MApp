@@ -20,7 +20,8 @@ class ServicesList : public QWidget {
     Q_OBJECT
 
 public:
-    explicit ServicesList(QWidget *parent = nullptr);
+    explicit ServicesList(std::shared_ptr<DatabaseInterface> database,
+                          QWidget *parent = nullptr);
     ~ServicesList();
 
 private:
@@ -47,9 +48,9 @@ private slots:
     void on_searchLine_textChanged(const QString &arg1);
 
 private:
-    std::shared_ptr<DatabaseInterface> databaseInterface_;
-
     Ui::ServicesList *ui;
+    std::shared_ptr<DatabaseInterface> database_;
+
     std::shared_ptr<QStandardItemModel> tableViewModel_;
     std::shared_ptr<ServiceTableSettings> tableSettingsForm_ = nullptr;
 };

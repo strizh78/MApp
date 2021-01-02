@@ -3,9 +3,11 @@
 
 #include "database/databasetest.h"
 
-ServiceEdit::ServiceEdit(std::optional<Service> service, QWidget *parent)
+ServiceEdit::ServiceEdit(std::shared_ptr<DatabaseInterface> database,
+                         std::optional<Service> service, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::ServiceEdit)
+    , database_(database)
     , service_(service.value_or(Service()))
     , editType_(service.has_value() ? EditType::VIEW : EditType::CREATE)
 {
@@ -22,7 +24,6 @@ ServiceEdit::ServiceEdit(std::optional<Service> service, QWidget *parent)
 
     fillFormServiceInfo();
 }
-
 
 ServiceEdit::~ServiceEdit() {
     delete ui;
@@ -56,7 +57,7 @@ void ServiceEdit::on_solutionBox_accepted() {
                             ui->priceEdit->text().toDouble(),
                             ui->durationEdit->time(),
                             !ui->switchActive->isChecked());
-            DatabaseTest().addService(created);
+            database_->addService(created);
             emit serviceCreateSignal(created);
             break;
         }
