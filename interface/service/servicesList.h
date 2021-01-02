@@ -9,6 +9,7 @@
 #include <QStandardItemModel>
 #include <QStyledItemDelegate>
 
+#include <memory>
 #include <vector>
 
 namespace Ui {
@@ -19,7 +20,8 @@ class ServicesList : public QWidget {
     Q_OBJECT
 
 public:
-    explicit ServicesList(QWidget *parent = nullptr);
+    explicit ServicesList(std::shared_ptr<DatabaseInterface> database,
+                          QWidget *parent = nullptr);
     ~ServicesList();
 
 private:
@@ -46,9 +48,9 @@ private slots:
     void on_searchLine_textChanged(const QString &arg1);
 
 private:
-    DatabaseInterface* databaseInterface_;
-
     Ui::ServicesList *ui;
-    QStandardItemModel* tableViewModel_;
-    ServiceTableSettings* tableSettingsForm_ = nullptr;
+    std::shared_ptr<DatabaseInterface> database_;
+
+    std::shared_ptr<QStandardItemModel> tableViewModel_;
+    std::shared_ptr<ServiceTableSettings> tableSettingsForm_ = nullptr;
 };

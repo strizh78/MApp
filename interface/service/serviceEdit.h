@@ -1,6 +1,7 @@
 #pragma once
 
 #include "service/service.h"
+#include "database/databaseinterface.h"
 
 #include <QWidget>
 
@@ -14,7 +15,8 @@ class ServiceEdit : public QWidget {
     Q_OBJECT
 
 public:
-    ServiceEdit(std::optional<Service> service = std::nullopt, QWidget *parent = nullptr);
+    ServiceEdit(std::shared_ptr<DatabaseInterface> database,
+                std::optional<Service> service = std::nullopt, QWidget *parent = nullptr);
     ~ServiceEdit();
 
 private:
@@ -34,6 +36,10 @@ private:
     };
 
     Ui::ServiceEdit *ui;
+    std::shared_ptr<DatabaseInterface> database_;
+
     Service service_;
     EditType editType_;
+
+    friend class ServiceTests;
 };

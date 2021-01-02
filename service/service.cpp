@@ -39,3 +39,10 @@ bool Service::isDeprecated() const {
 void Service::setDeprecated(bool deprecated) {
     isDeprecated_ = deprecated;
 }
+
+bool Service::operator==(const Service& other) const {
+    return std::abs(price_ - other.price()) < 1e-9 &&
+           name_ == other.name() &&
+           duration_ == other.duration() &&
+           isDeprecated_ == other.isDeprecated();
+}

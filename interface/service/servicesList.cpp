@@ -9,31 +9,21 @@
 
 #include <algorithm>
 
-ServicesList::ServicesList(QWidget *parent)
+ServicesList::ServicesList(std::shared_ptr<DatabaseInterface> database,
+                           QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::ServicesList)
+    , database_(database)
 {
     ui->setupUi(this);
 
-    databaseInterface_ = new DatabaseTest;
-
     std::vector<Service> servicesList;
-    databaseInterface_->services(servicesList);
+    database_->services(servicesList);
     fillServicesTable(servicesList);
 }
 
 ServicesList::~ServicesList() {
-    if (tableViewModel_ != ui->tableView->model()) {
-        delete ui->tableView->model();
-    }
-    delete tableViewModel_;
-
     delete ui;
-    delete databaseInterface_;
-
-    if (tableSettingsForm_) {
-        delete tableSettingsForm_;
-    }
 }
 
 void ServicesList::resizeEvent(QResizeEvent *event) {
@@ -74,7 +64,7 @@ QList<QStandardItem*> ServicesList::createServiceRow(size_t row, const Service& 
 }
 
 void ServicesList::fillServicesTable(const std::vector<Service>& servicesList) {
-    tableViewModel_ = new QStandardItemModel();
+    tableViewModel_ = std::make_shared<QStandardItemModel>();
 
     static const QStringList columnNames = {"Наименование", "Цена", "Длительность"};
     tableViewModel_->setHorizontalHeaderLabels(columnNames);
@@ -83,7 +73,7 @@ void ServicesList::fillServicesTable(const std::vector<Service>& servicesList) {
         addService(service);
     }
 
-    ui->tableView->setModel(tableViewModel_);
+    ui->tableView->setModel(tableViewModel_.get());
 }
 
 void ServicesList::addService(const Service& service) {
@@ -91,7 +81,7 @@ void ServicesList::addService(const Service& service) {
 }
 
 void ServicesList::showServiceInfo(const Service& service) {
-    auto* serviceViewForm = new ServiceEdit(service);
+    auto* serviceViewForm = new ServiceEdit(database_, service);
 
     serviceViewForm->setAttribute(Qt::WA_DeleteOnClose, true);
     serviceViewForm->show();
@@ -99,7 +89,7 @@ void ServicesList::showServiceInfo(const Service& service) {
 
 void ServicesList::on_createService_clicked()
 {
-    auto* serviceCreateForm = new ServiceEdit;
+    auto* serviceCreateForm = new ServiceEdit(database_);
     connect(serviceCreateForm, SIGNAL(serviceCreateSignal(const Service&)), this, SLOT(addService(const Service&)));
 
     serviceCreateForm->setAttribute(Qt::WA_DeleteOnClose, true);
@@ -126,20 +116,20 @@ void ServicesList::changeColumnsDisplayOption(std::vector<bool> columns) {
 
 void ServicesList::on_tableSettings_clicked() {
     if (!tableSettingsForm_) {
-        tableSettingsForm_ = new ServiceTableSettings;
+        tableSettingsForm_ = std::make_shared<ServiceTableSettings>();
     }
 
-    connect(tableSettingsForm_, SIGNAL(signalChangeColumnsDisplay(std::vector<bool>)), this, SLOT(changeColumnsDisplayOption(std::vector<bool>)));
+    connect(tableSettingsForm_.get(), SIGNAL(signalChangeColumnsDisplay(std::vector<bool>)), this, SLOT(changeColumnsDisplayOption(std::vector<bool>)));
     tableSettingsForm_->show();
 }
 
 void ServicesList::searchInTable(const QString& searchRequest) {
-    if (tableViewModel_ != ui->tableView->model()) {
+    if (tableViewModel_.get() != ui->tableView->model()) {
         delete ui->tableView->model();
     }
 
     auto* proxyModel = new QSortFilterProxyModel();
-    proxyModel->setSourceModel(tableViewModel_);
+    proxyModel->setSourceModel(tableViewModel_.get());
     ui->tableView->setModel(proxyModel);
 
     QRegExp regExp(searchRequest,

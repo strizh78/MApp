@@ -1,5 +1,5 @@
 QT       += core gui
-
+QT       += testlib
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
@@ -27,7 +27,9 @@ SOURCES += \
     interface/service/servicesList.cpp \
     interface/service/serviceTableSettings.cpp \
     \
-    contrib/toggleSwitch/switch.cpp
+    contrib/toggleSwitch/switch.cpp \
+    \
+    tests/servicetests.cpp
 
 HEADERS += \
     drugs/homeopathy.h \
@@ -44,7 +46,9 @@ HEADERS += \
     interface/service/serviceTableSettings.h \
     \
     contrib/toggleSwitch/style.h \
-    contrib/toggleSwitch/switch.h
+    contrib/toggleSwitch/switch.h \
+    \
+    tests/servicetests.h
 
 FORMS += \
     interface/mainwindow.ui \

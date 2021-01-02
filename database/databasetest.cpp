@@ -3,6 +3,8 @@
 #include "drugs/homeopathy.h"
 #include "drugs/medicines.h"
 
+std::vector<Service> DatabaseTest::servicesList_ = DatabaseTest::initServices();
+
 void DatabaseTest::homeopathyDrugs(std::vector<homeopathy::Drug>& receiver) {
     using namespace homeopathy;
 
@@ -128,7 +130,7 @@ void DatabaseTest::medicineDrugs(std::vector<medicine::Drug>& receiver) {
         Drug("actSubsP", "actSubsLatO", true, relForms1, brands3, dosages4, 636)};
 }
 
-void DatabaseTest::services(std::vector<Service>& receiver) {
+const std::vector<Service> DatabaseTest::initServices() {
     static const QTime duration1(/*hours*/ 1, /*mins*/ 30);
     static const QTime duration2(0, 45);
     static const QTime duration3(2, 0);
@@ -143,7 +145,11 @@ void DatabaseTest::services(std::vector<Service>& receiver) {
         Service("nameG", 10000, duration1, false)
     };
 
-    receiver = servicesList;
+    return servicesList;
+}
+
+void DatabaseTest::services(std::vector<Service>& receiver) {
+    receiver = servicesList_;
 }
 
 void DatabaseTest::notDeprecatedServices(std::vector<Service>& receiver) {
@@ -151,5 +157,5 @@ void DatabaseTest::notDeprecatedServices(std::vector<Service>& receiver) {
 }
 
 void DatabaseTest::addService(const Service& newService) {
-    Q_UNUSED(newService);
+    servicesList_.push_back(newService);
 }
