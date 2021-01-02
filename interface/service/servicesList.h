@@ -1,8 +1,7 @@
 #pragma once
 
-#include "serviceTableSettings.h"
-
 #include "service/service.h"
+#include "serviceTableSettings.h"
 
 #include "database/databaseinterface.h"
 

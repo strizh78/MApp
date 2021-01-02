@@ -3,8 +3,6 @@
 #include "drugs/homeopathy.h"
 #include "drugs/medicines.h"
 
-#define UNUSED(x)
-
 void DatabaseTest::homeopathyDrugs(std::vector<homeopathy::Drug>& receiver) {
     using namespace homeopathy;
 
@@ -151,7 +149,6 @@ void DatabaseTest::services(std::vector<Service>& receiver) {
 void DatabaseTest::notDeprecatedServices(std::vector<Service>& receiver) {
     Q_UNUSED(receiver);
 }
-
 
 void DatabaseTest::addService(const Service& newService) {
     Q_UNUSED(newService);

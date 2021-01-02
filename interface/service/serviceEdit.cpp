@@ -16,9 +16,8 @@ ServiceEdit::ServiceEdit(std::optional<Service> service, QWidget *parent)
             setWindowTitle("Создание услуги");
             break;
         case EditType::VIEW:
-            setWindowTitle("Просмотр услуги");
+            setWindowTitle("Услуга" + service_.name());
             ui->solutionBox->removeButton(ui->solutionBox->button(QDialogButtonBox::Save));
-            break;
     }
 
     fillFormServiceInfo();
@@ -30,21 +29,23 @@ ServiceEdit::~ServiceEdit() {
 }
 
 void ServiceEdit::fillFormServiceInfo() {
-    if (editType_ == EditType::VIEW) {
-        ui->nameEdit->setText(service_.name());
-        ui->nameEdit->setReadOnly(true);
-
-        ui->durationEdit->setTime(service_.duration());
-        ui->durationEdit->setFocusPolicy(Qt::NoFocus);
-        ui->durationEdit->setReadOnly(true);
-
-        ui->priceEdit->setText(QString::number(service_.price()));
-        ui->priceEdit->setReadOnly(true);
-
-        ui->switchActive->setChecked(!service_.isDeprecated());
-        ui->switchActive->setAttribute(Qt::WA_TransparentForMouseEvents);
-        ui->switchActive->setFocusPolicy(Qt::NoFocus);
+    if (editType_ != EditType::VIEW) {
+        return;
     }
+
+    ui->nameEdit->setText(service_.name());
+    ui->nameEdit->setReadOnly(true);
+
+    ui->durationEdit->setTime(service_.duration());
+    ui->durationEdit->setFocusPolicy(Qt::NoFocus);
+    ui->durationEdit->setReadOnly(true);
+
+    ui->priceEdit->setText(QString::number(service_.price()));
+    ui->priceEdit->setReadOnly(true);
+
+    ui->switchActive->setChecked(!service_.isDeprecated());
+    ui->switchActive->setAttribute(Qt::WA_TransparentForMouseEvents);
+    ui->switchActive->setFocusPolicy(Qt::NoFocus);
 }
 
 void ServiceEdit::on_solutionBox_accepted() {
