@@ -6,7 +6,6 @@
 
 #include <QApplication>
 #include <QTranslator>
-#include <QLibraryInfo>
 
 #include <memory>
 
