@@ -9,6 +9,7 @@
 #include <QStandardItemModel>
 #include <QStyledItemDelegate>
 
+#include <memory>
 #include <vector>
 
 namespace Ui {
@@ -46,9 +47,9 @@ private slots:
     void on_searchLine_textChanged(const QString &arg1);
 
 private:
-    DatabaseInterface* databaseInterface_;
+    std::shared_ptr<DatabaseInterface> databaseInterface_;
 
     Ui::ServicesList *ui;
-    QStandardItemModel* tableViewModel_;
-    ServiceTableSettings* tableSettingsForm_ = nullptr;
+    std::shared_ptr<QStandardItemModel> tableViewModel_;
+    std::shared_ptr<ServiceTableSettings> tableSettingsForm_ = nullptr;
 };
