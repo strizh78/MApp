@@ -18,7 +18,7 @@ ServiceEdit::ServiceEdit(std::shared_ptr<DatabaseInterface> database,
             setWindowTitle("Создание услуги");
             break;
         case EditType::VIEW:
-            setWindowTitle("Услуга" + service_.name());
+            setWindowTitle("Услуга " + service_.name());
             ui->solutionBox->removeButton(ui->solutionBox->button(QDialogButtonBox::Save));
     }
 
