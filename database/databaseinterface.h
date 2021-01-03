@@ -20,4 +20,5 @@ public:
     virtual void services(std::vector<Service>& ) = 0;
     virtual void notDeprecatedServices(std::vector<Service>& ) = 0;
     virtual void addService(const Service& newService) = 0;
+    virtual void editService(const Service& oldService, const Service& editedService) = 0;
 };

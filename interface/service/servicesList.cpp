@@ -80,8 +80,22 @@ void ServicesList::addService(const Service& service) {
     tableViewModel_->appendRow(createServiceRow(tableViewModel_->rowCount(), service));
 }
 
+void ServicesList::editService(const Service& oldService, const Service& editedService) {
+    for (int i = 0; i < tableViewModel_->rowCount(); ++i) {
+        auto tableElement = tableViewModel_->index(i, 0);
+        if (tableElement.data(Qt::UserRole).value<Service>() == oldService) {
+            tableViewModel_->removeRow(i);
+            tableViewModel_->insertRow(i, createServiceRow(i, editedService));
+            ui->tableView->clearSelection();
+            return;
+        }
+    }
+}
+
 void ServicesList::showServiceInfo(const Service& service) {
     auto* serviceViewForm = new ServiceEdit(database_, service);
+    connect(serviceViewForm, SIGNAL(serviceEditSignal(const Service&, const Service&)),
+            this, SLOT(editService(const Service&, const Service&)));
 
     serviceViewForm->setAttribute(Qt::WA_DeleteOnClose, true);
     serviceViewForm->show();
@@ -90,7 +104,8 @@ void ServicesList::showServiceInfo(const Service& service) {
 void ServicesList::on_createService_clicked()
 {
     auto* serviceCreateForm = new ServiceEdit(database_);
-    connect(serviceCreateForm, SIGNAL(serviceCreateSignal(const Service&)), this, SLOT(addService(const Service&)));
+    connect(serviceCreateForm, SIGNAL(serviceCreateSignal(const Service&)),
+            this, SLOT(addService(const Service&)));
 
     serviceCreateForm->setAttribute(Qt::WA_DeleteOnClose, true);
     serviceCreateForm->show();
@@ -119,7 +134,8 @@ void ServicesList::on_tableSettings_clicked() {
         tableSettingsForm_ = std::make_shared<ServiceTableSettings>();
     }
 
-    connect(tableSettingsForm_.get(), SIGNAL(signalChangeColumnsDisplay(std::vector<bool>)), this, SLOT(changeColumnsDisplayOption(std::vector<bool>)));
+    connect(tableSettingsForm_.get(), SIGNAL(signalChangeColumnsDisplay(std::vector<bool>)),
+            this, SLOT(changeColumnsDisplayOption(std::vector<bool>)));
     tableSettingsForm_->show();
 }
 

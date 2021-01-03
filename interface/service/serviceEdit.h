@@ -24,6 +24,7 @@ private:
 
 signals:
     void serviceCreateSignal(const Service& created);
+    void serviceEditSignal(const Service& oldService, const Service& editedService);
 
 private slots:
     void on_solutionBox_accepted();
@@ -32,7 +33,7 @@ private slots:
 private:
     enum class EditType {
         CREATE,
-        VIEW
+        EDIT
     };
 
     Ui::ServiceEdit *ui;
