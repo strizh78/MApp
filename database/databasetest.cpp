@@ -3,6 +3,8 @@
 #include "drugs/homeopathy.h"
 #include "drugs/medicines.h"
 
+#include <algorithm>
+
 std::vector<Service> DatabaseTest::servicesList_ = DatabaseTest::initServices();
 
 void DatabaseTest::homeopathyDrugs(std::vector<homeopathy::Drug>& receiver) {
@@ -158,4 +160,11 @@ void DatabaseTest::notDeprecatedServices(std::vector<Service>& receiver) {
 
 void DatabaseTest::addService(const Service& newService) {
     servicesList_.push_back(newService);
+}
+
+void DatabaseTest::editService(const Service& oldService,
+                               const Service& editedService)
+{
+    auto it = std::find(servicesList_.begin(), servicesList_.end(), oldService);
+    *it = editedService;
 }

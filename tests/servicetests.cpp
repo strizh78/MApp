@@ -13,7 +13,7 @@ ServiceTests::ServiceTests(QObject *parent)
 {
 }
 
-void ServiceTests::CreateService() {
+void ServiceTests::createService() {
     Service created("Test service name", 10003.14, QTime(/*hours*/ 5, /*mins*/ 45), true);
 
     ServiceEdit serviceEdit(database_);
@@ -28,4 +28,24 @@ void ServiceTests::CreateService() {
     std::vector<Service> currentServices;
     database_->services(currentServices);
     Q_ASSERT(std::find(currentServices.begin(), currentServices.end(), created) != currentServices.end());
+}
+
+void ServiceTests::editService() {
+    Service created("Test service name 2", 0.12, QTime(/*hours*/ 1, /*mins*/ 0), false);
+    Service edited("Test service name edited", 100, QTime(/*hours*/ 0, /*mins*/ 55), true);
+    database_->addService(created);
+
+    ServiceEdit serviceEdit(database_, created);
+
+    serviceEdit.ui->nameEdit->setText(edited.name());
+    serviceEdit.ui->priceEdit->setText(QString::number(edited.price()));
+    serviceEdit.ui->durationEdit->setTime(edited.duration());
+    serviceEdit.ui->switchActive->setChecked(!edited.isDeprecated());
+
+    serviceEdit.on_solutionBox_accepted();
+
+    std::vector<Service> currentServices;
+    database_->services(currentServices);
+    Q_ASSERT(std::find(currentServices.begin(), currentServices.end(), created) == currentServices.end());
+    Q_ASSERT(std::find(currentServices.begin(), currentServices.end(), edited) != currentServices.end());
 }

@@ -34,6 +34,7 @@ public:
 
 private slots:
     void addService(const Service& service);
+    void editService(const Service& oldService, const Service& editedService);
 
     void on_createService_clicked();
 

@@ -24,22 +24,23 @@ private:
 
 signals:
     void serviceCreateSignal(const Service& created);
+    void serviceEditSignal(const Service& oldService, const Service& editedService);
 
 private slots:
     void on_solutionBox_accepted();
     void on_solutionBox_rejected();
 
 private:
-    enum class EditType {
+    enum class OpenMode {
         CREATE,
-        VIEW
+        EDIT
     };
 
     Ui::ServiceEdit *ui;
     std::shared_ptr<DatabaseInterface> database_;
 
     Service service_;
-    EditType editType_;
+    OpenMode openMode_;
 
     friend class ServiceTests;
 };

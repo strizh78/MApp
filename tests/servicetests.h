@@ -12,7 +12,8 @@ class ServiceTests : public QObject
 public:
     explicit ServiceTests(QObject *parent = nullptr);
 private slots:
-    void CreateService();
+    void createService();
+    void editService();
 
 private:
     std::shared_ptr<DatabaseInterface> database_;

@@ -9,17 +9,16 @@ ServiceEdit::ServiceEdit(std::shared_ptr<DatabaseInterface> database,
     , ui(new Ui::ServiceEdit)
     , database_(database)
     , service_(service.value_or(Service()))
-    , editType_(service.has_value() ? EditType::VIEW : EditType::CREATE)
+    , openMode_(service.has_value() ? OpenMode::EDIT : OpenMode::CREATE)
 {
     ui->setupUi(this);
 
-    switch (editType_) {
-        case EditType::CREATE:
+    switch (openMode_) {
+        case OpenMode::CREATE:
             setWindowTitle("Создание услуги");
             break;
-        case EditType::VIEW:
+        case OpenMode::EDIT:
             setWindowTitle("Услуга " + service_.name());
-            ui->solutionBox->removeButton(ui->solutionBox->button(QDialogButtonBox::Save));
     }
 
     fillFormServiceInfo();
@@ -30,41 +29,39 @@ ServiceEdit::~ServiceEdit() {
 }
 
 void ServiceEdit::fillFormServiceInfo() {
-    if (editType_ != EditType::VIEW) {
+    if (openMode_ != OpenMode::EDIT) {
         return;
     }
 
     ui->nameEdit->setText(service_.name());
-    ui->nameEdit->setReadOnly(true);
-
     ui->durationEdit->setTime(service_.duration());
-    ui->durationEdit->setFocusPolicy(Qt::NoFocus);
-    ui->durationEdit->setReadOnly(true);
-
     ui->priceEdit->setText(QString::number(service_.price()));
-    ui->priceEdit->setReadOnly(true);
-
     ui->switchActive->setChecked(!service_.isDeprecated());
-    ui->switchActive->setAttribute(Qt::WA_TransparentForMouseEvents);
-    ui->switchActive->setFocusPolicy(Qt::NoFocus);
 }
 
 void ServiceEdit::on_solutionBox_accepted() {
-    switch (editType_) {
-        case EditType::CREATE:
-        {
-            Service created(ui->nameEdit->text(),
-                            ui->priceEdit->text().toDouble(),
-                            ui->durationEdit->time(),
-                            !ui->switchActive->isChecked());
-            database_->addService(created);
-            emit serviceCreateSignal(created);
-            break;
+    Service edited(ui->nameEdit->text(),
+                    ui->priceEdit->text().toDouble(),
+                    ui->durationEdit->time(),
+                    !ui->switchActive->isChecked());
+
+    if (edited.isValid()) {
+        switch (openMode_) {
+            case OpenMode::CREATE:
+                database_->addService(edited);
+                emit serviceCreateSignal(edited);
+                break;
+            case OpenMode::EDIT:
+                database_->editService(service_, edited);
+                emit serviceEditSignal(service_, edited);
+                break;
         }
-        case EditType::VIEW:
-            break;
+        close();
+    } else {
+        QMessageBox::critical(this, tr("Ошибка создания/редактирования услуги"),
+                             "Недопустимое значение поля",
+                             QMessageBox::Ok);
     }
-    close();
 }
 
 void ServiceEdit::on_solutionBox_rejected() {

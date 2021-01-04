@@ -13,6 +13,7 @@ public:
     void services(std::vector<Service>& receiver) override;
     void notDeprecatedServices(std::vector<Service>& receiver) override;
     void addService(const Service& newService) override;
+    void editService(const Service& oldService, const Service& editedService) override;
 
 private:
     static const std::vector<Service> initServices();
