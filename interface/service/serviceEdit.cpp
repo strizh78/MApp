@@ -9,15 +9,15 @@ ServiceEdit::ServiceEdit(std::shared_ptr<DatabaseInterface> database,
     , ui(new Ui::ServiceEdit)
     , database_(database)
     , service_(service.value_or(Service()))
-    , editType_(service.has_value() ? EditType::EDIT : EditType::CREATE)
+    , openMode_(service.has_value() ? OpenMode::EDIT : OpenMode::CREATE)
 {
     ui->setupUi(this);
 
-    switch (editType_) {
-        case EditType::CREATE:
+    switch (openMode_) {
+        case OpenMode::CREATE:
             setWindowTitle("Создание услуги");
             break;
-        case EditType::EDIT:
+        case OpenMode::EDIT:
             setWindowTitle("Услуга " + service_.name());
     }
 
@@ -29,7 +29,7 @@ ServiceEdit::~ServiceEdit() {
 }
 
 void ServiceEdit::fillFormServiceInfo() {
-    if (editType_ != EditType::EDIT) {
+    if (openMode_ != OpenMode::EDIT) {
         return;
     }
 
@@ -45,17 +45,23 @@ void ServiceEdit::on_solutionBox_accepted() {
                     ui->durationEdit->time(),
                     !ui->switchActive->isChecked());
 
-    switch (editType_) {
-        case EditType::CREATE:
-            database_->addService(edited);
-            emit serviceCreateSignal(edited);
-            break;
-        case EditType::EDIT:
-            database_->editService(service_, edited);
-            emit serviceEditSignal(service_, edited);
-            break;
+    if (edited.isValid()) {
+        switch (openMode_) {
+            case OpenMode::CREATE:
+                database_->addService(edited);
+                emit serviceCreateSignal(edited);
+                break;
+            case OpenMode::EDIT:
+                database_->editService(service_, edited);
+                emit serviceEditSignal(service_, edited);
+                break;
+        }
+        close();
+    } else {
+        QMessageBox::critical(this, tr("Ошибка создания/редактирования услуги"),
+                             "Недопустимое значение поля",
+                             QMessageBox::Ok);
     }
-    close();
 }
 
 void ServiceEdit::on_solutionBox_rejected() {

@@ -46,3 +46,13 @@ bool Service::operator==(const Service& other) const {
            duration_ == other.duration() &&
            isDeprecated_ == other.isDeprecated();
 }
+
+bool Service::isValid() const {
+    if (name_.isEmpty() ||
+        price_ <= 0     ||
+        duration_ <= QTime(/*hours*/ 0, /*mins*/ 0))
+    {
+        return false;
+    }
+    return true;
+}

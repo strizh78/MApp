@@ -24,6 +24,8 @@ public:
 
     bool operator==(const Service& other) const;
 
+    bool isValid() const;
+
 private:
     QString name_;
     float price_;

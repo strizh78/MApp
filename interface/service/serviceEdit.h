@@ -31,7 +31,7 @@ private slots:
     void on_solutionBox_rejected();
 
 private:
-    enum class EditType {
+    enum class OpenMode {
         CREATE,
         EDIT
     };
@@ -40,7 +40,7 @@ private:
     std::shared_ptr<DatabaseInterface> database_;
 
     Service service_;
-    EditType editType_;
+    OpenMode openMode_;
 
     friend class ServiceTests;
 };
