@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QString>
+#include <QMetaType>
 
 #include <vector>
 
@@ -35,27 +36,16 @@ public:
          float price);
 
     QString activeSubstance() const;
-    void setaAtiveSubstance(const QString& activeSubstance);
-
     QString activeSubstancetLat() const;
-    void setActiveSubstanceLat(const QString& activeSubstanceLat);
-
     bool isPrescription() const;
-    void setIsPrescription(bool isPrescription);
-
     std::vector<ReleaseForms> releaseForms() const;
-    void setReleaseForms(const std::vector<ReleaseForms>& releaseForms);
-
     std::vector<QString> brandNames() const;
-    void setBrandNames(const std::vector<QString>& brandNames);
-
     std::vector<QString> dosages() const;
-    void setDosages(const std::vector<QString>& dosages);
-
     float price() const;
-    void setPrice(float price);
 
     QString getFullName() const;
+
+    bool operator ==(const medicine::Drug& other);
 
 private:
     QString activeSubstance_;
@@ -65,7 +55,8 @@ private:
     std::vector<QString> brandNames_;
     std::vector<QString> dosages_;
     float price_;
-
 };
 
 }
+
+Q_DECLARE_METATYPE( medicine::Drug ); // for QVariant

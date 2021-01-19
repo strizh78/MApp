@@ -23,57 +23,28 @@ QString Drug::activeSubstance() const {
     return activeSubstance_;
 }
 
-void Drug::setaAtiveSubstance(const QString& activeSubstance)
-{
-    activeSubstance_ = activeSubstance;
-}
-
 QString Drug::activeSubstancetLat() const {
     return activeSubstancetLat_;
-}
-
-void Drug::setActiveSubstanceLat(const QString& activeSubstancetLat) {
-    activeSubstancetLat_ = activeSubstancetLat;
 }
 
 bool Drug::isPrescription() const {
     return isPrescription_;
 }
 
-void Drug::setIsPrescription(bool isPrescription) {
-    isPrescription_ = isPrescription;
-}
-
 std::vector<ReleaseForms> Drug::releaseForms() const {
     return releaseForms_;
-}
-
-void Drug::setReleaseForms(const std::vector<ReleaseForms>& releaseForms) {
-    releaseForms_ = releaseForms;
 }
 
 std::vector<QString> Drug::brandNames() const {
     return brandNames_;
 }
 
-void Drug::setBrandNames(const std::vector<QString>& brandNames) {
-    brandNames_ = brandNames;
-}
-
 std::vector<QString> Drug::dosages() const {
     return dosages_;
 }
 
-void Drug::setDosages(const std::vector<QString>& dosages) {
-    dosages_ = dosages;
-}
-
 float Drug::price() const {
     return price_;
-}
-
-void Drug::setPrice(float price) {
-    price_ = price;
 }
 
 QString Drug::getFullName() const {
@@ -85,7 +56,16 @@ QString Drug::getFullName() const {
     return fullName;
 }
 
+bool Drug::operator ==(const Drug& other)
+{
+    return activeSubstance_ == other.activeSubstance() &&
+           activeSubstancetLat_ == other.activeSubstancetLat() &&
+           isPrescription_ == other.isPrescription() &&
+           releaseForms_ == other.releaseForms() &&
+           brandNames_ == other.brandNames() &&
+           dosages_ == other.dosages() &&
+           std::abs(price_ - other.price()) < 1e9;
 }
 
-
+}
 
