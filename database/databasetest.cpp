@@ -1,11 +1,11 @@
 #include "databasetest.h"
 
-#include "drugs/homeopathy.h"
-#include "drugs/medicines.h"
+#include <QVariant>
 
 #include <algorithm>
 
 std::vector<Service> DatabaseTest::servicesList_ = DatabaseTest::initServices();
+std::vector<medicine::Drug> DatabaseTest::medicinesList_ = DatabaseTest::initMedicineDrugs();
 
 void DatabaseTest::homeopathyDrugs(std::vector<homeopathy::Drug>& receiver) {
     using namespace homeopathy;
@@ -72,7 +72,7 @@ void DatabaseTest::availableHomeopathyDrugs(std::vector<homeopathy::Drug>& recei
 
 }
 
-void DatabaseTest::medicineDrugs(std::vector<medicine::Drug>& receiver) {
+const std::vector<medicine::Drug> DatabaseTest::initMedicineDrugs() {
     using namespace medicine;
 
     static const std::vector<ReleaseForms> relForms1 = {
@@ -114,7 +114,7 @@ void DatabaseTest::medicineDrugs(std::vector<medicine::Drug>& receiver) {
         "4-16 dos8"};
     static const std::vector<QString> dosages4 = {
         "dos9"};
-    receiver = {
+    static const std::vector<medicine::Drug> medicines = {
         Drug("actSubsA", "actSubsLatA", false, relForms1, brands1, dosages1, 3.14),
         Drug("actSubsB", "", false, relForms2, brands1, dosages1, 2.71),
         Drug("actSubsC", "actSubsLatC", false, relForms3, brands2, dosages2, 60.22),
@@ -130,6 +130,21 @@ void DatabaseTest::medicineDrugs(std::vector<medicine::Drug>& receiver) {
         Drug("actSubsM", "actSubsLatM", false, relForms4, brands1, dosages3, 139),
         Drug("actSubsO", "", false, relForms4, brands2, dosages4, 525),
         Drug("actSubsP", "actSubsLatO", true, relForms1, brands3, dosages4, 636)};
+    return medicines;
+}
+
+void DatabaseTest::medicineDrugs(std::vector<medicine::Drug>& receiver) {
+    receiver = medicinesList_;
+}
+
+void DatabaseTest::addMedicineDrug(const medicine::Drug& drug) {
+    medicinesList_.push_back(drug);
+}
+
+void DatabaseTest::editMedicineDrug(const medicine::Drug& oldDrug,
+                                    const medicine::Drug& newDrug) {
+    auto it = std::find(medicinesList_.begin(), medicinesList_.end(), oldDrug);
+    *it = newDrug;
 }
 
 const std::vector<Service> DatabaseTest::initServices() {
