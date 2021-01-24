@@ -3,7 +3,10 @@
 #include <QString>
 #include <QMetaType>
 
+#include <optional>
 #include <vector>
+
+using Dosage = QString;
 
 namespace medicine {
 
@@ -32,7 +35,7 @@ public:
          bool isPrescription,
          const std::vector<ReleaseForms>& releaseForms,
          const std::vector<QString>& brandNames,
-         const std::vector<QString>& dosages,
+         const std::vector<Dosage>& dosages,
          float price);
 
     QString activeSubstance() const;
@@ -40,7 +43,7 @@ public:
     bool isPrescription() const;
     std::vector<ReleaseForms> releaseForms() const;
     std::vector<QString> brandNames() const;
-    std::vector<QString> dosages() const;
+    std::vector<Dosage> dosages() const;
     float price() const;
 
     QString getFullName() const;
@@ -53,7 +56,7 @@ private:
     bool isPrescription_;
     std::vector<ReleaseForms> releaseForms_;
     std::vector<QString> brandNames_;
-    std::vector<QString> dosages_;
+    std::vector<Dosage> dosages_;
     float price_;
 };
 

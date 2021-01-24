@@ -39,7 +39,7 @@ std::vector<QString> Drug::brandNames() const {
     return brandNames_;
 }
 
-std::vector<QString> Drug::dosages() const {
+std::vector<Dosage> Drug::dosages() const {
     return dosages_;
 }
 
@@ -56,15 +56,13 @@ QString Drug::getFullName() const {
     return fullName;
 }
 
-bool Drug::operator ==(const Drug& other)
-{
+bool Drug::operator ==(const Drug& other) {
     return activeSubstance_ == other.activeSubstance() &&
            activeSubstancetLat_ == other.activeSubstancetLat() &&
            isPrescription_ == other.isPrescription() &&
            releaseForms_ == other.releaseForms() &&
            brandNames_ == other.brandNames() &&
-           dosages_ == other.dosages() &&
-           std::abs(price_ - other.price()) < 1e9;
+           dosages_ == other.dosages();
 }
 
 }
