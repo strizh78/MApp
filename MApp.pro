@@ -12,6 +12,8 @@ macx: CONFIG += sdk_no_version_check
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    interface/medicine/medicineDrugForm.cpp \
+    interface/medicine/medicineDrugListForm.cpp \
     main.cpp \
     \
     drugs/homeopathy.cpp \
@@ -34,6 +36,8 @@ SOURCES += \
 HEADERS += \
     drugs/homeopathy.h \
     drugs/medicines.h \
+    interface/medicine/medicineDrugForm.h \
+    interface/medicine/medicineDrugListForm.h \
     patient/patient.h \
     service/service.h \
     \
@@ -53,6 +57,8 @@ HEADERS += \
 FORMS += \
     interface/mainwindow.ui \
     \
+    interface/medicine/medicineDrugForm.ui \
+    interface/medicine/medicineDrugListForm.ui \
     interface/service/serviceEdit.ui \
     interface/service/serviceTableSettings.ui \
     interface/service/servicesList.ui
@@ -67,4 +73,8 @@ RESOURCES += \
     translations.qrc
 
 macx: ICON = interface/icons/mainIcon.png
-win32: RC_ICONS = interface/icons/mainIcon.png
+win32: RC_ICONS = interface/icons/mainIcon.ico
+
+DISTFILES += \
+    interface/icons/mainIcon.ico \
+    qtbase_ru.qm
