@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include "interface/service/servicesList.h"
+#include "interface/patient/patientsListForm.h"
 
 MainWindow::MainWindow(std::shared_ptr<DatabaseInterface> database,
                        QWidget *parent)
@@ -21,4 +22,10 @@ void MainWindow::on_servicesList_clicked() {
     auto* servicesList = new ServicesList(database_);
     servicesList->setAttribute(Qt::WA_DeleteOnClose, true);
     servicesList->show();
+}
+
+void MainWindow::on_patientsList_clicked() {
+    auto* patientsList = new PatientsListForm(database_);
+    patientsList->setAttribute(Qt::WA_DeleteOnClose, true);
+    patientsList->show();
 }
