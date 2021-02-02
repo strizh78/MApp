@@ -18,8 +18,6 @@ private slots:
     void createPatient();
     void editPatients();
 
-    void patientInfoCreate();
-
     void listPatients();
 
 private:
@@ -27,9 +25,6 @@ private:
     void assertCreatePatient(const Patient& patient, bool valid, const std::string& messageWhat);
 
     void setPatientFormFields(PatientForm& form, const Patient& patient);
-
-    void connectFormsAndAcceptPatientInfo(PatientForm& patientForm, PatientInfoForm& infoForm,
-                                          std::pair<QString, QString> additionalInfo);
 
 private:
     std::shared_ptr<DatabaseInterface> database_;

@@ -24,7 +24,7 @@ public:
     virtual void addService(const Service& ) = 0;
     virtual void editService(const Service& , const Service& ) = 0;
 
-    virtual void patients(std::vector<Patient>& ) const = 0;
-    virtual void addPatient(const Patient& ) = 0;
-    virtual void editPatient(const Patient& , const Patient& ) = 0;
+    virtual void patients(std::vector<Patient>&) const = 0;
+    virtual void addPatient(const Patient&) = 0;
+    virtual void editPatient(const Patient& , const Patient&) = 0;
 };

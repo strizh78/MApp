@@ -20,18 +20,26 @@ namespace {
 
     std::vector<QString> getInvalidFields(const Patient& patient) {
         std::vector<QString> wrongFields;
-        if (patient.nameInfo().surname.size() == 0 ||
-            patient.nameInfo().name.size() == 0)
+        if (patient.nameInfo().surname.isEmpty() ||
+            patient.nameInfo().name.isEmpty())
         {
             wrongFields.push_back("\"ФИО\"");
         }
 
-        if (patient.address().size() == 0) {
+        if (patient.address().isEmpty()) {
             wrongFields.push_back("\"Адрес\"");
         }
 
         if (patient.birthDate() > QDate::currentDate()) {
             wrongFields.push_back("\"Дата рождения\"");
+        }
+
+        auto keys = patient.additionalInfo().keys();
+        for (auto& key : keys) {
+            if (key.isEmpty() || patient.additionalInfo()[key].isEmpty()) {
+                wrongFields.push_back("\"Дополнительная информация\"");
+                break;
+            }
         }
         return wrongFields;
     }
@@ -83,7 +91,18 @@ PatientForm::PatientForm(std::shared_ptr<DatabaseInterface> database,
     , openMode_(patient.has_value() ? OpenMode::EDIT : OpenMode::CREATE)
     , database_(database)
 {
+    setupUi();
+    setupInfoTable();
+    fillFormPatientInfo();
+}
+
+PatientForm::~PatientForm() {
+    delete ui;
+}
+
+void PatientForm::setupUi() {
     ui->setupUi(this);
+
     ui->errorLabel->setVisible(false);
     setAgeLabelTextColor(palette(), ui->ageDataLabel);
 
@@ -92,19 +111,16 @@ PatientForm::PatientForm(std::shared_ptr<DatabaseInterface> database,
         setWindowTitle("Создание пациента");
         break;
     case OpenMode::EDIT:
-        setWindowTitle("Пациент " + patient->nameInfo().getInitials());
+        setWindowTitle("Пациент " + patient_.nameInfo().getInitials());
     }
-
-    fillFormPatientInfo();
-
-    static const QStringList columnNames = {"Ключ", "Значение"};
-    infoViewModel_->setHorizontalHeaderLabels(columnNames);
-    ui->additionalInfo->setModel(infoViewModel_.get());
-    ui->additionalInfo->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 }
 
-PatientForm::~PatientForm() {
-    delete ui;
+void PatientForm::setupInfoTable() {
+    static const QStringList columnNames = {"Ключ", "Значение"};
+    infoViewModel_->setHorizontalHeaderLabels(columnNames);
+
+    ui->additionalInfo->setModel(infoViewModel_.get());
+    ui->additionalInfo->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 }
 
 void PatientForm::fillFormPatientInfo() {
@@ -154,10 +170,11 @@ Patient PatientForm::buildPatientFromFormData() {
                    ui->dateEdit->date(),
                    ui->addressEdit->text());
     for (int row = 0; row < infoViewModel_->rowCount(); ++row) {
-        auto keyIndex = infoViewModel_->index(row, 0);
-        auto keyValue = infoViewModel_->index(row, 1);
-        result.addAdditionalInfo(keyIndex.data().value<QString>(),
-                                 keyValue.data().value<QString>());
+        auto key =   infoViewModel_->index(row, 0).data().value<QString>();
+        auto value = infoViewModel_->index(row, 1).data().value<QString>();
+        if (!key.isEmpty() || !value.isEmpty()) {
+            result.addAdditionalInfo(key, value);
+        }
     }
     return result;
 }
@@ -171,10 +188,8 @@ void PatientForm::addPatientInfo(const QString& key, const QString& value) {
 }
 
 void PatientForm::on_createInfo_clicked() {
-    auto* patientInfoForm = new PatientInfoForm();
-    connect(patientInfoForm, SIGNAL(signalCreateInfo(const QString&, const QString&)), this, SLOT(addPatientInfo(const QString&, const QString&)));
-    patientInfoForm->setAttribute(Qt::WA_DeleteOnClose, true);
-    patientInfoForm->show();
+    infoViewModel_->appendRow(createInfoRow("", ""));
+    ui->additionalInfo->selectRow(infoViewModel_->rowCount() - 1);
 }
 
 void PatientForm::on_deleteInfo_clicked() {

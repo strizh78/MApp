@@ -13,7 +13,6 @@ macx: CONFIG += sdk_no_version_check
 
 SOURCES += \
     interface/patient/patientForm.cpp \
-    interface/patient/patientInfoForm.cpp \
     interface/patient/patientsListForm.cpp \
     interface/patient/tableSettingsForm.cpp \
     interface/utils.cpp \
@@ -41,7 +40,6 @@ HEADERS += \
     drugs/homeopathy.h \
     drugs/medicines.h \
     interface/patient/patientForm.h \
-    interface/patient/patientInfoForm.h \
     interface/patient/patientsListForm.h \
     interface/patient/tableSettingsForm.h \
     interface/utils.h \
@@ -66,7 +64,6 @@ FORMS += \
     interface/mainwindow.ui \
     \
     interface/patient/patientForm.ui \
-    interface/patient/patientInfoForm.ui \
     interface/patient/patientsListForm.ui \
     interface/patient/tableSettingsForm.ui \
     interface/service/serviceEdit.ui \

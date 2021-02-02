@@ -74,18 +74,25 @@ bool Patient::operator==(const Patient& other) const {
 }
 
 bool Patient::isValid() const {
-    if (nameInfo_.name.size() == 0 ||
-        nameInfo_.surname.size() == 0)
+    if (nameInfo_.name.isEmpty() ||
+        nameInfo_.surname.isEmpty())
     {
         return false;
     }
 
-    if (address_.size() == 0) {
+    if (address_.isEmpty()) {
         return false;
     }
 
     if (birthDate_ > QDate::currentDate()) {
         return false;
+    }
+
+    auto keys = additionalInfo_.keys();
+    for (auto& key : keys) {
+        if (key.isEmpty() || additionalInfo_[key].isEmpty()) {
+            return false;
+        }
     }
 
     return true;

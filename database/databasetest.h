@@ -15,9 +15,9 @@ public:
     void addService(const Service& newService) override;
     void editService(const Service& oldService, const Service& editedService) override;
 
-    virtual void patients(std::vector<Patient>& receiver) const override;
-    virtual void addPatient(const Patient& newPatient) override;
-    virtual void editPatient(const Patient& oldPatient, const Patient& editedPatient) override;
+    void patients(std::vector<Patient>& receiver) const override;
+    void addPatient(const Patient& newPatient) override;
+    void editPatient(const Patient& oldPatient, const Patient& editedPatient) override;
 
 private:
     static const std::vector<Service> initServices();

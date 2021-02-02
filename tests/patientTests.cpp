@@ -142,67 +142,6 @@ void PatientTests::assertModifyPatient(const Patient& patient, const Patient& ed
     QTEST_ASSERT_X(editedExists == valid, where.c_str(), (messageWhat + whatPartNew).c_str());
 }
 
-void PatientTests::patientInfoCreate() {
-    static const std::string where = "patient info create test";
-    Patient basePatient({"n", "s", "p"},
-                        QDate(2000, 1, 1),
-                        "a");
-    database_->addPatient(basePatient);
-
-    {
-        PatientForm patientForm(database_);
-        PatientInfoForm infoForm;
-        std::pair<QString, QString> info = {"key with spaces", "value with spaces and digits 1 12 123"};
-
-        connectFormsAndAcceptPatientInfo(patientForm, infoForm, info);
-
-        QTEST_ASSERT_X(patientForm.infoViewModel_->rowCount() == 1, where.c_str(), "check patientForm table size");
-        QTEST_ASSERT_X(patientForm.infoViewModel_->index(0, 0).data().value<QString>() == info.first, where.c_str(), "check patientForm table key");
-        QTEST_ASSERT_X(patientForm.infoViewModel_->index(0, 1).data().value<QString>() == info.second, where.c_str(), "check patientForm table value");
-    }
-    {
-        PatientForm patientForm(database_);
-        PatientInfoForm infoForm;
-        std::pair<QString, QString> info = {"", ""};
-
-        connectFormsAndAcceptPatientInfo(patientForm, infoForm, info);
-
-        QTEST_ASSERT_X(patientForm.infoViewModel_->rowCount() == 0, where.c_str(), "check patientForm table size");
-        QTEST_ASSERT_X(infoForm.ui->errorLabel->text() == "Недопустимое значение полей: \"Ключ\",\"Значение\"", where.c_str(), "check errorLabel text");
-    }
-    {
-        PatientForm patientForm(database_);
-        PatientInfoForm infoForm;
-        std::pair<QString, QString> info = {"", "123"};
-
-        connectFormsAndAcceptPatientInfo(patientForm, infoForm, info);
-
-        QTEST_ASSERT_X(patientForm.infoViewModel_->rowCount() == 0, where.c_str(), "check patientForm table size");
-        QTEST_ASSERT_X(infoForm.ui->errorLabel->text() == "Недопустимое значение полей: \"Ключ\"", where.c_str(), "check errorLabel text");
-    }
-    {
-        PatientForm patientForm(database_);
-        PatientInfoForm infoForm;
-        std::pair<QString, QString> info = {"213", ""};
-
-        connectFormsAndAcceptPatientInfo(patientForm, infoForm, info);
-
-        QTEST_ASSERT_X(patientForm.infoViewModel_->rowCount() == 0, where.c_str(), "check patientForm table size");
-        QTEST_ASSERT_X(infoForm.ui->errorLabel->text() == "Недопустимое значение полей: \"Значение\"", where.c_str(), "check errorLabel text");
-    }
-}
-
-void PatientTests::connectFormsAndAcceptPatientInfo(PatientForm& patientForm, PatientInfoForm& infoForm,
-                                                 std::pair<QString, QString> additionalInfo)
-{
-    connect(&infoForm, SIGNAL(signalCreateInfo(const QString&, const QString&)),
-            &patientForm, SLOT(addPatientInfo(const QString&, const QString&)));
-
-    infoForm.ui->keyEdit->setText(additionalInfo.first);
-    infoForm.ui->valueEdit->setText(additionalInfo.second);
-    infoForm.on_solutionBox_accepted();
-}
-
 void PatientTests::listPatients() {
     const std::string where = "patients list test";
     PatientsListForm listForm(database_);

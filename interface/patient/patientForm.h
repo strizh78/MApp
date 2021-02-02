@@ -1,7 +1,5 @@
 #pragma once
 
-#include "patientInfoForm.h"
-
 #include "patient/patient.h"
 #include "database/databaseinterface.h"
 
@@ -37,6 +35,9 @@ private slots:
     void on_dateEdit_userDateChanged(const QDate& date);
 
 private:
+    void setupUi();
+    void setupInfoTable();
+
     void fillFormPatientInfo();
     Patient buildPatientFromFormData();
 

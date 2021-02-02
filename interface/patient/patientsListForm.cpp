@@ -41,23 +41,6 @@ void PatientsListForm::resizeEvent(QResizeEvent *event) {
     QWidget::resizeEvent(event);
 }
 
-QList<QStandardItem*> PatientsListForm::createPatientRow(size_t row, const Patient& patient) {
-    QList<QStandardItem*> lst;
-
-    QStandardItem* initials = new QStandardItem(row, 0);
-    initials->setText(patient.nameInfo().getInitials());
-    initials->setData(QVariant::fromValue(patient), Qt::UserRole);
-
-    QStandardItem* birthDate = new QStandardItem(row, 1);
-    birthDate->setText(patient.birthDate().toString("d MMMM yyyy"));
-
-    QStandardItem* address = new QStandardItem(row, 2);
-    address->setText(patient.address());
-
-    lst << initials << birthDate << address;
-    return lst;
-}
-
 void PatientsListForm::fillPatientsTable(const std::vector<Patient>& patientsList) {
     for (const auto& patient : patientsList) {
         addPatient(patient);
@@ -80,13 +63,21 @@ void PatientsListForm::editPatient(const Patient& oldPatient, const Patient& edi
     }
 }
 
-void PatientsListForm::showPatientInfo(const Patient& patient) {
-    auto* patientViewForm = new PatientForm(database_, patient);
-    connect(patientViewForm, SIGNAL(patientEditSignal(const Patient&, const Patient&)),
-            this, SLOT(editPatient(const Patient&, const Patient&)));
+QList<QStandardItem*> PatientsListForm::createPatientRow(size_t row, const Patient& patient) {
+    QList<QStandardItem*> lst;
 
-    patientViewForm->setAttribute(Qt::WA_DeleteOnClose, true);
-    patientViewForm->show();
+    QStandardItem* initials = new QStandardItem(row, 0);
+    initials->setText(patient.nameInfo().getInitials());
+    initials->setData(QVariant::fromValue(patient), Qt::UserRole);
+
+    QStandardItem* birthDate = new QStandardItem(row, 1);
+    birthDate->setText(patient.birthDate().toString("d MMMM yyyy"));
+
+    QStandardItem* address = new QStandardItem(row, 2);
+    address->setText(patient.address());
+
+    lst << initials << birthDate << address;
+    return lst;
 }
 
 void PatientsListForm::on_createPatient_clicked() {
@@ -103,16 +94,33 @@ void PatientsListForm::on_tableView_doubleClicked(const QModelIndex &index) {
     showPatientInfo(firstIndex.data(Qt::UserRole).value<Patient>());
 }
 
-void PatientsListForm::changeColumnsDisplayOption(std::vector<bool> columns) {
-    for (size_t i = 0; i < columns.size(); ++i) {
-        ui->tableView->horizontalHeader()->setSectionHidden(i, columns[i]);
-    }
+void PatientsListForm::showPatientInfo(const Patient& patient) {
+    auto* patientViewForm = new PatientForm(database_, patient);
+    connect(patientViewForm, SIGNAL(patientEditSignal(const Patient&, const Patient&)),
+            this, SLOT(editPatient(const Patient&, const Patient&)));
+
+    patientViewForm->setAttribute(Qt::WA_DeleteOnClose, true);
+    patientViewForm->show();
 }
 
 void PatientsListForm::on_tableSettings_clicked() {
     connect(tableSettingsForm_.get(), SIGNAL(signalChangeColumnsDisplay(std::vector<bool>)),
             this, SLOT(changeColumnsDisplayOption(std::vector<bool>)));
     tableSettingsForm_->show();
+}
+
+void PatientsListForm::changeColumnsDisplayOption(std::vector<bool> columns) {
+    for (size_t i = 0; i < columns.size(); ++i) {
+        ui->tableView->horizontalHeader()->setSectionHidden(i, columns[i]);
+    }
+}
+
+void PatientsListForm::on_searchLine_returnPressed() {
+    searchInTable(ui->searchLine->text());
+}
+
+void PatientsListForm::on_searchLine_textChanged(const QString &text) {
+    searchInTable(text);
 }
 
 void PatientsListForm::searchInTable(const QString& searchRequest) {
@@ -130,12 +138,4 @@ void PatientsListForm::searchInTable(const QString& searchRequest) {
                    );
     proxyModel->setFilterKeyColumn(/*patient name column*/ 0);
     proxyModel->setFilterRegExp(regExp);
-}
-
-void PatientsListForm::on_searchLine_returnPressed() {
-    searchInTable(ui->searchLine->text());
-}
-
-void PatientsListForm::on_searchLine_textChanged(const QString &text) {
-    searchInTable(text);
 }
