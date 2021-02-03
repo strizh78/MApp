@@ -5,6 +5,8 @@
 
 #include "service/service.h"
 
+#include "patient/patient.h"
+
 #include <vector>
 
 class DatabaseInterface
@@ -19,6 +21,10 @@ public:
 
     virtual void services(std::vector<Service>& ) = 0;
     virtual void notDeprecatedServices(std::vector<Service>& ) = 0;
-    virtual void addService(const Service& newService) = 0;
-    virtual void editService(const Service& oldService, const Service& editedService) = 0;
+    virtual void addService(const Service& ) = 0;
+    virtual void editService(const Service& , const Service& ) = 0;
+
+    virtual void patients(std::vector<Patient>&) const = 0;
+    virtual void addPatient(const Patient&) = 0;
+    virtual void editPatient(const Patient& , const Patient&) = 0;
 };

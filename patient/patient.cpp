@@ -43,14 +43,57 @@ void Patient::setAddress(const QString& address) {
     address_ = address;
 }
 
-const QHash<QString, QVariant>& Patient::additionalInfo() const {
+const QHash<QString, QString>& Patient::additionalInfo() const {
     return additionalInfo_;
 }
 
-void Patient::setAdditionalInfo(const QHash<QString, QVariant>& info) {
+void Patient::setAdditionalInfo(const QHash<QString, QString>& info) {
     additionalInfo_ = info;
 }
 
-void Patient::addAdditionalInfo(const QString& key, const QVariant& value) {
+void Patient::addAdditionalInfo(const QString& key, const QString& value) {
     additionalInfo_[key] = value;
+}
+
+bool Patient::operator==(const Patient& other) const {
+    bool baseFields =  birthDate_ == other.birthDate() &&
+                       nameInfo_.getFullName() == other.nameInfo().getFullName() &&
+                       address_ == other.address() &&
+                       additionalInfo_ == other.additionalInfo();
+    if (baseFields == true) {
+        baseFields = additionalInfo_.size() == other.additionalInfo().size();
+        auto keys = additionalInfo_.keys();
+        for (auto& key : keys) {
+            if (!other.additionalInfo().contains(key)) {
+                baseFields = false;
+                break;
+            }
+        }
+    }
+    return baseFields;
+}
+
+bool Patient::isValid() const {
+    if (nameInfo_.name.isEmpty() ||
+        nameInfo_.surname.isEmpty())
+    {
+        return false;
+    }
+
+    if (address_.isEmpty()) {
+        return false;
+    }
+
+    if (birthDate_ > QDate::currentDate()) {
+        return false;
+    }
+
+    auto keys = additionalInfo_.keys();
+    for (auto& key : keys) {
+        if (key.isEmpty() || additionalInfo_[key].isEmpty()) {
+            return false;
+        }
+    }
+
+    return true;
 }

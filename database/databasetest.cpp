@@ -6,6 +6,7 @@
 #include <algorithm>
 
 std::vector<Service> DatabaseTest::servicesList_ = DatabaseTest::initServices();
+std::vector<Patient> DatabaseTest::patientsList_ = DatabaseTest::initPatients();
 
 void DatabaseTest::homeopathyDrugs(std::vector<homeopathy::Drug>& receiver) {
     using namespace homeopathy;
@@ -167,4 +168,53 @@ void DatabaseTest::editService(const Service& oldService,
 {
     auto it = std::find(servicesList_.begin(), servicesList_.end(), oldService);
     *it = editedService;
+}
+
+const std::vector<Patient> DatabaseTest::initPatients() {
+    const Patient::NameInfo name1 = {"Name1", "Surname1", "Patronymic1"};
+    const Patient::NameInfo name2 = {"Name2", "Surname2", "Patronymic2"};
+    const Patient::NameInfo name3 = {"Name3", "Surname2", "Patronymic2"};
+    const Patient::NameInfo name4 = {"Name4", "Surname3", "Patronymic3"};
+    const Patient::NameInfo name5 = {"Name4", "Surname4", "Patronymic4"};
+
+    const QDate birthDate1(1960, 1, 10);
+    const QDate birthDate2(1990, 5, 21);
+    const QDate birthDate3(2020, 7, 31);
+
+    const QString address1 = "City1, Street1, 4, 18";
+    const QString address2 = "City1, Street2, 19.2, 134";
+    const QString address3 = "City2, Street3, 1, 1";
+
+    const QHash<QString, QString> additionalInfo = {{"key1", "value1"},
+                                                     {"key2", "13.05.2020"},
+                                                     {"key3", "1час и 45 минут"},
+                                                     {"key4", "value1"},
+                                                     {"key5", "3.14"}};
+
+    std::vector<Patient> patientsList = {
+        Patient(name1, birthDate1, address1),
+        Patient(name2, birthDate2, address2),
+        Patient(name3, birthDate3, address3),
+        Patient(name4, birthDate1, address1),
+        Patient(name5, birthDate2, address2),
+        Patient(name1, birthDate3, address3)
+    };
+    patientsList[0].setAdditionalInfo(additionalInfo);
+
+    return patientsList;
+}
+
+void DatabaseTest::patients(std::vector<Patient> &receiver) const {
+    receiver = patientsList_;
+}
+
+void DatabaseTest::addPatient(const Patient &newPatient) {
+    patientsList_.push_back(newPatient);
+}
+
+void DatabaseTest::editPatient(const Patient &oldPatient, const Patient &editedPatient) {
+    auto it = std::find(patientsList_.begin(), patientsList_.end(), oldPatient);
+    if (it != patientsList_.end()) {
+        *it = editedPatient;
+    }
 }

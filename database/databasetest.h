@@ -15,9 +15,15 @@ public:
     void addService(const Service& newService) override;
     void editService(const Service& oldService, const Service& editedService) override;
 
+    void patients(std::vector<Patient>& receiver) const override;
+    void addPatient(const Patient& newPatient) override;
+    void editPatient(const Patient& oldPatient, const Patient& editedPatient) override;
+
 private:
     static const std::vector<Service> initServices();
+    static const std::vector<Patient> initPatients();
 
     static std::vector<Service> servicesList_;
+    static std::vector<Patient> patientsList_;
 };
 
