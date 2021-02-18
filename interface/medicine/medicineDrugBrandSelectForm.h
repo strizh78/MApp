@@ -10,8 +10,7 @@ namespace Ui {
 class MedicineDrugBrandSelectForm;
 }
 
-class MedicineDrugBrandSelectForm : public QDialog
-{
+class MedicineDrugBrandSelectForm : public QDialog {
     Q_OBJECT
 
 public:
@@ -27,7 +26,6 @@ private slots:
      void on_addButton_clicked();
      void on_deleteButton_clicked();
      void on_editButton_clicked();
-     void on_listView_doubleClicked(const QModelIndex &index);
      void on_buttonBox_accepted();
      void on_buttonBox_rejected();
 
