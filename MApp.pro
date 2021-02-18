@@ -12,8 +12,11 @@ macx: CONFIG += sdk_no_version_check
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    interface/medicine/medicineDrugBrandSelectForm.cpp \
     interface/medicine/medicineDrugForm.cpp \
     interface/medicine/medicineDrugListForm.cpp \
+    interface/medicine/medicineDrugReleaseFormSelectForm.cpp \
+    interface/medicine/medicineTableSettingsForm.cpp \
     main.cpp \
     \
     drugs/homeopathy.cpp \
@@ -36,8 +39,11 @@ SOURCES += \
 HEADERS += \
     drugs/homeopathy.h \
     drugs/medicines.h \
+    interface/medicine/medicineDrugBrandSelectForm.h \
     interface/medicine/medicineDrugForm.h \
     interface/medicine/medicineDrugListForm.h \
+    interface/medicine/medicineDrugReleaseFormSelectForm.h \
+    interface/medicine/medicineTableSettingsForm.h \
     patient/patient.h \
     service/service.h \
     \
@@ -57,8 +63,11 @@ HEADERS += \
 FORMS += \
     interface/mainwindow.ui \
     \
+    interface/medicine/medicineDrugBrandSelectForm.ui \
     interface/medicine/medicineDrugForm.ui \
     interface/medicine/medicineDrugListForm.ui \
+    interface/medicine/medicineDrugReleaseFormSelectForm.ui \
+    interface/medicine/medicineTableSettingsForm.ui \
     interface/service/serviceEdit.ui \
     interface/service/serviceTableSettings.ui \
     interface/service/servicesList.ui
