@@ -1,9 +1,6 @@
 #include "medicineDrugBrandSelectForm.h"
 #include "ui_medicineDrugBrandSelectForm.h"
 
-#include <QDebug>
-
-
 MedicineDrugBrandSelectForm::MedicineDrugBrandSelectForm(const std::vector<QString>& brands,
                                                          QLabel* label,
                                                          QWidget* parent)
@@ -42,10 +39,6 @@ void MedicineDrugBrandSelectForm::on_deleteButton_clicked() {
 
 void MedicineDrugBrandSelectForm::on_editButton_clicked() {
     ui->listView->edit(ui->listView->currentIndex());
-}
-
-void MedicineDrugBrandSelectForm::on_listView_doubleClicked(const QModelIndex &index) {
-   ui->listView->edit(index);
 }
 
 void MedicineDrugBrandSelectForm::on_buttonBox_accepted() {
