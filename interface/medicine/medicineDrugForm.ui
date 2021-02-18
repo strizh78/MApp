@@ -58,7 +58,6 @@
          </property>
          <property name="font">
           <font>
-           <pointsize>10</pointsize>
            <underline>false</underline>
            <strikeout>false</strikeout>
           </font>
@@ -144,7 +143,6 @@
          </property>
          <property name="font">
           <font>
-           <pointsize>10</pointsize>
            <underline>false</underline>
            <strikeout>false</strikeout>
           </font>
