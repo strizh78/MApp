@@ -75,22 +75,23 @@ void DatabaseTest::availableHomeopathyDrugs(std::vector<homeopathy::Drug>& recei
 const std::vector<medicine::Drug> DatabaseTest::initMedicineDrugs() {
     using namespace medicine;
 
-    static const std::vector<ReleaseForms> relForms1 = {
-        ReleaseForms::BROTH,
-        ReleaseForms::PILLS,
-        ReleaseForms::DRAGEE};
-    static const std::vector<ReleaseForms> relForms2 = {
-        ReleaseForms::DRAGEE,
-        ReleaseForms::CAPSULES,
-        ReleaseForms::OINTMENT};
-    static const std::vector<ReleaseForms> relForms3 = {
-        ReleaseForms::EXTRACT,
-        ReleaseForms::MIXTURE,
-        ReleaseForms::DRAGEE};
-    static const std::vector<ReleaseForms> relForms4 = {
-        ReleaseForms::POWDER,
-        ReleaseForms::PILLS,
-        ReleaseForms::MIXTURE};
+    static auto allReleaseForms = releaseForms();
+    static const std::vector<ReleaseForm> relForms1 = {
+        allReleaseForms[0],
+        allReleaseForms[1],
+        allReleaseForms[2]};
+    static const std::vector<ReleaseForm> relForms2 = {
+        allReleaseForms[2],
+        allReleaseForms[5],
+        allReleaseForms[1]};
+    static const std::vector<ReleaseForm> relForms3 = {
+        allReleaseForms[6],
+        allReleaseForms[7],
+        allReleaseForms[8]};
+    static const std::vector<ReleaseForm> relForms4 = {
+        allReleaseForms[4],
+        allReleaseForms[9],
+        allReleaseForms[10]};
     static const std::vector<QString> brands1 = {
         "brandA",
         "brandB",

@@ -1,11 +1,12 @@
 #include "medicines.h"
+#include <numeric>
 
 namespace medicine {
 
 Drug::Drug(const QString& activeSubstance,
            const QString& activeSubstanceLat,
            bool isPrescription,
-           const std::vector<ReleaseForms>& releaseForms,
+           const std::vector<ReleaseForm>& releaseForms,
            const std::vector<QString>& brandNames,
            const std::vector<QString>& dosages,
            float price)
@@ -31,7 +32,7 @@ bool Drug::isPrescription() const {
     return isPrescription_;
 }
 
-std::vector<ReleaseForms> Drug::releaseForms() const {
+std::vector<ReleaseForm> Drug::releaseForms() const {
     return releaseForms_;
 }
 
@@ -56,13 +57,44 @@ QString Drug::getFullName() const {
     return fullName;
 }
 
+QString Drug::getBrands(QString separator) const {
+    QString brands;
+
+    for (QString brand : brandNames_)
+        brands += brand + separator;
+    brands.resize(brands.size() - separator.size());
+
+    return brands;
+}
+
 bool Drug::operator ==(const Drug& other) {
     return activeSubstance_ == other.activeSubstance() &&
            activeSubstancetLat_ == other.activeSubstancetLat() &&
            isPrescription_ == other.isPrescription() &&
            releaseForms_ == other.releaseForms() &&
            brandNames_ == other.brandNames() &&
-           dosages_ == other.dosages();
+            dosages_ == other.dosages();
+}
+
+const std::vector<ReleaseForm>& releaseForms()
+{
+    static std::vector<ReleaseForm> releaseForms = {
+        "Ампулы (раствор для инъекций)",
+        "Бальзам (линимент)",
+        "Гранулы",
+        "Драже",
+        "Капсулы",
+        "Мазь",
+        "Микстура",
+        "Отвар (найстой)",
+        "Паста",
+        "Порошок",
+        "Раствор (для внутреннего или наружного применения)",
+        "Свечи",
+        "Таблетки",
+        "Экстракт (настойка)"
+    };
+    return releaseForms;
 }
 
 }
