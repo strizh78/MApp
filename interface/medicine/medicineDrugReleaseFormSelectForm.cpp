@@ -2,6 +2,7 @@
 #include "ui_medicineDrugReleaseFormSelectForm.h"
 
 #include <QCheckBox>
+#include <QDebug>
 
 #include <algorithm>
 
@@ -39,14 +40,10 @@ void MedicineDrugReleaseFormSelectForm::on_buttonBox_rejected() {
 }
 
 void MedicineDrugReleaseFormSelectForm::fillForm(const std::vector<ReleaseForm>& selectedForms) {
-
     for(auto releaseForm : medicine::releaseForms()) {
         auto checkBox = new QCheckBox(releaseForm);
-
-        if (std::find(selectedForms.begin(), selectedForms.end(), releaseForm) != selectedForms.end()) {
+        if (std::find(selectedForms.begin(), selectedForms.end(), releaseForm) != selectedForms.end())
             checkBox->setChecked(true);
-            break;
-        }
         ui->verticalLayout_2->addWidget(checkBox);
     }
 }
