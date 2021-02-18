@@ -8,17 +8,6 @@
 #include <QValidator>
 
 namespace {
-void fillEmptyLine(QLabel* label) {
-    label->setText("");
-}
-
-void fillFullLine(QLabel* label, const std::vector<QString>& data) {
-    QString text;
-    for (auto element : data)
-        text += element + ", ";
-    text.resize(text.size() - 2);
-    label->setText(text);
-}
 
 void setDoubleValidator(QLineEdit* lineEdit) {
     QRegExp regExp("[0-9]*[.]?[0-9]*");
@@ -122,10 +111,13 @@ void MedicineDrugForm::on_buttonBox_rejected() {
 }
 
 void MedicineDrugForm::fillLabelFromVector(QLabel* label, const std::vector<QString> data) {
-    if (data.empty())
-        fillEmptyLine(label);
-    else
-        fillFullLine(label, data);
+
+    QString text;
+    for (auto element : data)
+        text += element + ", ";
+    if (!data.empty())
+        text.resize(text.size() - 2);
+    label->setText(text);
 
     if (label == ui->releaseForms)
         releaseForms_ = data;
@@ -137,8 +129,8 @@ void MedicineDrugForm::init() {
     switch (openMode_) {
         case OpenMode::CREATE:
             setWindowTitle("Добавление лекарства");
-            fillEmptyLine(ui->brands);
-            fillEmptyLine(ui->releaseForms);
+            fillLabelFromVector(ui->brands);
+            fillLabelFromVector(ui->releaseForms);
             break;
         case OpenMode::EDIT:
             setWindowTitle("Лекарство " + drug_.getFullName());

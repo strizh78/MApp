@@ -15,8 +15,7 @@ namespace Ui {
 class MedicineDrugForm;
 }
 
-class MedicineDrugForm : public QWidget
-{
+class MedicineDrugForm : public QWidget {
     Q_OBJECT
 
 public:
@@ -41,7 +40,7 @@ private slots:
     void on_buttonBox_accepted();
     void on_buttonBox_rejected();
 
-    void fillLabelFromVector(QLabel* label, const std::vector <QString> data);
+    void fillLabelFromVector(QLabel* label, const std::vector <QString> data = std::vector<QString>());
 
 private:
     void init();
