@@ -65,10 +65,9 @@ void MedicineDrugForm::on_addReleaseFormsBtn_clicked() {
 }
 
 void MedicineDrugForm::on_addDosagesBtn_clicked() {
+    addDosage();
     int row = dosagesModel_->rowCount();
-    dosagesModel_->insertRows(row, 1);
-    QModelIndex index = dosagesModel_->index(row, 0);
-    ui->dosages->setCurrentIndex(index);
+    QModelIndex index = dosagesModel_->index(row - 1, 0);
     ui->dosages->edit(index);
 }
 
@@ -111,7 +110,6 @@ void MedicineDrugForm::on_buttonBox_rejected() {
 }
 
 void MedicineDrugForm::fillLabelFromVector(QLabel* label, const std::vector<QString> data) {
-
     QString text;
     for (auto element : data)
         text += element + ", ";
@@ -157,7 +155,9 @@ bool MedicineDrugForm::isValid() {
         validFilling = false;
     if (ui->prescription->isChecked() &&
         ui->activeSubstance->text().isEmpty())
+    {
         validFilling = false;
+    }
 
     return validFilling;
 }
@@ -170,7 +170,9 @@ void MedicineDrugForm::showWarning() {
         warning += "Не заданы торговые наименования \n";
     if (ui->prescription->isChecked() &&
         ui->activeSubstanceLat->text().isEmpty())
+    {
         warning += "Не задано название активного вещества (лат.)\n";
+    }
 
     QMessageBox::critical(this, "Ошибка " + openModeStr + " лекарства",
                            warning,
@@ -189,12 +191,11 @@ void MedicineDrugForm::fillDosagesList() {
     ui->dosages->setModel(dosagesModel_.get());
 }
 
-void MedicineDrugForm::addDosage(const QString& dosage) {
+void MedicineDrugForm::addDosage(const Dosage& dosage) {
     dosagesModel_->appendRow(createDosageRow(dosagesModel_->rowCount(), dosage));
 }
 
-QList<QStandardItem*> MedicineDrugForm::createDosageRow(size_t row, const Dosage& dosage)
-{
+QList<QStandardItem*> MedicineDrugForm::createDosageRow(size_t row, const Dosage& dosage) {
     QList<QStandardItem*> lst;
     QStandardItem* name = new QStandardItem(row, 0);
 
@@ -206,7 +207,6 @@ QList<QStandardItem*> MedicineDrugForm::createDosageRow(size_t row, const Dosage
 }
 
 std::vector<Dosage> MedicineDrugForm::getDosages() {
-
     std::vector<Dosage> dosages;
 
     for (int i = 0; i < dosagesModel_->rowCount(); ++i) {
@@ -216,8 +216,7 @@ std::vector<Dosage> MedicineDrugForm::getDosages() {
     return dosages;
 }
 
-void MedicineDrugForm::resizeEvent(QResizeEvent* event)
-{
+void MedicineDrugForm::resizeEvent(QResizeEvent* event) {
     static const std::vector<int> scale = {1};
     static const int dimension = std::accumulate(scale.begin(), scale.end(), 0);
 
