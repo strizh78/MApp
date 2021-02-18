@@ -26,11 +26,13 @@ public:
 
 private slots:
     void on_createBtn_clicked();
+    void on_deleteBtn_clicked();
     void on_searchLine_textEdited(const QString &searchString);
-    void on_medicinesTable_doubleClicked(const QModelIndex &index);
+    void on_toolButton_clicked();
 
     void addMedicineDrug(const medicine::Drug& newDrug);
     void editMedicineDrug(const medicine::Drug& oldDrug, const medicine::Drug& editedDrug);
+    void on_medicinesTable_doubleClicked(const QModelIndex &index);
 
 private:
     void resizeEvent(QResizeEvent *event) override;

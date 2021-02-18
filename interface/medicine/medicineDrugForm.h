@@ -5,6 +5,8 @@
 
 #include <QWidget>
 #include <QLineEdit>
+#include <QLabel>
+#include <QStandardItemModel>
 
 #include <optional>
 #include <vector>
@@ -29,14 +31,28 @@ signals:
                                 const medicine::Drug& editedDrug);
 
 private slots:
+    void on_addBrandsBtn_clicked();
+    void on_addReleaseFormsBtn_clicked();
+
+    void on_addDosagesBtn_clicked();
+    void on_deleteDosageBtn_clicked();
+    void on_editDosageBtn_clicked();
+
     void on_buttonBox_accepted();
     void on_buttonBox_rejected();
+
+    void fillLabelFromVector(QLabel* label, const std::vector <QString> data);
 
 private:
     void init();
     void setWidgetsSettings();
     bool isValid();
     void showWarning();
+    void fillDosagesList();
+    void addDosage(const Dosage& dosage = "");
+    QList<QStandardItem*> createDosageRow(size_t row, const Dosage& dosage);
+    std::vector <Dosage> getDosages();
+    void resizeEvent(QResizeEvent *event) override;
 
 private:
     enum class OpenMode {
@@ -46,10 +62,8 @@ private:
     Ui::MedicineDrugForm *ui;
     std::shared_ptr<DatabaseInterface> database_;
     medicine::Drug drug_;
-    std::vector <medicine::ReleaseForms> releaseForms_;
+    std::vector <ReleaseForm> releaseForms_;
     std::vector <QString> brands_;
-    std::vector <Dosage> dosages_ ;
+    std::shared_ptr<QStandardItemModel> dosagesModel_;
     OpenMode openMode_;
 };
-
-void setDoubleValidator(QLineEdit* lineEdit);
