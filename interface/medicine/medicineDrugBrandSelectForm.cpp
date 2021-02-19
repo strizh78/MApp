@@ -13,7 +13,7 @@ MedicineDrugBrandSelectForm::MedicineDrugBrandSelectForm(const std::vector<QStri
 
     QStringList list;
 
-    for (QString brand : brands)
+    for (const QString& brand : brands)
         list.append(brand);
 
     listModel = std::make_shared<QStringListModel>();
@@ -42,7 +42,6 @@ void MedicineDrugBrandSelectForm::on_editButton_clicked() {
 }
 
 void MedicineDrugBrandSelectForm::on_buttonBox_accepted() {
-
     std::vector<QString> brands;
     for (int rowId = 0; rowId < listModel->rowCount(); ++rowId) {
         auto index = listModel.get()->index(rowId);
