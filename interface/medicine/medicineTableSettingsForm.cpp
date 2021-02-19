@@ -2,40 +2,41 @@
 #include "ui_medicineTableSettingsForm.h"
 
 #include <QCheckBox>
-#include <QHeaderView>
 
-MedicineTableSettingsForm::MedicineTableSettingsForm(QTableView* table,
-                                                     QWidget* parent) :
-    QDialog(parent),
-    ui(new Ui::MedicineTableSettingsForm),
-    table_(table)
+MedicineTableSettingsForm::MedicineTableSettingsForm(QHeaderView* headers,
+                                                     QWidget* parent)
+    : QDialog(parent)
+    , ui(new Ui::MedicineTableSettingsForm)
+    , headerView_(headers)
 {
     ui->setupUi(this);
     this->setWindowFlag(Qt::WindowContextHelpButtonHint, false);
     ui->verticalLayout_2->setAlignment(Qt::AlignTop);
-    auto* tableModel = table_->model();
+    auto* model = headerView_->model();
 
-    for (int i = 0; i < tableModel->columnCount(); ++i) {
-        auto checkBox = new QCheckBox(tableModel->headerData(i, Qt::Horizontal).toString());
-        checkBox->setObjectName("checkBox_" + QString::number(i));
-        checkBox->setChecked(!table_->horizontalHeader()->isSectionHidden(i));
-        ui->verticalLayout_2->addWidget(checkBox);
-    }
+    for (int i = 0; i < model->columnCount(); ++i)
+        setCheckBox(model->headerData(i, Qt::Horizontal).toString(), i);
 }
 
 MedicineTableSettingsForm::~MedicineTableSettingsForm() {
     delete ui;
 }
-void MedicineTableSettingsForm::on_buttonBox_accepted() {
 
-    for (int i = 0; i < table_->model()->columnCount(); ++i) {
+void MedicineTableSettingsForm::on_buttonBox_accepted() {
+    for (int i = 0; i < headerView_->model()->columnCount(); ++i) {
         QCheckBox* checkBox = findChild<QCheckBox*>("checkBox_" + QString::number(i));
         bool show = checkBox->isChecked();
-        table_->horizontalHeader()->setSectionHidden(i, !show);
+        headerView_->setSectionHidden(i, !show);
     }
-    close();
 }
 
 void MedicineTableSettingsForm::on_buttonBox_rejected() {
     close();
+}
+
+void MedicineTableSettingsForm::setCheckBox(QString text, int num) {
+    auto checkBox = new QCheckBox(text);
+    checkBox->setObjectName("checkBox_" + QString::number(num));
+    checkBox->setChecked(!headerView_->isSectionHidden(num));
+    ui->verticalLayout_2->addWidget(checkBox);
 }

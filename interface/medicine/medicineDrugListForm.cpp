@@ -35,19 +35,12 @@ void MedicineDrugListForm::on_createBtn_clicked() {
     medicineDrugForm->show();
 }
 
-void MedicineDrugListForm::on_deleteBtn_clicked() {
-    int row = ui->medicinesTable->currentIndex().row();
-    tableViewModel_->removeRow(row);
-}
-
 void MedicineDrugListForm::on_searchLine_textEdited(const QString &searchString) {
     searchInTable(searchString);
 }
 
 void MedicineDrugListForm::on_toolButton_clicked() {
-
-    auto* medicineTableSettingsForm = new MedicineTableSettingsForm(ui->medicinesTable,
-                                                                    this);
+    auto* medicineTableSettingsForm = new MedicineTableSettingsForm(ui->medicinesTable->horizontalHeader(), this);
     medicineTableSettingsForm->setAttribute(Qt::WA_DeleteOnClose, true);
     medicineTableSettingsForm->show();
 }
@@ -57,7 +50,6 @@ void MedicineDrugListForm::addMedicineDrug(const Drug& newDrug) {
 }
 
 void MedicineDrugListForm::editMedicineDrug(const Drug& oldDrug, const Drug& editedDrug) {
-
     for (int i = 0; i < tableViewModel_->rowCount(); ++i) {
         auto tableElement = tableViewModel_->index(i, 0);
 
@@ -111,7 +103,6 @@ void MedicineDrugListForm::searchInTable(const QString& searchString) {
 }
 
 void MedicineDrugListForm::fillMedicinesTable(const std::vector<Drug>& medicinesList) {
-
     tableViewModel_ = std::make_shared<QStandardItemModel>();
 
     static const QStringList columnNames = {"Торговые наименования", "Активное вещество", "Цена"};

@@ -15,8 +15,7 @@ namespace Ui {
 class MedicineDrugListForm;
 }
 
-class MedicineDrugListForm : public QWidget
-{
+class MedicineDrugListForm : public QWidget {
     Q_OBJECT
 
 public:
@@ -26,7 +25,6 @@ public:
 
 private slots:
     void on_createBtn_clicked();
-    void on_deleteBtn_clicked();
     void on_searchLine_textEdited(const QString &searchString);
     void on_toolButton_clicked();
 

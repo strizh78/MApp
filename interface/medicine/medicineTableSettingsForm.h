@@ -1,19 +1,17 @@
 #pragma once
 
 #include <QDialog>
-#include <QTableView>
+#include <QHeaderView>
 
 namespace Ui {
 class MedicineTableSettingsForm;
 }
 
-class MedicineTableSettingsForm : public QDialog
-{
+class MedicineTableSettingsForm : public QDialog {
     Q_OBJECT
 
 public:
-
-    MedicineTableSettingsForm(QTableView* table,
+    MedicineTableSettingsForm(QHeaderView* headers,
                               QWidget* parent = nullptr);
     ~MedicineTableSettingsForm();
 
@@ -22,8 +20,10 @@ private slots:
     void on_buttonBox_rejected();
 
 private:
-    Ui::MedicineTableSettingsForm *ui;
-    QTableView* table_;
+    void setCheckBox(QString text, int num);
 
+private:
+    Ui::MedicineTableSettingsForm *ui;
+    QHeaderView* headerView_;
 };
 
