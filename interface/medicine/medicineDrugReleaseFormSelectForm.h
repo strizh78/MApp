@@ -10,8 +10,7 @@ namespace Ui {
 class MedicineDrugReleaseFormSelectForm;
 }
 
-class MedicineDrugReleaseFormSelectForm : public QDialog
-{
+class MedicineDrugReleaseFormSelectForm : public QDialog {
     Q_OBJECT
 
 public:
@@ -21,7 +20,7 @@ public:
     ~MedicineDrugReleaseFormSelectForm();
 
 signals:
-     void releaseFormsSelectedSignal(QLabel* label, std::vector<QString> data);
+     void releaseFormsSelectedSignal(QLabel* label, const std::vector<QString>& data);
 
 private slots:
      void on_buttonBox_accepted();

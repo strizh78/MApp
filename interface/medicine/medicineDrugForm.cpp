@@ -45,9 +45,9 @@ void MedicineDrugForm::on_addBrandsBtn_clicked() {
                                                                         ui->brands,
                                                                         this);
     connect(medicineDrugBrandSelectForm,
-            SIGNAL(brandsSelectedSignal(QLabel*, std::vector<QString>)),
+            SIGNAL(brandsSelectedSignal(QLabel*, const std::vector<QString>&)),
             this,
-            SLOT(fillLabelFromVector(QLabel*, const std::vector<QString>)));
+            SLOT(fillLabelFromVector(QLabel*, const std::vector<QString>&)));
     medicineDrugBrandSelectForm->setAttribute(Qt::WA_DeleteOnClose, true);
     medicineDrugBrandSelectForm->show();
 }
@@ -57,9 +57,9 @@ void MedicineDrugForm::on_addReleaseFormsBtn_clicked() {
                                                                                     ui->releaseForms,
                                                                                     this);
     connect(medicineDrugReleaseFormSelectForm,
-            SIGNAL(releaseFormsSelectedSignal(QLabel*, std::vector<QString>)),
+            SIGNAL(releaseFormsSelectedSignal(QLabel*, const std::vector<QString>&)),
             this,
-            SLOT(fillLabelFromVector(QLabel*, const std::vector<QString>)));
+            SLOT(fillLabelFromVector(QLabel*, const std::vector<QString>&)));
     medicineDrugReleaseFormSelectForm->setAttribute(Qt::WA_DeleteOnClose, true);
     medicineDrugReleaseFormSelectForm->show();
 }
@@ -109,8 +109,10 @@ void MedicineDrugForm::on_buttonBox_rejected() {
     close();
 }
 
-void MedicineDrugForm::fillLabelFromVector(QLabel* label, const std::vector<QString> data) {
+void MedicineDrugForm::fillLabelFromVector(QLabel* label, const std::vector<QString>& data) {
     QString text;
+    //TODO: Сейчас перевод из вектора в строку выполнен тут, потом следует его реализовать
+    //  через общую функцию в Utils
     for (auto element : data)
         text += element + ", ";
     if (!data.empty())
@@ -127,8 +129,6 @@ void MedicineDrugForm::init() {
     switch (openMode_) {
         case OpenMode::CREATE:
             setWindowTitle("Добавление лекарства");
-            fillLabelFromVector(ui->brands);
-            fillLabelFromVector(ui->releaseForms);
             break;
         case OpenMode::EDIT:
             setWindowTitle("Лекарство " + drug_.getFullName());
@@ -136,10 +136,10 @@ void MedicineDrugForm::init() {
             ui->activeSubstanceLat->setText(drug_.activeSubstancetLat());
             ui->prescription->setChecked(drug_.isPrescription());
             ui->price->setText(QString::number(drug_.price()));
-            fillLabelFromVector(ui->brands, drug_.brandNames());
-            fillLabelFromVector(ui->releaseForms, drug_.releaseForms());
             break;
     }
+    fillLabelFromVector(ui->brands, drug_.brandNames());
+    fillLabelFromVector(ui->releaseForms, drug_.releaseForms());
     fillDosagesList();
 }
 
@@ -211,7 +211,7 @@ std::vector<Dosage> MedicineDrugForm::getDosages() {
 
     for (int i = 0; i < dosagesModel_->rowCount(); ++i) {
         auto index = dosagesModel_->index(i, 0);
-        dosages.push_back(dosagesModel_->data(index).toString());
+        dosages.push_back(dosagesModel_->data(index, Qt::UserRole).toString());
     }
     return dosages;
 }

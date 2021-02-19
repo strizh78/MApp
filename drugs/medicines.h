@@ -2,9 +2,7 @@
 
 #include <QString>
 #include <QMetaType>
-#include <QHash>
 
-#include <optional>
 #include <vector>
 
 using Dosage = QString;
@@ -14,8 +12,7 @@ namespace medicine {
 
 const std::vector<ReleaseForm>& releaseForms();
 
-class Drug
-{
+class Drug {
 public:
     Drug() = default;
     Drug(const QString& activeSubstance,

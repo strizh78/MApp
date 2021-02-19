@@ -1,7 +1,5 @@
 #include "databasetest.h"
 
-#include <QVariant>
-
 #include <algorithm>
 
 std::vector<Service> DatabaseTest::servicesList_ = DatabaseTest::initServices();
@@ -145,7 +143,9 @@ void DatabaseTest::addMedicineDrug(const medicine::Drug& drug) {
 void DatabaseTest::editMedicineDrug(const medicine::Drug& oldDrug,
                                     const medicine::Drug& newDrug) {
     auto it = std::find(medicinesList_.begin(), medicinesList_.end(), oldDrug);
-    *it = newDrug;
+
+    if (it != medicinesList_.end())
+        *it = newDrug;
 }
 
 const std::vector<Service> DatabaseTest::initServices() {

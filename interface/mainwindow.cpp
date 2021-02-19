@@ -24,8 +24,7 @@ void MainWindow::on_servicesList_clicked() {
     servicesList->show();
 }
 
-void MainWindow::on_medicineList_clicked()
-{
+void MainWindow::on_medicineList_clicked() {
     auto* medicinesList = new MedicineDrugListForm(database_);
     medicinesList->setAttribute(Qt::WA_DeleteOnClose, true);
     medicinesList->show();

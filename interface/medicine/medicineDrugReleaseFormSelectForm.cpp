@@ -8,10 +8,10 @@
 
 MedicineDrugReleaseFormSelectForm::MedicineDrugReleaseFormSelectForm(const std::vector<ReleaseForm>& selectedReleaseForms,
                                                                      QLabel* label,
-                                                                     QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::MedicineDrugReleaseFormSelectForm),
-    label_(label)
+                                                                     QWidget *parent)
+    : QDialog(parent)
+    , ui(new Ui::MedicineDrugReleaseFormSelectForm)
+    , label_(label)
 {
     ui->setupUi(this);
     this->setWindowFlag(Qt::WindowContextHelpButtonHint, false);
@@ -33,7 +33,6 @@ void MedicineDrugReleaseFormSelectForm::on_buttonBox_accepted() {
     emit releaseFormsSelectedSignal(label_, selectedReleaseForms);
     close();
 }
-
 
 void MedicineDrugReleaseFormSelectForm::on_buttonBox_rejected() {
     close();

@@ -1,5 +1,4 @@
 #include "medicines.h"
-#include <numeric>
 
 namespace medicine {
 
@@ -76,8 +75,7 @@ bool Drug::operator ==(const Drug& other) {
             dosages_ == other.dosages();
 }
 
-const std::vector<ReleaseForm>& releaseForms()
-{
+const std::vector<ReleaseForm>& releaseForms() {
     static std::vector<ReleaseForm> releaseForms = {
         "Ампулы (раствор для инъекций)",
         "Бальзам (линимент)",
@@ -86,7 +84,7 @@ const std::vector<ReleaseForm>& releaseForms()
         "Капсулы",
         "Мазь",
         "Микстура",
-        "Отвар (найстой)",
+        "Отвар (настой)",
         "Паста",
         "Порошок",
         "Раствор (для внутреннего или наружного применения)",

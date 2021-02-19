@@ -40,7 +40,7 @@ private slots:
     void on_buttonBox_accepted();
     void on_buttonBox_rejected();
 
-    void fillLabelFromVector(QLabel* label, const std::vector <QString> data = std::vector<QString>());
+    void fillLabelFromVector(QLabel* label, const std::vector <QString>& data);
 
 private:
     void init();

@@ -20,7 +20,7 @@ public:
     ~MedicineDrugBrandSelectForm();
 
 signals:
-    void brandsSelectedSignal(QLabel* label, std::vector<QString> data);
+    void brandsSelectedSignal(QLabel* label, const std::vector<QString>& data);
 
 private slots:
      void on_addButton_clicked();
