@@ -74,25 +74,4 @@ bool Drug::operator ==(const Drug& other) {
            brandNames_ == other.brandNames() &&
            dosages_ == other.dosages();
 }
-
-const std::vector<ReleaseForm>& releaseForms() {
-    static std::vector<ReleaseForm> releaseForms = {
-        "Ампулы (раствор для инъекций)",
-        "Бальзам (линимент)",
-        "Гранулы",
-        "Драже",
-        "Капсулы",
-        "Мазь",
-        "Микстура",
-        "Отвар (настой)",
-        "Паста",
-        "Порошок",
-        "Раствор (для внутреннего или наружного применения)",
-        "Свечи",
-        "Таблетки",
-        "Экстракт (настойка)"
-    };
-    return releaseForms;
-}
-
 }

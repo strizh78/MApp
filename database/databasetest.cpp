@@ -73,23 +73,22 @@ void DatabaseTest::availableHomeopathyDrugs(std::vector<homeopathy::Drug>& recei
 const std::vector<medicine::Drug> DatabaseTest::initMedicineDrugs() {
     using namespace medicine;
 
-    auto allReleaseForms = releaseForms();
     const std::vector<ReleaseForm> relForms1 = {
-        allReleaseForms[0],
-        allReleaseForms[1],
-        allReleaseForms[2]};
+        RELEASE_FORMS[0],
+        RELEASE_FORMS[1],
+        RELEASE_FORMS[2]};
     const std::vector<ReleaseForm> relForms2 = {
-        allReleaseForms[2],
-        allReleaseForms[5],
-        allReleaseForms[1]};
+        RELEASE_FORMS[2],
+        RELEASE_FORMS[5],
+        RELEASE_FORMS[1]};
     const std::vector<ReleaseForm> relForms3 = {
-        allReleaseForms[6],
-        allReleaseForms[7],
-        allReleaseForms[8]};
+        RELEASE_FORMS[6],
+        RELEASE_FORMS[7],
+        RELEASE_FORMS[8]};
     const std::vector<ReleaseForm> relForms4 = {
-        allReleaseForms[4],
-        allReleaseForms[9],
-        allReleaseForms[10]};
+        RELEASE_FORMS[4],
+        RELEASE_FORMS[9],
+        RELEASE_FORMS[10]};
     const std::vector<QString> brands1 = {
         "brandA",
         "brandB",

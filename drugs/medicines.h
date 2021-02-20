@@ -10,7 +10,20 @@ using ReleaseForm = QString;
 
 namespace medicine {
 
-const std::vector<ReleaseForm>& releaseForms();
+const std::vector<ReleaseForm> RELEASE_FORMS = {"Ампулы (раствор для инъекций)",
+                                                "Бальзам (линимент)",
+                                                "Гранулы",
+                                                "Драже",
+                                                "Капсулы",
+                                                "Мазь",
+                                                "Микстура",
+                                                "Отвар (настой)",
+                                                "Паста",
+                                                "Порошок",
+                                                "Раствор (для внутреннего или наружного применения)",
+                                                "Свечи",
+                                                "Таблетки",
+                                                "Экстракт (настойка)"};
 
 class Drug {
 public:

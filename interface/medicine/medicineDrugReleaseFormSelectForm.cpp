@@ -39,7 +39,7 @@ void MedicineDrugReleaseFormSelectForm::on_buttonBox_rejected() {
 }
 
 void MedicineDrugReleaseFormSelectForm::fillForm(const std::vector<ReleaseForm>& selectedForms) {
-    for(auto releaseForm : medicine::releaseForms()) {
+    for(auto releaseForm : medicine::RELEASE_FORMS) {
         auto checkBox = new QCheckBox(releaseForm);
         if (std::find(selectedForms.begin(), selectedForms.end(), releaseForm) != selectedForms.end())
             checkBox->setChecked(true);
