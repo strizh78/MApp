@@ -14,31 +14,86 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="servicesList">
+   <widget class="Line" name="line">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>231</width>
-      <height>61</height>
+      <x>243</x>
+      <y>-30</y>
+      <width>20</width>
+      <height>711</height>
      </rect>
     </property>
-    <property name="text">
-     <string>Список услуг</string>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
     </property>
    </widget>
-   <widget class="QPushButton" name="medicineList">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>290</x>
-      <y>20</y>
-      <width>211</width>
-      <height>61</height>
+      <x>0</x>
+      <y>30</y>
+      <width>250</width>
+      <height>82</height>
      </rect>
     </property>
-    <property name="text">
-     <string>Список лекарств</string>
-    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QPushButton" name="servicesList">
+       <property name="minimumSize">
+        <size>
+         <width>250</width>
+         <height>45</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>250</width>
+         <height>45</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Список услуг</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="patientsList">
+       <property name="minimumSize">
+        <size>
+         <width>250</width>
+         <height>45</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>250</width>
+         <height>45</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Список пациентов</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="medicineList">
+        <property name="geometry">
+         <rect>
+          <x>290</x>
+          <y>20</y>
+          <width>211</width>
+          <height>61</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Список лекарств</string>
+        </property>
+        </widget>
+      </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

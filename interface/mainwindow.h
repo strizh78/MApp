@@ -18,6 +18,7 @@ public:
 
 private slots:
     void on_servicesList_clicked();
+    void on_patientsList_clicked();
 
     void on_medicineList_clicked();
 

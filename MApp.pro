@@ -17,6 +17,11 @@ SOURCES += \
     interface/medicine/medicineDrugListForm.cpp \
     interface/medicine/medicineDrugReleaseFormSelectForm.cpp \
     interface/medicine/medicineTableSettingsForm.cpp \
+    \
+    interface/patient/patientForm.cpp \
+    interface/patient/patientsListForm.cpp \
+    interface/patient/tableSettingsForm.cpp \
+    interface/utils.cpp \
     main.cpp \
     \
     drugs/homeopathy.cpp \
@@ -34,16 +39,23 @@ SOURCES += \
     \
     contrib/toggleSwitch/switch.cpp \
     \
+    tests/patientTests.cpp \
     tests/servicetests.cpp
 
 HEADERS += \
     drugs/homeopathy.h \
     drugs/medicines.h \
+    \
     interface/medicine/medicineDrugBrandSelectForm.h \
     interface/medicine/medicineDrugForm.h \
     interface/medicine/medicineDrugListForm.h \
     interface/medicine/medicineDrugReleaseFormSelectForm.h \
     interface/medicine/medicineTableSettingsForm.h \
+    \
+    interface/patient/patientForm.h \
+    interface/patient/patientsListForm.h \
+    interface/patient/tableSettingsForm.h \
+    interface/utils.h \
     patient/patient.h \
     service/service.h \
     \
@@ -58,6 +70,7 @@ HEADERS += \
     contrib/toggleSwitch/style.h \
     contrib/toggleSwitch/switch.h \
     \
+    tests/patientTests.h \
     tests/servicetests.h
 
 FORMS += \
@@ -68,6 +81,11 @@ FORMS += \
     interface/medicine/medicineDrugListForm.ui \
     interface/medicine/medicineDrugReleaseFormSelectForm.ui \
     interface/medicine/medicineTableSettingsForm.ui \
+    \
+    interface/patient/patientForm.ui \
+    interface/patient/patientsListForm.ui \
+    interface/patient/tableSettingsForm.ui \
+    \
     interface/service/serviceEdit.ui \
     interface/service/serviceTableSettings.ui \
     interface/service/servicesList.ui
