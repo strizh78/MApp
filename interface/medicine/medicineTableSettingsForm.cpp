@@ -10,7 +10,7 @@ MedicineTableSettingsForm::MedicineTableSettingsForm(QHeaderView* headers,
     , headerView_(headers)
 {
     ui->setupUi(this);
-    this->setWindowFlag(Qt::WindowContextHelpButtonHint, false);
+    setWindowFlag(Qt::WindowContextHelpButtonHint, false);
     ui->verticalLayout_2->setAlignment(Qt::AlignTop);
     auto* model = headerView_->model();
 

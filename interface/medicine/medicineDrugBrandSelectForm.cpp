@@ -9,7 +9,7 @@ MedicineDrugBrandSelectForm::MedicineDrugBrandSelectForm(const std::vector<QStri
     , label_(label)
 {
     ui->setupUi(this);
-    this->setWindowFlag(Qt::WindowContextHelpButtonHint, false);
+    setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 
     QStringList list;
 

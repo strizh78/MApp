@@ -14,7 +14,7 @@ MedicineDrugReleaseFormSelectForm::MedicineDrugReleaseFormSelectForm(const std::
     , label_(label)
 {
     ui->setupUi(this);
-    this->setWindowFlag(Qt::WindowContextHelpButtonHint, false);
+    setWindowFlag(Qt::WindowContextHelpButtonHint, false);
     fillForm(selectedReleaseForms);
 }
 
