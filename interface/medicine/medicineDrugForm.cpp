@@ -113,7 +113,7 @@ void MedicineDrugForm::fillLabelFromVector(QLabel* label, const std::vector<QStr
     QString text;
     //TODO: Сейчас перевод из вектора в строку выполнен тут, потом следует его реализовать
     //  через общую функцию в Utils
-    for (auto element : data)
+    for (const auto& element : data)
         text += element + ", ";
     if (!data.empty())
         text.resize(text.size() - 2);
