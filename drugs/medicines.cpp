@@ -72,7 +72,7 @@ bool Drug::operator ==(const Drug& other) {
            isPrescription_ == other.isPrescription() &&
            releaseForms_ == other.releaseForms() &&
            brandNames_ == other.brandNames() &&
-            dosages_ == other.dosages();
+           dosages_ == other.dosages();
 }
 
 const std::vector<ReleaseForm>& releaseForms() {
@@ -96,4 +96,3 @@ const std::vector<ReleaseForm>& releaseForms() {
 }
 
 }
-
