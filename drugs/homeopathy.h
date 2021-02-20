@@ -50,20 +50,10 @@ public:
          bool available);
 
     QString name() const;
-    void setName(const QString& name);
-
     QString nameLat() const;
-    void setNameLat(const QString& nameLat);
-
     Groups group() const;
-    void setGroup(Groups group);
-
     std::vector<Dilutions> availableDilutions() const;
-    void setAvailableDilutions(const std::vector<Dilutions>& availableDilutions);
-
     bool isAvailable() const;
-    void setAvailable(bool available);
-
     QString getFullName() const;
 
 private:

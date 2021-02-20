@@ -8,7 +8,10 @@ public:
 
     void homeopathyDrugs(std::vector<homeopathy::Drug>& receiver) override;
     void availableHomeopathyDrugs(std::vector<homeopathy::Drug>& receiver) override;
+
     void medicineDrugs(std::vector<medicine::Drug>& receiver) override;
+    void addMedicineDrug(const medicine::Drug& drug) override;
+    void editMedicineDrug(const medicine::Drug& oldDrug, const medicine::Drug& newDrug) override;
 
     void services(std::vector<Service>& receiver) override;
     void notDeprecatedServices(std::vector<Service>& receiver) override;
@@ -20,9 +23,11 @@ public:
     void editPatient(const Patient& oldPatient, const Patient& editedPatient) override;
 
 private:
+    static const std::vector<medicine::Drug> initMedicineDrugs();
     static const std::vector<Service> initServices();
     static const std::vector<Patient> initPatients();
 
+    static std::vector<medicine::Drug> medicinesList_;
     static std::vector<Service> servicesList_;
     static std::vector<Patient> patientsList_;
 };

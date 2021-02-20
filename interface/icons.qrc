@@ -5,5 +5,7 @@
         <file>icons/searchIcon.png</file>
         <file>icons/mainIcon.png</file>
         <file>icons/settingLinesIcon.png</file>
+        <file>icons/greenPlusIcon.png</file>
+        <file>icons/editIcon.png</file>
     </qresource>
 </RCC>

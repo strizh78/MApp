@@ -1,71 +1,64 @@
 #pragma once
 
 #include <QString>
+#include <QMetaType>
 
 #include <vector>
 
+using Dosage = QString;
+using ReleaseForm = QString;
+
 namespace medicine {
 
-enum class ReleaseForms {
-    PILLS,
-    GRANULES,
-    POWDER,
-    CAPSULES,
-    DRAGEE,
-    OINTMENT,
-    LINIMENT,
-    PASTE,
-    CANDLE,
-    SOLUTION,
-    BROTH,
-    EXTRACT,
-    MIXTURE
-};
+const std::vector<ReleaseForm> RELEASE_FORMS = {"Ампулы (раствор для инъекций)",
+                                                "Бальзам (линимент)",
+                                                "Гранулы",
+                                                "Драже",
+                                                "Капсулы",
+                                                "Мазь",
+                                                "Микстура",
+                                                "Отвар (настой)",
+                                                "Паста",
+                                                "Порошок",
+                                                "Раствор (для внутреннего или наружного применения)",
+                                                "Свечи",
+                                                "Таблетки",
+                                                "Экстракт (настойка)"};
 
-class Drug
-{
+class Drug {
 public:
     Drug() = default;
     Drug(const QString& activeSubstance,
          const QString& activeSubstancetLat,
          bool isPrescription,
-         const std::vector<ReleaseForms>& releaseForms,
+         const std::vector<ReleaseForm>& releaseForms,
          const std::vector<QString>& brandNames,
-         const std::vector<QString>& dosages,
+         const std::vector<Dosage>& dosages,
          float price);
 
     QString activeSubstance() const;
-    void setaAtiveSubstance(const QString& activeSubstance);
-
     QString activeSubstancetLat() const;
-    void setActiveSubstanceLat(const QString& activeSubstanceLat);
-
     bool isPrescription() const;
-    void setIsPrescription(bool isPrescription);
-
-    std::vector<ReleaseForms> releaseForms() const;
-    void setReleaseForms(const std::vector<ReleaseForms>& releaseForms);
-
+    std::vector<ReleaseForm> releaseForms() const;
     std::vector<QString> brandNames() const;
-    void setBrandNames(const std::vector<QString>& brandNames);
-
-    std::vector<QString> dosages() const;
-    void setDosages(const std::vector<QString>& dosages);
-
+    std::vector<Dosage> dosages() const;
     float price() const;
-    void setPrice(float price);
 
     QString getFullName() const;
+    QString getBrands(QString separator = " ") const;
+
+    bool operator ==(const medicine::Drug& other);
 
 private:
     QString activeSubstance_;
     QString activeSubstancetLat_;
     bool isPrescription_;
-    std::vector<ReleaseForms> releaseForms_;
+    std::vector<ReleaseForm> releaseForms_;
     std::vector<QString> brandNames_;
-    std::vector<QString> dosages_;
+    std::vector<Dosage> dosages_;
     float price_;
-
 };
 
 }
+
+Q_DECLARE_METATYPE( medicine::Drug ); // for QVariant

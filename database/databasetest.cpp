@@ -1,29 +1,27 @@
 #include "databasetest.h"
 
-#include "drugs/homeopathy.h"
-#include "drugs/medicines.h"
-
 #include <algorithm>
 
 std::vector<Service> DatabaseTest::servicesList_ = DatabaseTest::initServices();
+std::vector<medicine::Drug> DatabaseTest::medicinesList_ = DatabaseTest::initMedicineDrugs();
 std::vector<Patient> DatabaseTest::patientsList_ = DatabaseTest::initPatients();
 
 void DatabaseTest::homeopathyDrugs(std::vector<homeopathy::Drug>& receiver) {
     using namespace homeopathy;
 
-    static const std::vector<Dilutions> d1 = {
+    const std::vector<Dilutions> d1 = {
         Dilutions::C30,
         Dilutions::C200,
         Dilutions::C1000};
-    static const std::vector<Dilutions> d2 = {
+    const std::vector<Dilutions> d2 = {
         Dilutions::C30,
         Dilutions::C1000,
         Dilutions::LM1};
-    static const std::vector<Dilutions> d3 = {
+    const std::vector<Dilutions> d3 = {
         Dilutions::M1,
         Dilutions::LM6,
         Dilutions::C12};
-    static const std::vector<Dilutions> d4 = {
+    const std::vector<Dilutions> d4 = {
         Dilutions::M1,
         Dilutions::LM6,
         Dilutions::M10,
@@ -44,19 +42,19 @@ void DatabaseTest::homeopathyDrugs(std::vector<homeopathy::Drug>& receiver) {
 void DatabaseTest::availableHomeopathyDrugs(std::vector<homeopathy::Drug>& receiver) {
     using namespace homeopathy;
 
-    static const std::vector<Dilutions> d1 = {
+    const std::vector<Dilutions> d1 = {
         Dilutions::C30,
         Dilutions::C200,
         Dilutions::C1000};
-    static const std::vector<Dilutions> d2 = {
+    const std::vector<Dilutions> d2 = {
         Dilutions::C30,
         Dilutions::C1000,
         Dilutions::LM1};
-    static const std::vector<Dilutions> d3 = {
+    const std::vector<Dilutions> d3 = {
         Dilutions::M1,
         Dilutions::LM6,
         Dilutions::C12};
-    static const std::vector<Dilutions> d4 = {
+    const std::vector<Dilutions> d4 = {
         Dilutions::M1,
         Dilutions::LM6,
         Dilutions::M10,
@@ -73,49 +71,49 @@ void DatabaseTest::availableHomeopathyDrugs(std::vector<homeopathy::Drug>& recei
 
 }
 
-void DatabaseTest::medicineDrugs(std::vector<medicine::Drug>& receiver) {
+const std::vector<medicine::Drug> DatabaseTest::initMedicineDrugs() {
     using namespace medicine;
 
-    static const std::vector<ReleaseForms> relForms1 = {
-        ReleaseForms::BROTH,
-        ReleaseForms::PILLS,
-        ReleaseForms::DRAGEE};
-    static const std::vector<ReleaseForms> relForms2 = {
-        ReleaseForms::DRAGEE,
-        ReleaseForms::CAPSULES,
-        ReleaseForms::OINTMENT};
-    static const std::vector<ReleaseForms> relForms3 = {
-        ReleaseForms::EXTRACT,
-        ReleaseForms::MIXTURE,
-        ReleaseForms::DRAGEE};
-    static const std::vector<ReleaseForms> relForms4 = {
-        ReleaseForms::POWDER,
-        ReleaseForms::PILLS,
-        ReleaseForms::MIXTURE};
-    static const std::vector<QString> brands1 = {
+    const std::vector<ReleaseForm> relForms1 = {
+        RELEASE_FORMS[0],
+        RELEASE_FORMS[1],
+        RELEASE_FORMS[2]};
+    const std::vector<ReleaseForm> relForms2 = {
+        RELEASE_FORMS[2],
+        RELEASE_FORMS[5],
+        RELEASE_FORMS[1]};
+    const std::vector<ReleaseForm> relForms3 = {
+        RELEASE_FORMS[6],
+        RELEASE_FORMS[7],
+        RELEASE_FORMS[8]};
+    const std::vector<ReleaseForm> relForms4 = {
+        RELEASE_FORMS[4],
+        RELEASE_FORMS[9],
+        RELEASE_FORMS[10]};
+    const std::vector<QString> brands1 = {
         "brandA",
         "brandB",
         "brandC"};
-    static const std::vector<QString> brands2 = {
+    const std::vector<QString> brands2 = {
         "brandA"};
-    static const std::vector<QString> brands3 = {
+    const std::vector<QString> brands3 = {
         "brandB",
         "brandD"};
-    static const std::vector<QString> dosages1 = {
+    const std::vector<QString> dosages1 = {
         "10-12, dos1",
         "12-16, dos2",
         "16+ dos3"};
-    static const std::vector<QString> dosages2 = {
+    const std::vector<QString> dosages2 = {
         "1-12 мес., dos3",
         "1-10, dos4",
         "10-18+ dos5"};
-    static const std::vector<QString> dosages3 = {
+    const std::vector<QString> dosages3 = {
         "2-3, dos6",
         "3-4, dos7",
         "4-16 dos8"};
-    static const std::vector<QString> dosages4 = {
+    const std::vector<QString> dosages4 = {
         "dos9"};
-    receiver = {
+    const std::vector<medicine::Drug> medicines = {
         Drug("actSubsA", "actSubsLatA", false, relForms1, brands1, dosages1, 3.14),
         Drug("actSubsB", "", false, relForms2, brands1, dosages1, 2.71),
         Drug("actSubsC", "actSubsLatC", false, relForms3, brands2, dosages2, 60.22),
@@ -131,6 +129,23 @@ void DatabaseTest::medicineDrugs(std::vector<medicine::Drug>& receiver) {
         Drug("actSubsM", "actSubsLatM", false, relForms4, brands1, dosages3, 139),
         Drug("actSubsO", "", false, relForms4, brands2, dosages4, 525),
         Drug("actSubsP", "actSubsLatO", true, relForms1, brands3, dosages4, 636)};
+    return medicines;
+}
+
+void DatabaseTest::medicineDrugs(std::vector<medicine::Drug>& receiver) {
+    receiver = medicinesList_;
+}
+
+void DatabaseTest::addMedicineDrug(const medicine::Drug& drug) {
+    medicinesList_.push_back(drug);
+}
+
+void DatabaseTest::editMedicineDrug(const medicine::Drug& oldDrug,
+                                    const medicine::Drug& newDrug) {
+    auto it = std::find(medicinesList_.begin(), medicinesList_.end(), oldDrug);
+
+    if (it != medicinesList_.end())
+        *it = newDrug;
 }
 
 const std::vector<Service> DatabaseTest::initServices() {
