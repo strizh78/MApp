@@ -3,6 +3,7 @@
 
 #include "medicineDrugReleaseFormSelectForm.h"
 #include "medicineDrugBrandSelectForm.h"
+#include "interface/utils.h"
 
 #include <QMessageBox>
 #include <QValidator>
@@ -80,8 +81,9 @@ void MedicineDrugForm::on_editDosageBtn_clicked() {
 }
 
 void MedicineDrugForm::on_buttonBox_accepted() {
-    if (!isValid()) {
-        showWarning();
+    auto [isValidFilling, invalidFields] = isValid();
+    if (!isValidFilling) {
+        ErrorLog::showItemFormWarning(ui->errorLabel, invalidFields);
         return;
     }
 
@@ -110,14 +112,7 @@ void MedicineDrugForm::on_buttonBox_rejected() {
 }
 
 void MedicineDrugForm::fillLabelFromVector(QLabel* label, const std::vector<QString>& data) {
-    QString text;
-    //TODO: Сейчас перевод из вектора в строку выполнен тут, потом следует его реализовать
-    //  через общую функцию в Utils
-    for (const auto& element : data)
-        text += element + ", ";
-    if (!data.empty())
-        text.resize(text.size() - 2);
-    label->setText(text);
+    label->setText(toString(data, ", "));
 
     if (label == ui->releaseForms)
         releaseForms_ = data;
@@ -146,37 +141,22 @@ void MedicineDrugForm::init() {
 void MedicineDrugForm::setWidgetsSettings() {
     setDoubleValidator(ui->price);
     setEnglishValidator(ui->activeSubstanceLat);
+    ui->errorLabel->setHidden(true);
 }
 
-bool MedicineDrugForm::isValid() {
-    bool validFilling  = true;
+std::pair<bool, std::vector<QString>> MedicineDrugForm::isValid() {
+    std::vector<QString> invalidFields;
 
-    if (ui->brands->text().isEmpty())
-        validFilling = false;
+    if (ui->brands->text().isEmpty()) {
+        invalidFields.push_back(ui->brandsLabel->text());
+    }
     if (ui->prescription->isChecked() &&
         ui->activeSubstance->text().isEmpty())
     {
-        validFilling = false;
+        invalidFields.push_back(ui->activeSubstanceLatLabel->text());
     }
 
-    return validFilling;
-}
-
-void MedicineDrugForm::showWarning() {
-    QString openModeStr = openMode_ == OpenMode::CREATE ? "добавления" : "редактирования";
-    QString warning;
-
-    if (brands_.empty())
-        warning += "Не заданы торговые наименования \n";
-    if (ui->prescription->isChecked() &&
-        ui->activeSubstanceLat->text().isEmpty())
-    {
-        warning += "Не задано название активного вещества (лат.)\n";
-    }
-
-    QMessageBox::critical(this, "Ошибка " + openModeStr + " лекарства",
-                           warning,
-                          QMessageBox::Ok);
+    return std::pair{!bool(invalidFields.size()), invalidFields};
 }
 
 void MedicineDrugForm::fillDosagesList() {

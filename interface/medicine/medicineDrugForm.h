@@ -45,8 +45,7 @@ private slots:
 private:
     void init();
     void setWidgetsSettings();
-    bool isValid();
-    void showWarning();
+    std::pair<bool, std::vector<QString>> isValid();
     void fillDosagesList();
     void addDosage(const Dosage& dosage = "");
     QList<QStandardItem*> createDosageRow(size_t row, const Dosage& dosage);
