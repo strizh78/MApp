@@ -2,7 +2,6 @@
 
 #include "drugs/medicines.h"
 
-#include <QDialog>
 #include <QLabel>
 #include <QWidget>
 
@@ -10,7 +9,7 @@ namespace Ui {
 class MedicineDrugReleaseFormSelectForm;
 }
 
-class MedicineDrugReleaseFormSelectForm : public QDialog {
+class MedicineDrugReleaseFormSelectForm : public QWidget {
     Q_OBJECT
 
 public:

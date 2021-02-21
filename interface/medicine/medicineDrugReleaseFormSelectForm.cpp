@@ -2,19 +2,18 @@
 #include "ui_medicineDrugReleaseFormSelectForm.h"
 
 #include <QCheckBox>
-#include <QDebug>
 
 #include <algorithm>
 
 MedicineDrugReleaseFormSelectForm::MedicineDrugReleaseFormSelectForm(const std::vector<ReleaseForm>& selectedReleaseForms,
                                                                      QLabel* label,
                                                                      QWidget *parent)
-    : QDialog(parent)
+    : QWidget(parent)
     , ui(new Ui::MedicineDrugReleaseFormSelectForm)
     , label_(label)
 {
     ui->setupUi(this);
-    setWindowFlag(Qt::WindowContextHelpButtonHint, false);
+    setWindowFlag(Qt::Window);
     fillForm(selectedReleaseForms);
 }
 

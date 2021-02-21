@@ -1,8 +1,8 @@
 #pragma once
 
-#include <QDialog>
 #include <QLabel>
 #include <QStringListModel>
+#include <QWidget>
 
 #include <memory>
 
@@ -10,7 +10,7 @@ namespace Ui {
 class MedicineDrugBrandSelectForm;
 }
 
-class MedicineDrugBrandSelectForm : public QDialog {
+class MedicineDrugBrandSelectForm : public QWidget {
     Q_OBJECT
 
 public:

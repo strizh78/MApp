@@ -3,10 +3,10 @@
 #include "drugs/medicines.h"
 #include "database/databaseinterface.h"
 
-#include <QWidget>
-#include <QLineEdit>
 #include <QLabel>
+#include <QLineEdit>
 #include <QStandardItemModel>
+#include <QWidget>
 
 #include <optional>
 #include <vector>

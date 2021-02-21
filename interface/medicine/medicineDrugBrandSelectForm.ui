@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>MedicineDrugBrandSelectForm</class>
- <widget class="QDialog" name="MedicineDrugBrandSelectForm">
+ <widget class="QWidget" name="MedicineDrugBrandSelectForm">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
