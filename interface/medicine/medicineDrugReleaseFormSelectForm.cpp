@@ -14,6 +14,7 @@ MedicineDrugReleaseFormSelectForm::MedicineDrugReleaseFormSelectForm(const std::
 {
     ui->setupUi(this);
     setWindowFlag(Qt::Window);
+    setWindowTitle("Формы выпуска");
     fillForm(selectedReleaseForms);
 }
 

@@ -11,6 +11,7 @@ MedicineTableSettingsForm::MedicineTableSettingsForm(QHeaderView* headers,
 {
     ui->setupUi(this);
     setWindowFlag(Qt::Window);
+    setWindowTitle("Настройки");
     ui->verticalLayout_2->setAlignment(Qt::AlignTop);
     auto* model = headerView_->model();
 
