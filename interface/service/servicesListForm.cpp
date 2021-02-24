@@ -17,6 +17,14 @@ ServicesListForm::ServicesListForm(std::shared_ptr<DatabaseInterface> database,
 {
     ui->setupUi(this);
 
+    const QStringList columnNames = {"Наименование", "Цена", "Длительность"};
+
+    tableViewModel_ = std::make_shared<QStandardItemModel>();
+    tableViewModel_->setHorizontalHeaderLabels(columnNames);
+    ui->tableView->setModel(tableViewModel_.get());
+
+    tableSettingsForm_ = std::make_shared<TableSettingsForm>(columnNames);
+
     std::vector<Service> servicesList;
     database_->services(servicesList);
     fillServicesTable(servicesList);
@@ -64,16 +72,9 @@ QList<QStandardItem*> ServicesListForm::createServiceRow(size_t row, const Servi
 }
 
 void ServicesListForm::fillServicesTable(const std::vector<Service>& servicesList) {
-    tableViewModel_ = std::make_shared<QStandardItemModel>();
-
-    static const QStringList columnNames = {"Наименование", "Цена", "Длительность"};
-    tableViewModel_->setHorizontalHeaderLabels(columnNames);
-
     for (const auto& service : servicesList) {
         addService(service);
     }
-
-    ui->tableView->setModel(tableViewModel_.get());
 }
 
 void ServicesListForm::addService(const Service& service) {
@@ -116,20 +117,16 @@ void ServicesListForm::on_tableView_doubleClicked(const QModelIndex &index) {
     showServiceInfo(firstIndex.data(Qt::UserRole).value<Service>());
 }
 
+void ServicesListForm::on_tableSettings_clicked() {
+    connect(tableSettingsForm_.get(), SIGNAL(signalChangeColumnsDisplay(std::vector<bool>)),
+            this, SLOT(changeColumnsDisplayOption(std::vector<bool>)));
+    tableSettingsForm_->show();
+}
+
 void ServicesListForm::changeColumnsDisplayOption(std::vector<bool> columns) {
     for (size_t i = 0; i < columns.size(); ++i) {
         ui->tableView->horizontalHeader()->setSectionHidden(i, columns[i]);
     }
-}
-
-void ServicesListForm::on_tableSettings_clicked() {
-    if (!tableSettingsForm_) {
-        tableSettingsForm_ = std::make_shared<ServiceTableSettings>();
-    }
-
-    connect(tableSettingsForm_.get(), SIGNAL(signalChangeColumnsDisplay(std::vector<bool>)),
-            this, SLOT(changeColumnsDisplayOption(std::vector<bool>)));
-    tableSettingsForm_->show();
 }
 
 void ServicesListForm::searchInTable(const QString& searchRequest) {

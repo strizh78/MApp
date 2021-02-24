@@ -20,9 +20,9 @@ SOURCES += \
     \
     interface/patient/patientForm.cpp \
     interface/patient/patientsListForm.cpp \
-    interface/patient/tableSettingsForm.cpp \
     interface/service/serviceForm.cpp \
     interface/service/servicesListForm.cpp \
+    interface/tableSettingsForm.cpp \
     interface/utils.cpp \
     main.cpp \
     \
@@ -35,7 +35,6 @@ SOURCES += \
     database/databasetest.cpp \
     \
     interface/mainwindow.cpp \
-    interface/service/serviceTableSettings.cpp \
     \
     contrib/toggleSwitch/switch.cpp \
     \
@@ -54,9 +53,9 @@ HEADERS += \
     \
     interface/patient/patientForm.h \
     interface/patient/patientsListForm.h \
-    interface/patient/tableSettingsForm.h \
     interface/service/serviceForm.h \
     interface/service/servicesListForm.h \
+    interface/tableSettingsForm.h \
     interface/utils.h \
     patient/patient.h \
     service/service.h \
@@ -65,7 +64,6 @@ HEADERS += \
     database/databasetest.h \
     \
     interface/mainwindow.h \
-    interface/service/serviceTableSettings.h \
     \
     contrib/toggleSwitch/style.h \
     contrib/toggleSwitch/switch.h \
@@ -84,11 +82,10 @@ FORMS += \
     \
     interface/patient/patientForm.ui \
     interface/patient/patientsListForm.ui \
-    interface/patient/tableSettingsForm.ui \
     \
     interface/service/serviceForm.ui \
-    interface/service/serviceTableSettings.ui \
-    interface/service/servicesListForm.ui
+    interface/service/servicesListForm.ui \
+    interface/tableSettingsForm.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

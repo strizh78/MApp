@@ -1,7 +1,7 @@
 #pragma once
 
 #include "patientForm.h"
-#include "tableSettingsForm.h"
+#include "interface/tableSettingsForm.h"
 
 #include "patient/patient.h"
 #include "database/databaseinterface.h"

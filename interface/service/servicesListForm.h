@@ -1,7 +1,7 @@
 #pragma once
 
 #include "service/service.h"
-#include "serviceTableSettings.h"
+#include "interface/tableSettingsForm.h"
 
 #include "database/databaseinterface.h"
 
@@ -52,5 +52,5 @@ private:
     std::shared_ptr<DatabaseInterface> database_;
 
     std::shared_ptr<QStandardItemModel> tableViewModel_;
-    std::shared_ptr<ServiceTableSettings> tableSettingsForm_ = nullptr;
+    std::shared_ptr<TableSettingsForm> tableSettingsForm_ = nullptr;
 };
