@@ -8,16 +8,16 @@
 #include <optional>
 
 namespace Ui {
-class ServiceEdit;
+class ServiceForm;
 }
 
-class ServiceEdit : public QWidget {
+class ServiceForm : public QWidget {
     Q_OBJECT
 
 public:
-    ServiceEdit(std::shared_ptr<DatabaseInterface> database,
+    ServiceForm(std::shared_ptr<DatabaseInterface> database,
                 std::optional<Service> service = std::nullopt, QWidget *parent = nullptr);
-    ~ServiceEdit();
+    ~ServiceForm();
 
 private:
     void fillFormServiceInfo();
@@ -36,7 +36,7 @@ private:
         EDIT
     };
 
-    Ui::ServiceEdit *ui;
+    Ui::ServiceForm *ui;
     std::shared_ptr<DatabaseInterface> database_;
 
     Service service_;

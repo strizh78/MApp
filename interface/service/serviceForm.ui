@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ServiceEdit</class>
- <widget class="QWidget" name="ServiceEdit">
+ <class>ServiceForm</class>
+ <widget class="QWidget" name="ServiceForm">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -155,7 +155,7 @@
         </size>
        </property>
        <property name="text">
-        <string>Активирована</string>
+        <string>Активна</string>
        </property>
       </widget>
      </item>

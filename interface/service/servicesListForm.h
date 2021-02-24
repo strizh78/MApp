@@ -13,16 +13,16 @@
 #include <vector>
 
 namespace Ui {
-class ServicesList;
+class ServicesListForm;
 }
 
-class ServicesList : public QWidget {
+class ServicesListForm : public QWidget {
     Q_OBJECT
 
 public:
-    explicit ServicesList(std::shared_ptr<DatabaseInterface> database,
+    explicit ServicesListForm(std::shared_ptr<DatabaseInterface> database,
                           QWidget *parent = nullptr);
-    ~ServicesList();
+    ~ServicesListForm();
 
 private:
     void showServiceInfo(const Service& service);
@@ -49,7 +49,7 @@ private slots:
     void on_searchLine_textChanged(const QString &arg1);
 
 private:
-    Ui::ServicesList *ui;
+    Ui::ServicesListForm *ui;
     std::shared_ptr<DatabaseInterface> database_;
 
     std::shared_ptr<QStandardItemModel> tableViewModel_;

@@ -1,12 +1,12 @@
-#include "serviceEdit.h"
-#include "ui_serviceEdit.h"
+#include "serviceForm.h"
+#include "ui_serviceForm.h"
 
 #include "database/databasetest.h"
 
-ServiceEdit::ServiceEdit(std::shared_ptr<DatabaseInterface> database,
+ServiceForm::ServiceForm(std::shared_ptr<DatabaseInterface> database,
                          std::optional<Service> service, QWidget *parent)
     : QWidget(parent)
-    , ui(new Ui::ServiceEdit)
+    , ui(new Ui::ServiceForm)
     , database_(database)
     , service_(service.value_or(Service()))
     , openMode_(service.has_value() ? OpenMode::EDIT : OpenMode::CREATE)
@@ -24,11 +24,11 @@ ServiceEdit::ServiceEdit(std::shared_ptr<DatabaseInterface> database,
     fillFormServiceInfo();
 }
 
-ServiceEdit::~ServiceEdit() {
+ServiceForm::~ServiceForm() {
     delete ui;
 }
 
-void ServiceEdit::fillFormServiceInfo() {
+void ServiceForm::fillFormServiceInfo() {
     if (openMode_ != OpenMode::EDIT) {
         return;
     }
@@ -39,7 +39,7 @@ void ServiceEdit::fillFormServiceInfo() {
     ui->switchActive->setChecked(!service_.isDeprecated());
 }
 
-void ServiceEdit::on_solutionBox_accepted() {
+void ServiceForm::on_solutionBox_accepted() {
     Service edited(ui->nameEdit->text(),
                     ui->priceEdit->text().toDouble(),
                     ui->durationEdit->time(),
@@ -64,6 +64,6 @@ void ServiceEdit::on_solutionBox_accepted() {
     }
 }
 
-void ServiceEdit::on_solutionBox_rejected() {
+void ServiceForm::on_solutionBox_rejected() {
     close();
 }
