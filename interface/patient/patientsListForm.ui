@@ -65,6 +65,10 @@
          <property name="text">
           <string>Добавить пацента</string>
          </property>
+         <property name="icon">
+          <iconset resource="../icons.qrc">
+           <normaloff>:/icons/greenPlusIcon.png</normaloff>:/icons/greenPlusIcon.png</iconset>
+         </property>
         </widget>
        </item>
       </layout>
@@ -203,6 +207,8 @@ background-repeat: none;</string>
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../icons.qrc"/>
+ </resources>
  <connections/>
 </ui>

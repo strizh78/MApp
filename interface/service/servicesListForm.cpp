@@ -111,13 +111,6 @@ void ServicesListForm::on_createService_clicked()
     serviceCreateForm->show();
 }
 
-void ServicesListForm::on_selectService_clicked() {
-    const auto& selectedRows = ui->tableView->selectionModel()->selectedRows();
-    if (!selectedRows.empty()) {
-        showServiceInfo(selectedRows[0].data(Qt::UserRole).value<Service>());
-    }
-}
-
 void ServicesListForm::on_tableView_doubleClicked(const QModelIndex &index) {
     const QModelIndex& firstIndex = ui->tableView->model()->index(index.row(), 0);
     showServiceInfo(firstIndex.data(Qt::UserRole).value<Service>());

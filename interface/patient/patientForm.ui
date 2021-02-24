@@ -225,35 +225,90 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label">
-       <property name="font">
-        <font>
-         <weight>50</weight>
-         <bold>false</bold>
-         <underline>false</underline>
-        </font>
-       </property>
-       <property name="text">
-        <string>Дополнительная информация</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <property name="topMargin">
         <number>0</number>
        </property>
        <item>
-        <widget class="QPushButton" name="createInfo">
+        <widget class="QLabel" name="label">
+         <property name="font">
+          <font>
+           <weight>50</weight>
+           <bold>false</bold>
+           <underline>false</underline>
+          </font>
+         </property>
          <property name="text">
-          <string>Добавить строку</string>
+          <string>Дополнительная информация</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="createInfo">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../icons.qrc">
+           <normaloff>:/icons/greenPlusIcon.png</normaloff>:/icons/greenPlusIcon.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="editInfo">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../icons.qrc">
+           <normaloff>:/icons/editIcon.png</normaloff>:/icons/editIcon.png</iconset>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="deleteInfo">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
          <property name="text">
-          <string>Удалить строку</string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../icons.qrc">
+           <normaloff>:/icons/noIcon.png</normaloff>:/icons/noIcon.png</iconset>
          </property>
         </widget>
        </item>
@@ -312,6 +367,8 @@
   <tabstop>deleteInfo</tabstop>
   <tabstop>additionalInfo</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../icons.qrc"/>
+ </resources>
  <connections/>
 </ui>

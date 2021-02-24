@@ -199,6 +199,10 @@ void PatientForm::on_deleteInfo_clicked() {
     }
 }
 
+void PatientForm::on_editInfo_clicked() {
+    ui->additionalInfo->edit(ui->additionalInfo->currentIndex());
+}
+
 void PatientForm::on_dateEdit_userDateChanged(const QDate &date) {
     int age = getCurrentAge(date);
     ui->ageDataLabel->setText(generateAgeString(age));

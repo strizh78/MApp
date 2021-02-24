@@ -38,7 +38,6 @@ private slots:
 
     void on_createService_clicked();
 
-    void on_selectService_clicked();
     void on_tableView_doubleClicked(const QModelIndex &index);
 
     void changeColumnsDisplayOption(std::vector<bool> columns);
