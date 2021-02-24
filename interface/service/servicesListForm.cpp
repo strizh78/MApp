@@ -129,6 +129,14 @@ void ServicesListForm::changeColumnsDisplayOption(std::vector<bool> columns) {
     }
 }
 
+void ServicesListForm::on_searchLine_returnPressed() {
+    searchInTable(ui->searchLine->text());
+}
+
+void ServicesListForm::on_searchLine_textChanged(const QString &text) {
+    searchInTable(text);
+}
+
 void ServicesListForm::searchInTable(const QString& searchRequest) {
     if (tableViewModel_.get() != ui->tableView->model()) {
         delete ui->tableView->model();
@@ -144,12 +152,4 @@ void ServicesListForm::searchInTable(const QString& searchRequest) {
                    );
     proxyModel->setFilterKeyColumn(/*service name column*/ 0);
     proxyModel->setFilterRegExp(regExp);
-}
-
-void ServicesListForm::on_searchLine_returnPressed() {
-    searchInTable(ui->searchLine->text());
-}
-
-void ServicesListForm::on_searchLine_textChanged(const QString &text) {
-    searchInTable(text);
 }

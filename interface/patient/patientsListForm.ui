@@ -207,6 +207,12 @@ background-repeat: none;</string>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>createPatient</tabstop>
+  <tabstop>searchLine</tabstop>
+  <tabstop>tableSettings</tabstop>
+  <tabstop>tableView</tabstop>
+ </tabstops>
  <resources>
   <include location="../icons.qrc"/>
  </resources>

@@ -364,6 +364,7 @@
   <tabstop>dateEdit</tabstop>
   <tabstop>addressEdit</tabstop>
   <tabstop>createInfo</tabstop>
+  <tabstop>editInfo</tabstop>
   <tabstop>deleteInfo</tabstop>
   <tabstop>additionalInfo</tabstop>
  </tabstops>

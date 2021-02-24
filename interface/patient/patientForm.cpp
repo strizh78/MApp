@@ -104,7 +104,9 @@ void PatientForm::setupUi() {
     ui->setupUi(this);
 
     ui->errorLabel->setVisible(false);
+
     setAgeLabelTextColor(palette(), ui->ageDataLabel);
+    on_dateEdit_userDateChanged(ui->dateEdit->date());
 
     switch (openMode_) {
     case OpenMode::CREATE:
