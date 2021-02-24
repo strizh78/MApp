@@ -4,23 +4,10 @@
 #include "medicineDrugReleaseFormSelectForm.h"
 #include "medicineDrugBrandSelectForm.h"
 
+#include "interface/utils.h"
+
 #include <QMessageBox>
 #include <QValidator>
-
-namespace {
-
-void setDoubleValidator(QLineEdit* lineEdit) {
-    QRegExp regExp("[0-9]*[.]?[0-9]*");
-    QRegExpValidator* regExpValidator = new QRegExpValidator(regExp);
-    lineEdit->setValidator(regExpValidator);
-}
-
-void setEnglishValidator(QLineEdit* lineEdit) {
-    QRegExp regExp("[a-zA-Z]*");
-    QRegExpValidator* regExpValidator = new QRegExpValidator(regExp);
-    lineEdit->setValidator(regExpValidator);
-}
-}
 
 MedicineDrugForm::MedicineDrugForm(std::shared_ptr<DatabaseInterface> database,
                                    std::optional<medicine::Drug> drug,
@@ -144,8 +131,8 @@ void MedicineDrugForm::init() {
 }
 
 void MedicineDrugForm::setWidgetsSettings() {
-    setDoubleValidator(ui->price);
-    setEnglishValidator(ui->activeSubstanceLat);
+    Validators::setDoubleValidator(ui->price);
+    Validators::setEnglishValidator(ui->activeSubstanceLat);
 }
 
 bool MedicineDrugForm::isValid() {

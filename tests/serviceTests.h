@@ -10,7 +10,8 @@ class ServiceTests : public QObject
 {
     Q_OBJECT
 public:
-    explicit ServiceTests(QObject *parent = nullptr);
+    explicit ServiceTests(std::shared_ptr<DatabaseInterface> database,
+                          QObject *parent = nullptr);
 private slots:
     void createService();
     void editService();

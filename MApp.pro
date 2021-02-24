@@ -39,7 +39,7 @@ SOURCES += \
     contrib/toggleSwitch/switch.cpp \
     \
     tests/patientTests.cpp \
-    tests/servicetests.cpp
+    tests/serviceTests.cpp
 
 HEADERS += \
     drugs/homeopathy.h \
@@ -69,7 +69,7 @@ HEADERS += \
     contrib/toggleSwitch/switch.h \
     \
     tests/patientTests.h \
-    tests/servicetests.h
+    tests/serviceTests.h
 
 FORMS += \
     interface/mainwindow.ui \

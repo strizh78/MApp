@@ -1,4 +1,4 @@
-#include "servicetests.h"
+#include "serviceTests.h"
 
 #include "interface/service/serviceForm.h"
 #include "ui_serviceForm.h"
@@ -7,9 +7,9 @@
 
 #include <algorithm>
 
-ServiceTests::ServiceTests(QObject *parent)
+ServiceTests::ServiceTests(std::shared_ptr<DatabaseInterface> database, QObject *parent)
     : QObject(parent)
-    , database_(std::make_shared<DatabaseTest>())
+    , database_(database)
 {
 }
 
