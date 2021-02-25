@@ -94,6 +94,8 @@ PatientForm::PatientForm(std::shared_ptr<DatabaseInterface> database,
     setupUi();
     setupInfoTable();
     fillFormPatientInfo();
+    ui->editInfo->setEnabled(false);
+    ui->deleteInfo->setEnabled(false);
 }
 
 PatientForm::~PatientForm() {
@@ -203,6 +205,11 @@ void PatientForm::on_deleteInfo_clicked() {
 
 void PatientForm::on_editInfo_clicked() {
     ui->additionalInfo->edit(ui->additionalInfo->currentIndex());
+}
+
+void PatientForm::on_additionalInfo_entered(const QModelIndex &index) {
+    ui->editInfo->setEnabled(true);
+    ui->deleteInfo->setEnabled(true);
 }
 
 void PatientForm::on_dateEdit_userDateChanged(const QDate &date) {

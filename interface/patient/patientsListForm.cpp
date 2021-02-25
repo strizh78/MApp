@@ -13,7 +13,7 @@ PatientsListForm::PatientsListForm(std::shared_ptr<DatabaseInterface> database,
 {
     ui->setupUi(this);
 
-    static const QStringList columnNames = {"Фамилия И.О.", "Дата рождения", "Адрес"};
+    const QStringList columnNames = {"Фамилия И.О.", "Дата рождения", "Адрес"};
 
     tableViewModel_ = std::make_shared<QStandardItemModel>();
     tableViewModel_->setHorizontalHeaderLabels(columnNames);
