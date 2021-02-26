@@ -160,9 +160,9 @@ std::optional<std::vector<QString>> MedicineDrugForm::isValid() {
         invalidFields.push_back(ui->activeSubstanceLatLabel->text());
     }
 
-    if (bool(invalidFields.size()))
-        return invalidFields;
-    return std::nullopt;
+    if (invalidFields.empty())
+        return std::nullopt;
+    return invalidFields;
 }
 
 void MedicineDrugForm::fillDosagesList() {
