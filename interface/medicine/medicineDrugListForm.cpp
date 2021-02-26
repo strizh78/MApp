@@ -16,7 +16,6 @@ MedicineDrugListForm::MedicineDrugListForm(std::shared_ptr<DatabaseInterface> da
     , database_(database)
 {
     ui->setupUi(this);
-    setWindowTitle("Список лекарств");
 
     std::vector<Drug> medicinesList;
     database->medicineDrugs(medicinesList);

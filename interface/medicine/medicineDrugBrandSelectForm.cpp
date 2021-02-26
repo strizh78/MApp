@@ -10,7 +10,6 @@ MedicineDrugBrandSelectForm::MedicineDrugBrandSelectForm(const std::vector<QStri
 {
     ui->setupUi(this);
     setWindowFlag(Qt::Window);
-    setWindowTitle("Торговые наименования");
 
     QStringList list;
 
