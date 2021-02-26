@@ -82,8 +82,8 @@ void MedicineDrugForm::on_editDosageBtn_clicked() {
 }
 
 void MedicineDrugForm::on_buttonBox_accepted() {
-    auto [isValidFilling, invalidFields] = isValid();
-    if (!isValidFilling) {
+    auto invalidFields = isValid();
+    if (invalidFields.has_value()) {
         ErrorLog::showItemFormWarning(ui->errorLabel, invalidFields.value());
         return;
     }
@@ -148,7 +148,7 @@ void MedicineDrugForm::setWidgetsSettings() {
         ui->dosages->selectRow(0);
 }
 
-std::pair<bool, std::optional<std::vector<QString>>> MedicineDrugForm::isValid() {
+std::optional<std::vector<QString>> MedicineDrugForm::isValid() {
     std::vector<QString> invalidFields;
 
     if (ui->brands->text().isEmpty()) {
@@ -161,8 +161,8 @@ std::pair<bool, std::optional<std::vector<QString>>> MedicineDrugForm::isValid()
     }
 
     if (bool(invalidFields.size()))
-        return std::pair{false, invalidFields};
-    return std::pair{true, std::nullopt};
+        return invalidFields;
+    return std::nullopt;
 }
 
 void MedicineDrugForm::fillDosagesList() {
