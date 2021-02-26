@@ -45,7 +45,6 @@ private slots:
 private:
     void init();
     void setWidgetsSettings();
-    //std::pair<bool, std::optional<std::vector<QString> > > isValid();
     std::optional<std::vector<QString> > isValid();
     void fillDosagesList();
     void addDosage(const Dosage& dosage = "");
