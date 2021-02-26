@@ -45,11 +45,6 @@
            <height>40</height>
           </size>
          </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
          <property name="text">
           <string>Торговые наименования</string>
          </property>
@@ -68,12 +63,6 @@
            <width>0</width>
            <height>40</height>
           </size>
-         </property>
-         <property name="font">
-          <font>
-           <underline>false</underline>
-           <strikeout>false</strikeout>
-          </font>
          </property>
          <property name="styleSheet">
           <string notr="true">text-decoration: none;</string>
@@ -130,11 +119,6 @@
            <height>40</height>
           </size>
          </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
          <property name="text">
           <string>Формы выпуска</string>
          </property>
@@ -153,12 +137,6 @@
            <width>0</width>
            <height>40</height>
           </size>
-         </property>
-         <property name="font">
-          <font>
-           <underline>false</underline>
-           <strikeout>false</strikeout>
-          </font>
          </property>
          <property name="styleSheet">
           <string notr="true">text-decoration: none;</string>
@@ -231,11 +209,6 @@
            <height>40</height>
           </size>
          </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
          <property name="text">
           <string>Активное вещество (лат.)</string>
          </property>
@@ -260,11 +233,6 @@
            <width>16777215</width>
            <height>40</height>
           </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
          </property>
          <property name="text">
           <string>Активное вещество</string>
@@ -292,11 +260,6 @@
            <horstretch>1</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
          </property>
          <property name="text">
           <string>Рецептурный</string>
@@ -334,11 +297,6 @@
              <height>40</height>
             </size>
            </property>
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
            <property name="text">
             <string>Цена</string>
            </property>
@@ -364,11 +322,6 @@
     <layout class="QHBoxLayout" name="horizontalLayout_5">
      <item>
       <widget class="QLabel" name="label">
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
        <property name="text">
         <string>Дозировки</string>
        </property>
