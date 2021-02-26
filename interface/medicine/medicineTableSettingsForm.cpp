@@ -5,12 +5,12 @@
 
 MedicineTableSettingsForm::MedicineTableSettingsForm(QHeaderView* headers,
                                                      QWidget* parent)
-    : QDialog(parent)
+    : QWidget(parent)
     , ui(new Ui::MedicineTableSettingsForm)
     , headerView_(headers)
 {
     ui->setupUi(this);
-    setWindowFlag(Qt::WindowContextHelpButtonHint, false);
+    setWindowFlag(Qt::Window);
     ui->verticalLayout_2->setAlignment(Qt::AlignTop);
     auto* model = headerView_->model();
 
@@ -28,6 +28,7 @@ void MedicineTableSettingsForm::on_buttonBox_accepted() {
         bool show = checkBox->isChecked();
         headerView_->setSectionHidden(i, !show);
     }
+    close();
 }
 
 void MedicineTableSettingsForm::on_buttonBox_rejected() {

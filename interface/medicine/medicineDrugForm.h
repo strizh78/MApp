@@ -3,10 +3,10 @@
 #include "drugs/medicines.h"
 #include "database/databaseinterface.h"
 
-#include <QWidget>
-#include <QLineEdit>
 #include <QLabel>
+#include <QLineEdit>
 #include <QStandardItemModel>
+#include <QWidget>
 
 #include <optional>
 #include <vector>
@@ -45,8 +45,7 @@ private slots:
 private:
     void init();
     void setWidgetsSettings();
-    bool isValid();
-    void showWarning();
+    std::optional<std::vector<QString> > isValid();
     void fillDosagesList();
     void addDosage(const Dosage& dosage = "");
     QList<QStandardItem*> createDosageRow(size_t row, const Dosage& dosage);

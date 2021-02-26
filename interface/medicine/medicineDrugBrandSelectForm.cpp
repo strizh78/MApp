@@ -4,12 +4,12 @@
 MedicineDrugBrandSelectForm::MedicineDrugBrandSelectForm(const std::vector<QString>& brands,
                                                          QLabel* label,
                                                          QWidget* parent)
-    : QDialog(parent)
+    : QWidget(parent)
     , ui(new Ui::MedicineDrugBrandSelectForm)
     , label_(label)
 {
     ui->setupUi(this);
-    setWindowFlag(Qt::WindowContextHelpButtonHint, false);
+    setWindowFlag(Qt::Window);
 
     QStringList list;
 
@@ -51,6 +51,7 @@ void MedicineDrugBrandSelectForm::on_buttonBox_accepted() {
             brands.push_back(data);
     }
     emit brandsSelectedSignal(label_, brands);
+    close();
 }
 
 void MedicineDrugBrandSelectForm::on_buttonBox_rejected() {

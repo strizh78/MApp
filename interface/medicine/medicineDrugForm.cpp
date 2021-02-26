@@ -3,6 +3,7 @@
 
 #include "medicineDrugReleaseFormSelectForm.h"
 #include "medicineDrugBrandSelectForm.h"
+#include "interface/utils.h"
 
 #include <QMessageBox>
 #include <QValidator>
@@ -66,13 +67,14 @@ void MedicineDrugForm::on_addReleaseFormsBtn_clicked() {
 
 void MedicineDrugForm::on_addDosagesBtn_clicked() {
     addDosage();
-    int row = dosagesModel_->rowCount();
-    QModelIndex index = dosagesModel_->index(row - 1, 0);
-    ui->dosages->edit(index);
+    ui->dosages->edit(dosagesModel_->index(dosagesModel_->rowCount() - 1, 0));
 }
 
 void MedicineDrugForm::on_deleteDosageBtn_clicked() {
-    dosagesModel_->removeRows(ui->dosages->currentIndex().row(), 1);
+    int curRow = ui->dosages->currentIndex().row();
+    dosagesModel_->removeRow(curRow);
+    ui->dosages->selectRow(std::min(dosagesModel_->rowCount() - 1, curRow));
+    ui->dosages->setFocus();
 }
 
 void MedicineDrugForm::on_editDosageBtn_clicked() {
@@ -80,8 +82,9 @@ void MedicineDrugForm::on_editDosageBtn_clicked() {
 }
 
 void MedicineDrugForm::on_buttonBox_accepted() {
-    if (!isValid()) {
-        showWarning();
+    auto invalidFields = isValid();
+    if (invalidFields.has_value()) {
+        ErrorLog::showItemFormWarning(ui->errorLabel, invalidFields.value());
         return;
     }
 
@@ -110,14 +113,7 @@ void MedicineDrugForm::on_buttonBox_rejected() {
 }
 
 void MedicineDrugForm::fillLabelFromVector(QLabel* label, const std::vector<QString>& data) {
-    QString text;
-    //TODO: Сейчас перевод из вектора в строку выполнен тут, потом следует его реализовать
-    //  через общую функцию в Utils
-    for (const auto& element : data)
-        text += element + ", ";
-    if (!data.empty())
-        text.resize(text.size() - 2);
-    label->setText(text);
+    label->setText(toString(data, ", "));
 
     if (label == ui->releaseForms)
         releaseForms_ = data;
@@ -146,37 +142,27 @@ void MedicineDrugForm::init() {
 void MedicineDrugForm::setWidgetsSettings() {
     setDoubleValidator(ui->price);
     setEnglishValidator(ui->activeSubstanceLat);
+    ui->errorLabel->setHidden(true);
+
+    if (dosagesModel_->rowCount() != 0)
+        ui->dosages->selectRow(0);
 }
 
-bool MedicineDrugForm::isValid() {
-    bool validFilling  = true;
+std::optional<std::vector<QString>> MedicineDrugForm::isValid() {
+    std::vector<QString> invalidFields;
 
-    if (ui->brands->text().isEmpty())
-        validFilling = false;
+    if (ui->brands->text().isEmpty()) {
+        invalidFields.push_back(ui->brandsLabel->text());
+    }
     if (ui->prescription->isChecked() &&
         ui->activeSubstance->text().isEmpty())
     {
-        validFilling = false;
+        invalidFields.push_back(ui->activeSubstanceLatLabel->text());
     }
 
-    return validFilling;
-}
-
-void MedicineDrugForm::showWarning() {
-    QString openModeStr = openMode_ == OpenMode::CREATE ? "добавления" : "редактирования";
-    QString warning;
-
-    if (brands_.empty())
-        warning += "Не заданы торговые наименования \n";
-    if (ui->prescription->isChecked() &&
-        ui->activeSubstanceLat->text().isEmpty())
-    {
-        warning += "Не задано название активного вещества (лат.)\n";
-    }
-
-    QMessageBox::critical(this, "Ошибка " + openModeStr + " лекарства",
-                           warning,
-                          QMessageBox::Ok);
+    if (invalidFields.empty())
+        return std::nullopt;
+    return invalidFields;
 }
 
 void MedicineDrugForm::fillDosagesList() {
@@ -192,7 +178,9 @@ void MedicineDrugForm::fillDosagesList() {
 }
 
 void MedicineDrugForm::addDosage(const Dosage& dosage) {
-    dosagesModel_->appendRow(createDosageRow(dosagesModel_->rowCount(), dosage));
+    int rowCount = dosagesModel_->rowCount();
+    dosagesModel_->appendRow(createDosageRow(rowCount, dosage));
+    ui->dosages->selectRow(rowCount);
 }
 
 QList<QStandardItem*> MedicineDrugForm::createDosageRow(size_t row, const Dosage& dosage) {
