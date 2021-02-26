@@ -67,13 +67,14 @@ void MedicineDrugForm::on_addReleaseFormsBtn_clicked() {
 
 void MedicineDrugForm::on_addDosagesBtn_clicked() {
     addDosage();
-    int row = dosagesModel_->rowCount();
-    QModelIndex index = dosagesModel_->index(row - 1, 0);
-    ui->dosages->edit(index);
+    ui->dosages->edit(dosagesModel_->index(dosagesModel_->rowCount() - 1, 0));
 }
 
 void MedicineDrugForm::on_deleteDosageBtn_clicked() {
-    dosagesModel_->removeRows(ui->dosages->currentIndex().row(), 1);
+    int curRow = ui->dosages->currentIndex().row();
+    dosagesModel_->removeRow(curRow);
+    ui->dosages->selectRow(std::min(dosagesModel_->rowCount() - 1, curRow));
+    ui->dosages->setFocus();
 }
 
 void MedicineDrugForm::on_editDosageBtn_clicked() {
@@ -142,6 +143,9 @@ void MedicineDrugForm::setWidgetsSettings() {
     setDoubleValidator(ui->price);
     setEnglishValidator(ui->activeSubstanceLat);
     ui->errorLabel->setHidden(true);
+
+    if (dosagesModel_->rowCount() != 0)
+        ui->dosages->selectRow(0);
 }
 
 std::pair<bool, std::vector<QString>> MedicineDrugForm::isValid() {
@@ -172,7 +176,9 @@ void MedicineDrugForm::fillDosagesList() {
 }
 
 void MedicineDrugForm::addDosage(const Dosage& dosage) {
-    dosagesModel_->appendRow(createDosageRow(dosagesModel_->rowCount(), dosage));
+    int rowCount = dosagesModel_->rowCount();
+    dosagesModel_->appendRow(createDosageRow(rowCount, dosage));
+    ui->dosages->selectRow(rowCount);
 }
 
 QList<QStandardItem*> MedicineDrugForm::createDosageRow(size_t row, const Dosage& dosage) {
