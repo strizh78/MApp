@@ -143,6 +143,9 @@ void MedicineDrugForm::setWidgetsSettings() {
     Validators::setDoubleValidator(ui->price);
     Validators::setEnglishValidator(ui->activeSubstanceLat);
 
+    ui->deleteDosageBtn->setEnabled(false);
+    ui->editDosageBtn->setEnabled(false);
+
     if (dosagesModel_->rowCount() != 0) {
         ui->dosages->selectRow(0);
     }
