@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QWidget>
-#include <QCheckBox>
+#include <QHeaderView>
 
 #include <vector>
 
@@ -14,7 +14,8 @@ class TableSettingsForm : public QWidget
     Q_OBJECT
 
 public:
-    explicit TableSettingsForm(const QStringList& columnNames, QWidget *parent = nullptr);
+    explicit TableSettingsForm(QHeaderView* headerView,
+                               QWidget *parent = nullptr);
     ~TableSettingsForm();
 
 signals:
@@ -25,6 +26,9 @@ private slots:
     void on_tableSettingsSolutionBox_rejected();
 
 private:
+    void addCheckBox(const QString& text, int num);
+
+private:
     Ui::TableSettingsForm *ui;
-    std::vector<QCheckBox> columnCheckBoxes;
+    QHeaderView* headerView_;
 };

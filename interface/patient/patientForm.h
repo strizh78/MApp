@@ -38,6 +38,7 @@ private slots:
 private:
     void setupUi();
     void setupInfoTable();
+    void enableTableButtons(bool enabled);
 
     void fillFormPatientInfo();
     Patient buildPatientFromFormData();

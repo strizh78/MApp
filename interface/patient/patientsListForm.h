@@ -30,7 +30,6 @@ public:
 private slots:
     void addPatient(const Patient& patient);
     void editPatient(const Patient& oldPatient, const Patient& editedPatient);
-    void changeColumnsDisplayOption(std::vector<bool> columns);
 
     void on_createPatient_clicked();
 
@@ -53,6 +52,5 @@ private:
     std::shared_ptr<DatabaseInterface> database_;
 
     std::shared_ptr<QStandardItemModel> tableViewModel_;
-    std::shared_ptr<TableSettingsForm> tableSettingsForm_ = nullptr;
     friend class PatientTests;
 };

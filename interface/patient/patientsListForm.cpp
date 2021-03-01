@@ -19,8 +19,6 @@ PatientsListForm::PatientsListForm(std::shared_ptr<DatabaseInterface> database,
     tableViewModel_->setHorizontalHeaderLabels(columnNames);
     ui->tableView->setModel(tableViewModel_.get());
 
-    tableSettingsForm_ = std::make_shared<TableSettingsForm>(columnNames);
-
     std::vector<Patient> patientsList;
     database_->patients(patientsList);
     fillPatientsTable(patientsList);
@@ -104,15 +102,9 @@ void PatientsListForm::showPatientInfo(const Patient& patient) {
 }
 
 void PatientsListForm::on_tableSettings_clicked() {
-    connect(tableSettingsForm_.get(), SIGNAL(signalChangeColumnsDisplay(std::vector<bool>)),
-            this, SLOT(changeColumnsDisplayOption(std::vector<bool>)));
-    tableSettingsForm_->show();
-}
-
-void PatientsListForm::changeColumnsDisplayOption(std::vector<bool> columns) {
-    for (size_t i = 0; i < columns.size(); ++i) {
-        ui->tableView->horizontalHeader()->setSectionHidden(i, columns[i]);
-    }
+    auto* tableSettingsForm = new TableSettingsForm(ui->tableView->horizontalHeader(), this);
+    tableSettingsForm->setAttribute(Qt::WA_DeleteOnClose, true);
+    tableSettingsForm->show();
 }
 
 void PatientsListForm::on_searchLine_returnPressed() {

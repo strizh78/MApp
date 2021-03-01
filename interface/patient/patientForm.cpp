@@ -3,10 +3,10 @@
 
 #include "database/databasetest.h"
 
+#include "interface/utils.h"
+
 #include <QMessageBox>
 
-#include "interface/utils.h"
-#include <iostream>
 namespace {
     QList<QStandardItem*> createInfoRow(const QString& key, const QString& value) {
         QList<QStandardItem*> lst;
@@ -137,9 +137,12 @@ void PatientForm::fillFormPatientInfo() {
     ui->dateEdit->setDate(patient_.birthDate());
     ui->addressEdit->setText(patient_.address());
 
-    auto keys = patient_.additionalInfo().keys();
+    const auto& keys = patient_.additionalInfo().keys();
     for (auto& key : keys) {
         addPatientInfo(key, patient_.additionalInfo()[key]);
+    }
+    if (!keys.empty()) {
+        ui->additionalInfo->selectRow(0);
     }
 }
 
@@ -190,34 +193,33 @@ void PatientForm::on_solutionBox_rejected() {
 
 void PatientForm::addPatientInfo(const QString& key, const QString& value) {
     infoViewModel_->appendRow(createInfoRow(key, value));
+    enableTableButtons(true);
 }
 
 void PatientForm::on_createInfo_clicked() {
-    infoViewModel_->appendRow(createInfoRow("", ""));
+    addPatientInfo("", "");
 
     int rowNumber = infoViewModel_->rowCount() - 1;
     ui->additionalInfo->selectRow(rowNumber);
     ui->additionalInfo->edit(infoViewModel_->index(rowNumber, 0));
-
-    ui->editInfo->setEnabled(true);
-    ui->deleteInfo->setEnabled(true);
 }
 
 void PatientForm::on_deleteInfo_clicked() {
-    const auto& selectedRows = ui->additionalInfo->selectionModel()->selectedRows();
+    int currentRow = ui->additionalInfo->currentIndex().row();
+    infoViewModel_->removeRow(currentRow);
 
-    if (selectedRows.empty()) {
-        return;
-    }
-
-    infoViewModel_->removeRow(selectedRows[0].row());
-    ui->additionalInfo->selectRow(std::min(infoViewModel_->rowCount() - 1, selectedRows[0].row()));
+    int rowCount = infoViewModel_->rowCount();
+    ui->additionalInfo->selectRow(std::min(rowCount - 1, currentRow));
     ui->additionalInfo->setFocus();
 
-    if (infoViewModel_->rowCount() == 0) {
-        ui->editInfo->setEnabled(false);
-        ui->deleteInfo->setEnabled(false);
+    if (rowCount == 0) {
+        enableTableButtons(false);
     }
+}
+
+void PatientForm::enableTableButtons(bool enabled) {
+    ui->editInfo->setEnabled(enabled);
+    ui->deleteInfo->setEnabled(enabled);
 }
 
 void PatientForm::on_editInfo_clicked() {

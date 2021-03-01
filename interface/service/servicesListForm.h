@@ -40,7 +40,6 @@ private slots:
 
     void on_tableView_doubleClicked(const QModelIndex &index);
 
-    void changeColumnsDisplayOption(std::vector<bool> columns);
     void on_tableSettings_clicked();
 
     void searchInTable(const QString& searchRequest);
@@ -52,5 +51,4 @@ private:
     std::shared_ptr<DatabaseInterface> database_;
 
     std::shared_ptr<QStandardItemModel> tableViewModel_;
-    std::shared_ptr<TableSettingsForm> tableSettingsForm_ = nullptr;
 };

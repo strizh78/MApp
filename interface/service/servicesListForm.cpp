@@ -23,8 +23,6 @@ ServicesListForm::ServicesListForm(std::shared_ptr<DatabaseInterface> database,
     tableViewModel_->setHorizontalHeaderLabels(columnNames);
     ui->tableView->setModel(tableViewModel_.get());
 
-    tableSettingsForm_ = std::make_shared<TableSettingsForm>(columnNames);
-
     std::vector<Service> servicesList;
     database_->services(servicesList);
     fillServicesTable(servicesList);
@@ -118,15 +116,9 @@ void ServicesListForm::on_tableView_doubleClicked(const QModelIndex &index) {
 }
 
 void ServicesListForm::on_tableSettings_clicked() {
-    connect(tableSettingsForm_.get(), SIGNAL(signalChangeColumnsDisplay(std::vector<bool>)),
-            this, SLOT(changeColumnsDisplayOption(std::vector<bool>)));
-    tableSettingsForm_->show();
-}
-
-void ServicesListForm::changeColumnsDisplayOption(std::vector<bool> columns) {
-    for (size_t i = 0; i < columns.size(); ++i) {
-        ui->tableView->horizontalHeader()->setSectionHidden(i, columns[i]);
-    }
+    auto* tableSettingsForm = new TableSettingsForm(ui->tableView->horizontalHeader(), this);
+    tableSettingsForm->setAttribute(Qt::WA_DeleteOnClose, true);
+    tableSettingsForm->show();
 }
 
 void ServicesListForm::on_searchLine_returnPressed() {

@@ -1,18 +1,19 @@
 #include "tableSettingsForm.h"
 #include "ui_tableSettingsForm.h"
 
-TableSettingsForm::TableSettingsForm(const QStringList& columnNames, QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::TableSettingsForm),
-    columnCheckBoxes(columnNames.size())
+#include <QCheckBox>
+
+TableSettingsForm::TableSettingsForm(QHeaderView* headerView, QWidget *parent)
+    : QWidget(parent)
+    , ui(new Ui::TableSettingsForm)
+    , headerView_(headerView)
 {
     ui->setupUi(this);
+    setWindowFlag(Qt::Window);
 
-    for (int i = 0; i < columnNames.size(); ++i) {
-        columnCheckBoxes[i].setText(columnNames[i]);
-
-        columnCheckBoxes[i].setChecked(true);
-        ui->verticalLayout->insertWidget(i + 1, &columnCheckBoxes[i]);
+    auto* model = headerView_->model();
+    for (int i = 0; i < model->columnCount(); ++i) {
+        addCheckBox(model->headerData(i, Qt::Horizontal).toString(), i);
     }
 }
 
@@ -21,16 +22,20 @@ TableSettingsForm::~TableSettingsForm() {
 }
 
 void TableSettingsForm::on_tableSettingsSolutionBox_accepted() {
-    std::vector<bool> columns(columnCheckBoxes.size());
-
-    for (size_t i = 0; i < columnCheckBoxes.size(); ++i) {
-        columns[i] = !columnCheckBoxes[i].isChecked();
+    for (int i = 0; i < headerView_->model()->columnCount(); ++i) {
+        auto* checkBox = findChild<QCheckBox*>("checkBox_" + QString::number(i));
+        headerView_->setSectionHidden(i, !checkBox->isChecked());
     }
-
-    emit signalChangeColumnsDisplay(columns);
     close();
 }
 
 void TableSettingsForm::on_tableSettingsSolutionBox_rejected() {
     close();
+}
+
+void TableSettingsForm::addCheckBox(const QString& prefix, int number) {
+    QCheckBox* checkBox = new QCheckBox(prefix);
+    checkBox->setObjectName("checkBox_" + QString::number(number));
+    checkBox->setChecked(!headerView_->isSectionHidden(number));
+    ui->verticalLayout->insertWidget(number + 1, checkBox);
 }

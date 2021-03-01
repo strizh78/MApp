@@ -57,9 +57,6 @@ void MedicineDrugForm::on_addDosagesBtn_clicked() {
     QModelIndex index = dosagesModel_->index(row - 1, 0);
     ui->dosages->selectRow(ui->dosages->model()->rowCount() - 1);
     ui->dosages->edit(index);
-
-    ui->deleteDosageBtn->setEnabled(true);
-    ui->editDosageBtn->setEnabled(true);
 }
 
 void MedicineDrugForm::on_deleteDosageBtn_clicked() {
@@ -143,11 +140,11 @@ void MedicineDrugForm::setWidgetsSettings() {
     Validators::setDoubleValidator(ui->price);
     Validators::setEnglishValidator(ui->activeSubstanceLat);
 
-    ui->deleteDosageBtn->setEnabled(false);
-    ui->editDosageBtn->setEnabled(false);
-
     if (dosagesModel_->rowCount() != 0) {
         ui->dosages->selectRow(0);
+    } else {
+        ui->deleteDosageBtn->setEnabled(false);
+        ui->editDosageBtn->setEnabled(false);
     }
 }
 
@@ -196,6 +193,7 @@ void MedicineDrugForm::fillDosagesList() {
 
 void MedicineDrugForm::addDosage(const Dosage& dosage) {
     dosagesModel_->appendRow(createDosageRow(dosagesModel_->rowCount(), dosage));
+
     ui->deleteDosageBtn->setEnabled(true);
     ui->editDosageBtn->setEnabled(true);
 }
