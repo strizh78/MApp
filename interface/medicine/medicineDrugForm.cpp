@@ -167,7 +167,7 @@ std::optional<std::vector<QString>> MedicineDrugForm::isValid() {
         invalidFields.push_back(ui->brandsLabel->text());
     }
     if (ui->prescription->isChecked() &&
-        ui->activeSubstance->text().isEmpty())
+        ui->activeSubstanceLat->text().isEmpty())
     {
         invalidFields.push_back(ui->activeSubstanceLatLabel->text());
     }
