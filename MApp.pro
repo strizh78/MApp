@@ -6,6 +6,7 @@ CONFIG += c++17
 
 # Temporary solution because qt does not support sdk=11.1
 macx: CONFIG += sdk_no_version_check
+QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.15
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -16,7 +17,6 @@ SOURCES += \
     interface/medicine/medicineDrugForm.cpp \
     interface/medicine/medicineDrugListForm.cpp \
     interface/medicine/medicineDrugReleaseFormSelectForm.cpp \
-    interface/medicine/medicineTableSettingsForm.cpp \
     \
     interface/patient/patientForm.cpp \
     interface/patient/patientsListForm.cpp \
@@ -49,7 +49,6 @@ HEADERS += \
     interface/medicine/medicineDrugForm.h \
     interface/medicine/medicineDrugListForm.h \
     interface/medicine/medicineDrugReleaseFormSelectForm.h \
-    interface/medicine/medicineTableSettingsForm.h \
     \
     interface/patient/patientForm.h \
     interface/patient/patientsListForm.h \
@@ -78,7 +77,6 @@ FORMS += \
     interface/medicine/medicineDrugForm.ui \
     interface/medicine/medicineDrugListForm.ui \
     interface/medicine/medicineDrugReleaseFormSelectForm.ui \
-    interface/medicine/medicineTableSettingsForm.ui \
     \
     interface/patient/patientForm.ui \
     interface/patient/patientsListForm.ui \
