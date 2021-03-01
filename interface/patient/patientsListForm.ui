@@ -149,6 +149,9 @@ background-repeat: none;</string>
            <property name="placeholderText">
             <string>Введите текст для поиска</string>
            </property>
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
         </layout>

@@ -94,8 +94,6 @@ PatientForm::PatientForm(std::shared_ptr<DatabaseInterface> database,
     setupUi();
     setupInfoTable();
     fillFormPatientInfo();
-    ui->editInfo->setEnabled(false);
-    ui->deleteInfo->setEnabled(false);
 }
 
 PatientForm::~PatientForm() {
@@ -106,6 +104,9 @@ void PatientForm::setupUi() {
     ui->setupUi(this);
 
     ui->errorLabel->setVisible(false);
+
+    ui->editInfo->setEnabled(false);
+    ui->deleteInfo->setEnabled(false);
 
     setAgeLabelTextColor(palette(), ui->ageDataLabel);
     on_dateEdit_userDateChanged(ui->dateEdit->date());
@@ -193,23 +194,34 @@ void PatientForm::addPatientInfo(const QString& key, const QString& value) {
 
 void PatientForm::on_createInfo_clicked() {
     infoViewModel_->appendRow(createInfoRow("", ""));
-    ui->additionalInfo->selectRow(infoViewModel_->rowCount() - 1);
+
+    int rowNumber = infoViewModel_->rowCount() - 1;
+    ui->additionalInfo->selectRow(rowNumber);
+    ui->additionalInfo->edit(infoViewModel_->index(rowNumber, 0));
+
+    ui->editInfo->setEnabled(true);
+    ui->deleteInfo->setEnabled(true);
 }
 
 void PatientForm::on_deleteInfo_clicked() {
     const auto& selectedRows = ui->additionalInfo->selectionModel()->selectedRows();
-    if (!selectedRows.empty()) {
-        infoViewModel_->removeRow(selectedRows[0].row());
+
+    if (selectedRows.empty()) {
+        return;
+    }
+
+    infoViewModel_->removeRow(selectedRows[0].row());
+    ui->additionalInfo->selectRow(std::min(infoViewModel_->rowCount() - 1, selectedRows[0].row()));
+    ui->additionalInfo->setFocus();
+
+    if (infoViewModel_->rowCount() == 0) {
+        ui->editInfo->setEnabled(false);
+        ui->deleteInfo->setEnabled(false);
     }
 }
 
 void PatientForm::on_editInfo_clicked() {
     ui->additionalInfo->edit(ui->additionalInfo->currentIndex());
-}
-
-void PatientForm::on_additionalInfo_entered(const QModelIndex &index) {
-    ui->editInfo->setEnabled(true);
-    ui->deleteInfo->setEnabled(true);
 }
 
 void PatientForm::on_dateEdit_userDateChanged(const QDate &date) {
