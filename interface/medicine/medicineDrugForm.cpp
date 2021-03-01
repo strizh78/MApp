@@ -67,14 +67,24 @@ void MedicineDrugForm::on_addReleaseFormsBtn_clicked() {
 
 void MedicineDrugForm::on_addDosagesBtn_clicked() {
     addDosage();
-    ui->dosages->edit(dosagesModel_->index(dosagesModel_->rowCount() - 1, 0));
+    int rowCount = dosagesModel_->rowCount();
+    ui->dosages->edit(dosagesModel_->index(rowCount - 1, 0));
+
+    if (rowCount != 0)
+        setButtonsEnabled();
 }
 
 void MedicineDrugForm::on_deleteDosageBtn_clicked() {
     int curRow = ui->dosages->currentIndex().row();
     dosagesModel_->removeRow(curRow);
-    ui->dosages->selectRow(std::min(dosagesModel_->rowCount() - 1, curRow));
-    ui->dosages->setFocus();
+    int rowCount = dosagesModel_->rowCount();
+
+    if (rowCount > 0) {
+        ui->dosages->selectRow(std::min(rowCount - 1, curRow));
+        ui->dosages->setFocus();
+    }
+    else
+        setButtonsEnabled(false);
 }
 
 void MedicineDrugForm::on_editDosageBtn_clicked() {
@@ -146,6 +156,8 @@ void MedicineDrugForm::setWidgetsSettings() {
 
     if (dosagesModel_->rowCount() != 0)
         ui->dosages->selectRow(0);
+    else
+        setButtonsEnabled(false);
 }
 
 std::optional<std::vector<QString>> MedicineDrugForm::isValid() {
@@ -188,7 +200,6 @@ QList<QStandardItem*> MedicineDrugForm::createDosageRow(size_t row, const Dosage
     QStandardItem* name = new QStandardItem(row, 0);
 
     name->setText(dosage);
-    name->setData(QVariant::fromValue(dosage), Qt::UserRole);
     lst << name;
 
     return lst;
@@ -198,8 +209,10 @@ std::vector<Dosage> MedicineDrugForm::getDosages() {
     std::vector<Dosage> dosages;
 
     for (int i = 0; i < dosagesModel_->rowCount(); ++i) {
-        auto index = dosagesModel_->index(i, 0);
-        dosages.push_back(dosagesModel_->data(index, Qt::UserRole).toString());
+        auto data = dosagesModel_->item(i, 0)->text();
+
+        if (!data.isEmpty())
+            dosages.push_back(data);
     }
     return dosages;
 }
@@ -213,4 +226,9 @@ void MedicineDrugForm::resizeEvent(QResizeEvent* event) {
     }
 
     QWidget::resizeEvent(event);
+}
+
+void MedicineDrugForm::setButtonsEnabled(bool isEnabled) {
+    ui->editDosageBtn->setEnabled(isEnabled);
+    ui->deleteDosageBtn->setEnabled(isEnabled);
 }
