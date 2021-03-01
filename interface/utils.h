@@ -2,6 +2,8 @@
 
 #include <QString>
 #include <QLabel>
+#include <QLineEdit>
+#include <QRegExpValidator>
 
 #include <vector>
 #include <sstream>
@@ -21,4 +23,10 @@ QString toString(const std::vector<T>& src, std::string sep = " ") {
         oss << src.back();
     }
     return QString::fromStdString(oss.str());
+}
+
+namespace Validators {
+void SetValidator(const QRegExp& regExp, QLineEdit* lineEdit);
+void setDoubleValidator(QLineEdit* lineEdit);
+void setEnglishValidator(QLineEdit* lineEdit);
 }

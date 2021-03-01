@@ -65,6 +65,10 @@
          <property name="text">
           <string>Добавить пацента</string>
          </property>
+         <property name="icon">
+          <iconset resource="../icons.qrc">
+           <normaloff>:/icons/greenPlusIcon.png</normaloff>:/icons/greenPlusIcon.png</iconset>
+         </property>
         </widget>
        </item>
       </layout>
@@ -145,6 +149,9 @@ background-repeat: none;</string>
            <property name="placeholderText">
             <string>Введите текст для поиска</string>
            </property>
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
         </layout>
@@ -203,6 +210,14 @@ background-repeat: none;</string>
    </item>
   </layout>
  </widget>
- <resources/>
+ <tabstops>
+  <tabstop>createPatient</tabstop>
+  <tabstop>searchLine</tabstop>
+  <tabstop>tableSettings</tabstop>
+  <tabstop>tableView</tabstop>
+ </tabstops>
+ <resources>
+  <include location="../icons.qrc"/>
+ </resources>
  <connections/>
 </ui>

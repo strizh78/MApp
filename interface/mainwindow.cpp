@@ -2,7 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include "interface/medicine/medicineDrugListForm.h"
-#include "interface/service/servicesList.h"
+#include "interface/service/servicesListForm.h"
 #include "interface/patient/patientsListForm.h"
 
 MainWindow::MainWindow(std::shared_ptr<DatabaseInterface> database,
@@ -19,7 +19,7 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::on_servicesList_clicked() {
-    auto* servicesList = new ServicesList(database_);
+    auto* servicesList = new ServicesListForm(database_);
     servicesList->setAttribute(Qt::WA_DeleteOnClose, true);
     servicesList->show();
 }

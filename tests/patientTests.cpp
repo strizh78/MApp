@@ -3,8 +3,6 @@
 #include "interface/patient/patientsListForm.h"
 
 #include "ui_patientForm.h"
-#include "ui_patientInfoForm.h"
-#include "ui_patientsListForm.h"
 
 PatientTests::PatientTests(std::shared_ptr<DatabaseInterface> database, QObject *parent)
     : QObject(parent)

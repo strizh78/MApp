@@ -5,23 +5,10 @@
 #include "medicineDrugBrandSelectForm.h"
 #include "interface/utils.h"
 
+#include "interface/utils.h"
+
 #include <QMessageBox>
 #include <QValidator>
-
-namespace {
-
-void setDoubleValidator(QLineEdit* lineEdit) {
-    QRegExp regExp("[0-9]*[.]?[0-9]*");
-    QRegExpValidator* regExpValidator = new QRegExpValidator(regExp);
-    lineEdit->setValidator(regExpValidator);
-}
-
-void setEnglishValidator(QLineEdit* lineEdit) {
-    QRegExp regExp("[a-zA-Z]*");
-    QRegExpValidator* regExpValidator = new QRegExpValidator(regExp);
-    lineEdit->setValidator(regExpValidator);
-}
-}
 
 MedicineDrugForm::MedicineDrugForm(std::shared_ptr<DatabaseInterface> database,
                                    std::optional<medicine::Drug> drug,
@@ -67,6 +54,7 @@ void MedicineDrugForm::on_addReleaseFormsBtn_clicked() {
 
 void MedicineDrugForm::on_addDosagesBtn_clicked() {
     addDosage();
+    ui->dosages->selectRow(ui->dosages->model()->rowCount() - 1);
     ui->dosages->edit(dosagesModel_->index(dosagesModel_->rowCount() - 1, 0));
 }
 
@@ -140,12 +128,16 @@ void MedicineDrugForm::init() {
 }
 
 void MedicineDrugForm::setWidgetsSettings() {
-    setDoubleValidator(ui->price);
-    setEnglishValidator(ui->activeSubstanceLat);
+    Validators::setDoubleValidator(ui->price);
+    Validators::setEnglishValidator(ui->activeSubstanceLat);
     ui->errorLabel->setHidden(true);
-
-    if (dosagesModel_->rowCount() != 0)
+  
+    if (dosagesModel_->rowCount() != 0) {
         ui->dosages->selectRow(0);
+    } else {
+        ui->deleteDosageBtn->setEnabled(false);
+        ui->editDosageBtn->setEnabled(false);
+    }
 }
 
 std::optional<std::vector<QString>> MedicineDrugForm::isValid() {
@@ -181,6 +173,9 @@ void MedicineDrugForm::addDosage(const Dosage& dosage) {
     int rowCount = dosagesModel_->rowCount();
     dosagesModel_->appendRow(createDosageRow(rowCount, dosage));
     ui->dosages->selectRow(rowCount);
+  
+    ui->deleteDosageBtn->setEnabled(true);
+    ui->editDosageBtn->setEnabled(true);
 }
 
 QList<QStandardItem*> MedicineDrugForm::createDosageRow(size_t row, const Dosage& dosage) {
