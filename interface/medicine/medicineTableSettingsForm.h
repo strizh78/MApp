@@ -1,13 +1,13 @@
 #pragma once
 
-#include <QDialog>
 #include <QHeaderView>
+#include <QWidget>
 
 namespace Ui {
 class MedicineTableSettingsForm;
 }
 
-class MedicineTableSettingsForm : public QDialog {
+class MedicineTableSettingsForm : public QWidget {
     Q_OBJECT
 
 public:

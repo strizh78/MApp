@@ -4,9 +4,9 @@
 
 #include "database/databaseinterface.h"
 
-#include <QWidget>
 #include <QStandardItemModel>
 #include <QStyledItemDelegate>
+#include <QWidget>
 
 #include <memory>
 #include <vector>
