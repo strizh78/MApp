@@ -48,9 +48,12 @@ float Drug::price() const {
 }
 
 QString Drug::getFullName() const {
+    if (activeSubstance_.isEmpty())
+        return  activeSubstancetLat_;
+
     QString fullName = activeSubstance_;
 
-    if (activeSubstancetLat_.size())
+    if (!activeSubstancetLat_.isEmpty())
         fullName += " (" + activeSubstancetLat_ + ")";
 
     return fullName;

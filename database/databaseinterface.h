@@ -15,7 +15,8 @@ public:
     virtual ~DatabaseInterface() = default;
 
     virtual void homeopathyDrugs(std::vector<homeopathy::Drug>& ) = 0;
-    virtual void availableHomeopathyDrugs(std::vector<homeopathy::Drug>& ) = 0;
+    virtual void addHomeopathyDrug(const homeopathy::Drug& drug) = 0;
+    virtual void editHomeopathyDrug(const homeopathy::Drug& oldDrug, const homeopathy::Drug& newDrug) = 0;
 
     virtual void medicineDrugs(std::vector<medicine::Drug>&) = 0;
     virtual void addMedicineDrug(const medicine::Drug& drug) = 0;

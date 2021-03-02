@@ -1,42 +1,43 @@
 #pragma once
 
 #include <QString>
+#include <QMetaType>
 
 #include <vector>
 
 namespace homeopathy {
 
 enum class Groups {
-    MINERALS,
-    PLANTS,
     ANIMALS,
-    IMMATERIAL
+    MINERALS,
+    IMMATERIAL,
+    PLANTS,
+    NUMBER_OF_GROUPS
 };
 
-enum class Dilutions {
-    D6,
-    D12,
-    C3,
-    C6,
-    C12,
-    C30,
-    C200,
-    C1000 = 1000,
-    M1 = 1000,
-    M10,
-    M50,
-    LM1,
-    LM2,
-    LM3,
-    LM4,
-    LM5,
-    LM6,
-    LM7,
-    LM8,
-    LM9,
-    LM10,
-    LM11,
-    LM12
+const std::vector<QString> DILUTIONS = {
+    "D6",
+    "D12",
+    "C3",
+    "C6",
+    "C12",
+    "C30",
+    "C200",
+    "C1000 (M1)",
+    "M10",
+    "M50",
+    "LM1",
+    "LM2",
+    "LM3",
+    "LM4",
+    "LM5",
+    "LM6",
+    "LM7",
+    "LM8",
+    "LM9",
+    "LM10",
+    "LM11",
+    "LM12"
 };
 
 class Drug
@@ -45,23 +46,27 @@ public:
     Drug() = default;
     Drug(const QString& name,
          const QString& nameLat,
-         Groups group,
-         const std::vector<Dilutions>& dilutions,
-         bool available);
+         const Groups group,
+         const std::vector<QString>& dilutions);
 
     QString name() const;
     QString nameLat() const;
     Groups group() const;
-    std::vector<Dilutions> availableDilutions() const;
+    std::vector<QString> availableDilutions() const;
     bool isAvailable() const;
     QString getFullName() const;
+    bool operator ==(const homeopathy::Drug& other);
 
 private:
     QString name_;
     QString nameLat_;
     Groups group_;
-    std::vector<Dilutions> availableDilutions_;
-    bool isAvailable_;
+    std::vector<QString> availableDilutions_;
 };
 
+QString groupToString(Groups group);
+
 }
+
+Q_DECLARE_METATYPE(homeopathy::Drug); // for QVariant
+Q_DECLARE_METATYPE(homeopathy::Groups);

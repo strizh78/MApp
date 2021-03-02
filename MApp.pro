@@ -13,6 +13,9 @@ QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.15
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    interface/homeopathy/homeopathyDrugDilutionsSelectForm.cpp \
+    interface/homeopathy/homeopathyDrugForm.cpp \
+    interface/homeopathy/homeopathyDrugListForm.cpp \
     interface/medicine/medicineDrugBrandSelectForm.cpp \
     interface/medicine/medicineDrugForm.cpp \
     interface/medicine/medicineDrugListForm.cpp \
@@ -45,6 +48,9 @@ HEADERS += \
     drugs/homeopathy.h \
     drugs/medicines.h \
     \
+    interface/homeopathy/homeopathyDrugDilutionsSelectForm.h \
+    interface/homeopathy/homeopathyDrugForm.h \
+    interface/homeopathy/homeopathyDrugListForm.h \
     interface/medicine/medicineDrugBrandSelectForm.h \
     interface/medicine/medicineDrugForm.h \
     interface/medicine/medicineDrugListForm.h \
@@ -71,6 +77,9 @@ HEADERS += \
     tests/serviceTests.h
 
 FORMS += \
+    interface/homeopathy/homeopathyDrugDilutionsSelectForm.ui \
+    interface/homeopathy/homeopathyDrugForm.ui \
+    interface/homeopathy/homeopathyDrugListForm.ui \
     interface/mainwindow.ui \
     \
     interface/medicine/medicineDrugBrandSelectForm.ui \

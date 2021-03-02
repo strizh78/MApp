@@ -77,9 +77,6 @@
          <property name="text">
           <string/>
          </property>
-         <property name="pixmap">
-          <pixmap resource="../icons.qrc">:/icons/searchIcon.png</pixmap>
-         </property>
         </widget>
        </item>
        <item>

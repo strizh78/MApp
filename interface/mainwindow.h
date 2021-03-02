@@ -22,6 +22,8 @@ private slots:
 
     void on_medicineList_clicked();
 
+    void on_homeopathyList_clicked();
+
 private:
     Ui::MainWindow *ui;
     std::shared_ptr<DatabaseInterface> database_;

@@ -7,7 +7,8 @@ public:
     DatabaseTest() = default;
 
     void homeopathyDrugs(std::vector<homeopathy::Drug>& receiver) override;
-    void availableHomeopathyDrugs(std::vector<homeopathy::Drug>& receiver) override;
+    void addHomeopathyDrug(const homeopathy::Drug& drug) override;
+    void editHomeopathyDrug(const homeopathy::Drug& oldDrug, const homeopathy::Drug& newDrug) override;
 
     void medicineDrugs(std::vector<medicine::Drug>& receiver) override;
     void addMedicineDrug(const medicine::Drug& drug) override;
@@ -23,10 +24,12 @@ public:
 
 private:
     static const std::vector<medicine::Drug> initMedicineDrugs();
+    static const std::vector<homeopathy::Drug> initHomeopathyDrugs();
     static const std::vector<Service> initServices();
     static const std::vector<Patient> initPatients();
 
     static std::vector<medicine::Drug> medicinesList_;
+    static std::vector<homeopathy::Drug> homeopathyList_;
     static std::vector<Service> servicesList_;
     static std::vector<Patient> patientsList_;
 };

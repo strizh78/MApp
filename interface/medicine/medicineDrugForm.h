@@ -51,6 +51,7 @@ private:
     QList<QStandardItem*> createDosageRow(size_t row, const Dosage& dosage);
     std::vector <Dosage> getDosages();
     void resizeEvent(QResizeEvent *event) override;
+    void setButtonsEnabled(bool isEnabled);
 
 private:
     enum class OpenMode {
