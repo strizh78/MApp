@@ -32,8 +32,8 @@
      <rect>
       <x>0</x>
       <y>30</y>
-      <width>250</width>
-      <height>119</height>
+      <width>252</width>
+      <height>182</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -97,6 +97,25 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QPushButton" name="homeopathyList">
+       <property name="minimumSize">
+        <size>
+         <width>250</width>
+         <height>45</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>250</width>
+         <height>45</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Гомеопатические препараты</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </widget>
   </widget>
@@ -106,7 +125,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>24</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>

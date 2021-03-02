@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include "interface/medicine/medicineDrugListForm.h"
+#include "interface/homeopathy/homeopathyDrugListForm.h"
 #include "interface/service/servicesListForm.h"
 #include "interface/patient/patientsListForm.h"
 
@@ -34,4 +35,10 @@ void MainWindow::on_patientsList_clicked() {
     auto* patientsList = new PatientsListForm(database_);
     patientsList->setAttribute(Qt::WA_DeleteOnClose, true);
     patientsList->show();
+}
+
+void MainWindow::on_homeopathyList_clicked() {
+    auto* homeopathyList = new HomeopathyDrugListForm(database_);
+    homeopathyList->setAttribute(Qt::WA_DeleteOnClose, true);
+    homeopathyList->show();
 }
