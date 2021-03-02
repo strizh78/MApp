@@ -8,8 +8,7 @@ namespace Ui {
 class HomeopathyDrugDilutionsSelectForm;
 }
 
-class HomeopathyDrugDilutionsSelectForm : public QWidget
-{
+class HomeopathyDrugDilutionsSelectForm : public QWidget {
     Q_OBJECT
 
 public:

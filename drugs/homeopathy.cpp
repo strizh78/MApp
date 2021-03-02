@@ -34,7 +34,6 @@ bool Drug::isAvailable() const {
 }
 
 QString Drug::getFullName() const {
-
     if (name_.isEmpty())
         return  nameLat_;
 
@@ -50,7 +49,7 @@ bool Drug::operator ==(const Drug& other) {
     return name_ == other.name() &&
            nameLat_ == other.nameLat() &&
            group_ == other.group() &&
-            availableDilutions_ == other.availableDilutions_;
+           availableDilutions_ == other.availableDilutions_;
 }
 
 QString groupToString(Groups group) {

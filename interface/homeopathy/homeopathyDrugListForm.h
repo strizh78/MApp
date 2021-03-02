@@ -11,8 +11,7 @@ namespace Ui {
 class HomeopathyDrugListForm;
 }
 
-class HomeopathyDrugListForm : public QWidget
-{
+class HomeopathyDrugListForm : public QWidget {
     Q_OBJECT
 
 public:

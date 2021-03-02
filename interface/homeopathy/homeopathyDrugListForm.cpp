@@ -105,7 +105,7 @@ void HomeopathyDrugListForm::fillHomeopathyTable(const std::vector<homeopathy::D
     static const QStringList columnNames = {"Наименования", "Группа"};
     tableViewModel_->setHorizontalHeaderLabels(columnNames);
 
-    for (const auto& drug : homeopatyList) {
+    for (const auto& drug : homeopathyList) {
         addHomeopathyDrug(drug);
     }
 
