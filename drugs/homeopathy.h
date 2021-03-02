@@ -12,7 +12,7 @@ enum class Groups {
     MINERALS,
     IMMATERIAL,
     PLANTS,
-    NUMBER_OF_GROUPS = 4
+    NUMBER_OF_GROUPS
 };
 
 const std::vector<QString> DILUTIONS = {

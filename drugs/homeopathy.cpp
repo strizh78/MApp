@@ -63,8 +63,8 @@ QString groupToString(Groups group) {
            return "Неживое";
        case Groups::PLANTS:
            return "Растения";
-   default:
-       return "";
+       default:
+           return "";
    }
 }
 
