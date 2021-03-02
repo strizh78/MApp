@@ -35,8 +35,7 @@ void HomeopathyDrugDilutionsSelectForm::on_buttonBox_rejected() {
 }
 
 void HomeopathyDrugDilutionsSelectForm::fillForm(const std::vector<QString>& selectedDilutions) {
-
-    for (size_t i = 0; i < homeopathy::DILUTIONS.size(); ++i){
+    for (size_t i = 0; i < homeopathy::DILUTIONS.size(); ++i) {
         auto dilution = homeopathy::DILUTIONS[i];
         auto checkBox = new QCheckBox(dilution);
         if (std::find(selectedDilutions.begin(), selectedDilutions.end(), dilution) != selectedDilutions.end())
