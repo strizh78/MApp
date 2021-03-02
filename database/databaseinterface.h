@@ -9,8 +9,7 @@
 
 #include <vector>
 
-class DatabaseInterface
-{
+class DatabaseInterface {
 public:
     DatabaseInterface() = default;
     virtual ~DatabaseInterface() = default;
@@ -23,8 +22,6 @@ public:
     virtual void editMedicineDrug(const medicine::Drug& oldDrug, const medicine::Drug& newDrug) = 0;
 
     virtual void services(std::vector<Service>& ) = 0;
-    virtual void notDeprecatedServices(std::vector<Service>& ) = 0;
-
     virtual void addService(const Service& ) = 0;
     virtual void editService(const Service& , const Service& ) = 0;
 

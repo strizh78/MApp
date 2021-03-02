@@ -1,22 +1,22 @@
-#include "servicetests.h"
+#include "serviceTests.h"
 
-#include "interface/service/serviceEdit.h"
-#include "ui_serviceEdit.h"
+#include "interface/service/serviceForm.h"
+#include "ui_serviceForm.h"
 
 #include "database/databasetest.h"
 
 #include <algorithm>
 
-ServiceTests::ServiceTests(QObject *parent)
+ServiceTests::ServiceTests(std::shared_ptr<DatabaseInterface> database, QObject *parent)
     : QObject(parent)
-    , database_(std::make_shared<DatabaseTest>())
+    , database_(database)
 {
 }
 
 void ServiceTests::createService() {
     Service created("Test service name", 10003.14, QTime(/*hours*/ 5, /*mins*/ 45), true);
 
-    ServiceEdit serviceEdit(database_);
+    ServiceForm serviceEdit(database_);
 
     serviceEdit.ui->nameEdit->setText(created.name());
     serviceEdit.ui->priceEdit->setText(QString::number(created.price()));
@@ -35,7 +35,7 @@ void ServiceTests::editService() {
     Service edited("Test service name edited", 100, QTime(/*hours*/ 0, /*mins*/ 55), true);
     database_->addService(created);
 
-    ServiceEdit serviceEdit(database_, created);
+    ServiceForm serviceEdit(database_, created);
 
     serviceEdit.ui->nameEdit->setText(edited.name());
     serviceEdit.ui->priceEdit->setText(QString::number(edited.price()));

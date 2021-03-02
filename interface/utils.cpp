@@ -20,3 +20,20 @@ QString toString(const std::vector<QString>& src, std::string sep) {
 
     return result;
 }
+
+namespace Validators {
+void SetValidator(const QRegExp& regExp, QLineEdit* lineEdit) {
+    QRegExpValidator* regExpValidator = new QRegExpValidator(regExp);
+    lineEdit->setValidator(regExpValidator);
+}
+
+void setDoubleValidator(QLineEdit* lineEdit) {
+    QRegExp regExp("[0-9]*[.]?[0-9]*");
+    SetValidator(regExp, lineEdit);
+}
+
+void setEnglishValidator(QLineEdit* lineEdit) {
+    QRegExp regExp("[a-zA-Z]*");
+    SetValidator(regExp, lineEdit);
+}
+}

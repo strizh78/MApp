@@ -6,6 +6,7 @@ CONFIG += c++17
 
 # Temporary solution because qt does not support sdk=11.1
 macx: CONFIG += sdk_no_version_check
+QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.15
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -16,11 +17,12 @@ SOURCES += \
     interface/medicine/medicineDrugForm.cpp \
     interface/medicine/medicineDrugListForm.cpp \
     interface/medicine/medicineDrugReleaseFormSelectForm.cpp \
-    interface/medicine/medicineTableSettingsForm.cpp \
     \
     interface/patient/patientForm.cpp \
     interface/patient/patientsListForm.cpp \
-    interface/patient/tableSettingsForm.cpp \
+    interface/service/serviceForm.cpp \
+    interface/service/servicesListForm.cpp \
+    interface/tableSettingsForm.cpp \
     interface/utils.cpp \
     main.cpp \
     \
@@ -33,14 +35,11 @@ SOURCES += \
     database/databasetest.cpp \
     \
     interface/mainwindow.cpp \
-    interface/service/serviceEdit.cpp \
-    interface/service/servicesList.cpp \
-    interface/service/serviceTableSettings.cpp \
     \
     contrib/toggleSwitch/switch.cpp \
     \
     tests/patientTests.cpp \
-    tests/servicetests.cpp
+    tests/serviceTests.cpp
 
 HEADERS += \
     drugs/homeopathy.h \
@@ -50,11 +49,12 @@ HEADERS += \
     interface/medicine/medicineDrugForm.h \
     interface/medicine/medicineDrugListForm.h \
     interface/medicine/medicineDrugReleaseFormSelectForm.h \
-    interface/medicine/medicineTableSettingsForm.h \
     \
     interface/patient/patientForm.h \
     interface/patient/patientsListForm.h \
-    interface/patient/tableSettingsForm.h \
+    interface/service/serviceForm.h \
+    interface/service/servicesListForm.h \
+    interface/tableSettingsForm.h \
     interface/utils.h \
     patient/patient.h \
     service/service.h \
@@ -63,15 +63,12 @@ HEADERS += \
     database/databasetest.h \
     \
     interface/mainwindow.h \
-    interface/service/serviceEdit.h \
-    interface/service/servicesList.h \
-    interface/service/serviceTableSettings.h \
     \
     contrib/toggleSwitch/style.h \
     contrib/toggleSwitch/switch.h \
     \
     tests/patientTests.h \
-    tests/servicetests.h
+    tests/serviceTests.h
 
 FORMS += \
     interface/mainwindow.ui \
@@ -80,15 +77,13 @@ FORMS += \
     interface/medicine/medicineDrugForm.ui \
     interface/medicine/medicineDrugListForm.ui \
     interface/medicine/medicineDrugReleaseFormSelectForm.ui \
-    interface/medicine/medicineTableSettingsForm.ui \
     \
     interface/patient/patientForm.ui \
     interface/patient/patientsListForm.ui \
-    interface/patient/tableSettingsForm.ui \
     \
-    interface/service/serviceEdit.ui \
-    interface/service/serviceTableSettings.ui \
-    interface/service/servicesList.ui
+    interface/service/serviceForm.ui \
+    interface/service/servicesListForm.ui \
+    interface/tableSettingsForm.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

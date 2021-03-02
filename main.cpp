@@ -2,7 +2,7 @@
 
 #include "database/databasetest.h"
 
-#include "tests/servicetests.h"
+#include "tests/serviceTests.h"
 #include "tests/patientTests.h"
 
 #include <QApplication>
@@ -11,7 +11,7 @@
 #include <memory>
 
 void runTests(std::shared_ptr<DatabaseInterface> database, int argc, char *argv[]) {
-//    QTest::qExec(new ServiceTests, argc, argv); [need fix]
+    QTest::qExec(new ServiceTests(database), argc, argv);
     QTest::qExec(new PatientTests(database), argc, argv);
 }
 

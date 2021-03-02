@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ServicesList</class>
- <widget class="QWidget" name="ServicesList">
+ <class>ServicesListForm</class>
+ <widget class="QWidget" name="ServicesListForm">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -65,21 +65,9 @@
          <property name="text">
           <string>Добавить услугу</string>
          </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="selectService">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>45</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Просмотреть информацию</string>
+         <property name="icon">
+          <iconset resource="../icons.qrc">
+           <normaloff>:/icons/greenPlusIcon.png</normaloff>:/icons/greenPlusIcon.png</iconset>
          </property>
         </widget>
        </item>
@@ -161,6 +149,9 @@ background-repeat: none;</string>
            <property name="placeholderText">
             <string>Введите текст для поиска</string>
            </property>
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
         </layout>
@@ -223,9 +214,10 @@ background-repeat: none;</string>
   <tabstop>tableView</tabstop>
   <tabstop>searchLine</tabstop>
   <tabstop>createService</tabstop>
-  <tabstop>selectService</tabstop>
   <tabstop>tableSettings</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../icons.qrc"/>
+ </resources>
  <connections/>
 </ui>

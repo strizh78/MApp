@@ -1,7 +1,7 @@
 #pragma once
 
 #include "service/service.h"
-#include "serviceTableSettings.h"
+#include "interface/tableSettingsForm.h"
 
 #include "database/databaseinterface.h"
 
@@ -13,16 +13,16 @@
 #include <vector>
 
 namespace Ui {
-class ServicesList;
+class ServicesListForm;
 }
 
-class ServicesList : public QWidget {
+class ServicesListForm : public QWidget {
     Q_OBJECT
 
 public:
-    explicit ServicesList(std::shared_ptr<DatabaseInterface> database,
+    explicit ServicesListForm(std::shared_ptr<DatabaseInterface> database,
                           QWidget *parent = nullptr);
-    ~ServicesList();
+    ~ServicesListForm();
 
 private:
     void showServiceInfo(const Service& service);
@@ -38,10 +38,8 @@ private slots:
 
     void on_createService_clicked();
 
-    void on_selectService_clicked();
     void on_tableView_doubleClicked(const QModelIndex &index);
 
-    void changeColumnsDisplayOption(std::vector<bool> columns);
     void on_tableSettings_clicked();
 
     void searchInTable(const QString& searchRequest);
@@ -49,9 +47,8 @@ private slots:
     void on_searchLine_textChanged(const QString &arg1);
 
 private:
-    Ui::ServicesList *ui;
+    Ui::ServicesListForm *ui;
     std::shared_ptr<DatabaseInterface> database_;
 
     std::shared_ptr<QStandardItemModel> tableViewModel_;
-    std::shared_ptr<ServiceTableSettings> tableSettingsForm_ = nullptr;
 };

@@ -11,19 +11,11 @@ public:
     Service(const QString& name, float price, QTime duration, bool deprecated = false);
 
     QString name() const;
-    void setName(const QString& name);
-
     float price() const;
-    void setPrice(float price);
-
     QTime duration() const;
-    void setDuration(QTime duration);
-
     bool isDeprecated() const;
-    void setDeprecated(bool deprecated);
 
     bool operator==(const Service& other) const;
-
     bool isValid() const;
 
 private:

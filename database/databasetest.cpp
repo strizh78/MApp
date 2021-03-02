@@ -170,10 +170,6 @@ void DatabaseTest::services(std::vector<Service>& receiver) {
     receiver = servicesList_;
 }
 
-void DatabaseTest::notDeprecatedServices(std::vector<Service>& receiver) {
-    Q_UNUSED(receiver);
-}
-
 void DatabaseTest::addService(const Service& newService) {
     servicesList_.push_back(newService);
 }

@@ -1,7 +1,7 @@
-#include "servicesList.h"
-#include "ui_servicesList.h"
+#include "servicesListForm.h"
+#include "ui_servicesListForm.h"
 
-#include "serviceEdit.h"
+#include "serviceForm.h"
 
 #include "database/databasetest.h"
 
@@ -9,24 +9,30 @@
 
 #include <algorithm>
 
-ServicesList::ServicesList(std::shared_ptr<DatabaseInterface> database,
+ServicesListForm::ServicesListForm(std::shared_ptr<DatabaseInterface> database,
                            QWidget *parent)
     : QWidget(parent)
-    , ui(new Ui::ServicesList)
+    , ui(new Ui::ServicesListForm)
     , database_(database)
 {
     ui->setupUi(this);
+
+    const QStringList columnNames = {"Наименование", "Цена", "Длительность"};
+
+    tableViewModel_ = std::make_shared<QStandardItemModel>();
+    tableViewModel_->setHorizontalHeaderLabels(columnNames);
+    ui->tableView->setModel(tableViewModel_.get());
 
     std::vector<Service> servicesList;
     database_->services(servicesList);
     fillServicesTable(servicesList);
 }
 
-ServicesList::~ServicesList() {
+ServicesListForm::~ServicesListForm() {
     delete ui;
 }
 
-void ServicesList::resizeEvent(QResizeEvent *event) {
+void ServicesListForm::resizeEvent(QResizeEvent *event) {
     static const std::vector<int> scale = {4, 1, 1};
     static const int dimension = std::accumulate(scale.begin(), scale.end(), 0);
 
@@ -37,7 +43,7 @@ void ServicesList::resizeEvent(QResizeEvent *event) {
     QWidget::resizeEvent(event);
 }
 
-QList<QStandardItem*> ServicesList::createServiceRow(size_t row, const Service& service) {
+QList<QStandardItem*> ServicesListForm::createServiceRow(size_t row, const Service& service) {
     QList<QStandardItem*> lst;
 
     QStandardItem* name = new QStandardItem(row, 0);
@@ -63,24 +69,17 @@ QList<QStandardItem*> ServicesList::createServiceRow(size_t row, const Service& 
     return lst;
 }
 
-void ServicesList::fillServicesTable(const std::vector<Service>& servicesList) {
-    tableViewModel_ = std::make_shared<QStandardItemModel>();
-
-    static const QStringList columnNames = {"Наименование", "Цена", "Длительность"};
-    tableViewModel_->setHorizontalHeaderLabels(columnNames);
-
+void ServicesListForm::fillServicesTable(const std::vector<Service>& servicesList) {
     for (const auto& service : servicesList) {
         addService(service);
     }
-
-    ui->tableView->setModel(tableViewModel_.get());
 }
 
-void ServicesList::addService(const Service& service) {
+void ServicesListForm::addService(const Service& service) {
     tableViewModel_->appendRow(createServiceRow(tableViewModel_->rowCount(), service));
 }
 
-void ServicesList::editService(const Service& oldService, const Service& editedService) {
+void ServicesListForm::editService(const Service& oldService, const Service& editedService) {
     for (int i = 0; i < tableViewModel_->rowCount(); ++i) {
         auto tableElement = tableViewModel_->index(i, 0);
         if (tableElement.data(Qt::UserRole).value<Service>() == oldService) {
@@ -92,8 +91,8 @@ void ServicesList::editService(const Service& oldService, const Service& editedS
     }
 }
 
-void ServicesList::showServiceInfo(const Service& service) {
-    auto* serviceViewForm = new ServiceEdit(database_, service);
+void ServicesListForm::showServiceInfo(const Service& service) {
+    auto* serviceViewForm = new ServiceForm(database_, service);
     connect(serviceViewForm, SIGNAL(serviceEditSignal(const Service&, const Service&)),
             this, SLOT(editService(const Service&, const Service&)));
 
@@ -101,9 +100,9 @@ void ServicesList::showServiceInfo(const Service& service) {
     serviceViewForm->show();
 }
 
-void ServicesList::on_createService_clicked()
+void ServicesListForm::on_createService_clicked()
 {
-    auto* serviceCreateForm = new ServiceEdit(database_);
+    auto* serviceCreateForm = new ServiceForm(database_);
     connect(serviceCreateForm, SIGNAL(serviceCreateSignal(const Service&)),
             this, SLOT(addService(const Service&)));
 
@@ -111,35 +110,26 @@ void ServicesList::on_createService_clicked()
     serviceCreateForm->show();
 }
 
-void ServicesList::on_selectService_clicked() {
-    const auto& selectedRows = ui->tableView->selectionModel()->selectedRows();
-    if (!selectedRows.empty()) {
-        showServiceInfo(selectedRows[0].data(Qt::UserRole).value<Service>());
-    }
-}
-
-void ServicesList::on_tableView_doubleClicked(const QModelIndex &index) {
+void ServicesListForm::on_tableView_doubleClicked(const QModelIndex &index) {
     const QModelIndex& firstIndex = ui->tableView->model()->index(index.row(), 0);
     showServiceInfo(firstIndex.data(Qt::UserRole).value<Service>());
 }
 
-void ServicesList::changeColumnsDisplayOption(std::vector<bool> columns) {
-    for (size_t i = 0; i < columns.size(); ++i) {
-        ui->tableView->horizontalHeader()->setSectionHidden(i, columns[i]);
-    }
+void ServicesListForm::on_tableSettings_clicked() {
+    auto* tableSettingsForm = new TableSettingsForm(ui->tableView->horizontalHeader(), this);
+    tableSettingsForm->setAttribute(Qt::WA_DeleteOnClose, true);
+    tableSettingsForm->show();
 }
 
-void ServicesList::on_tableSettings_clicked() {
-    if (!tableSettingsForm_) {
-        tableSettingsForm_ = std::make_shared<ServiceTableSettings>();
-    }
-
-    connect(tableSettingsForm_.get(), SIGNAL(signalChangeColumnsDisplay(std::vector<bool>)),
-            this, SLOT(changeColumnsDisplayOption(std::vector<bool>)));
-    tableSettingsForm_->show();
+void ServicesListForm::on_searchLine_returnPressed() {
+    searchInTable(ui->searchLine->text());
 }
 
-void ServicesList::searchInTable(const QString& searchRequest) {
+void ServicesListForm::on_searchLine_textChanged(const QString &text) {
+    searchInTable(text);
+}
+
+void ServicesListForm::searchInTable(const QString& searchRequest) {
     if (tableViewModel_.get() != ui->tableView->model()) {
         delete ui->tableView->model();
     }
@@ -154,12 +144,4 @@ void ServicesList::searchInTable(const QString& searchRequest) {
                    );
     proxyModel->setFilterKeyColumn(/*service name column*/ 0);
     proxyModel->setFilterRegExp(regExp);
-}
-
-void ServicesList::on_searchLine_returnPressed() {
-    searchInTable(ui->searchLine->text());
-}
-
-void ServicesList::on_searchLine_textChanged(const QString &text) {
-    searchInTable(text);
 }

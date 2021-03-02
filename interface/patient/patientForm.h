@@ -31,12 +31,14 @@ private slots:
 
     void on_createInfo_clicked();
     void on_deleteInfo_clicked();
+    void on_editInfo_clicked();
 
     void on_dateEdit_userDateChanged(const QDate& date);
 
 private:
     void setupUi();
     void setupInfoTable();
+    void enableTableButtons(bool enabled);
 
     void fillFormPatientInfo();
     Patient buildPatientFromFormData();
