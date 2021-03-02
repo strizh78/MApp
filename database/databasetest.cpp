@@ -5,70 +5,55 @@
 std::vector<Service> DatabaseTest::servicesList_ = DatabaseTest::initServices();
 std::vector<medicine::Drug> DatabaseTest::medicinesList_ = DatabaseTest::initMedicineDrugs();
 std::vector<Patient> DatabaseTest::patientsList_ = DatabaseTest::initPatients();
+std::vector<homeopathy::Drug> DatabaseTest::homeopathyList_ = DatabaseTest::initHomeopathyDrugs();
 
-void DatabaseTest::homeopathyDrugs(std::vector<homeopathy::Drug>& receiver) {
+const std::vector<homeopathy::Drug> DatabaseTest::initHomeopathyDrugs() {
     using namespace homeopathy;
 
-    const std::vector<Dilutions> d1 = {
-        Dilutions::C30,
-        Dilutions::C200,
-        Dilutions::C1000};
-    const std::vector<Dilutions> d2 = {
-        Dilutions::C30,
-        Dilutions::C1000,
-        Dilutions::LM1};
-    const std::vector<Dilutions> d3 = {
-        Dilutions::M1,
-        Dilutions::LM6,
-        Dilutions::C12};
-    const std::vector<Dilutions> d4 = {
-        Dilutions::M1,
-        Dilutions::LM6,
-        Dilutions::M10,
-        Dilutions::LM10};
-    receiver = {
-        Drug("nameA", "nameLatA", Groups::ANIMALS, d1, true),
-        Drug("nameB", "nameLatB", Groups::IMMATERIAL, d2, false),
-        Drug("nameC", "nameLatC", Groups::MINERALS, d3, true),
-        Drug("nameE", "nameLatE", Groups::ANIMALS, d4, false),
-        Drug("nameF", "nameLatF", Groups::IMMATERIAL, d3, true),
-        Drug("nameG", "nameLatG", Groups::MINERALS, d2, true),
-        Drug("nameH", "nameLatH", Groups::PLANTS, d1, true),
-        Drug("nameI", "nameLatI", Groups::ANIMALS, d1, false),
-        Drug("nameJ", "nameLatJ", Groups::IMMATERIAL, d2, true),
-        Drug("nameK", "nameLatK", Groups::MINERALS, d3, true)};
+    const std::vector<QString> d1 = {
+        DILUTIONS[0],
+        DILUTIONS[1],
+        DILUTIONS[2]};
+    const std::vector<QString> d2 = {
+        DILUTIONS[3],
+        DILUTIONS[4],
+        DILUTIONS[5]};
+    const std::vector<QString> d3 = {
+        DILUTIONS[6],
+        DILUTIONS[7],
+        DILUTIONS[8]};
+    const std::vector<QString> d4 = {
+        DILUTIONS[0],
+        DILUTIONS[3],
+        DILUTIONS[4]};
+    const std::vector<homeopathy::Drug> homeopathyDrugs = {
+        Drug("nameA", "nameLatA", Groups::ANIMALS, d1),
+        Drug("nameB", "nameLatB", Groups::IMMATERIAL, d2),
+        Drug("nameC", "nameLatC", Groups::MINERALS, d3),
+        Drug("nameE", "nameLatE", Groups::ANIMALS, d4),
+        Drug("nameF", "nameLatF", Groups::IMMATERIAL, d3),
+        Drug("nameG", "nameLatG", Groups::MINERALS, d2),
+        Drug("nameH", "nameLatH", Groups::PLANTS, d1),
+        Drug("nameI", "nameLatI", Groups::ANIMALS, d1),
+        Drug("nameJ", "nameLatJ", Groups::IMMATERIAL, d2),
+        Drug("nameK", "nameLatK", Groups::MINERALS, d3)};
+
+    return homeopathyDrugs;
 }
 
-void DatabaseTest::availableHomeopathyDrugs(std::vector<homeopathy::Drug>& receiver) {
-    using namespace homeopathy;
+void DatabaseTest::homeopathyDrugs(std::vector<homeopathy::Drug>& receiver) {
+    receiver = homeopathyList_;
+}
 
-    const std::vector<Dilutions> d1 = {
-        Dilutions::C30,
-        Dilutions::C200,
-        Dilutions::C1000};
-    const std::vector<Dilutions> d2 = {
-        Dilutions::C30,
-        Dilutions::C1000,
-        Dilutions::LM1};
-    const std::vector<Dilutions> d3 = {
-        Dilutions::M1,
-        Dilutions::LM6,
-        Dilutions::C12};
-    const std::vector<Dilutions> d4 = {
-        Dilutions::M1,
-        Dilutions::LM6,
-        Dilutions::M10,
-        Dilutions::LM10};
-    receiver = {
-        Drug("nameA", "nameLatA", Groups::ANIMALS, d1, true),
-        Drug("nameC", "nameLatC", Groups::MINERALS, d3, true),
-        Drug("nameD", "nameLatD", Groups::PLANTS, d4, true),
-        Drug("nameF", "nameLatF", Groups::IMMATERIAL, d3, true),
-        Drug("nameG", "nameLatG", Groups::MINERALS, d2, true),
-        Drug("nameH", "nameLatH", Groups::PLANTS, d1, true),
-        Drug("nameJ", "nameLatJ", Groups::IMMATERIAL, d2, true),
-        Drug("nameK", "nameLatK", Groups::MINERALS, d3, true)};
+void DatabaseTest::addHomeopathyDrug(const homeopathy::Drug& drug) {
+    homeopathyList_.push_back(drug);
+}
 
+void DatabaseTest::editHomeopathyDrug(const homeopathy::Drug& oldDrug, const homeopathy::Drug& newDrug) {
+    auto it = std::find(homeopathyList_.begin(), homeopathyList_.end(), oldDrug);
+
+    if (it != homeopathyList_.end())
+        *it = newDrug;
 }
 
 const std::vector<medicine::Drug> DatabaseTest::initMedicineDrugs() {
