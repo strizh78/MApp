@@ -11,7 +11,8 @@ enum class Groups {
     ANIMALS,
     MINERALS,
     IMMATERIAL,
-    PLANTS
+    PLANTS,
+    NUMBER_OF_GROUPS = 4
 };
 
 const std::vector<QString> DILUTIONS = {

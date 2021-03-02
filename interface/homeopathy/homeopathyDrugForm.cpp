@@ -100,24 +100,15 @@ void HomeopathyDrugForm::init() {
 }
 
 void HomeopathyDrugForm::setGroupValues() {
-    auto* animal = new QStandardItem(0);
-    animal->setData(QVariant::fromValue(Groups::ANIMALS), Qt::UserRole);
-    animal->setText(homeopathy::groupToString(Groups::ANIMALS));
-
-    auto *mineral = new QStandardItem(1);
-    mineral->setData(QVariant::fromValue(Groups::MINERALS), Qt::UserRole);
-    mineral->setText(homeopathy::groupToString(Groups::MINERALS));
-
-    auto* immaterial = new QStandardItem(2);
-    immaterial->setData(QVariant::fromValue(Groups::IMMATERIAL), Qt::UserRole);
-    immaterial->setText(homeopathy::groupToString(Groups::IMMATERIAL));
-
-    auto* plant = new QStandardItem(3);
-    plant->setData(QVariant::fromValue(Groups::PLANTS), Qt::UserRole);
-    plant->setText(homeopathy::groupToString(Groups::PLANTS));
-
     QList<QStandardItem*> list;
-    list << animal << mineral << immaterial << plant;
+
+    for (int i = 0; i < int(Groups::NUMBER_OF_GROUPS); ++i) {
+        auto* item = new QStandardItem(i);
+        Groups group = static_cast<Groups>(i);
+        item->setData(QVariant::fromValue(group), Qt::UserRole);
+        item->setText(groupToString(group));
+        list << item;
+    }
     groupsModel_ = std::make_shared<QStandardItemModel>();
     groupsModel_->appendColumn(list);
     ui->groupComboBox->setModel(groupsModel_.get());
