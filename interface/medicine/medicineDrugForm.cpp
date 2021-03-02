@@ -58,7 +58,7 @@ void MedicineDrugForm::on_addDosagesBtn_clicked() {
     ui->dosages->edit(dosagesModel_->index(rowCount - 1, 0));
 
     if (rowCount == 1)
-        setButtonsEnabled();
+        setButtonsEnabled(true);
 }
 
 void MedicineDrugForm::on_deleteDosageBtn_clicked() {
@@ -66,7 +66,7 @@ void MedicineDrugForm::on_deleteDosageBtn_clicked() {
     dosagesModel_->removeRow(curRow);
     int rowCount = dosagesModel_->rowCount();
 
-    if (rowCount > 0) {
+    if (rowCount != 0) {
         ui->dosages->selectRow(std::min(rowCount - 1, curRow));
         ui->dosages->setFocus();
     }
