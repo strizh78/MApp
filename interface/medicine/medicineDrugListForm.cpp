@@ -1,7 +1,8 @@
 #include "medicineDrugListForm.h"
 #include "ui_medicineDrugListForm.h"
 #include "medicineDrugForm.h"
-#include "medicineTableSettingsForm.h"
+
+#include "interface/tableSettingsForm.h"
 
 #include <QSortFilterProxyModel>
 
@@ -40,7 +41,7 @@ void MedicineDrugListForm::on_searchLine_textEdited(const QString &searchString)
 }
 
 void MedicineDrugListForm::on_toolButton_clicked() {
-    auto* medicineTableSettingsForm = new MedicineTableSettingsForm(ui->medicinesTable->horizontalHeader(), this);
+    auto* medicineTableSettingsForm = new TableSettingsForm(ui->medicinesTable->horizontalHeader(), this);
     medicineTableSettingsForm->setAttribute(Qt::WA_DeleteOnClose, true);
     medicineTableSettingsForm->show();
 }
