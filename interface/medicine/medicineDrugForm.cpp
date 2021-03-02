@@ -57,7 +57,7 @@ void MedicineDrugForm::on_addDosagesBtn_clicked() {
     int rowCount = dosagesModel_->rowCount();
     ui->dosages->edit(dosagesModel_->index(rowCount - 1, 0));
 
-    if (rowCount != 0)
+    if (rowCount == 1)
         setButtonsEnabled();
 }
 
