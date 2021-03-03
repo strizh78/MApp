@@ -45,13 +45,13 @@
       <widget class="QLabel" name="nameLabel">
        <property name="minimumSize">
         <size>
-         <width>130</width>
+         <width>135</width>
          <height>0</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>130</width>
+         <width>135</width>
          <height>40</height>
         </size>
        </property>
@@ -78,13 +78,13 @@
       <widget class="QLabel" name="nameLatLabel">
        <property name="minimumSize">
         <size>
-         <width>130</width>
+         <width>135</width>
          <height>0</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>130</width>
+         <width>135</width>
          <height>40</height>
         </size>
        </property>
@@ -111,13 +111,13 @@
       <widget class="QLabel" name="groupLabel">
        <property name="minimumSize">
         <size>
-         <width>130</width>
+         <width>135</width>
          <height>0</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>130</width>
+         <width>135</width>
          <height>16777215</height>
         </size>
        </property>
@@ -150,13 +150,13 @@
       <widget class="QLabel" name="dilutionsLabel">
        <property name="minimumSize">
         <size>
-         <width>130</width>
+         <width>135</width>
          <height>40</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>130</width>
+         <width>135</width>
          <height>16777215</height>
         </size>
        </property>
