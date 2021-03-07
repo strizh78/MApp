@@ -1,12 +1,13 @@
 #pragma once
 
+#include "MAppBaseObj/mappBaseObj.h"
+
 #include <QDate>
 #include <QHash>
 #include <QString>
 #include <QVariant>
 
-class Patient
-{
+class Patient : public MAppBaseObj {
 public:
     struct NameInfo {
         QString getFullName() const;
@@ -32,8 +33,6 @@ public:
     const QHash<QString, QString>& additionalInfo() const;
     void setAdditionalInfo(const QHash<QString, QString>& info);
     void addAdditionalInfo(const QString& key, const QString& value);
-
-    bool operator==(const Patient& other) const;
 
     bool isValid() const;
 

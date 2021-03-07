@@ -1,11 +1,12 @@
 #pragma once
 
+#include "MAppBaseObj/mappBaseObj.h"
+
 #include <QTime>
 #include <QString>
 #include <QMetaType>
 
-class Service
-{
+class Service : public MAppBaseObj {
 public:
     Service() = default;
     Service(const QString& name, float price, QTime duration, bool deprecated = false);
@@ -15,7 +16,6 @@ public:
     QTime duration() const;
     bool isDeprecated() const;
 
-    bool operator==(const Service& other) const;
     bool isValid() const;
 
 private:

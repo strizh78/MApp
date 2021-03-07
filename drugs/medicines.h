@@ -1,5 +1,7 @@
 #pragma once
 
+#include "MAppBaseObj/mappBaseObj.h"
+
 #include <QString>
 #include <QMetaType>
 
@@ -25,7 +27,7 @@ const std::vector<ReleaseForm> RELEASE_FORMS = {"Ампулы (раствор д
                                                 "Таблетки",
                                                 "Экстракт (настойка)"};
 
-class Drug {
+class Drug : public MAppBaseObj {
 public:
     Drug() = default;
     Drug(const QString& activeSubstance,
@@ -46,8 +48,6 @@ public:
 
     QString getFullName() const;
     QString getBrands(QString separator = " ") const;
-
-    bool operator ==(const medicine::Drug& other);
 
 private:
     QString activeSubstance_;

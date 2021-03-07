@@ -68,13 +68,4 @@ QString Drug::getBrands(QString separator) const {
 
     return brands;
 }
-
-bool Drug::operator ==(const Drug& other) {
-    return activeSubstance_ == other.activeSubstance() &&
-           activeSubstancetLat_ == other.activeSubstancetLat() &&
-           isPrescription_ == other.isPrescription() &&
-           releaseForms_ == other.releaseForms() &&
-           brandNames_ == other.brandNames() &&
-           dosages_ == other.dosages();
-}
 }
