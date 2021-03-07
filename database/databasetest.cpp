@@ -2,10 +2,10 @@
 
 #include <algorithm>
 
-std::vector<Service> DatabaseTest::servicesList_ = std::vector<Service>();
-std::vector<medicine::Drug> DatabaseTest::medicinesList_ = std::vector<medicine::Drug>();
-std::vector<Patient> DatabaseTest::patientsList_ = std::vector<Patient>();
-std::vector<homeopathy::Drug> DatabaseTest::homeopathyList_ = std::vector<homeopathy::Drug>();
+std::vector<Service> DatabaseTest::servicesList_ = {};
+std::vector<medicine::Drug> DatabaseTest::medicinesList_ = {};
+std::vector<Patient> DatabaseTest::patientsList_ = {};
+std::vector<homeopathy::Drug> DatabaseTest::homeopathyList_ = {};
 int DatabaseTest::nextCode = 0;
 
 DatabaseTest::DatabaseTest() {

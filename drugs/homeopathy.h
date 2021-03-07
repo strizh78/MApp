@@ -42,7 +42,7 @@ const std::vector<QString> DILUTIONS = {
     "LM12"
 };
 
-class Drug : public MAppBaseObj{
+class Drug : public MAppBaseObj {
 public:
     Drug() = default;
     Drug(const QString& name,

@@ -1,10 +1,5 @@
 #include "mappBaseObj.h"
 
-MAppBaseObj::MAppBaseObj() {
-    code_ = 0;
-    isDeleted_ = false;
-}
-
 int MAppBaseObj::code() const {
     return code_;
 }

@@ -4,7 +4,7 @@
 
 class MAppBaseObj {
 public:
-    MAppBaseObj();
+    MAppBaseObj() = default;
     int code() const;
     bool isDeleted() const;
 
@@ -14,8 +14,8 @@ public:
     friend class DatabaseInterface;
 
 protected:
-    int code_;
-    bool isDeleted_;
+    int code_ = 0;
+    bool isDeleted_ = false;
 
 private:
     void setCode(int code);
