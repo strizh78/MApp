@@ -55,24 +55,6 @@ void Patient::addAdditionalInfo(const QString& key, const QString& value) {
     additionalInfo_[key] = value;
 }
 
-bool Patient::operator==(const Patient& other) const {
-    bool baseFields =  birthDate_ == other.birthDate() &&
-                       nameInfo_.getFullName() == other.nameInfo().getFullName() &&
-                       address_ == other.address() &&
-                       additionalInfo_ == other.additionalInfo();
-    if (baseFields == true) {
-        baseFields = additionalInfo_.size() == other.additionalInfo().size();
-        auto keys = additionalInfo_.keys();
-        for (auto& key : keys) {
-            if (!other.additionalInfo().contains(key)) {
-                baseFields = false;
-                break;
-            }
-        }
-    }
-    return baseFields;
-}
-
 bool Patient::isValid() const {
     if (nameInfo_.name.isEmpty() ||
         nameInfo_.surname.isEmpty())

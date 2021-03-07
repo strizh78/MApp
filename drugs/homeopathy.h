@@ -1,5 +1,7 @@
 #pragma once
 
+#include "MAppBaseObj/mappBaseObj.h"
+
 #include <QString>
 #include <QMetaType>
 
@@ -40,8 +42,7 @@ const std::vector<QString> DILUTIONS = {
     "LM12"
 };
 
-class Drug
-{
+class Drug : public MAppBaseObj {
 public:
     Drug() = default;
     Drug(const QString& name,
@@ -55,7 +56,6 @@ public:
     std::vector<QString> availableDilutions() const;
     bool isAvailable() const;
     QString getFullName() const;
-    bool operator ==(const homeopathy::Drug& other);
 
 private:
     QString name_;

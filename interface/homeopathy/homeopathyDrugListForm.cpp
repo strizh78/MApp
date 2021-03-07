@@ -99,7 +99,7 @@ void HomeopathyDrugListForm::resizeEvent(QResizeEvent* event) {
     QWidget::resizeEvent(event);
 }
 
-void HomeopathyDrugListForm::fillHomeopathyTable(const std::vector<homeopathy::Drug>& homeopatyList) {
+void HomeopathyDrugListForm::fillHomeopathyTable(const std::vector<homeopathy::Drug>& homeopathyList) {
     tableViewModel_ = std::make_shared<QStandardItemModel>();
 
     static const QStringList columnNames = {"Наименования", "Группа"};

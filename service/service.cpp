@@ -24,13 +24,6 @@ bool Service::isDeprecated() const {
     return isDeprecated_;
 }
 
-bool Service::operator==(const Service& other) const {
-    return std::abs(price_ - other.price()) < 1e-1 &&
-           name_ == other.name() &&
-           duration_ == other.duration() &&
-           isDeprecated_ == other.isDeprecated();
-}
-
 bool Service::isValid() const {
     if (name_.isEmpty() ||
         price_ <= 0     ||

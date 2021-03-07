@@ -45,13 +45,6 @@ QString Drug::getFullName() const {
     return fullName;
 }
 
-bool Drug::operator ==(const Drug& other) {
-    return name_ == other.name() &&
-           nameLat_ == other.nameLat() &&
-           group_ == other.group() &&
-           availableDilutions_ == other.availableDilutions_;
-}
-
 QString groupToString(Groups group) {
    switch (group) {
        case Groups::ANIMALS:
