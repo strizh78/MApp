@@ -2,12 +2,17 @@
 
 #include <algorithm>
 
-std::vector<Service> DatabaseTest::servicesList_ = DatabaseTest::initServices();
-std::vector<medicine::Drug> DatabaseTest::medicinesList_ = DatabaseTest::initMedicineDrugs();
-std::vector<Patient> DatabaseTest::patientsList_ = DatabaseTest::initPatients();
-std::vector<homeopathy::Drug> DatabaseTest::homeopathyList_ = DatabaseTest::initHomeopathyDrugs();
+std::vector<Service> DatabaseTest::servicesList_ = std::vector<Service>();
+std::vector<medicine::Drug> DatabaseTest::medicinesList_ = std::vector<medicine::Drug>();
+std::vector<Patient> DatabaseTest::patientsList_ = std::vector<Patient>();
+std::vector<homeopathy::Drug> DatabaseTest::homeopathyList_ = std::vector<homeopathy::Drug>();
+int DatabaseTest::nextCode = 0;
 
-const std::vector<homeopathy::Drug> DatabaseTest::initHomeopathyDrugs() {
+DatabaseTest::DatabaseTest() {
+    initMedicineDrugs();
+}
+
+void DatabaseTest::initHomeopathyDrugs() {
     using namespace homeopathy;
 
     const std::vector<QString> d1 = {
@@ -38,14 +43,16 @@ const std::vector<homeopathy::Drug> DatabaseTest::initHomeopathyDrugs() {
         Drug("nameJ", "nameLatJ", Groups::IMMATERIAL, d2),
         Drug("nameK", "nameLatK", Groups::MINERALS, d3)};
 
-    return homeopathyDrugs;
+    for (auto drug : homeopathyDrugs)
+        addHomeopathyDrug(drug);
 }
 
 void DatabaseTest::homeopathyDrugs(std::vector<homeopathy::Drug>& receiver) {
     receiver = homeopathyList_;
 }
 
-void DatabaseTest::addHomeopathyDrug(const homeopathy::Drug& drug) {
+void DatabaseTest::addHomeopathyDrug(homeopathy::Drug& drug) {
+    setCode(drug);
     homeopathyList_.push_back(drug);
 }
 
@@ -56,7 +63,7 @@ void DatabaseTest::editHomeopathyDrug(const homeopathy::Drug& oldDrug, const hom
         *it = newDrug;
 }
 
-const std::vector<medicine::Drug> DatabaseTest::initMedicineDrugs() {
+void DatabaseTest::initMedicineDrugs() {
     using namespace medicine;
 
     const std::vector<ReleaseForm> relForms1 = {
@@ -114,14 +121,17 @@ const std::vector<medicine::Drug> DatabaseTest::initMedicineDrugs() {
         Drug("actSubsM", "actSubsLatM", false, relForms4, brands1, dosages3, 139),
         Drug("actSubsO", "", false, relForms4, brands2, dosages4, 525),
         Drug("actSubsP", "actSubsLatO", true, relForms1, brands3, dosages4, 636)};
-    return medicines;
+
+    for (auto drug : medicines)
+        addMedicineDrug(drug);
 }
 
 void DatabaseTest::medicineDrugs(std::vector<medicine::Drug>& receiver) {
     receiver = medicinesList_;
 }
 
-void DatabaseTest::addMedicineDrug(const medicine::Drug& drug) {
+void DatabaseTest::addMedicineDrug(medicine::Drug& drug) {
+    setCode(drug);
     medicinesList_.push_back(drug);
 }
 
@@ -133,7 +143,7 @@ void DatabaseTest::editMedicineDrug(const medicine::Drug& oldDrug,
         *it = newDrug;
 }
 
-const std::vector<Service> DatabaseTest::initServices() {
+void DatabaseTest::initServices() {
     static const QTime duration1(/*hours*/ 1, /*mins*/ 30);
     static const QTime duration2(0, 45);
     static const QTime duration3(2, 0);
@@ -148,14 +158,16 @@ const std::vector<Service> DatabaseTest::initServices() {
         Service("nameG", 10000, duration1, false)
     };
 
-    return servicesList;
+    for (auto service : servicesList)
+        addService(service);
 }
 
 void DatabaseTest::services(std::vector<Service>& receiver) {
     receiver = servicesList_;
 }
 
-void DatabaseTest::addService(const Service& newService) {
+void DatabaseTest::addService(Service& newService) {
+    setCode(newService);
     servicesList_.push_back(newService);
 }
 
@@ -166,7 +178,7 @@ void DatabaseTest::editService(const Service& oldService,
     *it = editedService;
 }
 
-const std::vector<Patient> DatabaseTest::initPatients() {
+void DatabaseTest::initPatients() {
     const Patient::NameInfo name1 = {"Name1", "Surname1", "Patronymic1"};
     const Patient::NameInfo name2 = {"Name2", "Surname2", "Patronymic2"};
     const Patient::NameInfo name3 = {"Name3", "Surname2", "Patronymic2"};
@@ -197,14 +209,16 @@ const std::vector<Patient> DatabaseTest::initPatients() {
     };
     patientsList[0].setAdditionalInfo(additionalInfo);
 
-    return patientsList;
+    for (auto patient : patientsList)
+        addPatient(patient);
 }
 
 void DatabaseTest::patients(std::vector<Patient> &receiver) const {
     receiver = patientsList_;
 }
 
-void DatabaseTest::addPatient(const Patient &newPatient) {
+void DatabaseTest::addPatient(Patient &newPatient) {
+    setCode(newPatient);
     patientsList_.push_back(newPatient);
 }
 
@@ -213,4 +227,8 @@ void DatabaseTest::editPatient(const Patient &oldPatient, const Patient &editedP
     if (it != patientsList_.end()) {
         *it = editedPatient;
     }
+}
+
+int DatabaseTest::getNextCode() {
+    return ++nextCode;
 }
