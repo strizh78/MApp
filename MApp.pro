@@ -13,6 +13,9 @@ QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.15
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    MAppBaseObj/mappBaseObj.cpp \
+#    interface/basicForms/mappTable.cpp \
+    interface/basicForms/tableSettingsForm.cpp \
     interface/homeopathy/homeopathyDrugDilutionsSelectForm.cpp \
     interface/homeopathy/homeopathyDrugForm.cpp \
     interface/homeopathy/homeopathyDrugListForm.cpp \
@@ -25,7 +28,6 @@ SOURCES += \
     interface/patient/patientsListForm.cpp \
     interface/service/serviceForm.cpp \
     interface/service/servicesListForm.cpp \
-    interface/tableSettingsForm.cpp \
     interface/utils.cpp \
     main.cpp \
     \
@@ -45,9 +47,12 @@ SOURCES += \
     tests/serviceTests.cpp
 
 HEADERS += \
+    MAppBaseObj/mappBaseObj.h \
     drugs/homeopathy.h \
     drugs/medicines.h \
     \
+#    interface/basicForms/mappTable.h \
+    interface/basicForms/tableSettingsForm.h \
     interface/homeopathy/homeopathyDrugDilutionsSelectForm.h \
     interface/homeopathy/homeopathyDrugForm.h \
     interface/homeopathy/homeopathyDrugListForm.h \
@@ -60,7 +65,6 @@ HEADERS += \
     interface/patient/patientsListForm.h \
     interface/service/serviceForm.h \
     interface/service/servicesListForm.h \
-    interface/tableSettingsForm.h \
     interface/utils.h \
     patient/patient.h \
     service/service.h \
@@ -77,6 +81,8 @@ HEADERS += \
     tests/serviceTests.h
 
 FORMS += \
+#    interface/basicForms/mappTable.ui \
+    interface/basicForms/tableSettingsForm.ui \
     interface/homeopathy/homeopathyDrugDilutionsSelectForm.ui \
     interface/homeopathy/homeopathyDrugForm.ui \
     interface/homeopathy/homeopathyDrugListForm.ui \
@@ -92,7 +98,6 @@ FORMS += \
     \
     interface/service/serviceForm.ui \
     interface/service/servicesListForm.ui \
-    interface/tableSettingsForm.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
