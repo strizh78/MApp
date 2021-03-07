@@ -19,3 +19,7 @@ bool MAppBaseObj::operator !=(const MAppBaseObj& other) const {
 void MAppBaseObj::setCode(int code) {
     code_ = code;
 }
+
+void MAppBaseObj::setDeleted(bool isDelelted) {
+    isDeleted_ = isDelelted;
+}
