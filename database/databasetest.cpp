@@ -9,7 +9,10 @@ std::vector<homeopathy::Drug> DatabaseTest::homeopathyList_ = std::vector<homeop
 int DatabaseTest::nextCode = 0;
 
 DatabaseTest::DatabaseTest() {
+    initHomeopathyDrugs();
     initMedicineDrugs();
+    initPatients();
+    initServices();
 }
 
 void DatabaseTest::initHomeopathyDrugs() {

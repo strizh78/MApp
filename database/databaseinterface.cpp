@@ -1,7 +1,7 @@
 #include "databaseinterface.h"
 
 void DatabaseInterface::setCode(MAppBaseObj& item) {
-    item.code_ = getNextCode();
+    item.setCode(getNextCode());
 }
 
 void DatabaseInterface::setDeletedMark(MAppBaseObj& item) {

@@ -16,6 +16,9 @@ public:
 protected:
     int code_;
     bool isDeleted_;
+
+private:
+    void setCode(int code);
 };
 
 Q_DECLARE_METATYPE(MAppBaseObj);

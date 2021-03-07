@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
     std::shared_ptr<DatabaseInterface> database = std::make_shared<DatabaseTest>();
 
     QApplication a(argc, argv);
-//    runTests(database, argc, argv);
+    runTests(database, argc, argv);
 
     QTranslator qtTranslator;
     qtTranslator.load(":/qtbase_ru.qm");
