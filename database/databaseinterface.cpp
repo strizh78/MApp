@@ -5,10 +5,10 @@ void DatabaseInterface::setCode(MAppBaseObj& item) {
 }
 
 void DatabaseInterface::setDeletedMark(MAppBaseObj& item) {
-    item.isDeleted_ = true;
+    item.setDeleted(true);
 }
 
 void DatabaseInterface::removeDeletedMark(MAppBaseObj& item) {
-    item.isDeleted_ = false;
+    item.setDeleted(false);
 }
 
