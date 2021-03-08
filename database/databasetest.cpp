@@ -59,11 +59,13 @@ void DatabaseTest::addHomeopathyDrug(homeopathy::Drug& drug) {
     homeopathyList_.push_back(drug);
 }
 
-void DatabaseTest::editHomeopathyDrug(const homeopathy::Drug& oldDrug, const homeopathy::Drug& newDrug) {
+void DatabaseTest::editHomeopathyDrug(const homeopathy::Drug& oldDrug, homeopathy::Drug& newDrug) {
     auto it = std::find(homeopathyList_.begin(), homeopathyList_.end(), oldDrug);
 
-    if (it != homeopathyList_.end())
+    if (it != homeopathyList_.end()) {
         *it = newDrug;
+        setCodeToEdit(newDrug, oldDrug.code());
+    }
 }
 
 void DatabaseTest::initMedicineDrugs() {
@@ -139,11 +141,13 @@ void DatabaseTest::addMedicineDrug(medicine::Drug& drug) {
 }
 
 void DatabaseTest::editMedicineDrug(const medicine::Drug& oldDrug,
-                                    const medicine::Drug& newDrug) {
+                                    medicine::Drug& newDrug) {
     auto it = std::find(medicinesList_.begin(), medicinesList_.end(), oldDrug);
 
-    if (it != medicinesList_.end())
+    if (it != medicinesList_.end()) {
         *it = newDrug;
+        setCodeToEdit(newDrug, oldDrug.code());
+    }
 }
 
 void DatabaseTest::initServices() {
@@ -174,11 +178,14 @@ void DatabaseTest::addService(Service& newService) {
     servicesList_.push_back(newService);
 }
 
-void DatabaseTest::editService(const Service& oldService,
-                               const Service& editedService)
+void DatabaseTest::editService(const Service& oldService, Service& editedService)
 {
     auto it = std::find(servicesList_.begin(), servicesList_.end(), oldService);
-    *it = editedService;
+
+    if (it != servicesList_.end()) {
+        *it = editedService;
+        setCodeToEdit(editedService, oldService.code());
+    }
 }
 
 void DatabaseTest::initPatients() {
@@ -225,10 +232,11 @@ void DatabaseTest::addPatient(Patient &newPatient) {
     patientsList_.push_back(newPatient);
 }
 
-void DatabaseTest::editPatient(const Patient &oldPatient, const Patient &editedPatient) {
+void DatabaseTest::editPatient(const Patient &oldPatient, Patient &editedPatient) {
     auto it = std::find(patientsList_.begin(), patientsList_.end(), oldPatient);
     if (it != patientsList_.end()) {
         *it = editedPatient;
+        setCodeToEdit(editedPatient, oldPatient.code());
     }
 }
 
