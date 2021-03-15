@@ -3,27 +3,28 @@
 #include <QWidget>
 #include <QHeaderView>
 
+#include <optional>
 #include <vector>
 
 namespace Ui {
 class TableSettingsForm;
 }
 
-class TableSettingsForm : public QWidget
-{
+class TableSettingsForm : public QWidget {
     Q_OBJECT
 
 public:
-    explicit TableSettingsForm(QHeaderView* headerView,
-                               QWidget *parent = nullptr);
+    TableSettingsForm(QHeaderView* headerView,
+                      QWidget *parent = nullptr);
+    TableSettingsForm(QWidget* parent = nullptr);
     ~TableSettingsForm();
+
+    void setHeaders(QHeaderView* headerView);
+    void accept();
+    void reject();
 
 signals:
     void signalChangeColumnsDisplay(std::vector<bool> columns);
-
-private slots:
-    void on_tableSettingsSolutionBox_accepted();
-    void on_tableSettingsSolutionBox_rejected();
 
 private:
     void addCheckBox(const QString& text, int num);

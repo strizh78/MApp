@@ -8,11 +8,7 @@ void DatabaseInterface::setCodeToEdit(MAppBaseObj& item, int code) {
     item.setCode(code);
 }
 
-void DatabaseInterface::setDeletedMark(MAppBaseObj& item) {
-    item.setDeleted(true);
-}
-
-void DatabaseInterface::removeDeletedMark(MAppBaseObj& item) {
-    item.setDeleted(false);
+void DatabaseInterface::setDeletedMark(MAppBaseObj& item, bool isDeleted) {
+    item.setDeleted(isDeleted);
 }
 

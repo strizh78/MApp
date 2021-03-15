@@ -7,5 +7,7 @@
         <file>icons/settingLinesIcon.png</file>
         <file>icons/greenPlusIcon.png</file>
         <file>icons/editIcon.png</file>
+        <file>icons/trash.png</file>
+        <file>icons/previous.png</file>
     </qresource>
 </RCC>

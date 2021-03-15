@@ -14,7 +14,8 @@ QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.15
 
 SOURCES += \
     MAppBaseObj/mappBaseObj.cpp \
-#    interface/basicForms/mappTable.cpp \
+    interface/basicForms/mappTable.cpp \
+    interface/basicForms/mappTableSettingsForm.cpp \
     interface/basicForms/tableSettingsForm.cpp \
     interface/homeopathy/homeopathyDrugDilutionsSelectForm.cpp \
     interface/homeopathy/homeopathyDrugForm.cpp \
@@ -51,7 +52,8 @@ HEADERS += \
     drugs/homeopathy.h \
     drugs/medicines.h \
     \
-#    interface/basicForms/mappTable.h \
+    interface/basicForms/mappTable.h \
+    interface/basicForms/mappTableSettingsForm.h \
     interface/basicForms/tableSettingsForm.h \
     interface/homeopathy/homeopathyDrugDilutionsSelectForm.h \
     interface/homeopathy/homeopathyDrugForm.h \
@@ -81,7 +83,8 @@ HEADERS += \
     tests/serviceTests.h
 
 FORMS += \
-#    interface/basicForms/mappTable.ui \
+    interface/basicForms/mappTable.ui \
+    interface/basicForms/mappTableSettingsForm.ui \
     interface/basicForms/tableSettingsForm.ui \
     interface/homeopathy/homeopathyDrugDilutionsSelectForm.ui \
     interface/homeopathy/homeopathyDrugForm.ui \

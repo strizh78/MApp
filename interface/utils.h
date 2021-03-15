@@ -1,5 +1,7 @@
 #pragma once
 
+#include "MAppBaseObj/mappBaseObj.h"
+
 #include <QString>
 #include <QLabel>
 #include <QLineEdit>
@@ -23,6 +25,17 @@ QString toString(const std::vector<T>& src, std::string sep = " ") {
         oss << src.back();
     }
     return QString::fromStdString(oss.str());
+}
+
+template <class T>
+QVariant getModelData(const T& item) {
+    const MAppBaseObj* base = new T(item);
+    return QVariant::fromValue(base);
+}
+
+template <class T>
+T* getValueFromModelData(const QVariant &variant) {
+    return (T*)variant.value<const MAppBaseObj*>();
 }
 
 namespace Validators {

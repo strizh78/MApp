@@ -31,8 +31,7 @@ public:
 
     void setCode(MAppBaseObj& item);
     void setCodeToEdit(MAppBaseObj& item, int code);
-    void setDeletedMark(MAppBaseObj& item);
-    void removeDeletedMark(MAppBaseObj& item);
+    void setDeletedMark(MAppBaseObj& item, bool isDeleted);
 
 protected:
     virtual int getNextCode() = 0;

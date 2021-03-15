@@ -23,3 +23,4 @@ private:
 };
 
 Q_DECLARE_METATYPE(MAppBaseObj);
+Q_DECLARE_METATYPE(const MAppBaseObj*);

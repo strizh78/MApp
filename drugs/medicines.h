@@ -62,3 +62,4 @@ private:
 }
 
 Q_DECLARE_METATYPE( medicine::Drug ); // for QVariant
+Q_DECLARE_METATYPE( medicine::Drug*);
