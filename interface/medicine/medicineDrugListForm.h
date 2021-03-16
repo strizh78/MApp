@@ -1,11 +1,11 @@
 #pragma once
 
 #include "drugs/medicines.h"
+#include "interface/basicForms/mappTable.h"
 
 #include "database/databaseinterface.h"
 
 #include <QStandardItemModel>
-#include <QStyledItemDelegate>
 #include <QWidget>
 
 #include <memory>
@@ -24,22 +24,18 @@ public:
     ~MedicineDrugListForm();
 
 private slots:
-    void on_createBtn_clicked();
-    void on_searchLine_textEdited(const QString &searchString);
-    void on_toolButton_clicked();
-
-    void addMedicineDrug(const medicine::Drug& newDrug);
-    void editMedicineDrug(const medicine::Drug& oldDrug, const medicine::Drug& editedDrug);
-    void on_medicinesTable_doubleClicked(const QModelIndex &index);
+    void onAddButtonClicked();
+    void onEditButtonClicked(const QVariant &data);
+    void onDeleteButtonClicked(const QVariant &data);
+    void addMedicineDrug(const medicine::Drug& drug);
+    void editMedicineDrug(const medicine::Drug& drug);
 
 private:
-    void resizeEvent(QResizeEvent *event) override;
-    void searchInTable(const QString& searchString);
+    void setupTableSettings();
     void fillMedicinesTable(const std::vector<medicine::Drug>& medicinesList);
-    QList<QStandardItem*> createMedicineDrugRow(size_t row, const medicine::Drug& drug);
+    QList<QStandardItem*> createMedicineDrugRow(const medicine::Drug& drug);
 
     Ui::MedicineDrugListForm *ui;
     std::shared_ptr<DatabaseInterface> database_;
-    std::shared_ptr<QStandardItemModel> tableViewModel_;
 };
 

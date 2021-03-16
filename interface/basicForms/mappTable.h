@@ -25,14 +25,14 @@ public:
     void setFlag(TableSettings, bool);
     void setHorizontalHeaderLabels(const QStringList& headers);
     void setMainTabLabel(QString label);
-    void setModel(QStandardItemModel* model);
+    void setModel(const QStandardItemModel* model);
     void setScale(const std::vector<int>& scale);
 
 signals:
     void onAddButtonClicked();
-    void onEditButtonClicked(const QVariant data);
-    void onDeleteButtonClicked(const QVariant data);
-    void onTableDoubleClicked(const QVariant data);
+    void onEditButtonClicked(const QVariant &data);
+    void onDeleteButtonClicked(const QVariant &data);
+    void onTableDoubleClicked(const QVariant &data);
 
 private slots:
     void on_addBtn_clicked();
@@ -50,6 +50,7 @@ private:
     QTableView* getCurrentTable();
     QStandardItemModel* modelByData(const MAppBaseObj& data);
     QTableView* tableByData(const MAppBaseObj& data);
+    QList<QStandardItem*> takeRow(const QStandardItemModel* model, int row);
     void setButtonsEnabled();
     void resizeEvent(QResizeEvent *event) override;
     void showEvent(QShowEvent *event) override;

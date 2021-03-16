@@ -2,11 +2,7 @@
 #include "ui_medicineDrugListForm.h"
 #include "medicineDrugForm.h"
 
-#include "interface/tableSettingsForm.h"
-
-#include <QSortFilterProxyModel>
-
-#include <numeric>
+#include "interface/utils.h"
 
 using namespace medicine;
 
@@ -17,9 +13,9 @@ MedicineDrugListForm::MedicineDrugListForm(std::shared_ptr<DatabaseInterface> da
     , database_(database)
 {
     ui->setupUi(this);
-
     std::vector<Drug> medicinesList;
     database->medicineDrugs(medicinesList);
+    setupTableSettings();
     fillMedicinesTable(medicinesList);
 }
 
@@ -27,108 +23,67 @@ MedicineDrugListForm::~MedicineDrugListForm() {
     delete ui;
 }
 
-void MedicineDrugListForm::on_createBtn_clicked() {
+void MedicineDrugListForm::addMedicineDrug(const Drug& newDrug) {
+    ui->medicineTable->appendRow(newDrug, createMedicineDrugRow(newDrug));
+}
+
+void MedicineDrugListForm::editMedicineDrug(const Drug& drug) {
+    ui->medicineTable->editData(drug, createMedicineDrugRow(drug));
+}
+
+void MedicineDrugListForm::onAddButtonClicked() {
     auto* medicineDrugForm = new MedicineDrugForm(database_);
 
     connect(medicineDrugForm, SIGNAL(medicineDrugCreateSignal(const medicine::Drug&)),
-            this, SLOT(addMedicineDrug(const medicine::Drug&)));
+            this, SLOT(editMedicineDrug(const medicine::Drug&)));
     medicineDrugForm->setAttribute(Qt::WA_DeleteOnClose, true);
     medicineDrugForm->show();
 }
 
-void MedicineDrugListForm::on_searchLine_textEdited(const QString &searchString) {
-    searchInTable(searchString);
-}
+void MedicineDrugListForm::onEditButtonClicked(const QVariant &data) {
+    auto* medicineDrugForm = new MedicineDrugForm(database_, *getValueFromModelData<Drug>(data));
 
-void MedicineDrugListForm::on_toolButton_clicked() {
-    auto* medicineTableSettingsForm = new TableSettingsForm(ui->medicinesTable->horizontalHeader(), this);
-    medicineTableSettingsForm->setAttribute(Qt::WA_DeleteOnClose, true);
-    medicineTableSettingsForm->show();
-}
-
-void MedicineDrugListForm::addMedicineDrug(const Drug& newDrug) {
-    tableViewModel_->appendRow(createMedicineDrugRow(tableViewModel_->rowCount(), newDrug));
-}
-
-void MedicineDrugListForm::editMedicineDrug(const Drug& oldDrug, const Drug& editedDrug) {
-    for (int i = 0; i < tableViewModel_->rowCount(); ++i) {
-        auto tableElement = tableViewModel_->index(i, 0);
-
-        if (tableElement.data(Qt::UserRole).value<Drug>() == oldDrug) {
-            tableViewModel_->removeRow(i);
-            tableViewModel_->insertRow(i, createMedicineDrugRow(i, editedDrug));
-            ui->medicinesTable->clearSelection();
-            return;
-        }
-    }
-}
-
-void MedicineDrugListForm::on_medicinesTable_doubleClicked(const QModelIndex &index) {
-    const QModelIndex& firstIndex = ui->medicinesTable->model()->index(index.row(), 0);
-    auto* medicineDrugForm = new MedicineDrugForm(database_, firstIndex.data(Qt::UserRole).value<Drug>());
-
-    connect(medicineDrugForm, SIGNAL(medicineDrugEditSignal(const medicine::Drug&, const medicine::Drug&)),
-            this, SLOT(editMedicineDrug(const medicine::Drug&, const medicine::Drug&)));
+    connect(medicineDrugForm, SIGNAL(medicineDrugEditSignal(const medicine::Drug&)),
+            this, SLOT(editMedicineDrug(const medicine::Drug&)));
     medicineDrugForm->setAttribute(Qt::WA_DeleteOnClose, true);
     medicineDrugForm->show();
 }
 
-void MedicineDrugListForm::resizeEvent(QResizeEvent *event) {
-    static const std::vector<int> scale = {4, 4, 1};
-    static const int dimension = std::accumulate(scale.begin(), scale.end(), 0);
-    static const int columnNumber = tableViewModel_->columnCount();
-    static const int baseWidth = (ui->medicinesTable->width() - 10 * columnNumber) / dimension;
-
-    for (int column = 0; column < columnNumber; ++column) {
-        ui->medicinesTable->setColumnWidth(column, baseWidth * scale[column]);
-    }
-
-    QWidget::resizeEvent(event);
+void MedicineDrugListForm::onDeleteButtonClicked(const QVariant &data) {
+    auto value = *getValueFromModelData<Drug>(data);
+    database_->setDeletedMark(value, !value.isDeleted());
+    editMedicineDrug(value);
 }
 
-void MedicineDrugListForm::searchInTable(const QString& searchString) {
-    if (tableViewModel_.get() != ui->medicinesTable->model()) {
-        delete ui->medicinesTable->model();
-    }
+void MedicineDrugListForm::setupTableSettings() {
+    ui->medicineTable->setHorizontalHeaderLabels({"Торговые наименования", "Активное вещество", "Цена"});
+    ui->medicineTable->setScale({4, 4, 1});
+    ui->medicineTable->setMainTabLabel("Лекарства");
 
-    auto* proxyModel = new QSortFilterProxyModel();
-    proxyModel->setSourceModel(tableViewModel_.get());
-    ui->medicinesTable->setModel(proxyModel);
-
-    QRegExp regExp(searchString,
-                   Qt::CaseInsensitive,
-                   QRegExp::PatternSyntax(QRegExp::RegExp)
-                   );
-    proxyModel->setFilterKeyColumn(0);
-    proxyModel->setFilterRegExp(regExp);
+    connect(ui->medicineTable, SIGNAL(onAddButtonClicked()),
+            this, SLOT(onAddButtonClicked()));
+    connect(ui->medicineTable, SIGNAL(onEditButtonClicked(const QVariant&)),
+            this, SLOT(onEditButtonClicked(const QVariant&)));
+    connect(ui->medicineTable, SIGNAL(onTableDoubleClicked(const QVariant&)),
+            this, SLOT(onEditButtonClicked(const QVariant&)));
+    connect(ui->medicineTable, SIGNAL(onDeleteButtonClicked(const QVariant&)),
+            this, SLOT(onDeleteButtonClicked(const QVariant&)));
 }
 
 void MedicineDrugListForm::fillMedicinesTable(const std::vector<Drug>& medicinesList) {
-    tableViewModel_ = std::make_shared<QStandardItemModel>();
-
-    static const QStringList columnNames = {"Торговые наименования", "Активное вещество", "Цена"};
-    tableViewModel_->setHorizontalHeaderLabels(columnNames);
-
-    for (const auto& drug : medicinesList) {
+    for (const auto& drug : medicinesList)
         addMedicineDrug(drug);
-    }
-
-    ui->medicinesTable->setModel(tableViewModel_.get());
 }
 
-QList<QStandardItem*> MedicineDrugListForm::createMedicineDrugRow(size_t row, const Drug& drug) {
-    QList<QStandardItem*> lst;
+QList<QStandardItem*> MedicineDrugListForm::createMedicineDrugRow(const Drug& drug) {
+    QList<QStandardItem*> list;
 
-    QStandardItem* brands = new QStandardItem(row, 0);
-    brands->setText(drug.getBrands(", "));
-    brands->setData(QVariant::fromValue(drug), Qt::UserRole);
+    QStandardItem* brands = new QStandardItem(drug.getBrands(", "));
+    brands->setData(getModelData(drug), Qt::UserRole);
+    QStandardItem* name = new QStandardItem(drug.getFullName());
+    QStandardItem* price = new QStandardItem(QString::number(drug.price()));
 
-    QStandardItem* name = new QStandardItem(row, 1);
-    name->setText(drug.getFullName());
+    list << brands << name << price;
 
-    QStandardItem* price = new QStandardItem(row, 2);
-    price->setText(QString::number(drug.price()));
-
-    lst << brands << name << price;
-    return lst;
+    return list;
 }

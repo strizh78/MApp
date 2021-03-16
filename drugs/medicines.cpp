@@ -62,7 +62,7 @@ QString Drug::getFullName() const {
 QString Drug::getBrands(QString separator) const {
     QString brands;
 
-    for (QString brand : brandNames_)
+    for (const QString &brand : brandNames_)
         brands += brand + separator;
     brands.resize(brands.size() - separator.size());
 

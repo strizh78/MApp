@@ -21,7 +21,7 @@ public:
 
 signals:
     void patientCreateSignal(const Patient& created);
-    void patientEditSignal(const Patient& oldPatient, const Patient& editedPatient);
+    void patientEditSignal(const Patient& editedPatient);
 
 private slots:
     void addPatientInfo(const QString& key, const QString& value);

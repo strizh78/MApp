@@ -1,6 +1,7 @@
 #pragma once
 
 #include "drugs/homeopathy.h"
+#include "interface/basicForms/mappTable.h"
 
 #include "database/databaseinterface.h"
 
@@ -20,19 +21,16 @@ public:
     ~HomeopathyDrugListForm();
 
 private slots:
-    void on_addBtn_clicked();
-    void on_toolBtn_clicked();
-    void on_searchString_textEdited(const QString &searchString);
-    void on_homeopathyTable_doubleClicked(const QModelIndex &index);
-
-    void addHomeopathyDrug(const homeopathy::Drug& newDrug);
-    void editHomeopathyDrug(const homeopathy::Drug& oldDrug, const homeopathy::Drug& editedDrug);
+    void onAddButtonClicked();
+    void onEditButtonClicked(const QVariant &data);
+    void onDeleteButtonClicked(const QVariant &data);
+    void addHomeopathyDrug(const homeopathy::Drug &newDrug);
+    void editHomeopathyDrug(const homeopathy::Drug &editedDrug);
 
 private:
-    void searchInTable(const QString& searchString);
-    void resizeEvent(QResizeEvent *event) override;
-    void fillHomeopathyTable(const std::vector<homeopathy::Drug>& homeopatyList);
-    QList<QStandardItem*> createHomeopathyDrugRow(size_t row, const homeopathy::Drug& drug);
+    void setupTableSettings();
+    void fillHomeopathyTable(const std::vector<homeopathy::Drug> &homeopatyList);
+    QList<QStandardItem*> createHomeopathyDrugRow(const homeopathy::Drug &drug);
 
 private:
     Ui::HomeopathyDrugListForm *ui;

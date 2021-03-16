@@ -1,6 +1,7 @@
 #pragma once
 
 #include "drugs/homeopathy.h"
+
 #include "database/databaseinterface.h"
 
 #include <QLabel>
@@ -24,8 +25,7 @@ public:
 
 signals:
     void homeopathyDrugCreateSignal(const homeopathy::Drug& newDrug);
-    void homeopathyDrugEditSignal(const homeopathy::Drug& oldDrug,
-                                  const homeopathy::Drug& editedDrug);
+    void homeopathyDrugEditSignal(const homeopathy::Drug& drug);
 
 private slots:
     void on_addDilutionsBtn_clicked();

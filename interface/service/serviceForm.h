@@ -24,7 +24,7 @@ private:
 
 signals:
     void serviceCreateSignal(const Service& created);
-    void serviceEditSignal(const Service& oldService, const Service& editedService);
+    void serviceEditSignal(const Service& editedService);
 
 private slots:
     void on_solutionBox_accepted();

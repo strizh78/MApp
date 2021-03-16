@@ -160,7 +160,7 @@ void PatientForm::on_solutionBox_accepted() {
         break;
     case OpenMode::EDIT:
         database_->editPatient(patient_, patient);
-        emit patientEditSignal(patient_, patient);
+        emit patientEditSignal(patient);
         break;
     }
     close();

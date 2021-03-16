@@ -1,14 +1,12 @@
 #pragma once
 
-#include "patientForm.h"
-#include "interface/tableSettingsForm.h"
-
 #include "patient/patient.h"
+#include "interface/basicForms/mappTable.h"
+
 #include "database/databaseinterface.h"
 
-#include <QWidget>
-#include <QStringList>
 #include <QStandardItemModel>
+#include <QWidget>
 
 #include <memory>
 #include <vector>
@@ -25,32 +23,20 @@ public:
                          QWidget *parent = nullptr);
     ~PatientsListForm();
 
-    void resizeEvent(QResizeEvent *event) override;
-
 private slots:
+    void onAddButtonClicked();
+    void onEditButtonClicked(const QVariant &data);
+    void onDeleteButtonClicked(const QVariant &data);
     void addPatient(const Patient& patient);
-    void editPatient(const Patient& oldPatient, const Patient& editedPatient);
-
-    void on_createPatient_clicked();
-
-    void on_tableView_doubleClicked(const QModelIndex &index);
-
-    void on_tableSettings_clicked();
-
-    void on_searchLine_returnPressed();
-    void on_searchLine_textChanged(const QString &text);
+    void editPatient(const Patient& editedPatient);
 
 private:
-    void searchInTable(const QString& searchRequest);
-
-    void showPatientInfo(const Patient& patient);
+    void setupTableSettings();
     void fillPatientsTable(const std::vector<Patient>& patientsList);
-    QList<QStandardItem*> createPatientRow(size_t row, const Patient& patient);
+    QList<QStandardItem*> createPatientRow(const Patient& patient);
 
 private:
     Ui::PatientsListForm *ui;
     std::shared_ptr<DatabaseInterface> database_;
-
-    std::shared_ptr<QStandardItemModel> tableViewModel_;
     friend class PatientTests;
 };

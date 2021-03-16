@@ -5,9 +5,6 @@
 #include "medicineDrugBrandSelectForm.h"
 #include "interface/utils.h"
 
-#include "interface/utils.h"
-
-#include <QMessageBox>
 #include <QValidator>
 
 MedicineDrugForm::MedicineDrugForm(std::shared_ptr<DatabaseInterface> database,
@@ -99,7 +96,7 @@ void MedicineDrugForm::on_buttonBox_accepted() {
             break;
         case OpenMode::EDIT:
             database_->editMedicineDrug(drug_, currentDrug);
-            emit medicineDrugEditSignal(drug_, currentDrug);
+            emit medicineDrugEditSignal(currentDrug);
             break;
     }
     close();

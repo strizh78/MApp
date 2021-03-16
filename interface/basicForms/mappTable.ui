@@ -343,9 +343,7 @@ background-repeat: none;</string>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">qproperty-icon: url(:/icons/settingLinesIcon.png) no-repeat;
-background-size: cover;
-</string>
+          <string notr="true">qproperty-icon: url(:/icons/settingLinesIcon.png);</string>
          </property>
          <property name="text">
           <string/>
@@ -358,9 +356,6 @@ background-size: cover;
    </item>
    <item>
     <widget class="QTabWidget" name="tabWidget">
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
      <property name="currentIndex">
       <number>0</number>
      </property>

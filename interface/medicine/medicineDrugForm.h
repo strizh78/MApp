@@ -25,9 +25,8 @@ public:
     ~MedicineDrugForm();
 
 signals:
-    void medicineDrugCreateSignal(const medicine::Drug& newDrug);
-    void medicineDrugEditSignal(const medicine::Drug& oldDrug,
-                                const medicine::Drug& editedDrug);
+    void medicineDrugCreateSignal(const medicine::Drug& drug);
+    void medicineDrugEditSignal(const medicine::Drug& drug);
 
 private slots:
     void on_addBrandsBtn_clicked();

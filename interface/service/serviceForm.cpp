@@ -74,7 +74,7 @@ void ServiceForm::on_solutionBox_accepted() {
         break;
     case OpenMode::EDIT:
         database_->editService(service_, edited);
-        emit serviceEditSignal(service_, edited);
+        emit serviceEditSignal(edited);
         break;
     }
     close();

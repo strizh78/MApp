@@ -11,7 +11,7 @@
 
 namespace {
 
-const MAppBaseObj* getData(QStandardItemModel* model, int row) {
+const MAppBaseObj* getData(const QStandardItemModel* model, int row) {
     return model->data(model->index(row, 0), Qt::UserRole).value<const MAppBaseObj*>();
 }
 
@@ -93,6 +93,7 @@ void MAppTable::editData(const MAppBaseObj& data, const QList<QStandardItem*>& l
 
     if (!e2)
         appendRow(data, list);
+    setButtonsEnabled();
 }
 
 void MAppTable::setFlag(MAppTable::TableSettings flag, bool value) {
@@ -107,7 +108,7 @@ void MAppTable::setFlag(MAppTable::TableSettings flag, bool value) {
 }
 
 void MAppTable::setBinUsage(bool useBin) {
-    ui->tabWidget->tabBar()->setHidden(useBin);
+    ui->tabWidget->tabBar()->setVisible(useBin);
     useBin_ = useBin;
 }
 
@@ -123,9 +124,9 @@ void MAppTable::setMainTabLabel(QString label) {
     ui->tabWidget->setTabText(0, label);
 }
 
-void MAppTable::setModel(QStandardItemModel* model) {
+void MAppTable::setModel(const QStandardItemModel* model) {
     for (int i = 0; i < model->rowCount(); ++i)
-        modelByData(*getData(model, i))->appendRow(model->takeRow(i));
+        modelByData(*getData(model, i))->appendRow(takeRow(model, i));
 
     setButtonsEnabled();
     setFocusOnRow(getCurrentTable(), 0);
@@ -183,6 +184,7 @@ void MAppTable::on_tableSettingsBtn_clicked() {
 }
 
 void MAppTable::on_tabWidget_currentChanged(int index) {
+    Q_UNUSED(index);
     on_searchString_textEdited(ui->searchString->text());
     switchTabButtons();
     setFocusOnRow(getCurrentTable(), 0);
@@ -220,6 +222,15 @@ QTableView* MAppTable::tableByData(const MAppBaseObj& data) {
     if (data.isDeleted())
         return ui->binTable;
     return ui->mainTable;
+}
+
+QList<QStandardItem*> MAppTable::takeRow(const QStandardItemModel* model, int row) {
+    QList<QStandardItem*> list;
+
+    for (int i = 0; i < model->columnCount(); ++i)
+        list << model->item(row, i);
+
+    return list;
 }
 
 void MAppTable::setButtonsEnabled() {

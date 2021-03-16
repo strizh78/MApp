@@ -43,6 +43,7 @@ void HomeopathyDrugForm::on_buttonBox_accepted() {
         ErrorLog::showItemFormWarning(ui->errorLabel, invalidFields.value());
         return;
     }
+
     Drug currentDrug(ui->name->text(),
                      ui->nameLat->text(),
                      ui->groupComboBox->currentData().value<Groups>(),
@@ -54,7 +55,7 @@ void HomeopathyDrugForm::on_buttonBox_accepted() {
             break;
         case OpenMode::EDIT:
             database_->editHomeopathyDrug(drug_, currentDrug);
-            emit homeopathyDrugEditSignal(drug_, currentDrug);
+            emit homeopathyDrugEditSignal(currentDrug);
             break;
     }
     close();
