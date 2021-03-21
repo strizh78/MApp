@@ -15,8 +15,16 @@ class ServiceForm : public QWidget {
     Q_OBJECT
 
 public:
+    enum class OpenMode {
+        CREATE,
+        EDIT,
+        VIEW
+    };
+
+public:
     ServiceForm(std::shared_ptr<DatabaseInterface> database,
-                std::optional<Service> service = std::nullopt, QWidget *parent = nullptr);
+                std::optional<Service> service = std::nullopt,
+                OpenMode openMode = OpenMode::CREATE, QWidget *parent = nullptr);
     ~ServiceForm();
 
 private:
@@ -31,10 +39,7 @@ private slots:
     void on_solutionBox_rejected();
 
 private:
-    enum class OpenMode {
-        CREATE,
-        EDIT
-    };
+    void setEditEnabled(bool enabled);
 
     Ui::ServiceForm *ui;
     std::shared_ptr<DatabaseInterface> database_;

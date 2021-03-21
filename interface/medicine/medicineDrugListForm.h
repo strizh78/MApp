@@ -33,7 +33,6 @@ private slots:
 private:
     void setupTableSettings();
     void fillMedicinesTable(const std::vector<medicine::Drug>& medicinesList);
-    QList<QStandardItem*> createMedicineDrugRow(const medicine::Drug& drug);
 
     Ui::MedicineDrugListForm *ui;
     std::shared_ptr<DatabaseInterface> database_;

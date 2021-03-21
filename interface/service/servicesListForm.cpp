@@ -47,11 +47,11 @@ void ServicesListForm::onDeleteButtonClicked(const QVariant& data) {
 }
 
 void ServicesListForm::addService(const Service& service) {
-    ui->serviceTable->appendRow(service, createServiceRow(service));
+    ui->serviceTable->appendRow(service, CreateRows::createServiceRow(service));
 }
 
 void ServicesListForm::editService(const Service& editedService) {
-    ui->serviceTable->editData(editedService, createServiceRow(editedService));
+    ui->serviceTable->editData(editedService, CreateRows::createServiceRow(editedService));
 }
 
 void ServicesListForm::setupTableSettings() {
@@ -72,25 +72,4 @@ void ServicesListForm::setupTableSettings() {
 void ServicesListForm::fillServicesTable(const std::vector<Service>& servicesList) {
     for (const auto& service : servicesList)
         addService(service);
-}
-
-QList<QStandardItem*> ServicesListForm::createServiceRow(const Service& service) {
-    QList<QStandardItem*> lst;
-
-    QStandardItem* name = new QStandardItem(service.name());
-    name->setData(getModelData(service), Qt::UserRole);
-    QStandardItem* price = new QStandardItem(QString::number(service.price()));
-    QStandardItem* duration = new QStandardItem(service.duration().toString("hч mmм"));
-
-    if (service.isDeprecated()) {
-        QColor color = ui->serviceTable->palette().text().color();
-        color.setAlpha(256 * 0.20);
-
-        name->setData(QVariant::fromValue(color), Qt::ForegroundRole);
-        price->setData(QVariant::fromValue(color), Qt::ForegroundRole);
-        duration->setData(QVariant::fromValue(color), Qt::ForegroundRole);
-    }
-
-    lst << name << price << duration;
-    return lst;
 }

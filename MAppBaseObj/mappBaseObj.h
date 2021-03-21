@@ -8,6 +8,8 @@ public:
     int code() const;
     bool isDeleted() const;
 
+    bool isExists() const;
+
     bool operator ==(const MAppBaseObj& other) const;
     bool operator !=(const MAppBaseObj& other) const;
 

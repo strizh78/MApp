@@ -5,10 +5,22 @@
 #include <QString>
 #include <QLabel>
 #include <QLineEdit>
+#include <QStandardItem>
 #include <QRegExpValidator>
 
 #include <vector>
 #include <sstream>
+
+class Patient;
+class Service;
+class MAppTable;
+
+namespace medicine {
+class Drug;
+}
+namespace homeopathy {
+class Drug;
+}
 
 namespace ErrorLog {
 void showItemFormWarning(QLabel* errorText, const std::vector<QString>& wrongFields);
@@ -43,3 +55,14 @@ void SetValidator(const QRegExp& regExp, QLineEdit* lineEdit);
 void setDoubleValidator(QLineEdit* lineEdit);
 void setEnglishValidator(QLineEdit* lineEdit);
 }
+
+namespace CreateRows {
+QList<QStandardItem*> createPatientRow(const Patient& patient);
+QList<QStandardItem*> createServiceRow(const Service& service);
+QList<QStandardItem*> createMedicineDrugRow(const medicine::Drug& drug);
+QList<QStandardItem*> createHomeopathyDrugRow(const homeopathy::Drug& drug);
+}
+
+MAppTable* createSelectionForm(QWidget* parent);
+
+void showAsWindowModal(QWidget* form);

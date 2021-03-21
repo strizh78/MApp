@@ -48,11 +48,11 @@ void PatientsListForm::onDeleteButtonClicked(const QVariant& data) {
 }
 
 void PatientsListForm::addPatient(const Patient& patient) {
-    ui->patientTable->appendRow(patient, createPatientRow(patient));
+    ui->patientTable->appendRow(patient, CreateRows::createPatientRow(patient));
 }
 
 void PatientsListForm::editPatient(const Patient& editedPatient) {
-    ui->patientTable->editData(editedPatient, createPatientRow(editedPatient));
+    ui->patientTable->editData(editedPatient, CreateRows::createPatientRow(editedPatient));
 }
 
 void PatientsListForm::setupTableSettings() {
@@ -73,15 +73,4 @@ void PatientsListForm::setupTableSettings() {
 void PatientsListForm::fillPatientsTable(const std::vector<Patient>& patientsList) {
     for (const auto& patient : patientsList)
         addPatient(patient);
-}
-
-QList<QStandardItem*> PatientsListForm::createPatientRow(const Patient& patient) {
-    QList<QStandardItem*> lst;
-
-    QStandardItem* initials = new QStandardItem(patient.nameInfo().getInitials());
-    initials->setData(getModelData(patient), Qt::UserRole);
-    QStandardItem* birthDate = new QStandardItem(patient.birthDate().toString("d MMMM yyyy"));
-    QStandardItem* address = new QStandardItem(patient.address());
-    lst << initials << birthDate << address;
-    return lst;
 }

@@ -20,13 +20,19 @@ std::vector<QString> getInvalidFields(const Service& service) {
 }
 
 ServiceForm::ServiceForm(std::shared_ptr<DatabaseInterface> database,
-                         std::optional<Service> service, QWidget *parent)
+                         std::optional<Service> service,
+                         OpenMode openMode,
+                         QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::ServiceForm)
     , database_(database)
     , service_(service.value_or(Service()))
-    , openMode_(service.has_value() ? OpenMode::EDIT : OpenMode::CREATE)
+    , openMode_(openMode)
 {
+    if (service.has_value() && openMode_ == OpenMode::CREATE) {
+        openMode_ = OpenMode::EDIT;
+    }
+
     ui->setupUi(this);
     ui->errorLabel->setVisible(false);
     Validators::setDoubleValidator(ui->priceEdit);
@@ -35,6 +41,8 @@ ServiceForm::ServiceForm(std::shared_ptr<DatabaseInterface> database,
         case OpenMode::CREATE:
             setWindowTitle("Создание услуги");
             break;
+        case OpenMode::VIEW:
+            setEditEnabled(false);
         case OpenMode::EDIT:
             setWindowTitle("Услуга " + service_.name());
     }
@@ -46,8 +54,26 @@ ServiceForm::~ServiceForm() {
     delete ui;
 }
 
+void ServiceForm::setEditEnabled(bool enabled) {
+    ui->nameEdit->setEnabled(enabled);
+    ui->durationEdit->setEnabled(enabled);
+    ui->priceEdit->setEnabled(enabled);
+    ui->switchActive->setEnabled(enabled);
+
+    ui->solutionBox->clear();
+    if (!enabled) {
+        ui->solutionBox->addButton(QDialogButtonBox::Close);
+    } else {
+        ui->solutionBox->addButton(QDialogButtonBox::Cancel);
+        ui->solutionBox->addButton(QDialogButtonBox::Save);
+    }
+
+    adjustSize();
+}
+
+
 void ServiceForm::fillFormServiceInfo() {
-    if (openMode_ != OpenMode::EDIT) {
+    if (openMode_ == OpenMode::CREATE) {
         return;
     }
 

@@ -14,8 +14,16 @@ class PatientForm : public QWidget {
     Q_OBJECT
 
 public:
+    enum class OpenMode {
+        CREATE,
+        EDIT,
+        VIEW
+    };
+
+public:
     PatientForm(std::shared_ptr<DatabaseInterface> database,
                 std::optional<Patient> patient = std::nullopt,
+                OpenMode mode = OpenMode::CREATE,
                 QWidget *parent = nullptr);
     ~PatientForm();
 
@@ -24,7 +32,7 @@ signals:
     void patientEditSignal(const Patient& editedPatient);
 
 private slots:
-    void addPatientInfo(const QString& key, const QString& value);
+    void fieldEdited();
 
     void on_solutionBox_accepted();
     void on_solutionBox_rejected();
@@ -35,19 +43,22 @@ private slots:
 
     void on_dateEdit_userDateChanged(const QDate& date);
 
+    void on_addAppointmentBtn_clicked();
+
+    void addPatientInfo(const QString& key, const QString& value);
+    void addAppointment(const Appointment& appointment);
+
 private:
     void setupUi();
     void setupInfoTable();
     void enableTableButtons(bool enabled);
+    void setEditEnabled(bool enabled);
 
     void fillFormPatientInfo();
-    Patient buildPatientFromFormData();
+    void setupAppointmentsInfo();
 
-private:
-    enum class OpenMode {
-        CREATE,
-        EDIT
-    };
+    Patient buildPatientFromFormData();
+    bool trySavePatient();
 
 private:
     Ui::PatientForm *ui;
@@ -56,6 +67,8 @@ private:
     Patient patient_;
     OpenMode openMode_;
     std::shared_ptr<DatabaseInterface> database_;
+
+    bool isModified;
 
     friend class PatientTests;
 };

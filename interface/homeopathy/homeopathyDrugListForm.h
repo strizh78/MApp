@@ -30,7 +30,6 @@ private slots:
 private:
     void setupTableSettings();
     void fillHomeopathyTable(const std::vector<homeopathy::Drug> &homeopatyList);
-    QList<QStandardItem*> createHomeopathyDrugRow(const homeopathy::Drug &drug);
 
 private:
     Ui::HomeopathyDrugListForm *ui;

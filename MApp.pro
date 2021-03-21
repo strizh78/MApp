@@ -13,6 +13,11 @@ QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.15
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    appointment/appointment.cpp \
+    interface/appointment/appointmentForm.cpp \
+    interface/appointment/appointmentMiniForm.cpp \
+    interface/appointment/appointmentRecordForm.cpp \
+    interface/appointment/appointmentsListForm.cpp \
     MAppBaseObj/mappBaseObj.cpp \
     interface/basicForms/mappTable.cpp \
     interface/basicForms/mappTableSettingsForm.cpp \
@@ -48,10 +53,15 @@ SOURCES += \
     tests/serviceTests.cpp
 
 HEADERS += \
-    MAppBaseObj/mappBaseObj.h \
+    appointment/appointment.h \
     drugs/homeopathy.h \
     drugs/medicines.h \
     \
+    interface/appointment/appointmentForm.h \
+    interface/appointment/appointmentMiniForm.h \
+    interface/appointment/appointmentRecordForm.h \
+    interface/appointment/appointmentsListForm.h \
+    MAppBaseObj/mappBaseObj.h \
     interface/basicForms/mappTable.h \
     interface/basicForms/mappTableSettingsForm.h \
     interface/basicForms/tableSettingsForm.h \
@@ -83,6 +93,11 @@ HEADERS += \
     tests/serviceTests.h
 
 FORMS += \
+    interface/appointment/appointmentForm.ui \
+    interface/appointment/appointmentMiniForm.ui \
+    interface/appointment/appointmentMiniForm.ui \
+    interface/appointment/appointmentRecordForm.ui \
+    interface/appointment/appointmentsListForm.ui \
     interface/basicForms/mappTable.ui \
     interface/basicForms/mappTableSettingsForm.ui \
     interface/basicForms/tableSettingsForm.ui \

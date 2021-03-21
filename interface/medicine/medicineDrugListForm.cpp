@@ -24,11 +24,11 @@ MedicineDrugListForm::~MedicineDrugListForm() {
 }
 
 void MedicineDrugListForm::addMedicineDrug(const Drug& newDrug) {
-    ui->medicineTable->appendRow(newDrug, createMedicineDrugRow(newDrug));
+    ui->medicineTable->appendRow(newDrug, CreateRows::createMedicineDrugRow(newDrug));
 }
 
 void MedicineDrugListForm::editMedicineDrug(const Drug& drug) {
-    ui->medicineTable->editData(drug, createMedicineDrugRow(drug));
+    ui->medicineTable->editData(drug, CreateRows::createMedicineDrugRow(drug));
 }
 
 void MedicineDrugListForm::onAddButtonClicked() {
@@ -73,17 +73,4 @@ void MedicineDrugListForm::setupTableSettings() {
 void MedicineDrugListForm::fillMedicinesTable(const std::vector<Drug>& medicinesList) {
     for (const auto& drug : medicinesList)
         addMedicineDrug(drug);
-}
-
-QList<QStandardItem*> MedicineDrugListForm::createMedicineDrugRow(const Drug& drug) {
-    QList<QStandardItem*> list;
-
-    QStandardItem* brands = new QStandardItem(drug.getBrands(", "));
-    brands->setData(getModelData(drug), Qt::UserRole);
-    QStandardItem* name = new QStandardItem(drug.getFullName());
-    QStandardItem* price = new QStandardItem(QString::number(drug.price()));
-
-    list << brands << name << price;
-
-    return list;
 }

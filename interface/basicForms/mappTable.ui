@@ -14,12 +14,27 @@
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>-1</number>
+   </property>
+   <property name="leftMargin">
+    <number>7</number>
+   </property>
+   <property name="topMargin">
+    <number>5</number>
+   </property>
+   <property name="rightMargin">
+    <number>7</number>
+   </property>
+   <property name="bottomMargin">
+    <number>5</number>
+   </property>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <property name="rightMargin">
-        <number>7</number>
+        <number>0</number>
        </property>
        <item>
         <widget class="QWidget" name="buttonBar" native="true">
@@ -276,14 +291,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>30</width>
-           <height>30</height>
+           <width>25</width>
+           <height>25</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>30</width>
-           <height>30</height>
+           <width>25</width>
+           <height>25</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -314,7 +329,7 @@ background-repeat: none;</string>
          <property name="maximumSize">
           <size>
            <width>300</width>
-           <height>40</height>
+           <height>30</height>
           </size>
          </property>
          <property name="clearButtonEnabled">
@@ -332,14 +347,14 @@ background-repeat: none;</string>
          </property>
          <property name="minimumSize">
           <size>
-           <width>40</width>
-           <height>40</height>
+           <width>30</width>
+           <height>30</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>40</width>
-           <height>40</height>
+           <width>30</width>
+           <height>30</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -358,6 +373,12 @@ background-repeat: none;</string>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
       <number>0</number>
+     </property>
+     <property name="usesScrollButtons">
+      <bool>false</bool>
+     </property>
+     <property name="documentMode">
+      <bool>false</bool>
      </property>
      <property name="tabBarAutoHide">
       <bool>true</bool>
@@ -450,6 +471,19 @@ background-repeat: none;</string>
        </item>
       </layout>
      </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="solutionBox">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+     <property name="centerButtons">
+      <bool>false</bool>
+     </property>
     </widget>
    </item>
   </layout>

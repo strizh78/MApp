@@ -2,6 +2,7 @@
 
 #include <algorithm>
 
+std::vector<Appointment> DatabaseTest::appointmentsList_ = {};
 std::vector<Service> DatabaseTest::servicesList_ = {};
 std::vector<medicine::Drug> DatabaseTest::medicinesList_ = {};
 std::vector<Patient> DatabaseTest::patientsList_ = {};
@@ -13,6 +14,8 @@ DatabaseTest::DatabaseTest() {
     initMedicineDrugs();
     initPatients();
     initServices();
+
+    initAppointments();
 }
 
 void DatabaseTest::initHomeopathyDrugs() {
@@ -156,12 +159,12 @@ void DatabaseTest::initServices() {
     static const QTime duration3(2, 0);
 
     static const std::vector<Service> servicesList = {
-        Service("nameA", 1000, duration1, false),
-        Service("nameB", 100.99, duration2, true),
-        Service("nameC", 200.5, duration3, true),
+        Service("Услуга 1", 1000, duration1, false),
+        Service("Услуга 2", 100.99, duration2, true),
+        Service("Гомеопатия", 200.5, duration3, true),
         Service("long long long long nameD", 1.0, duration1, false),
         Service("really long long long long long long long nameE", 5000, duration2, false),
-        Service("nameF", 2.5, duration3, true),
+        Service("Мутная услуга", 2.5, duration3, true),
         Service("nameG", 10000, duration1, false)
     };
 
@@ -237,6 +240,36 @@ void DatabaseTest::editPatient(const Patient &oldPatient, Patient &editedPatient
     if (it != patientsList_.end()) {
         *it = editedPatient;
         setCodeToEdit(editedPatient, oldPatient.code());
+    }
+}
+
+void DatabaseTest::initAppointments() {
+    std::vector<Appointment> appointmentsList = {
+        Appointment(patientsList_[0], servicesList_[0], QDateTime({2021, 01, 19}, {15, 45})),
+        Appointment(patientsList_[0], servicesList_[1], QDateTime({2020, 12, 21}, {10, 05})),
+        Appointment(patientsList_[1], servicesList_[1], QDateTime({2021, 01, 19}, {16, 00})),
+        Appointment(patientsList_[1], servicesList_[1], QDateTime({2021, 03, 10}, {15, 45})),
+        Appointment(patientsList_[1], servicesList_[2], QDateTime({2021, 02, 17}, { 9, 00})),
+        Appointment(patientsList_[2], servicesList_[3], QDateTime({2021, 02, 21}, {21, 15}))
+    };
+
+    for (auto appointment : appointmentsList)
+        addAppointment(appointment);
+}
+
+void DatabaseTest::appointments(std::vector<Appointment> &receiver) const {
+    receiver = appointmentsList_;
+}
+
+void DatabaseTest::addAppointment(Appointment &newAppointment) {
+    setCode(newAppointment);
+    appointmentsList_.push_back(newAppointment);
+}
+
+void DatabaseTest::editAppointment(const Appointment &appointment) {
+    auto it = std::find(appointmentsList_.begin(), appointmentsList_.end(), appointment);
+    if (it != appointmentsList_.end()) {
+        *it = appointment;
     }
 }
 

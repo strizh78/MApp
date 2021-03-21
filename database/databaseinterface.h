@@ -4,6 +4,8 @@
 #include "drugs/medicines.h"
 #include "service/service.h"
 #include "patient/patient.h"
+#include "appointment/appointment.h"
+
 #include "MAppBaseObj/mappBaseObj.h"
 
 #include <vector>
@@ -28,6 +30,10 @@ public:
     virtual void patients(std::vector<Patient>&) const = 0;
     virtual void addPatient(Patient&) = 0;
     virtual void editPatient(const Patient&, Patient&) = 0;
+
+    virtual void appointments(std::vector<Appointment>&) const = 0;
+    virtual void addAppointment(Appointment&) = 0;
+    virtual void editAppointment(const Appointment&) = 0;
 
     void setCode(MAppBaseObj& item);
     void setCodeToEdit(MAppBaseObj& item, int code);

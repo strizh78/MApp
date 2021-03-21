@@ -44,6 +44,8 @@ MAppTable::MAppTable(QWidget *parent)
     , ui(new Ui::MAppTable)
 {
     ui->setupUi(this);
+    ui->solutionBox->setHidden(true);
+
     useBin_ = true;
     setEmptyModel();
 }
@@ -103,6 +105,9 @@ void MAppTable::setFlag(MAppTable::TableSettings flag, bool value) {
             break;
         case MAppTable::TableSettings::UseButtons:
             setButtonsVisible(value);
+            break;
+        case MAppTable::TableSettings::UseSolutionBox:
+            ui->solutionBox->setVisible(value);
             break;
     }
 }
@@ -227,8 +232,10 @@ QTableView* MAppTable::tableByData(const MAppBaseObj& data) {
 QList<QStandardItem*> MAppTable::takeRow(const QStandardItemModel* model, int row) {
     QList<QStandardItem*> list;
 
-    for (int i = 0; i < model->columnCount(); ++i)
-        list << model->item(row, i);
+    for (int i = 0; i < model->columnCount(); ++i) {
+        list << (new QStandardItem(model->item(row, i)->text()));
+    }
+    (*list.begin())->setData(model->item(row, 0)->data(Qt::UserRole), Qt::UserRole);
 
     return list;
 }
@@ -297,4 +304,48 @@ void MAppTable::removeRow(QStandardItemModel* model, int row) {
 
 void MAppTable::setButtonsVisible(bool isVisible) {
     ui->buttonBar->setVisible(isVisible);
+}
+
+void MAppTable::on_solutionBox_accepted() {
+    switch (getCurrentTable()->selectionMode()) {
+        case QAbstractItemView::SingleSelection:
+        {
+            auto index = getCurrentModel()->index(ui->mainTable->currentIndex().row(), 0);
+            emit onChooseButtonClicked(getCurrentModel()->data(index, Qt::UserRole));
+            break;
+        }
+        case QAbstractItemView::MultiSelection:
+        {
+            std::vector <QVariant> items;
+            auto selectedItems = getCurrentTable()->selectionModel()->selectedRows(/*column*/ 0);
+            for (auto& x : selectedItems) {
+                items.push_back(getCurrentModel()->data(x, Qt::UserRole));
+            }
+            emit onChooseButtonClicked(items);
+            break;
+        }
+        default:
+            throw "Selection mode is not supported";
+    }
+}
+
+void MAppTable::on_solutionBox_rejected() {
+    close();
+}
+
+void MAppTable::setItemSelected(const MAppBaseObj& item) {
+    auto index = indexInTable(mainTableModel.get(), item);
+    if (index.has_value()) {
+        ui->mainTable->selectRow(index->row());
+    }
+
+    index = indexInTable(binTableModel.get(), item);
+    if (index.has_value()) {
+        ui->binTable->selectRow(index->row());
+    }
+}
+
+void MAppTable::setSelectionMode(QAbstractItemView::SelectionMode mode) {
+    ui->mainTable->setSelectionMode(mode);
+    ui->binTable->setSelectionMode(mode);
 }

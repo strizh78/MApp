@@ -15,8 +15,7 @@ namespace Ui {
     class PatientsListForm;
 }
 
-class PatientsListForm : public QWidget
-{
+class PatientsListForm : public QWidget {
     Q_OBJECT
 public:
     explicit PatientsListForm(std::shared_ptr<DatabaseInterface> database,
@@ -33,7 +32,6 @@ private slots:
 private:
     void setupTableSettings();
     void fillPatientsTable(const std::vector<Patient>& patientsList);
-    QList<QStandardItem*> createPatientRow(const Patient& patient);
 
 private:
     Ui::PatientsListForm *ui;

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "service/service.h"
-#include "interface/basicForms/mappTable.h"
 
 #include "database/databaseinterface.h"
 
@@ -34,7 +33,6 @@ private slots:
 private:
     void setupTableSettings();
     void fillServicesTable(const std::vector<Service>& servicesList);
-    QList<QStandardItem*> createServiceRow(const Service& service);
 
 private:
     Ui::ServicesListForm *ui;

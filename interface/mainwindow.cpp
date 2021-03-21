@@ -5,6 +5,7 @@
 #include "interface/homeopathy/homeopathyDrugListForm.h"
 #include "interface/service/servicesListForm.h"
 #include "interface/patient/patientsListForm.h"
+#include "interface/appointment/appointmentsListForm.h"
 
 MainWindow::MainWindow(std::shared_ptr<DatabaseInterface> database,
                        QWidget *parent)
@@ -41,4 +42,10 @@ void MainWindow::on_homeopathyList_clicked() {
     auto* homeopathyList = new HomeopathyDrugListForm(database_);
     homeopathyList->setAttribute(Qt::WA_DeleteOnClose, true);
     homeopathyList->show();
+}
+
+void MainWindow::on_appointmentsList_clicked() {
+    auto* appointmentsList = new AppointmentsListForm(database_);
+    appointmentsList->setAttribute(Qt::WA_DeleteOnClose, true);
+    appointmentsList->show();
 }

@@ -8,6 +8,10 @@ bool MAppBaseObj::isDeleted() const {
     return isDeleted_;
 }
 
+bool MAppBaseObj::isExists() const {
+    return code_ != 0;
+}
+
 bool MAppBaseObj::operator ==(const MAppBaseObj& other) const {
     return code_ == other.code();
 }

@@ -48,11 +48,11 @@ void HomeopathyDrugListForm::onDeleteButtonClicked(const QVariant& data) {
 }
 
 void HomeopathyDrugListForm::addHomeopathyDrug(const Drug& newDrug) {
-    ui->homeopathyTable->appendRow(newDrug, createHomeopathyDrugRow(newDrug));
+    ui->homeopathyTable->appendRow(newDrug, CreateRows::createHomeopathyDrugRow(newDrug));
 }
 
 void HomeopathyDrugListForm::editHomeopathyDrug(const Drug& editedDrug) {
-    ui->homeopathyTable->editData(editedDrug, createHomeopathyDrugRow(editedDrug));
+    ui->homeopathyTable->editData(editedDrug, CreateRows::createHomeopathyDrugRow(editedDrug));
 }
 
 void HomeopathyDrugListForm::setupTableSettings() {
@@ -73,14 +73,4 @@ void HomeopathyDrugListForm::setupTableSettings() {
 void HomeopathyDrugListForm::fillHomeopathyTable(const std::vector<homeopathy::Drug>& homeopathyList) {
     for (const auto& drug : homeopathyList)
         addHomeopathyDrug(drug);
-}
-
-QList<QStandardItem*> HomeopathyDrugListForm::createHomeopathyDrugRow(const Drug& drug) {
-    QList<QStandardItem*> lst;
-
-    QStandardItem* name = new QStandardItem(drug.getFullName());
-    name->setData(getModelData(drug), Qt::UserRole);
-    QStandardItem* group = new QStandardItem(groupToString(drug.group()));
-    lst << name << group;
-    return lst;
 }

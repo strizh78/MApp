@@ -7,7 +7,11 @@
         <file>icons/settingLinesIcon.png</file>
         <file>icons/greenPlusIcon.png</file>
         <file>icons/editIcon.png</file>
+        <file>icons/newTabIcon.png</file>
         <file>icons/trash.png</file>
         <file>icons/previous.png</file>
+        <file>icons/appointment.png</file>
+        <file>icons/transfer.png</file>
+        <file>icons/copy.png</file>
     </qresource>
 </RCC>

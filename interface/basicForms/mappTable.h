@@ -17,6 +17,7 @@ public:
     enum class TableSettings {
         UseBin,
         UseButtons,
+        UseSolutionBox
     };
     MAppTable(QWidget *parent = nullptr);
     ~MAppTable();
@@ -28,11 +29,16 @@ public:
     void setModel(const QStandardItemModel* model);
     void setScale(const std::vector<int>& scale);
 
+    void setItemSelected(const MAppBaseObj& item);
+    void setSelectionMode(QAbstractItemView::SelectionMode mode);
+
 signals:
     void onAddButtonClicked();
     void onEditButtonClicked(const QVariant &data);
     void onDeleteButtonClicked(const QVariant &data);
     void onTableDoubleClicked(const QVariant &data);
+    void onChooseButtonClicked(QVariant);
+    void onChooseButtonClicked(std::vector<QVariant> data);
 
 private slots:
     void on_addBtn_clicked();
@@ -44,6 +50,9 @@ private slots:
     void on_tabWidget_currentChanged(int index);
     void on_mainTable_doubleClicked(const QModelIndex &index);
     void on_binTable_doubleClicked(const QModelIndex &index);
+
+    void on_solutionBox_accepted();
+    void on_solutionBox_rejected();
 
 private:
     QStandardItemModel* getCurrentModel();
@@ -69,7 +78,10 @@ private:
     std::shared_ptr<QStandardItemModel> mainTableModel;
     std::shared_ptr<QStandardItemModel> binTableModel;
     std::vector<int> scale_;
-    bool useBin_;
     int dimension_;
+
+    bool useBin_;
+    bool closeOnSignalEmitted_;
+
     Ui::MAppTable *ui;
 };

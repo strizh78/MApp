@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>PatientsListForm</class>
- <widget class="QWidget" name="PatientsListForm">
+ <class>AppointmentsListForm</class>
+ <widget class="QWidget" name="AppointmentsListForm">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>655</width>
-    <height>542</height>
+    <width>669</width>
+    <height>548</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Список пациентов</string>
+   <string>Список приёмов</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -30,7 +30,7 @@
     <number>7</number>
    </property>
    <item>
-    <widget class="MAppTable" name="patientTable"/>
+    <widget class="MAppTable" name="appointmentTable"/>
    </item>
   </layout>
  </widget>

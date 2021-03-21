@@ -19,10 +19,15 @@ public:
     void editService(const Service& oldService, Service& editedService) override;
 
     void patients(std::vector<Patient>& receiver) const override;
-    void addPatient(Patient& newPatient) override;
+    void addPatient(Patient& patient) override;
     void editPatient(const Patient& oldPatient, Patient& editedPatient) override;
 
+    void appointments(std::vector<Appointment>& receiver) const override;
+    void addAppointment(Appointment& appointment) override;
+    void editAppointment(const Appointment& appointment) override;
+
 private:
+    void initAppointments();
     void initMedicineDrugs();
     void initHomeopathyDrugs();
     void initServices();
@@ -33,6 +38,7 @@ private:
     static std::vector<homeopathy::Drug> homeopathyList_;
     static std::vector<Service> servicesList_;
     static std::vector<Patient> patientsList_;
+    static std::vector<Appointment> appointmentsList_;
 
     static int nextCode;
 };

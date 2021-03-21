@@ -8,13 +8,18 @@ using namespace homeopathy;
 
 HomeopathyDrugForm::HomeopathyDrugForm(std::shared_ptr<DatabaseInterface> database,
                                        std::optional<Drug> drug,
+                                       OpenMode mode,
                                        QWidget* parent)
     : QWidget(parent)
     , ui(new Ui::HomeopathyDrugForm)
     , database_(database)
     , drug_(drug.value_or(Drug()))
-    , openMode_(drug.has_value() ? OpenMode::EDIT : OpenMode::CREATE)
+    , openMode_(mode)
 {
+    if (drug.has_value() && openMode_ == OpenMode::CREATE) {
+        openMode_ = OpenMode::EDIT;
+    }
+
     ui->setupUi(this);
     init();
     ui->errorLabel->setHidden(true);
@@ -90,6 +95,8 @@ void HomeopathyDrugForm::init() {
         case OpenMode::CREATE:
             setWindowTitle("Добавление препарата");
             break;
+        case OpenMode::VIEW:
+            setEditEnabled(false);
         case OpenMode::EDIT:
             setWindowTitle(drug_.getFullName());
             ui->name->setText(drug_.name());
@@ -98,6 +105,24 @@ void HomeopathyDrugForm::init() {
             break;
     }
     fillLabelFromVector(drug_.availableDilutions());
+}
+
+void HomeopathyDrugForm::setEditEnabled(bool enabled) {
+    ui->addDilutionsBtn->setEnabled(enabled);
+    ui->groupComboBox->setEnabled(enabled);
+    ui->dilutions->setEnabled(enabled);
+    ui->name->setEnabled(enabled);
+    ui->nameLat->setEnabled(enabled);
+
+    ui->buttonBox->clear();
+    if (!enabled) {
+        ui->buttonBox->addButton(QDialogButtonBox::Close);
+    } else {
+        ui->buttonBox->addButton(QDialogButtonBox::Cancel);
+        ui->buttonBox->addButton(QDialogButtonBox::Save);
+    }
+
+    adjustSize();
 }
 
 void HomeopathyDrugForm::setGroupValues() {
