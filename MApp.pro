@@ -34,6 +34,7 @@ SOURCES += \
     interface/patient/patientsListForm.cpp \
     interface/service/serviceForm.cpp \
     interface/service/servicesListForm.cpp \
+    interface/timetable/event/eventForm.cpp \
     interface/utils.cpp \
     main.cpp \
     \
@@ -50,7 +51,9 @@ SOURCES += \
     contrib/toggleSwitch/switch.cpp \
     \
     tests/patientTests.cpp \
-    tests/serviceTests.cpp
+    tests/serviceTests.cpp \
+    timetable/event.cpp \
+    timetable/timetableUtils.cpp
 
 HEADERS += \
     appointment/appointment.h \
@@ -77,6 +80,7 @@ HEADERS += \
     interface/patient/patientsListForm.h \
     interface/service/serviceForm.h \
     interface/service/servicesListForm.h \
+    interface/timetable/event/eventForm.h \
     interface/utils.h \
     patient/patient.h \
     service/service.h \
@@ -90,7 +94,9 @@ HEADERS += \
     contrib/toggleSwitch/switch.h \
     \
     tests/patientTests.h \
-    tests/serviceTests.h
+    tests/serviceTests.h \
+    timetable/event.h \
+    timetable/timetableUtils.h
 
 FORMS += \
     interface/appointment/appointmentForm.ui \
@@ -116,6 +122,7 @@ FORMS += \
     \
     interface/service/serviceForm.ui \
     interface/service/servicesListForm.ui \
+    interface/timetable/event/eventForm.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

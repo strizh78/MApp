@@ -5,6 +5,7 @@
 #include "service/service.h"
 #include "patient/patient.h"
 #include "appointment/appointment.h"
+#include "timetable/event.h"
 
 #include "MAppBaseObj/mappBaseObj.h"
 
@@ -34,6 +35,10 @@ public:
     virtual void appointments(std::vector<Appointment>&) const = 0;
     virtual void addAppointment(Appointment&) = 0;
     virtual void editAppointment(const Appointment&) = 0;
+
+    virtual void events(std::vector<Event>&) const = 0;
+    virtual void addEvent(Event&) = 0;
+    virtual void editEvent(const Event&) = 0;
 
     void setCode(MAppBaseObj& item);
     void setCodeToEdit(MAppBaseObj& item, int code);

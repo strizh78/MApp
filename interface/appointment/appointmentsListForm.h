@@ -30,7 +30,6 @@ private slots:
 private:
     void setupTableSettings();
     void fillAppointmentsTable(const std::vector<Appointment>& appointmentsList);
-    QList<QStandardItem*> createAppointmentRow(const Appointment& appointment);
 
 private:
     Ui::AppointmentsListForm *ui;

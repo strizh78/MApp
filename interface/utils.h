@@ -14,6 +14,7 @@
 class Patient;
 class Service;
 class MAppTable;
+class Appointment;
 
 namespace medicine {
 class Drug;
@@ -61,6 +62,7 @@ QList<QStandardItem*> createPatientRow(const Patient& patient);
 QList<QStandardItem*> createServiceRow(const Service& service);
 QList<QStandardItem*> createMedicineDrugRow(const medicine::Drug& drug);
 QList<QStandardItem*> createHomeopathyDrugRow(const homeopathy::Drug& drug);
+QList<QStandardItem*> createAppointmentRow(const Appointment& appointment);
 }
 
 MAppTable* createSelectionForm(QWidget* parent);

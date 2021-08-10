@@ -46,15 +46,16 @@ void AppointmentsListForm::onEditButtonClicked(const QVariant& data) {
 void AppointmentsListForm::onDeleteButtonClicked(const QVariant& data) {
     auto value = *getValueFromModelData<Appointment>(data);
     database_->setDeletedMark(value, !value.isDeleted());
+    database_->editAppointment(value);
     editAppointment(value);
 }
 
 void AppointmentsListForm::addAppointment(const Appointment& appointment) {
-    ui->appointmentTable->appendRow(appointment, createAppointmentRow(appointment));
+    ui->appointmentTable->appendRow(appointment, CreateRows::createAppointmentRow(appointment));
 }
 
 void AppointmentsListForm::editAppointment(const Appointment& editedAppointment) {
-    ui->appointmentTable->editData(editedAppointment, createAppointmentRow(editedAppointment));
+    ui->appointmentTable->editData(editedAppointment, CreateRows::createAppointmentRow(editedAppointment));
 }
 
 void AppointmentsListForm::setupTableSettings() {
@@ -75,17 +76,4 @@ void AppointmentsListForm::fillAppointmentsTable(const std::vector<Appointment>&
     for (const auto& appointment : appointmentsList) {
         addAppointment(appointment);
     }
-}
-
-QList<QStandardItem*> AppointmentsListForm::createAppointmentRow(const Appointment& appointment) {
-    QList<QStandardItem*> lst;
-
-    QStandardItem* patientName = new QStandardItem(appointment.patient.nameInfo().getInitials());
-    patientName->setData(getModelData(appointment), Qt::UserRole);
-
-    QStandardItem* serviceName = new QStandardItem(appointment.service.name());
-    QStandardItem* dateTime = new QStandardItem(appointment.date.toString("d MMMM yyyy, h:mm"));
-
-    lst << patientName << serviceName << dateTime;
-    return lst;
 }

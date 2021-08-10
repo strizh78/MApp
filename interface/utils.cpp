@@ -4,6 +4,7 @@
 #include "service/service.h"
 #include "drugs/homeopathy.h"
 #include "drugs/medicines.h"
+#include "appointment/appointment.h"
 
 #include "interface/basicForms/mappTable.h"
 
@@ -99,6 +100,19 @@ QList<QStandardItem*> createHomeopathyDrugRow(const homeopathy::Drug& drug) {
     name->setData(getModelData(drug), Qt::UserRole);
     QStandardItem* group = new QStandardItem(groupToString(drug.group()));
     lst << name << group;
+    return lst;
+}
+
+QList<QStandardItem*> createAppointmentRow(const Appointment& appointment) {
+    QList<QStandardItem*> lst;
+
+    QStandardItem* patientName = new QStandardItem(appointment.patient.nameInfo().getInitials());
+    patientName->setData(getModelData(appointment), Qt::UserRole);
+
+    QStandardItem* serviceName = new QStandardItem(appointment.service.name());
+    QStandardItem* dateTime = new QStandardItem(appointment.date.toString("d MMMM yyyy, h:mm"));
+
+    lst << patientName << serviceName << dateTime;
     return lst;
 }
 }

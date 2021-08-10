@@ -7,6 +7,7 @@ std::vector<Service> DatabaseTest::servicesList_ = {};
 std::vector<medicine::Drug> DatabaseTest::medicinesList_ = {};
 std::vector<Patient> DatabaseTest::patientsList_ = {};
 std::vector<homeopathy::Drug> DatabaseTest::homeopathyList_ = {};
+std::vector<Event> DatabaseTest::eventsList_ = {};
 int DatabaseTest::nextCode = 0;
 
 DatabaseTest::DatabaseTest() {
@@ -14,7 +15,8 @@ DatabaseTest::DatabaseTest() {
     initMedicineDrugs();
     initPatients();
     initServices();
-
+    initEvents();
+    
     initAppointments();
 }
 
@@ -244,14 +246,30 @@ void DatabaseTest::editPatient(const Patient &oldPatient, Patient &editedPatient
 }
 
 void DatabaseTest::initAppointments() {
+    QDate today = QDate::currentDate();
+    QDate yesterday = QDate::currentDate().addDays(-1);
+    QDate tomorrow = QDate::currentDate().addDays(1);
+
     std::vector<Appointment> appointmentsList = {
-        Appointment(patientsList_[0], servicesList_[0], QDateTime({2021, 01, 19}, {15, 45})),
-        Appointment(patientsList_[0], servicesList_[1], QDateTime({2020, 12, 21}, {10, 05})),
-        Appointment(patientsList_[1], servicesList_[1], QDateTime({2021, 01, 19}, {16, 00})),
-        Appointment(patientsList_[1], servicesList_[1], QDateTime({2021, 03, 10}, {15, 45})),
-        Appointment(patientsList_[1], servicesList_[2], QDateTime({2021, 02, 17}, { 9, 00})),
-        Appointment(patientsList_[2], servicesList_[3], QDateTime({2021, 02, 21}, {21, 15}))
+        Appointment(patientsList_[0], servicesList_[0], QDateTime(today, {8, 10})),
+        Appointment(patientsList_[0], servicesList_[1], QDateTime(today, {11, 00})),
+        Appointment(patientsList_[1], servicesList_[1], QDateTime(today, {12, 05})),
+        Appointment(patientsList_[1], servicesList_[1], QDateTime(today, {14, 10})),
+        Appointment(patientsList_[1], servicesList_[2], QDateTime(today, {19, 00})),
+        Appointment(patientsList_[2], servicesList_[3], QDateTime(today, {21, 45})),
+
+        Appointment(patientsList_[3], servicesList_[6], QDateTime(yesterday, {8, 10})),
+        Appointment(patientsList_[3], servicesList_[5], QDateTime(yesterday, {9, 45})),
+        Appointment(patientsList_[0], servicesList_[1], QDateTime(yesterday, {14, 10})),
+        Appointment(patientsList_[5], servicesList_[3], QDateTime(yesterday, {16, 00})),
+        Appointment(patientsList_[1], servicesList_[2], QDateTime(yesterday, {19, 00})),
+        Appointment(patientsList_[1], servicesList_[3], QDateTime(yesterday, {21, 45})),
+
+        Appointment(patientsList_[2], servicesList_[0], QDateTime(tomorrow, {8, 10})),
+        Appointment(patientsList_[4], servicesList_[1], QDateTime(tomorrow, {12, 45})),
+        Appointment(patientsList_[3], servicesList_[2], QDateTime(tomorrow, {14, 10}))
     };
+   // appointmentsList[1].isConducted = true; (раскомментирую следующим ревью)
 
     for (auto appointment : appointmentsList)
         addAppointment(appointment);
@@ -275,4 +293,41 @@ void DatabaseTest::editAppointment(const Appointment &appointment) {
 
 int DatabaseTest::getNextCode() {
     return ++nextCode;
+}
+
+void DatabaseTest::initEvents() {
+    QDate today = QDate::currentDate();
+    QDate yesterday = QDate::currentDate().addDays(-1);
+    QDate tomorrow = QDate::currentDate().addDays(1);
+
+    std::vector<Event> eventsList = {
+        Event({"Обед", QDateTime(today, {17, 20}), QTime(1, 30)}),
+        Event({"Важное дело с длинным длинным названием, в котором даже есть запятая",
+               QDateTime(today, {15, 10}), QTime(2, 0)}),
+        Event({"Дело 1", QDateTime(tomorrow, {9, 45}), QTime(0, 20)}),
+        Event({"Кушац", QDateTime(tomorrow, {19, 45}), QTime(0, 30)}),
+        Event({"Сходить погулять", QDateTime(yesterday, {21, 0}), QTime(0, 45)}),
+        Event({"Важное дело с english буквами", QDateTime(yesterday, {11, 50}), QTime(1, 10)})
+    };
+
+    eventsList[0].comment = "- Суп\n- Второе\n- Компот\n";
+
+    for (auto event : eventsList)
+        addEvent(event);
+}
+
+void DatabaseTest::events(std::vector<Event> &receiver) const {
+    receiver = eventsList_;
+}
+
+void DatabaseTest::addEvent(Event &newEvent) {
+    setCode(newEvent);
+    eventsList_.push_back(newEvent);
+}
+
+void DatabaseTest::editEvent(const Event &event) {
+    auto it = std::find(eventsList_.begin(), eventsList_.end(), event);
+    if (it != eventsList_.end()) {
+        *it = event;
+    }
 }

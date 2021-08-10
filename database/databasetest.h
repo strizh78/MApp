@@ -26,7 +26,12 @@ public:
     void addAppointment(Appointment& appointment) override;
     void editAppointment(const Appointment& appointment) override;
 
+    void events(std::vector<Event>&) const override;
+    void addEvent(Event&) override;
+    void editEvent(const Event&) override;
+
 private:
+    void initEvents();
     void initAppointments();
     void initMedicineDrugs();
     void initHomeopathyDrugs();
@@ -39,6 +44,7 @@ private:
     static std::vector<Service> servicesList_;
     static std::vector<Patient> patientsList_;
     static std::vector<Appointment> appointmentsList_;
+    static std::vector<Event> eventsList_;
 
     static int nextCode;
 };
