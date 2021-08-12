@@ -1,5 +1,7 @@
 #include "databasetest.h"
 
+#include "interface/utils.h"
+
 #include <algorithm>
 
 std::vector<Appointment> DatabaseTest::appointmentsList_ = {};
@@ -200,7 +202,7 @@ void DatabaseTest::initPatients() {
                                             {"Анна", "Попова", "Александровна"},
                                             {"Константин", "Пахомов", "Константинович"},
                                             {"Алия", "Арджеванидзе", "Даниэльевна"},
-                                            {"Андрей", "Григорьевич", "Никулин"}};
+                                            {"Андрей", "Никулин", "Григорьевич"}};
     std::vector<QDate> dates = {{1963, 11, 24},
                                 {1996, 8, 9},
                                 {2008, 3, 8},
@@ -216,21 +218,23 @@ void DatabaseTest::initPatients() {
                                       "г. Дивное, ул. Пионерская, дом 55, квартира 981",
                                       "ул. Старобельская, дом 169, квартира 282"};
 
+    std::vector <QString> infos = {"Телефон для связи +7 (961) 873 27 43, почта grishina_eli@yandex.ru",
+                                   "[Просила не звонить после 19!]",
+                                   "",
+                                   "Рост 177, вес 102",
+                                   "Аллергия на пенициллин и линкомицин",
+                                   "Хронических заболеваний нет, операций не было",
+                                   "Ана́мнез (от греч. ἀνάμνησις — воспоминание) — совокупность сведений, получаемых при медицинском обследовании путём расспроса самого обследуемого и/или знающих его лиц. Изучение анамнеза, как и расспрос в целом, не просто перечень вопросов и ответов на них. От стиля беседы врача и больного зависит та психологическая совместимость, которая во многом определяет конечную цель — облегчение состояния пациента."};
+
     std::vector<Patient> patientsList;
     for (size_t i = 0; i < names.size(); ++i) {
         patientsList.push_back(Patient(names[i], dates[i], addresses[i]));
     }
 
-    const QHash<QString, QString> additionalInfo = {{"Аллергии", "кошки"},
-                                                     {"Хронические", "нет"},
-                                                     {"Телефон для связи", "+7 (961) 873 27 43"},
-                                                     {"Почта", "grishina_eli@yandex.ru"},
-                                                     {"Заметки", "не звонить после 22"}};
-
-    patientsList[0].setAdditionalInfo(additionalInfo);
-
     for (auto patient : patientsList)
         addPatient(patient);
+    patientsList_[0].additionalInfo = toString(infos, "\n\n");
+    editPatient(patientsList_[0], patientsList_[0]);
 }
 
 void DatabaseTest::patients(std::vector<Patient> &receiver) const {

@@ -21,26 +21,18 @@ namespace {
 
     std::vector<QString> getInvalidFields(const Patient& patient) {
         std::vector<QString> wrongFields;
-        if (patient.nameInfo().surname.isEmpty() ||
-            patient.nameInfo().name.isEmpty())
+        if (patient.nameInfo.surname.isEmpty() ||
+            patient.nameInfo.name.isEmpty())
         {
             wrongFields.push_back("\"ФИО\"");
         }
 
-        if (patient.address().isEmpty()) {
+        if (patient.address.isEmpty()) {
             wrongFields.push_back("\"Адрес\"");
         }
 
-        if (patient.birthDate() > QDate::currentDate()) {
+        if (patient.birthDate > QDate::currentDate()) {
             wrongFields.push_back("\"Дата рождения\"");
-        }
-
-        auto keys = patient.additionalInfo().keys();
-        for (auto& key : keys) {
-            if (key.isEmpty() || patient.additionalInfo()[key].isEmpty()) {
-                wrongFields.push_back("\"Дополнительная информация\"");
-                break;
-            }
         }
         return wrongFields;
     }
@@ -134,7 +126,6 @@ PatientForm::PatientForm(std::shared_ptr<DatabaseInterface> database,
     }
 
     setupUi();
-    setupInfoTable();
     fillFormPatientInfo();
     setupAppointmentsInfo();
 
@@ -157,31 +148,6 @@ void PatientForm::on_solutionBox_accepted() {
 
 void PatientForm::on_solutionBox_rejected() {
     close();
-}
-
-void PatientForm::on_createInfo_clicked() {
-    addPatientInfo("", "");
-
-    int rowNumber = infoViewModel_->rowCount() - 1;
-    ui->additionalInfo->selectRow(rowNumber);
-    ui->additionalInfo->edit(infoViewModel_->index(rowNumber, 0));
-}
-
-void PatientForm::on_deleteInfo_clicked() {
-    int currentRow = ui->additionalInfo->currentIndex().row();
-    infoViewModel_->removeRow(currentRow);
-
-    int rowCount = infoViewModel_->rowCount();
-    ui->additionalInfo->selectRow(std::min(rowCount - 1, currentRow));
-    ui->additionalInfo->setFocus();
-
-    if (rowCount == 0) {
-        enableTableButtons(false);
-    }
-}
-
-void PatientForm::on_editInfo_clicked() {
-    ui->additionalInfo->edit(ui->additionalInfo->currentIndex());
 }
 
 void PatientForm::on_dateEdit_userDateChanged(const QDate &date) {
@@ -218,11 +184,6 @@ void PatientForm::on_addAppointmentBtn_clicked() {
     showAsWindowModal(appointmentViewForm);
 }
 
-void PatientForm::addPatientInfo(const QString& key, const QString& value) {
-    infoViewModel_->appendRow(createInfoRow(key, value));
-    enableTableButtons(true);
-}
-
 void PatientForm::addAppointment(const Appointment& appointment) {
     auto* miniAppointmentForm = new AppointmentMiniForm(appointment, database_, this);
     ui->appointmentsList->insertWidget(2, miniAppointmentForm);
@@ -235,18 +196,12 @@ void PatientForm::setupUi() {
 
     ui->errorLabel->setVisible(false);
 
-    ui->editInfo->setEnabled(false);
-    ui->deleteInfo->setEnabled(false);
-
     setAgeLabelTextColor(palette(), ui->ageDataLabel);
     on_dateEdit_userDateChanged(ui->dateEdit->date());
 
     connect(ui->nameEdit, SIGNAL(textChanged(QString)), this, SLOT(fieldEdited()));
     connect(ui->dateEdit, SIGNAL(userDateChanged(QDate)), this, SLOT(fieldEdited()));
     connect(ui->addressEdit, SIGNAL(textChanged(QString)), this, SLOT(fieldEdited()));
-    connect(ui->createInfo, SIGNAL(clicked()), this, SLOT(fieldEdited()));
-    connect(ui->editInfo, SIGNAL(clicked()), this, SLOT(fieldEdited()));
-    connect(ui->deleteInfo, SIGNAL(clicked()), this, SLOT(fieldEdited()));
 
     switch (openMode_) {
     case OpenMode::CREATE:
@@ -255,7 +210,7 @@ void PatientForm::setupUi() {
     case OpenMode::VIEW:
         setEditEnabled(false);
     case OpenMode::EDIT:
-        setWindowTitle("Пациент " + patient_.nameInfo().getInitials());
+        setWindowTitle("Пациент " + patient_.nameInfo.getInitials());
     }
 }
 
@@ -264,10 +219,6 @@ void PatientForm::setEditEnabled(bool enabled) {
     ui->dateEdit->setEnabled(enabled);
     ui->addressEdit->setEnabled(enabled);
     ui->additionalInfo->setEnabled(enabled);
-
-    ui->createInfo->setVisible(enabled);
-    ui->editInfo->setVisible(enabled);
-    ui->deleteInfo->setVisible(enabled);
 
     ui->solutionBox->clear();
     if (!enabled) {
@@ -280,30 +231,15 @@ void PatientForm::setEditEnabled(bool enabled) {
     adjustSize();
 }
 
-void PatientForm::setupInfoTable() {
-    static const QStringList columnNames = {"Ключ", "Значение"};
-    infoViewModel_->setHorizontalHeaderLabels(columnNames);
-
-    ui->additionalInfo->setModel(infoViewModel_.get());
-    ui->additionalInfo->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-}
-
 void PatientForm::fillFormPatientInfo() {
     if (openMode_ == OpenMode::CREATE) {
         return;
     }
 
-    ui->nameEdit->setText(patient_.nameInfo().getFullName());
-    ui->dateEdit->setDate(patient_.birthDate());
-    ui->addressEdit->setText(patient_.address());
-
-    const auto& keys = patient_.additionalInfo().keys();
-    for (auto& key : keys) {
-        addPatientInfo(key, patient_.additionalInfo()[key]);
-    }
-    if (!keys.empty()) {
-        ui->additionalInfo->selectRow(0);
-    }
+    ui->nameEdit->setText(patient_.nameInfo.getFullName());
+    ui->dateEdit->setDate(patient_.birthDate);
+    ui->addressEdit->setText(patient_.address);
+    ui->additionalInfo->setMarkdown(patient_.additionalInfo);
 }
 
 void PatientForm::setupAppointmentsInfo() {
@@ -327,11 +263,6 @@ void PatientForm::setupAppointmentsInfo() {
     }
 }
 
-void PatientForm::enableTableButtons(bool enabled) {
-    ui->editInfo->setEnabled(enabled);
-    ui->deleteInfo->setEnabled(enabled);
-}
-
 Patient PatientForm::buildPatientFromFormData() {
     auto splittedName = ui->nameEdit->text().split(' ');
 
@@ -343,13 +274,7 @@ Patient PatientForm::buildPatientFromFormData() {
     Patient result(nameInfo,
                    ui->dateEdit->date(),
                    ui->addressEdit->text());
-    for (int row = 0; row < infoViewModel_->rowCount(); ++row) {
-        auto key =   infoViewModel_->index(row, 0).data().value<QString>();
-        auto value = infoViewModel_->index(row, 1).data().value<QString>();
-        if (!key.isEmpty() || !value.isEmpty()) {
-            result.addAdditionalInfo(key, value);
-        }
-    }
+    result.additionalInfo = ui->additionalInfo->toMarkdown();
     return result;
 }
 
@@ -374,3 +299,4 @@ bool PatientForm::trySavePatient() {
     isModified = false;
     return true;
 }
+

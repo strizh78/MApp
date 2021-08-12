@@ -37,21 +37,14 @@ private slots:
     void on_solutionBox_accepted();
     void on_solutionBox_rejected();
 
-    void on_createInfo_clicked();
-    void on_deleteInfo_clicked();
-    void on_editInfo_clicked();
-
     void on_dateEdit_userDateChanged(const QDate& date);
 
     void on_addAppointmentBtn_clicked();
 
-    void addPatientInfo(const QString& key, const QString& value);
     void addAppointment(const Appointment& appointment);
 
 private:
     void setupUi();
-    void setupInfoTable();
-    void enableTableButtons(bool enabled);
     void setEditEnabled(bool enabled);
 
     void fillFormPatientInfo();
