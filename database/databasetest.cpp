@@ -156,18 +156,18 @@ void DatabaseTest::editMedicineDrug(const medicine::Drug& oldDrug,
 }
 
 void DatabaseTest::initServices() {
-    static const QTime duration1(/*hours*/ 1, /*mins*/ 30);
-    static const QTime duration2(0, 45);
-    static const QTime duration3(2, 0);
-
     static const std::vector<Service> servicesList = {
-        Service("Услуга 1", 1000, duration1, false),
-        Service("Услуга 2", 100.99, duration2, true),
-        Service("Гомеопатия", 200.5, duration3, true),
-        Service("long long long long nameD", 1.0, duration1, false),
-        Service("really long long long long long long long nameE", 5000, duration2, false),
-        Service("Мутная услуга", 2.5, duration3, true),
-        Service("nameG", 10000, duration1, false)
+        Service("Прием мануального терапевта (20 мин.)",  800, QTime(0, 20), false),
+        Service("Прием мануального терапевта (30 мин.)", 1200, QTime(0, 30), false),
+        Service("Прием мануального терапевта (60 мин.)", 2000, QTime(1, 00), false),
+
+        Service("Растяжка позвоночника - дети (до 15 лет)",      300, QTime(0, 20), false),
+        Service("Растяжка позвоночника - взрослые (от 15 лет)",  400, QTime(0, 30), false),
+        Service("Растяжка позвоночника + массаж шеи - взрослые", 600, QTime(0, 30), false),
+
+        Service("Mануальная терапия шейного отдела позвоночника", 1620.50, QTime(1, 0), true),
+        Service("Мануальная терапия при заболеваниях суставов (плечевой, локтевой, лучезапястный)", 1495, QTime(1, 20), true),
+        Service("Онлайн-консультация в зуме/телеграмме", 10000, QTime(0, 40), true),
     };
 
     for (auto service : servicesList)
@@ -194,34 +194,39 @@ void DatabaseTest::editService(const Service& oldService, Service& editedService
 }
 
 void DatabaseTest::initPatients() {
-    const Patient::NameInfo name1 = {"Name1", "Surname1", "Patronymic1"};
-    const Patient::NameInfo name2 = {"Name2", "Surname2", "Patronymic2"};
-    const Patient::NameInfo name3 = {"Name3", "Surname2", "Patronymic2"};
-    const Patient::NameInfo name4 = {"Name4", "Surname3", "Patronymic3"};
-    const Patient::NameInfo name5 = {"Name4", "Surname4", "Patronymic4"};
+    std::vector<Patient::NameInfo> names = {{"Елизавета", "Гришина", "Тимуровна"},
+                                            {"Тимофей", "Никулин", "Григорьевич"},
+                                            {"Никита", "Фролов", "Артурович"},
+                                            {"Анна", "Попова", "Александровна"},
+                                            {"Константин", "Пахомов", "Константинович"},
+                                            {"Алия", "Арджеванидзе", "Даниэльевна"},
+                                            {"Андрей", "Григорьевич", "Никулин"}};
+    std::vector<QDate> dates = {{1963, 11, 24},
+                                {1996, 8, 9},
+                                {2008, 3, 8},
+                                {2002, 6, 3},
+                                {2021, 1, 17},
+                                {2020, 5, 15},
+                                {1971, 7, 13}};
+    std::vector<QString> addresses = {"687940, Костромская область, город Павловский Посад, наб. Космонавтов, 96",
+                                      "Смоленская область, город Ступино, спуск Славы, 97",
+                                      "г. Москва, ул. Скаковая аллея, д. 15, кв. 667",
+                                      "г. Дмитров, Ольховский 2-й пер, д. 165, кв. 200",
+                                      "ул. Академика Лебедева (Калининский), д. 12к1, 341",
+                                      "г. Дивное, ул. Пионерская, дом 55, квартира 981",
+                                      "ул. Старобельская, дом 169, квартира 282"};
 
-    const QDate birthDate1(1960, 1, 10);
-    const QDate birthDate2(1990, 5, 21);
-    const QDate birthDate3(2020, 7, 31);
+    std::vector<Patient> patientsList;
+    for (size_t i = 0; i < names.size(); ++i) {
+        patientsList.push_back(Patient(names[i], dates[i], addresses[i]));
+    }
 
-    const QString address1 = "City1, Street1, 4, 18";
-    const QString address2 = "City1, Street2, 19.2, 134";
-    const QString address3 = "City2, Street3, 1, 1";
+    const QHash<QString, QString> additionalInfo = {{"Аллергии", "кошки"},
+                                                     {"Хронические", "нет"},
+                                                     {"Телефон для связи", "+7 (961) 873 27 43"},
+                                                     {"Почта", "grishina_eli@yandex.ru"},
+                                                     {"Заметки", "не звонить после 22"}};
 
-    const QHash<QString, QString> additionalInfo = {{"key1", "value1"},
-                                                     {"key2", "13.05.2020"},
-                                                     {"key3", "1час и 45 минут"},
-                                                     {"key4", "value1"},
-                                                     {"key5", "3.14"}};
-
-    std::vector<Patient> patientsList = {
-        Patient(name1, birthDate1, address1),
-        Patient(name2, birthDate2, address2),
-        Patient(name3, birthDate3, address3),
-        Patient(name4, birthDate1, address1),
-        Patient(name5, birthDate2, address2),
-        Patient(name1, birthDate3, address3)
-    };
     patientsList[0].setAdditionalInfo(additionalInfo);
 
     for (auto patient : patientsList)
@@ -252,24 +257,33 @@ void DatabaseTest::initAppointments() {
 
     std::vector<Appointment> appointmentsList = {
         Appointment(patientsList_[0], servicesList_[0], QDateTime(today, {8, 10})),
-        Appointment(patientsList_[0], servicesList_[1], QDateTime(today, {11, 00})),
-        Appointment(patientsList_[1], servicesList_[1], QDateTime(today, {12, 05})),
-        Appointment(patientsList_[1], servicesList_[1], QDateTime(today, {14, 10})),
-        Appointment(patientsList_[1], servicesList_[2], QDateTime(today, {19, 00})),
-        Appointment(patientsList_[2], servicesList_[3], QDateTime(today, {21, 45})),
+        Appointment(patientsList_[4], servicesList_[1], QDateTime(today, {8, 30})),
+        Appointment(patientsList_[6], servicesList_[2], QDateTime(today, {9, 00})),
+        Appointment(patientsList_[1], servicesList_[1], QDateTime(today, {11, 00})),
+        Appointment(patientsList_[1], servicesList_[1], QDateTime(today, {11, 30})),
+        Appointment(patientsList_[3], servicesList_[5], QDateTime(today, {14, 10})),
+        Appointment(patientsList_[4], servicesList_[2], QDateTime(today, {19, 00})),
+        Appointment(patientsList_[5], servicesList_[4], QDateTime(today, {21, 45})),
 
-        Appointment(patientsList_[3], servicesList_[6], QDateTime(yesterday, {8, 10})),
-        Appointment(patientsList_[3], servicesList_[5], QDateTime(yesterday, {9, 45})),
+        Appointment(patientsList_[1], servicesList_[8], QDateTime(yesterday, {8, 10})),
+        Appointment(patientsList_[3], servicesList_[8], QDateTime(yesterday, {9, 45})),
         Appointment(patientsList_[0], servicesList_[1], QDateTime(yesterday, {14, 10})),
-        Appointment(patientsList_[5], servicesList_[3], QDateTime(yesterday, {16, 00})),
-        Appointment(patientsList_[1], servicesList_[2], QDateTime(yesterday, {19, 00})),
-        Appointment(patientsList_[1], servicesList_[3], QDateTime(yesterday, {21, 45})),
+        Appointment(patientsList_[5], servicesList_[2], QDateTime(yesterday, {16, 00})),
+        Appointment(patientsList_[2], servicesList_[8], QDateTime(yesterday, {20, 00})),
+        Appointment(patientsList_[1], servicesList_[7], QDateTime(yesterday, {21, 45})),
 
         Appointment(patientsList_[2], servicesList_[0], QDateTime(tomorrow, {8, 10})),
         Appointment(patientsList_[4], servicesList_[1], QDateTime(tomorrow, {12, 45})),
-        Appointment(patientsList_[3], servicesList_[2], QDateTime(tomorrow, {14, 10}))
+        Appointment(patientsList_[3], servicesList_[3], QDateTime(tomorrow, {14, 10}))
     };
-   // appointmentsList[1].isConducted = true; (раскомментирую следующим ревью)
+
+    for (auto& appointment : appointmentsList) {
+        if (appointment.date.date() == yesterday)
+            appointment.isConducted = true;
+    }
+    appointmentsList[1].isConducted = true;
+    appointmentsList[7].isConducted = false;
+
 
     for (auto appointment : appointmentsList)
         addAppointment(appointment);
@@ -302,15 +316,15 @@ void DatabaseTest::initEvents() {
 
     std::vector<Event> eventsList = {
         Event({"Обед", QDateTime(today, {17, 20}), QTime(1, 30)}),
-        Event({"Важное дело с длинным длинным названием, в котором даже есть запятая",
+        Event({"Зайти в МФЦ, которое находится на щукинской (не забыть документы)",
                QDateTime(today, {15, 10}), QTime(2, 0)}),
-        Event({"Дело 1", QDateTime(tomorrow, {9, 45}), QTime(0, 20)}),
-        Event({"Кушац", QDateTime(tomorrow, {19, 45}), QTime(0, 30)}),
-        Event({"Сходить погулять", QDateTime(yesterday, {21, 0}), QTime(0, 45)}),
-        Event({"Важное дело с english буквами", QDateTime(yesterday, {11, 50}), QTime(1, 10)})
+        Event({"Забрать дочь из обучащего заведения", QDateTime(tomorrow, {9, 45}), QTime(0, 20)}),
+        Event({"Обед (в кафе?)", QDateTime(tomorrow, {19, 45}), QTime(0, 30)}),
+        Event({"Сходить прогуляться", QDateTime(yesterday, {21, 0}), QTime(0, 45)}),
+        Event({"забрать заказ wildberries", QDateTime(yesterday, {11, 50}), QTime(1, 10)})
     };
 
-    eventsList[0].comment = "- Суп\n- Второе\n- Компот\n";
+    eventsList[0].comment = "- Суп Том Ям\n- Фрикадельки в брусничном соусе\n- Яблочный сок\n";
 
     for (auto event : eventsList)
         addEvent(event);
