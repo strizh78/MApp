@@ -256,9 +256,14 @@ void PatientForm::setupAppointmentsInfo() {
                   return a.date < b.date;
               });
 
+    int maxAppointmentsCount = 3;
+    int currentCount = 0;
     for (const auto& x : appointments) {
         if (x.patient == patient_) {
             addAppointment(x);
+            if (++currentCount >= maxAppointmentsCount) {
+                break;
+            }
         }
     }
 }
