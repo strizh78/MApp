@@ -14,16 +14,8 @@ class PatientForm : public QWidget {
     Q_OBJECT
 
 public:
-    enum class OpenMode {
-        CREATE,
-        EDIT,
-        VIEW
-    };
-
-public:
     PatientForm(std::shared_ptr<DatabaseInterface> database,
                 std::optional<Patient> patient = std::nullopt,
-                OpenMode mode = OpenMode::CREATE,
                 QWidget *parent = nullptr);
     ~PatientForm();
 
@@ -58,7 +50,6 @@ private:
     std::shared_ptr<QStandardItemModel> infoViewModel_;
 
     Patient patient_;
-    OpenMode openMode_;
     std::shared_ptr<DatabaseInterface> database_;
 
     bool isModified;

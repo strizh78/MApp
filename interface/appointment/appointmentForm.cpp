@@ -173,8 +173,7 @@ void AppointmentForm::on_timeEdit_timeChanged(const QTime &time) {
 }
 
 void AppointmentForm::on_patientViewBtn_clicked() {
-    auto* patientViewForm = new PatientForm(database_, currentAppointment_.patient,
-                                            PatientForm::OpenMode::VIEW, this);
+    auto* patientViewForm = new PatientForm(database_, currentAppointment_.patient, this);
     showAsWindowModal(patientViewForm);
 }
 

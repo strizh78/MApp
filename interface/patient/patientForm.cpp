@@ -112,19 +112,13 @@ namespace {
 
 PatientForm::PatientForm(std::shared_ptr<DatabaseInterface> database,
                          std::optional<Patient> patient,
-                         OpenMode mode,
                          QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::PatientForm)
     , infoViewModel_(std::make_shared<QStandardItemModel>())
     , patient_(patient.value_or(Patient()))
-    , openMode_(mode)
     , database_(database)
 {
-    if (patient.has_value() && openMode_ == OpenMode::CREATE) {
-        openMode_ = OpenMode::EDIT;
-    }
-
     setupUi();
     fillFormPatientInfo();
     setupAppointmentsInfo();
@@ -203,14 +197,10 @@ void PatientForm::setupUi() {
     connect(ui->dateEdit, SIGNAL(userDateChanged(QDate)), this, SLOT(fieldEdited()));
     connect(ui->addressEdit, SIGNAL(textChanged(QString)), this, SLOT(fieldEdited()));
 
-    switch (openMode_) {
-    case OpenMode::CREATE:
-        setWindowTitle("Создание пациента");
-        break;
-    case OpenMode::VIEW:
-        setEditEnabled(false);
-    case OpenMode::EDIT:
+    if (patient_.isExists()) {
         setWindowTitle("Пациент " + patient_.nameInfo.getInitials());
+    } else {
+        setWindowTitle("Создание пациента");
     }
 }
 
@@ -232,7 +222,7 @@ void PatientForm::setEditEnabled(bool enabled) {
 }
 
 void PatientForm::fillFormPatientInfo() {
-    if (openMode_ == OpenMode::CREATE) {
+    if (!patient_.isExists()) {
         return;
     }
 
@@ -245,7 +235,7 @@ void PatientForm::fillFormPatientInfo() {
 void PatientForm::setupAppointmentsInfo() {
     ui->appointments->setHidden(true);
 
-    if (openMode_ == OpenMode::CREATE) {
+    if (!patient_.isExists()) {
         return;
     }
 
@@ -290,16 +280,14 @@ bool PatientForm::trySavePatient() {
         return false;
     }
 
-    switch (openMode_) {
-    case OpenMode::CREATE:
-        database_->addPatient(patient);
-        emit patientCreateSignal(patient);
-        break;
-    case OpenMode::EDIT:
+    if (!patient_.isExists()) {
         database_->editPatient(patient_, patient);
         emit patientEditSignal(patient);
-        break;
+    } else {
+        database_->addPatient(patient);
+        emit patientCreateSignal(patient);
     }
+
     patient_ = patient;
     isModified = false;
     return true;
