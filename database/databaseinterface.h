@@ -5,9 +5,12 @@
 #include "service/service.h"
 #include "patient/patient.h"
 #include "appointment/appointment.h"
+#include "file/file.h"
 #include "timetable/event.h"
 
 #include "MAppBaseObj/mappBaseObj.h"
+
+#include <QByteArray>
 
 #include <vector>
 
@@ -39,6 +42,14 @@ public:
     virtual void events(std::vector<Event>&) const = 0;
     virtual void addEvent(Event&) = 0;
     virtual void editEvent(const Event&) = 0;
+    
+    virtual void files(std::vector<File>&) const = 0;
+    virtual void addFile(File&, FileData&, int) = 0;
+    virtual void editFile(const File&, File&, const FileData&) = 0;
+    virtual void fileData(const File&, FileData&) = 0;
+    virtual void appointmentByFile(const File&, Appointment&) = 0;
+    virtual void filesByPatient(const Patient&, std::vector<File>&) = 0;
+    virtual void filesByAppointment(const Appointment&, std::vector<File>&) = 0;
 
     void setCode(MAppBaseObj& item);
     void setCodeToEdit(MAppBaseObj& item, int code);

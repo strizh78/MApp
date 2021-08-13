@@ -17,7 +17,8 @@ public:
     enum class TableSettings {
         UseBin,
         UseButtons,
-        UseSolutionBox
+        UseSolutionBox,
+        UseAddButton
     };
     MAppTable(QWidget *parent = nullptr);
     ~MAppTable();

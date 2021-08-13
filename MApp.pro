@@ -14,6 +14,7 @@ QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.15
 
 SOURCES += \
     appointment/appointment.cpp \
+    file/file.cpp \
     interface/appointment/appointmentForm.cpp \
     interface/appointment/appointmentMiniForm.cpp \
     interface/appointment/appointmentRecordForm.cpp \
@@ -22,6 +23,8 @@ SOURCES += \
     interface/basicForms/mappTable.cpp \
     interface/basicForms/mappTableSettingsForm.cpp \
     interface/basicForms/tableSettingsForm.cpp \
+    interface/file/fileForm.cpp \
+    interface/file/filesListForm.cpp \
     interface/homeopathy/homeopathyDrugDilutionsSelectForm.cpp \
     interface/homeopathy/homeopathyDrugForm.cpp \
     interface/homeopathy/homeopathyDrugListForm.cpp \
@@ -60,6 +63,7 @@ HEADERS += \
     drugs/homeopathy.h \
     drugs/medicines.h \
     \
+    file/file.h \
     interface/appointment/appointmentForm.h \
     interface/appointment/appointmentMiniForm.h \
     interface/appointment/appointmentRecordForm.h \
@@ -68,6 +72,8 @@ HEADERS += \
     interface/basicForms/mappTable.h \
     interface/basicForms/mappTableSettingsForm.h \
     interface/basicForms/tableSettingsForm.h \
+    interface/file/fileForm.h \
+    interface/file/filesListForm.h \
     interface/homeopathy/homeopathyDrugDilutionsSelectForm.h \
     interface/homeopathy/homeopathyDrugForm.h \
     interface/homeopathy/homeopathyDrugListForm.h \
@@ -107,6 +113,8 @@ FORMS += \
     interface/basicForms/mappTable.ui \
     interface/basicForms/mappTableSettingsForm.ui \
     interface/basicForms/tableSettingsForm.ui \
+    interface/file/fileForm.ui \
+    interface/file/filesListForm.ui \
     interface/homeopathy/homeopathyDrugDilutionsSelectForm.ui \
     interface/homeopathy/homeopathyDrugForm.ui \
     interface/homeopathy/homeopathyDrugListForm.ui \

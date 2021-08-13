@@ -28,6 +28,7 @@ signals:
 
 private:
     void addCheckBox(const QString& text, int num);
+    void hideSections();
 
 private:
     Ui::TableSettingsForm *ui;

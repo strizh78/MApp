@@ -1,6 +1,9 @@
 #include "databasetest.h"
-
 #include "interface/utils.h"
+
+#include <QDir>
+#include <QFileInfoList>
+#include <QFileDevice>
 
 #include <algorithm>
 
@@ -10,6 +13,10 @@ std::vector<medicine::Drug> DatabaseTest::medicinesList_ = {};
 std::vector<Patient> DatabaseTest::patientsList_ = {};
 std::vector<homeopathy::Drug> DatabaseTest::homeopathyList_ = {};
 std::vector<Event> DatabaseTest::eventsList_ = {};
+std::vector<File> DatabaseTest::filesList_ = {};
+std::vector<QByteArray> DatabaseTest::fileDataList_ = {};
+std::vector<int> DatabaseTest::fileParentAppointmentCode_ = {};
+
 int DatabaseTest::nextCode = 0;
 
 DatabaseTest::DatabaseTest() {
@@ -20,6 +27,7 @@ DatabaseTest::DatabaseTest() {
     initEvents();
     
     initAppointments();
+    initFiles();
 }
 
 void DatabaseTest::initHomeopathyDrugs() {
@@ -307,6 +315,105 @@ void DatabaseTest::editAppointment(const Appointment &appointment) {
     if (it != appointmentsList_.end()) {
         *it = appointment;
     }
+}
+
+void DatabaseTest::initFiles() {
+    struct FullFileData {
+        File file;
+        FileData data;
+        int parentCode;
+
+        FullFileData(File _file, FileData _data, int _parentCode)
+            : file(_file)
+            , data(_data)
+            , parentCode (_parentCode)
+        {}
+    };
+    int parentCode = appointmentsList_[0].code();
+    QString longString;
+
+    for (int i = 0; i < 1000; ++i) {
+        for (int j = 0; j < 100; ++j)
+            longString.push_back('a' + j % 26);
+        longString.push_back('\n');
+    }
+
+    QByteArray pngBytes;
+    QFile pngFile(":/icons/trash.png");
+
+    if (pngFile.open(QIODevice::ReadOnly)) {
+        pngBytes = pngFile.readAll();
+        pngFile.close();
+    }
+
+    std::vector<FullFileData> fullList = {
+        FullFileData(File("fileTXT_en", "txt"), QString("qwerty_123").toLocal8Bit(), parentCode),
+        FullFileData(File("fileTXT_ru", "txt"), QString("кверти_123").toLocal8Bit(), parentCode),
+        FullFileData(File("fileTXT_en_ru", "txt"), QString("Qwerty_кверти_123").toLocal8Bit(), parentCode),
+        FullFileData(File("fileLONG_TXT_en", "txt"), longString.toLocal8Bit(), parentCode),
+        FullFileData(File("filePNG", "png"),pngBytes, parentCode)
+    };
+
+    for (auto& item : fullList) {
+        addFile(item.file, item.data, item.parentCode);
+    }
+}
+
+void DatabaseTest::files(std::vector<File>& receiver) const {
+    receiver = filesList_;
+}
+
+void DatabaseTest::addFile(File& file, FileData& data, int parentCode) {
+    setCode(file);
+    filesList_.push_back(file);
+    fileDataList_.push_back(data);
+    fileParentAppointmentCode_.push_back(parentCode);
+}
+
+void DatabaseTest::editFile(const File& oldFile, File& newFile, const FileData& data) {
+    auto it = std::find(filesList_.begin(), filesList_.end(), oldFile);
+    if (it == filesList_.end()) {
+        return;
+    }
+
+    int idx = it - filesList_.begin();
+    setCodeToEdit(newFile, oldFile.code());
+    filesList_[idx] = newFile;
+    fileDataList_[idx] = data;
+}
+
+void DatabaseTest::fileData(const File& file, FileData& data) {
+    auto it = std::find(filesList_.begin(), filesList_.end(), file);
+    if (it != filesList_.end()) {
+        data = fileDataList_[it - filesList_.begin()];
+    }
+}
+
+void DatabaseTest::appointmentByFile(const File& file, Appointment& appointment) {
+    auto it = std::find(filesList_.begin(), filesList_.end(), file);
+    if (it != filesList_.end()) {
+        int code = fileParentAppointmentCode_[it - filesList_.begin()];
+
+        for (auto app : appointmentsList_) {
+            if (app.code() != code)
+                continue;
+            appointment = app;
+            break;
+        }
+    }
+}
+
+void DatabaseTest::filesByPatient(const Patient& patient, std::vector<File>& receiver) {
+    for (const Appointment& appointment : appointmentsList_)
+        if (appointment.patient == patient)
+            filesByAppointment(appointment, receiver);
+}
+
+void DatabaseTest::filesByAppointment(const Appointment& appointment, std::vector<File>& receiver) {
+    int parentCode = appointment.code();
+    for (int i = 0; i < filesList_.size(); ++i)
+        if (fileParentAppointmentCode_[i] == parentCode)
+            receiver.push_back(filesList_[i]);
 }
 
 int DatabaseTest::getNextCode() {

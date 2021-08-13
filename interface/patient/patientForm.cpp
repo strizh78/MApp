@@ -123,6 +123,10 @@ PatientForm::PatientForm(std::shared_ptr<DatabaseInterface> database,
     fillFormPatientInfo();
     setupAppointmentsInfo();
 
+    ui->fileList->setupDatabase(database);
+    ui->fileList->fillTable(patient_);
+    ui->fileList->hideAddButton();
+
     isModified = false;
 }
 

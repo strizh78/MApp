@@ -109,6 +109,9 @@ void MAppTable::setFlag(MAppTable::TableSettings flag, bool value) {
         case MAppTable::TableSettings::UseSolutionBox:
             ui->solutionBox->setVisible(value);
             break;
+        case MAppTable::TableSettings::UseAddButton:
+            ui->addBtn->setVisible(value);
+            break;
     }
 }
 
@@ -118,10 +121,13 @@ void MAppTable::setBinUsage(bool useBin) {
 }
 
 void MAppTable::setHorizontalHeaderLabels(const QStringList& headers) {
+    bool isHeadersVisible = !headers.empty();
+    ui->mainTable->horizontalHeader()->setVisible(isHeadersVisible);
+    ui->binTable->horizontalHeader()->setVisible(isHeadersVisible);
     mainTableModel.get()->setHorizontalHeaderLabels(headers);
     binTableModel.get()->setHorizontalHeaderLabels(headers);
 
-    if (scale_.empty())
+    if (scale_.empty() && isHeadersVisible)
         setScale(headers.count());
 }
 
@@ -253,6 +259,10 @@ void MAppTable::setButtonsEnabled() {
 }
 
 void MAppTable::resizeEvent(QResizeEvent* event) {
+    if (!dimension_) {
+        return;
+    }
+
     int columnCount = mainTableModel->columnCount();
     int baseWidth = (ui->mainTable->width() - 10 * columnCount) / dimension_;
 
@@ -279,6 +289,7 @@ void MAppTable::setEmptyModel() {
     binTableModel = std::make_shared<QStandardItemModel>();
     ui->mainTable->setModel(mainTableModel.get());
     ui->binTable->setModel(binTableModel.get());
+    setHorizontalHeaderLabels({});
 }
 
 void MAppTable::setScale(int columnCount) {

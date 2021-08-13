@@ -15,6 +15,7 @@ class Patient;
 class Service;
 class MAppTable;
 class Appointment;
+class File;
 
 namespace medicine {
 class Drug;
@@ -25,6 +26,7 @@ class Drug;
 
 namespace ErrorLog {
 void showItemFormWarning(QLabel* errorText, const std::vector<QString>& wrongFields);
+void showItemFormWarning(QLabel* errorLabel, const QString& errorText);
 }
 
 QString toString(const std::vector<QString>& src, std::string sep = " ");
@@ -63,6 +65,7 @@ QList<QStandardItem*> createServiceRow(const Service& service);
 QList<QStandardItem*> createMedicineDrugRow(const medicine::Drug& drug);
 QList<QStandardItem*> createHomeopathyDrugRow(const homeopathy::Drug& drug);
 QList<QStandardItem*> createAppointmentRow(const Appointment& appointment);
+QList<QStandardItem*> createFileRow(const File& file);
 }
 
 MAppTable* createSelectionForm(QWidget* parent);

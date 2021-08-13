@@ -28,7 +28,15 @@ public:
 
     void events(std::vector<Event>&) const override;
     void addEvent(Event&) override;
-    void editEvent(const Event&) override;
+    void editEvent(const Event&) override
+      
+    void files(std::vector<File>& receiver) const override;
+    void addFile(File& file, FileData& data, int parentCode) override;
+    void editFile(const File& oldFile, File& newFile, const FileData& data) override;
+    void fileData(const File& file, FileData& data) override;
+    void appointmentByFile(const File& file, Appointment& appointment) override;
+    void filesByPatient(const Patient& patient, std::vector<File>& receiver) override;
+    void filesByAppointment(const Appointment& appointment, std::vector<File>& receiver) override;
 
 private:
     void initEvents();
@@ -37,6 +45,7 @@ private:
     void initHomeopathyDrugs();
     void initServices();
     void initPatients();
+    void initFiles();
     int getNextCode() override;
 
     static std::vector<medicine::Drug> medicinesList_;
@@ -45,7 +54,9 @@ private:
     static std::vector<Patient> patientsList_;
     static std::vector<Appointment> appointmentsList_;
     static std::vector<Event> eventsList_;
-
+    static std::vector<File> filesList_;
+    static std::vector<QByteArray> fileDataList_;
+    static std::vector<int> fileParentAppointmentCode_;
+  
     static int nextCode;
 };
-

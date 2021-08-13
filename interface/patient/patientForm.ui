@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>802</width>
-    <height>479</height>
+    <height>483</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -343,10 +343,13 @@
           <property name="sizeHint" stdset="0">
            <size>
             <width>17</width>
-            <height>443</height>
+            <height>10</height>
            </size>
           </property>
          </spacer>
+        </item>
+        <item>
+         <widget class="FilesListForm" name="fileList" native="true"/>
         </item>
        </layout>
       </item>
@@ -355,6 +358,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>FilesListForm</class>
+   <extends>QWidget</extends>
+   <header>interface/file/filesListForm.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>nameEdit</tabstop>
   <tabstop>dateEdit</tabstop>

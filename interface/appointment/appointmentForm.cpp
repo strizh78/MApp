@@ -4,6 +4,7 @@
 #include "interface/patient/patientForm.h"
 #include "interface/service/serviceForm.h"
 #include "interface/homeopathy/homeopathyDrugForm.h"
+#include "interface/file/filesListForm.h"
 
 #include "interface/basicForms/mappTable.h"
 
@@ -58,6 +59,8 @@ AppointmentForm::AppointmentForm(std::shared_ptr<DatabaseInterface> database,
             setupEditUi();
     }
     fillAppointmentInfo();
+    ui->fileTable->setupDatabase(database_);
+    ui->fileTable->fillTable(currentAppointment_);
 }
 
 AppointmentForm::~AppointmentForm() {

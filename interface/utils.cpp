@@ -5,7 +5,7 @@
 #include "drugs/homeopathy.h"
 #include "drugs/medicines.h"
 #include "appointment/appointment.h"
-
+#include "file/file.h"
 #include "interface/basicForms/mappTable.h"
 
 namespace ErrorLog {
@@ -15,6 +15,14 @@ void showItemFormWarning(QLabel* errorText, const std::vector<QString>& wrongFie
     }
     errorText->setVisible(true);
     errorText->setText("Недопустимое значение полей: " + toString(wrongFields, ", "));
+}
+
+void showItemFormWarning(QLabel* errorLabel, const QString& errorText) {
+    if (errorText.isEmpty()) {
+        return;
+    }
+    errorLabel->show();
+    errorLabel->setText(errorText);
 }
 }
 
@@ -115,6 +123,14 @@ QList<QStandardItem*> createAppointmentRow(const Appointment& appointment) {
     lst << patientName << serviceName << dateTime;
     return lst;
 }
+  
+QList<QStandardItem*> createFileRow(const File& file) {
+    QList<QStandardItem*> lst;
+
+    QStandardItem* name = new QStandardItem(file.name());
+    name->setData(getModelData(file), Qt::UserRole);
+    lst << name;
+    return lst;
 }
 
 MAppTable* createSelectionForm(QWidget* parent) {

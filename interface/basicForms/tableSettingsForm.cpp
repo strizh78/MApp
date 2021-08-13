@@ -26,6 +26,12 @@ TableSettingsForm::~TableSettingsForm() {
 
 void TableSettingsForm::setHeaders(QHeaderView* headerView) {
     headerView_ = headerView;
+
+    if (headerView->isHidden()) {
+        ui->columnDisplaySettings->hide();
+        return;
+    }
+
     auto* model = headerView_->model();
     for (int i = 0; i < model->columnCount(); ++i) {
         addCheckBox(model->headerData(i, Qt::Horizontal).toString(), i);
@@ -33,10 +39,8 @@ void TableSettingsForm::setHeaders(QHeaderView* headerView) {
 }
 
 void TableSettingsForm::accept() {
-    for (int i = 0; i < headerView_->model()->columnCount(); ++i) {
-        auto* checkBox = findChild<QCheckBox*>("checkBox_" + QString::number(i));
-        headerView_->setSectionHidden(i, !checkBox->isChecked());
-    }
+    if (headerView_->isVisible())
+        hideSections();
     close();
 }
 
@@ -49,4 +53,11 @@ void TableSettingsForm::addCheckBox(const QString& prefix, int number) {
     checkBox->setObjectName("checkBox_" + QString::number(number));
     checkBox->setChecked(!headerView_->isSectionHidden(number));
     ui->verticalLayout_2->insertWidget(number + 1, checkBox);
+}
+
+void TableSettingsForm::hideSections() {
+    for (int i = 0; i < headerView_->model()->columnCount(); ++i) {
+        auto* checkBox = findChild<QCheckBox*>("checkBox_" + QString::number(i));
+        headerView_->setSectionHidden(i, !checkBox->isChecked());
+    }
 }
