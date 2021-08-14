@@ -53,8 +53,6 @@ SOURCES += \
     \
     contrib/toggleSwitch/switch.cpp \
     \
-    tests/patientTests.cpp \
-    tests/serviceTests.cpp \
     timetable/event.cpp \
     timetable/timetableUtils.cpp
 
@@ -99,8 +97,6 @@ HEADERS += \
     contrib/toggleSwitch/style.h \
     contrib/toggleSwitch/switch.h \
     \
-    tests/patientTests.h \
-    tests/serviceTests.h \
     timetable/event.h \
     timetable/timetableUtils.h
 

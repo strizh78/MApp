@@ -1,6 +1,6 @@
 #pragma once
 
-#include "interface/timetable/dailyTimetable.h"
+#include "database/databaseinterface.h"
 
 #include <QWidget>
 

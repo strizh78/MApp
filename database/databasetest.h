@@ -28,7 +28,7 @@ public:
 
     void events(std::vector<Event>&) const override;
     void addEvent(Event&) override;
-    void editEvent(const Event&) override
+    void editEvent(const Event&) override;
       
     void files(std::vector<File>& receiver) const override;
     void addFile(File& file, FileData& data, int parentCode) override;

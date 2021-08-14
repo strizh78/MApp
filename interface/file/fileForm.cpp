@@ -38,7 +38,7 @@ void FileForm::showAppointment() {
     Appointment app;
     database_->appointmentByFile(file_, app);
 //    TODO: Make label clickable
-    ui->appointmentLabel->setText(app.patient.nameInfo().getInitials() + " " + app.date.toString());
+    ui->appointmentLabel->setText(app.patient.nameInfo.getInitials() + " " + app.date.toString());
     ui->appointmentLabel->show();
 }
 

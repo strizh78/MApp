@@ -132,6 +132,7 @@ QList<QStandardItem*> createFileRow(const File& file) {
     lst << name;
     return lst;
 }
+}
 
 MAppTable* createSelectionForm(QWidget* parent) {
     auto* selectionForm = new MAppTable(parent);
@@ -156,3 +157,4 @@ void showAsWindowModal(QWidget* form) {
     form->setAttribute(Qt::WA_DeleteOnClose, true);
     form->show();
 }
+
