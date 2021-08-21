@@ -284,7 +284,7 @@ bool PatientForm::trySavePatient() {
         return false;
     }
 
-    if (!patient_.isExists()) {
+    if (patient_.isExists()) {
         database_->editPatient(patient_, patient);
         emit patientEditSignal(patient);
     } else {
