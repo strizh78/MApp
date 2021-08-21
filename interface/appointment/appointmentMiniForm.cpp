@@ -23,7 +23,7 @@ AppointmentMiniForm::~AppointmentMiniForm() {
 
 void AppointmentMiniForm::mouseReleaseEvent(QMouseEvent *event) {
     Q_UNUSED(event);
-    auto* appointmentViewForm = new AppointmentForm(database_, AppointmentForm::EDIT, appointment_);
+    auto* appointmentViewForm = new AppointmentForm(database_, appointment_);
 
     appointmentViewForm->setAttribute(Qt::WA_DeleteOnClose, true);
     appointmentViewForm->show();

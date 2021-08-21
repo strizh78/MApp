@@ -15,16 +15,9 @@ class ServiceForm : public QWidget {
     Q_OBJECT
 
 public:
-    enum class OpenMode {
-        CREATE,
-        EDIT,
-        VIEW
-    };
-
-public:
     ServiceForm(std::shared_ptr<DatabaseInterface> database,
                 std::optional<Service> service = std::nullopt,
-                OpenMode openMode = OpenMode::CREATE, QWidget *parent = nullptr);
+                QWidget *parent = nullptr);
     ~ServiceForm();
 
 private:
@@ -45,7 +38,6 @@ private:
     std::shared_ptr<DatabaseInterface> database_;
 
     Service service_;
-    OpenMode openMode_;
 
     friend class ServiceTests;
 };

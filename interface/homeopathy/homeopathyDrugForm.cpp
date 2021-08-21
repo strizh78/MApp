@@ -8,18 +8,12 @@ using namespace homeopathy;
 
 HomeopathyDrugForm::HomeopathyDrugForm(std::shared_ptr<DatabaseInterface> database,
                                        std::optional<Drug> drug,
-                                       OpenMode mode,
                                        QWidget* parent)
     : QWidget(parent)
     , ui(new Ui::HomeopathyDrugForm)
     , database_(database)
     , drug_(drug.value_or(Drug()))
-    , openMode_(mode)
 {
-    if (drug.has_value() && openMode_ == OpenMode::CREATE) {
-        openMode_ = OpenMode::EDIT;
-    }
-
     ui->setupUi(this);
     init();
     ui->errorLabel->setHidden(true);
@@ -53,16 +47,15 @@ void HomeopathyDrugForm::on_buttonBox_accepted() {
                      ui->nameLat->text(),
                      ui->groupComboBox->currentData().value<Groups>(),
                      dilutions_);
-    switch (openMode_) {
-        case OpenMode::CREATE:
-            database_->addHomeopathyDrug(currentDrug);
-            emit homeopathyDrugCreateSignal(currentDrug);
-            break;
-        case OpenMode::EDIT:
-            database_->editHomeopathyDrug(drug_, currentDrug);
-            emit homeopathyDrugEditSignal(currentDrug);
-            break;
+
+    if (currentDrug.isExists()) {
+        database_->editHomeopathyDrug(drug_, currentDrug);
+        emit homeopathyDrugEditSignal(currentDrug);
+    } else {
+        database_->addHomeopathyDrug(currentDrug);
+        emit homeopathyDrugCreateSignal(currentDrug);
     }
+
     close();
 }
 
@@ -91,20 +84,17 @@ std::optional<std::vector<QString> > HomeopathyDrugForm::isValid() {
 
 void HomeopathyDrugForm::init() {
     setGroupValues();
-    switch (openMode_) {
-        case OpenMode::CREATE:
-            setWindowTitle("Добавление препарата");
-            break;
-        case OpenMode::VIEW:
-            setEditEnabled(false);
-        case OpenMode::EDIT:
-            setWindowTitle(drug_.getFullName());
-            ui->name->setText(drug_.name);
-            ui->nameLat->setText(drug_.nameLat);
-            ui->groupComboBox->setCurrentIndex(int(drug_.group));
-            break;
+
+    if (drug_.isExists()) {
+        setWindowTitle(drug_.getFullName());
+        ui->name->setText(drug_.name);
+        ui->nameLat->setText(drug_.nameLat);
+        ui->groupComboBox->setCurrentIndex(int(drug_.group));
+    } else {
+        setWindowTitle("Добавление препарата");
     }
-    fillLabelFromVector(drug_.availableDilutions);
+
+    fillLabelFromVector(drug_.availableDilutions());
 }
 
 void HomeopathyDrugForm::setEditEnabled(bool enabled) {

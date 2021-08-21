@@ -175,7 +175,7 @@ void PatientForm::on_addAppointmentBtn_clicked() {
     appointment.patient = patient_;
 
     auto* appointmentViewForm =
-        new AppointmentForm(database_, AppointmentForm::CREATE, appointment, this);
+        new AppointmentForm(database_, appointment, this);
     connect(appointmentViewForm, SIGNAL(appointmentCreateSignal(Appointment)),
             this, SLOT(addAppointment(Appointment)));
 

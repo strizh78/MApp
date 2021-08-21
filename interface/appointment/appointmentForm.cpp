@@ -11,7 +11,7 @@
 #include "interface/utils.h"
 
 namespace {
-std::vector<QString> getInvalidFields(const Appointment& appointment, bool isNewAppointment) {
+std::vector<QString> getInvalidFields(const Appointment& appointment) {
     std::vector<QString> wrongFields;
     if (!appointment.patient.isExists()) {
         wrongFields.push_back("Пациент");
@@ -22,7 +22,7 @@ std::vector<QString> getInvalidFields(const Appointment& appointment, bool isNew
     }
 
     QDateTime past10Mins = QDateTime::currentDateTime().addSecs(/*seconds*/ -10 * 60);
-    if (isNewAppointment && appointment.date < past10Mins) {
+    if (appointment.isExists() && appointment.date < past10Mins) {
         wrongFields.push_back("Дата");
     }
     return wrongFields;
@@ -39,25 +39,22 @@ QString getDrugsInfoString(const std::vector<T>& drugs) {
 }
 
 AppointmentForm::AppointmentForm(std::shared_ptr<DatabaseInterface> database,
-                                 OpenMode mode,
                                  std::optional<Appointment> appointment,
                                  QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::AppointmentForm)
     , database_(database)
-    , openMode_(mode)
     , currentAppointment_(appointment.value_or(Appointment()))
 {
     ui->setupUi(this);
     ui->errorLabel->setVisible(false);
 
-    switch (openMode_) {
-        case OpenMode::CREATE:
-            setupCreateUi();
-            break;
-        case OpenMode::EDIT:
-            setupEditUi();
+    if (currentAppointment_.isExists()) {
+        setupEditUi();
+    } else {
+        setupCreateUi();
     }
+
     fillAppointmentInfo();
     ui->fileTable->setupDatabase(database_);
     ui->fileTable->fillTable(currentAppointment_);
@@ -70,22 +67,20 @@ AppointmentForm::~AppointmentForm() {
 void AppointmentForm::on_solutionBox_accepted() {
     currentAppointment_.record = ui->appointmentRecord->getText();
 
-    auto wrongFields = getInvalidFields(currentAppointment_, openMode_ == OpenMode::CREATE);
+    auto wrongFields = getInvalidFields(currentAppointment_);
     if (!wrongFields.empty()) {
         ErrorLog::showItemFormWarning(ui->errorLabel, wrongFields);
         return;
     }
 
-    switch (openMode_) {
-    case OpenMode::CREATE:
-        database_->addAppointment(currentAppointment_);
-        emit appointmentCreateSignal(currentAppointment_);
-        break;
-    case OpenMode::EDIT:
+    if (currentAppointment_.isExists()) {
         database_->editAppointment(currentAppointment_);
         emit appointmentEditSignal(currentAppointment_);
-        break;
+    } else {
+        database_->addAppointment(currentAppointment_);
+        emit appointmentCreateSignal(currentAppointment_);
     }
+
     close();
 }
 
@@ -181,14 +176,16 @@ void AppointmentForm::on_patientViewBtn_clicked() {
 }
 
 void AppointmentForm::on_serviceViewBtn_clicked() {
-    auto* serviceViewForm = new ServiceForm(database_, currentAppointment_.service,
-                                            ServiceForm::OpenMode::VIEW, this);
+    auto* serviceViewForm = new ServiceForm(database_,
+                                            currentAppointment_.service,
+                                            this);
     showAsWindowModal(serviceViewForm);
 }
 
 void AppointmentForm::on_homeopathyViewBtn_clicked() {
-    auto* homeopathyViewForm = new HomeopathyDrugForm(database_, currentAppointment_.homeopathy,
-                                                      HomeopathyDrugForm::OpenMode::VIEW, this);
+    auto* homeopathyViewForm = new HomeopathyDrugForm(database_,
+                                                      currentAppointment_.homeopathy,
+                                                      this);
     showAsWindowModal(homeopathyViewForm);
 }
 
@@ -202,7 +199,7 @@ void AppointmentForm::on_copyAppointmentBtn_clicked() {
     copied.service = currentAppointment_.service;
 
     auto* appointmentViewForm =
-        new AppointmentForm(database_, AppointmentForm::CREATE, copied, this);
+        new AppointmentForm(database_, copied, this);
 
     appointmentViewForm->setWindowModality(Qt::WindowModality::WindowModal);
     appointmentViewForm->setWindowFlag(Qt::Window);

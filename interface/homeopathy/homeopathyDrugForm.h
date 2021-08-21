@@ -18,16 +18,8 @@ class HomeopathyDrugForm : public QWidget {
     Q_OBJECT
 
 public:
-    enum class OpenMode {
-        CREATE,
-        EDIT,
-        VIEW
-    };
-
-public:
     explicit HomeopathyDrugForm(std::shared_ptr<DatabaseInterface> database,
                                 std::optional<homeopathy::Drug> drug = std::nullopt,
-                                OpenMode mode = OpenMode::CREATE,
                                 QWidget *parent = nullptr);
     ~HomeopathyDrugForm();
 
@@ -53,5 +45,4 @@ private:
     std::shared_ptr<QStandardItemModel> groupsModel_;
     std::vector<QString> dilutions_;
     homeopathy::Drug drug_;
-    OpenMode openMode_;
 };

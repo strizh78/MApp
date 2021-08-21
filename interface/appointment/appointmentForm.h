@@ -13,14 +13,7 @@ class AppointmentForm : public QWidget {
     Q_OBJECT
 
 public:
-    enum OpenMode {
-        CREATE,
-        EDIT
-    };
-
-public:
     AppointmentForm(std::shared_ptr<DatabaseInterface> database,
-                    OpenMode mode,
                     std::optional<Appointment> appointment = std::nullopt,
                     QWidget *parent = nullptr);
     ~AppointmentForm();
@@ -67,6 +60,5 @@ private:
     Ui::AppointmentForm *ui;
     std::shared_ptr<DatabaseInterface> database_;
 
-    OpenMode openMode_;
     Appointment currentAppointment_;
 };

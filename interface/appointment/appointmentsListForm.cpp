@@ -24,7 +24,7 @@ AppointmentsListForm::~AppointmentsListForm() {
 }
 
 void AppointmentsListForm::onAddButtonClicked() {
-    auto* appointmentCreateForm = new AppointmentForm(database_, AppointmentForm::CREATE);
+    auto* appointmentCreateForm = new AppointmentForm(database_);
     connect(appointmentCreateForm, SIGNAL(appointmentCreateSignal(const Appointment&)),
             this, SLOT(addAppointment(const Appointment&)));
 
@@ -33,7 +33,7 @@ void AppointmentsListForm::onAddButtonClicked() {
 }
 
 void AppointmentsListForm::onEditButtonClicked(const QVariant& data) {
-    auto* appointmentViewForm = new AppointmentForm(database_, AppointmentForm::EDIT,
+    auto* appointmentViewForm = new AppointmentForm(database_,
                                                     *getValueFromModelData<Appointment>(data));
 
     connect(appointmentViewForm, SIGNAL(appointmentEditSignal(const Appointment&)),

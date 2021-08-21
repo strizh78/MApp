@@ -21,30 +21,20 @@ std::vector<QString> getInvalidFields(const Service& service) {
 
 ServiceForm::ServiceForm(std::shared_ptr<DatabaseInterface> database,
                          std::optional<Service> service,
-                         OpenMode openMode,
                          QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::ServiceForm)
     , database_(database)
     , service_(service.value_or(Service()))
-    , openMode_(openMode)
 {
-    if (service.has_value() && openMode_ == OpenMode::CREATE) {
-        openMode_ = OpenMode::EDIT;
-    }
-
     ui->setupUi(this);
     ui->errorLabel->setVisible(false);
     Validators::setDoubleValidator(ui->priceEdit);
 
-    switch (openMode_) {
-        case OpenMode::CREATE:
-            setWindowTitle("Создание услуги");
-            break;
-        case OpenMode::VIEW:
-            setEditEnabled(false);
-        case OpenMode::EDIT:
-            setWindowTitle("Услуга " + service_.name);
+    if (service->isExists()) {
+        setWindowTitle("Услуга " + service_.name);
+    } else {
+        setWindowTitle("Создание услуги");
     }
 
     fillFormServiceInfo();
@@ -73,7 +63,7 @@ void ServiceForm::setEditEnabled(bool enabled) {
 
 
 void ServiceForm::fillFormServiceInfo() {
-    if (openMode_ == OpenMode::CREATE) {
+    if (!service_.isExists()) {
         return;
     }
 
@@ -93,15 +83,12 @@ void ServiceForm::on_solutionBox_accepted() {
         return;
     }
 
-    switch (openMode_) {
-    case OpenMode::CREATE:
-        database_->addService(edited);
-        emit serviceCreateSignal(edited);
-        break;
-    case OpenMode::EDIT:
+    if (service_.isExists()) {
         database_->editService(service_, edited);
         emit serviceEditSignal(edited);
-        break;
+    } else {
+        database_->addService(edited);
+        emit serviceCreateSignal(edited);
     }
     close();
 }

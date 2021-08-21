@@ -53,15 +53,10 @@ private:
     void setButtonsEnabled(bool isEnabled);
 
 private:
-    enum class OpenMode {
-        CREATE,
-        EDIT
-    };
     Ui::MedicineDrugForm *ui;
     std::shared_ptr<DatabaseInterface> database_;
     medicine::Drug drug_;
     std::vector <ReleaseForm> releaseForms_;
     std::vector <QString> brands_;
     std::shared_ptr<QStandardItemModel> dosagesModel_;
-    OpenMode openMode_;
 };

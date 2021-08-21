@@ -14,7 +14,6 @@ MedicineDrugForm::MedicineDrugForm(std::shared_ptr<DatabaseInterface> database,
     , ui(new Ui::MedicineDrugForm)
     , database_(database)
     , drug_(drug.value_or(medicine::Drug()))
-    , openMode_(drug.has_value() ? OpenMode::EDIT : OpenMode::CREATE)
 {
     ui->setupUi(this);
     init();
@@ -89,15 +88,13 @@ void MedicineDrugForm::on_buttonBox_accepted() {
                                brands_,
                                getDosages(),
                                ui->price->text().toFloat());
-    switch (openMode_) {
-        case OpenMode::CREATE:
-            database_->addMedicineDrug(currentDrug);
-            emit medicineDrugCreateSignal(currentDrug);
-            break;
-        case OpenMode::EDIT:
-            database_->editMedicineDrug(drug_, currentDrug);
-            emit medicineDrugEditSignal(currentDrug);
-            break;
+
+    if (drug_.isExists()) {
+        database_->editMedicineDrug(drug_, currentDrug);
+        emit medicineDrugEditSignal(currentDrug);
+    } else {
+        database_->addMedicineDrug(currentDrug);
+        emit medicineDrugCreateSignal(currentDrug);
     }
     close();
 }
@@ -116,20 +113,18 @@ void MedicineDrugForm::fillLabelFromVector(QLabel* label, const std::vector<QStr
 }
 
 void MedicineDrugForm::init() {
-    switch (openMode_) {
-        case OpenMode::CREATE:
-            setWindowTitle("Добавление лекарства");
-            break;
-        case OpenMode::EDIT:
-            setWindowTitle("Лекарство " + drug_.getFullName());
-            ui->activeSubstance->setText(drug_.activeSubstance);
-            ui->activeSubstanceLat->setText(drug_.activeSubstancetLat);
-            ui->prescription->setChecked(drug_.isPrescription);
-            ui->price->setText(QString::number(drug_.price));
-            break;
+    if (drug_.isExists()) {
+        setWindowTitle("Лекарство " + drug_.getFullName());
+        ui->activeSubstance->setText(drug_.activeSubstance);
+        ui->activeSubstanceLat->setText(drug_.activeSubstancetLat);
+        ui->prescription->setChecked(drug_.isPrescription);
+        ui->price->setText(QString::number(drug_.price));
+    } else {
+        setWindowTitle("Добавление лекарства");
     }
-    fillLabelFromVector(ui->brands, drug_.brandNames);
-    fillLabelFromVector(ui->releaseForms, drug_.releaseForms);
+
+    fillLabelFromVector(ui->brands, drug_.brandNames());
+    fillLabelFromVector(ui->releaseForms, drug_.releaseForms());
     fillDosagesList();
 }
 
