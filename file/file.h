@@ -19,15 +19,9 @@ public:
          const QDateTime& upload,
          const QDateTime& lastEdit);
 
-    QString name() const;
-    QString extension() const;
-    QString fullName() const;
-    QDateTime uploadTime() const;
-    QDateTime lastEditTime() const;
-
-private:
-    QString name_;
-    QString extension_;
-    QDateTime uploadTime_;
-    QDateTime lastEditTime_;
+public:
+    QString name;
+    QString extension;
+    QDateTime uploadTime;
+    QDateTime lastEditTime;
 };

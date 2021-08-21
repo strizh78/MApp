@@ -38,25 +38,17 @@ public:
          const std::vector<Dosage>& dosages,
          float price);
 
-    QString activeSubstance() const;
-    QString activeSubstancetLat() const;
-    bool isPrescription() const;
-    std::vector<ReleaseForm> releaseForms() const;
-    std::vector<QString> brandNames() const;
-    std::vector<Dosage> dosages() const;
-    float price() const;
-
     QString getFullName() const;
     QString getBrands(QString separator = " ") const;
 
-private:
-    QString activeSubstance_;
-    QString activeSubstancetLat_;
-    bool isPrescription_;
-    std::vector<ReleaseForm> releaseForms_;
-    std::vector<QString> brandNames_;
-    std::vector<Dosage> dosages_;
-    float price_;
+public:
+    QString activeSubstance;
+    QString activeSubstancetLat;
+    bool isPrescription;
+    std::vector<ReleaseForm> releaseForms;
+    std::vector<QString> brandNames;
+    std::vector<Dosage> dosages;
+    float price;
 };
 
 }

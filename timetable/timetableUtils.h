@@ -17,7 +17,7 @@ bool isTimeSlotAvailable(DatabaseInterface* db, const T& obj, QDateTime dateTime
     db->appointments(a);
     for (const auto& x : a) {
         if (x != obj &&
-            isTimeSlotsIntersect(dateTime, end, x.date, x.date.addSecs(toSeconds(x.service.duration()))))
+            isTimeSlotsIntersect(dateTime, end, x.date, x.date.addSecs(toSeconds(x.service.duration))))
         {
             return false;
         }

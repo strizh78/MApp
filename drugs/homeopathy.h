@@ -50,18 +50,14 @@ public:
          const Groups group,
          const std::vector<QString>& dilutions);
 
-    QString name() const;
-    QString nameLat() const;
-    Groups group() const;
-    std::vector<QString> availableDilutions() const;
     bool isAvailable() const;
     QString getFullName() const;
 
-private:
-    QString name_;
-    QString nameLat_;
-    Groups group_;
-    std::vector<QString> availableDilutions_;
+public:
+    QString name;
+    QString nameLat;
+    Groups group;
+    std::vector<QString> availableDilutions;
 };
 
 QString groupToString(Groups group);

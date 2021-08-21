@@ -122,14 +122,14 @@ void MedicineDrugForm::init() {
             break;
         case OpenMode::EDIT:
             setWindowTitle("Лекарство " + drug_.getFullName());
-            ui->activeSubstance->setText(drug_.activeSubstance());
-            ui->activeSubstanceLat->setText(drug_.activeSubstancetLat());
-            ui->prescription->setChecked(drug_.isPrescription());
-            ui->price->setText(QString::number(drug_.price()));
+            ui->activeSubstance->setText(drug_.activeSubstance);
+            ui->activeSubstanceLat->setText(drug_.activeSubstancetLat);
+            ui->prescription->setChecked(drug_.isPrescription);
+            ui->price->setText(QString::number(drug_.price));
             break;
     }
-    fillLabelFromVector(ui->brands, drug_.brandNames());
-    fillLabelFromVector(ui->releaseForms, drug_.releaseForms());
+    fillLabelFromVector(ui->brands, drug_.brandNames);
+    fillLabelFromVector(ui->releaseForms, drug_.releaseForms);
     fillDosagesList();
 }
 
@@ -168,7 +168,7 @@ void MedicineDrugForm::fillDosagesList() {
     static const QStringList columnNames = {"Дозировка"};
     dosagesModel_->setHorizontalHeaderLabels(columnNames);
 
-    for (auto& dosage : drug_.dosages())
+    for (auto& dosage : drug_.dosages)
         addDosage(dosage);
 
     ui->dosages->setModel(dosagesModel_.get());

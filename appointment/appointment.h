@@ -29,7 +29,7 @@ public:
     AppointmentTimeType getTimeType() const {
         const int secondsIn15Mins = 15 * 60;
         QDateTime begin = date;
-        QDateTime end = date.addSecs(service.duration().hour() * 60 * 60 + service.duration().minute() * 60);
+        QDateTime end = date.addSecs(service.duration.hour() * 60 * 60 + service.duration.minute() * 60);
 
         QDateTime pastTime = QDateTime::currentDateTime().addSecs(-secondsIn15Mins);
         QDateTime futureTime = QDateTime::currentDateTime().addSecs(secondsIn15Mins);

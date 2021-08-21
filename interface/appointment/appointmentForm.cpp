@@ -218,7 +218,7 @@ void AppointmentForm::patientChoosed(QVariant data) {
 
 void AppointmentForm::serviceChoosed(QVariant data) {
     currentAppointment_.service = *getValueFromModelData<Service>(data);
-    ui->serviceEdit->setText(currentAppointment_.service.name());
+    ui->serviceEdit->setText(currentAppointment_.service.name);
     ((QWidget*)sender())->close();
 }
 
@@ -269,7 +269,7 @@ void AppointmentForm::fillAppointmentInfo() {
         ui->patientEdit->setText(currentAppointment_.patient.nameInfo.getInitials());
     }
     if (currentAppointment_.service.isExists()) {
-        ui->serviceEdit->setText(currentAppointment_.service.name());
+        ui->serviceEdit->setText(currentAppointment_.service.name);
     }
     if (currentAppointment_.homeopathy.isExists()) {
         ui->homeopathyEdit->setText(currentAppointment_.homeopathy.getFullName());

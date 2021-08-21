@@ -16,12 +16,12 @@ FileForm::FileForm(const File& file,
     , file_(file)
 {
     ui->setupUi(this);
-    setWindowTitle(file_.name());
+    setWindowTitle(file_.name);
     ui->errorLabel->hide();
-    ui->name->setText(file_.name());
-    ui->extensionValue->setText(file_.extension());
-    ui->uploadTimeValue->setText(file_.uploadTime().toString());
-    ui->lastUpdTimeValue->setText(file_.lastEditTime().toString());
+    ui->name->setText(file_.name);
+    ui->extensionValue->setText(file_.extension);
+    ui->uploadTimeValue->setText(file_.uploadTime.toString());
+    ui->lastUpdTimeValue->setText(file_.lastEditTime.toString());
     ui->tabWidget->tabBar()->hide();
     ui->appointmentLabel->hide();
 
@@ -55,8 +55,8 @@ void FileForm::on_buttonBox_accepted() {
     }
 
     File newFile = File(newName,
-                        file_.extension(),
-                        file_.uploadTime(),
+                        file_.extension,
+                        file_.uploadTime,
                         QDateTime::currentDateTime());
     database_->editFile(file_, newFile, getData());
     emit fileEditSignal(newFile);
@@ -68,7 +68,7 @@ void FileForm::on_buttonBox_rejected() {
 }
 
 void FileForm::setData(const FileData& data) {
-    QString ext = file_.extension();
+    QString ext = file_.extension;
 
     if (ext == "txt") {
         ui->textDisplay->setText(QString::fromLocal8Bit(data));
@@ -97,7 +97,7 @@ FileData FileForm::getData() {
     case 1: {
         QBuffer buffer(&data);
         buffer.open(QIODevice::WriteOnly);
-        const char* upperExt = file_.extension().toUpper().toStdString().c_str();
+        const char* upperExt = file_.extension.toUpper().toStdString().c_str();
         ui->pngDisplay->pixmap(Qt::ReturnByValue).save(&buffer, upperExt);
         break;
     }

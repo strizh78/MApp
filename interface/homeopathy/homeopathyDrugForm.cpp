@@ -99,12 +99,12 @@ void HomeopathyDrugForm::init() {
             setEditEnabled(false);
         case OpenMode::EDIT:
             setWindowTitle(drug_.getFullName());
-            ui->name->setText(drug_.name());
-            ui->nameLat->setText(drug_.nameLat());
-            ui->groupComboBox->setCurrentIndex(int(drug_.group()));
+            ui->name->setText(drug_.name);
+            ui->nameLat->setText(drug_.nameLat);
+            ui->groupComboBox->setCurrentIndex(int(drug_.group));
             break;
     }
-    fillLabelFromVector(drug_.availableDilutions());
+    fillLabelFromVector(drug_.availableDilutions);
 }
 
 void HomeopathyDrugForm::setEditEnabled(bool enabled) {

@@ -6,13 +6,13 @@
 namespace {
 std::vector<QString> getInvalidFields(const Service& service) {
     std::vector<QString> wrongFields;
-    if (service.name().isEmpty()) {
+    if (service.name.isEmpty()) {
         wrongFields.push_back("Наименование");
     }
-    if (service.price() <= 0) {
+    if (service.price <= 0) {
         wrongFields.push_back("Цена");
     }
-    if (service.duration() <= QTime(/*hours*/ 0, /*mins*/ 0)) {
+    if (service.duration <= QTime(/*hours*/ 0, /*mins*/ 0)) {
         wrongFields.push_back("Длительность");
     }
     return wrongFields;
@@ -44,7 +44,7 @@ ServiceForm::ServiceForm(std::shared_ptr<DatabaseInterface> database,
         case OpenMode::VIEW:
             setEditEnabled(false);
         case OpenMode::EDIT:
-            setWindowTitle("Услуга " + service_.name());
+            setWindowTitle("Услуга " + service_.name);
     }
 
     fillFormServiceInfo();
@@ -77,10 +77,10 @@ void ServiceForm::fillFormServiceInfo() {
         return;
     }
 
-    ui->nameEdit->setText(service_.name());
-    ui->durationEdit->setTime(service_.duration());
-    ui->priceEdit->setText(QString::number(service_.price()));
-    ui->switchActive->setChecked(!service_.isDeprecated());
+    ui->nameEdit->setText(service_.name);
+    ui->durationEdit->setTime(service_.duration);
+    ui->priceEdit->setText(QString::number(service_.price));
+    ui->switchActive->setChecked(!service_.isDeprecated);
 }
 
 void ServiceForm::on_solutionBox_accepted() {

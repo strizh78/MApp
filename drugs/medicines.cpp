@@ -9,52 +9,24 @@ Drug::Drug(const QString& activeSubstance,
            const std::vector<QString>& brandNames,
            const std::vector<QString>& dosages,
            float price)
-    : activeSubstance_(activeSubstance)
-    , activeSubstancetLat_(activeSubstanceLat)
-    , isPrescription_(isPrescription)
-    , releaseForms_(releaseForms)
-    , brandNames_(brandNames)
-    , dosages_(dosages)
-    , price_(price)
+    : activeSubstance(activeSubstance)
+    , activeSubstancetLat(activeSubstanceLat)
+    , isPrescription(isPrescription)
+    , releaseForms(releaseForms)
+    , brandNames(brandNames)
+    , dosages(dosages)
+    , price(price)
 {
 }
 
-QString Drug::activeSubstance() const {
-    return activeSubstance_;
-}
-
-QString Drug::activeSubstancetLat() const {
-    return activeSubstancetLat_;
-}
-
-bool Drug::isPrescription() const {
-    return isPrescription_;
-}
-
-std::vector<ReleaseForm> Drug::releaseForms() const {
-    return releaseForms_;
-}
-
-std::vector<QString> Drug::brandNames() const {
-    return brandNames_;
-}
-
-std::vector<Dosage> Drug::dosages() const {
-    return dosages_;
-}
-
-float Drug::price() const {
-    return price_;
-}
-
 QString Drug::getFullName() const {
-    if (activeSubstance_.isEmpty())
-        return  activeSubstancetLat_;
+    if (activeSubstance.isEmpty())
+        return  activeSubstancetLat;
 
-    QString fullName = activeSubstance_;
+    QString fullName = activeSubstance;
 
-    if (!activeSubstancetLat_.isEmpty())
-        fullName += " (" + activeSubstancetLat_ + ")";
+    if (!activeSubstancetLat.isEmpty())
+        fullName += " (" + activeSubstancetLat + ")";
 
     return fullName;
 }
@@ -62,7 +34,7 @@ QString Drug::getFullName() const {
 QString Drug::getBrands(QString separator) const {
     QString brands;
 
-    for (const QString &brand : brandNames_)
+    for (const QString &brand : brandNames)
         brands += brand + separator;
     brands.resize(brands.size() - separator.size());
 

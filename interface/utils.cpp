@@ -71,12 +71,12 @@ QList<QStandardItem*> createPatientRow(const Patient& patient) {
 QList<QStandardItem*> createServiceRow(const Service& service) {
     QList<QStandardItem*> lst;
 
-    QStandardItem* name = new QStandardItem(service.name());
+    QStandardItem* name = new QStandardItem(service.name);
     name->setData(getModelData(service), Qt::UserRole);
-    QStandardItem* price = new QStandardItem(QString::number(service.price()));
-    QStandardItem* duration = new QStandardItem(service.duration().toString("hч mmм"));
+    QStandardItem* price = new QStandardItem(QString::number(service.price));
+    QStandardItem* duration = new QStandardItem(service.duration.toString("hч mmм"));
 
-    if (service.isDeprecated()) {
+    if (service.isDeprecated) {
         QColor color = QWidget().palette().text().color();
         color.setAlpha(256 * 0.20);
 
@@ -94,7 +94,7 @@ QList<QStandardItem*> createMedicineDrugRow(const medicine::Drug& drug) {
     QStandardItem* brands = new QStandardItem(drug.getBrands(", "));
     brands->setData(getModelData(drug), Qt::UserRole);
     QStandardItem* name = new QStandardItem(drug.getFullName());
-    QStandardItem* price = new QStandardItem(QString::number(drug.price()));
+    QStandardItem* price = new QStandardItem(QString::number(drug.price));
 
     list << brands << name << price;
 
@@ -106,7 +106,7 @@ QList<QStandardItem*> createHomeopathyDrugRow(const homeopathy::Drug& drug) {
 
     QStandardItem* name = new QStandardItem(drug.getFullName());
     name->setData(getModelData(drug), Qt::UserRole);
-    QStandardItem* group = new QStandardItem(groupToString(drug.group()));
+    QStandardItem* group = new QStandardItem(groupToString(drug.group));
     lst << name << group;
     return lst;
 }
@@ -117,7 +117,7 @@ QList<QStandardItem*> createAppointmentRow(const Appointment& appointment) {
     QStandardItem* patientName = new QStandardItem(appointment.patient.nameInfo.getInitials());
     patientName->setData(getModelData(appointment), Qt::UserRole);
 
-    QStandardItem* serviceName = new QStandardItem(appointment.service.name());
+    QStandardItem* serviceName = new QStandardItem(appointment.service.name);
     QStandardItem* dateTime = new QStandardItem(appointment.date.toString("d MMMM yyyy, h:mm"));
 
     lst << patientName << serviceName << dateTime;
@@ -127,7 +127,7 @@ QList<QStandardItem*> createAppointmentRow(const Appointment& appointment) {
 QList<QStandardItem*> createFileRow(const File& file) {
     QList<QStandardItem*> lst;
 
-    QStandardItem* name = new QStandardItem(file.name());
+    QStandardItem* name = new QStandardItem(file.name);
     name->setData(getModelData(file), Qt::UserRole);
     lst << name;
     return lst;

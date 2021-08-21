@@ -14,7 +14,7 @@ AppointmentMiniForm::AppointmentMiniForm(const Appointment& appointment,
     ui->setupUi(this);
 
     ui->dateTime->setText(appointment_.date.toString("d.MM.yy h:mm"));
-    ui->service->setText(appointment_.service.name());
+    ui->service->setText(appointment_.service.name);
 }
 
 AppointmentMiniForm::~AppointmentMiniForm() {

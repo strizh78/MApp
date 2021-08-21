@@ -6,41 +6,25 @@ Drug::Drug(const QString& name,
            const QString& nameLat,
            const Groups group,
            const std::vector<QString>& dilutions)
-    : name_(name)
-    , nameLat_(nameLat)
-    , group_(group)
-    , availableDilutions_(dilutions)
+    : name(name)
+    , nameLat(nameLat)
+    , group(group)
+    , availableDilutions(dilutions)
 {
 }
 
-QString Drug::name() const {
-    return name_;
-}
-
-QString Drug::nameLat() const {
-    return nameLat_;
-}
-
-Groups Drug::group() const {
-    return group_;
-}
-
-std::vector<QString> Drug::availableDilutions() const {
-    return availableDilutions_;
-}
-
 bool Drug::isAvailable() const {
-    return !availableDilutions_.empty();
+    return !availableDilutions.empty();
 }
 
 QString Drug::getFullName() const {
-    if (name_.isEmpty())
-        return  nameLat_;
+    if (name.isEmpty())
+        return  nameLat;
 
-    QString fullName = name_;
+    QString fullName = name;
 
-    if (!nameLat_.isEmpty())
-        fullName += " (" + nameLat_ + ")";
+    if (!nameLat.isEmpty())
+        fullName += " (" + nameLat + ")";
 
     return fullName;
 }
