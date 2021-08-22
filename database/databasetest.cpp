@@ -78,8 +78,8 @@ void DatabaseTest::editHomeopathyDrug(const homeopathy::Drug& oldDrug, homeopath
     auto it = std::find(homeopathyList_.begin(), homeopathyList_.end(), oldDrug);
 
     if (it != homeopathyList_.end()) {
-        *it = newDrug;
         setCodeToEdit(newDrug, oldDrug.code());
+        *it = newDrug;
     }
 }
 
@@ -160,8 +160,8 @@ void DatabaseTest::editMedicineDrug(const medicine::Drug& oldDrug,
     auto it = std::find(medicinesList_.begin(), medicinesList_.end(), oldDrug);
 
     if (it != medicinesList_.end()) {
-        *it = newDrug;
         setCodeToEdit(newDrug, oldDrug.code());
+        *it = newDrug;
     }
 }
 
@@ -198,8 +198,8 @@ void DatabaseTest::editService(const Service& oldService, Service& editedService
     auto it = std::find(servicesList_.begin(), servicesList_.end(), oldService);
 
     if (it != servicesList_.end()) {
-        *it = editedService;
         setCodeToEdit(editedService, oldService.code());
+        *it = editedService;
     }
 }
 
@@ -257,8 +257,8 @@ void DatabaseTest::addPatient(Patient &newPatient) {
 void DatabaseTest::editPatient(const Patient &oldPatient, Patient &editedPatient) {
     auto it = std::find(patientsList_.begin(), patientsList_.end(), oldPatient);
     if (it != patientsList_.end()) {
-        *it = editedPatient;
         setCodeToEdit(editedPatient, oldPatient.code());
+        *it = editedPatient;
     }
 }
 
