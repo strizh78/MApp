@@ -123,8 +123,8 @@ void MedicineDrugForm::init() {
         setWindowTitle("Добавление лекарства");
     }
 
-    fillLabelFromVector(ui->brands, drug_.brandNames());
-    fillLabelFromVector(ui->releaseForms, drug_.releaseForms());
+    fillLabelFromVector(ui->brands, drug_.brandNames);
+    fillLabelFromVector(ui->releaseForms, drug_.releaseForms);
     fillDosagesList();
 }
 

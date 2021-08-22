@@ -94,7 +94,7 @@ void HomeopathyDrugForm::init() {
         setWindowTitle("Добавление препарата");
     }
 
-    fillLabelFromVector(drug_.availableDilutions());
+    fillLabelFromVector(drug_.availableDilutions);
 }
 
 void HomeopathyDrugForm::setEditEnabled(bool enabled) {
