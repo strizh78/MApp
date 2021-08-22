@@ -12,16 +12,38 @@ AppointmentRecordForm::AppointmentRecordForm(QWidget *parent)
     setWindowModality(Qt::WindowModality::WindowModal);
 }
 
+void AppointmentRecordForm::resizeEvent(QResizeEvent *event) {
+    QWidget::resizeEvent(event);
+    int stringsNum = 0;
+    QString text = ui->fileTextEdit->toPlainText();
+    int currentLen = 0;
+    for (const auto& ch : text) {
+        if (ch == '\n') {
+            stringsNum++;
+            currentLen = 0;
+        } else {
+            if (++currentLen >= ui->scrollArea->width() / 15) {
+                stringsNum++;
+                currentLen = 0;
+            }
+        }
+    }
+
+    ui->fileTextEdit->setGeometry(ui->fileTextEdit->geometry().x(),
+                                  ui->fileTextEdit->geometry().y(),
+                                  ui->scrollArea->width(),
+                                  std::max(stringsNum * 17 + 15, ui->scrollArea->height()));
+}
+
 AppointmentRecordForm::~AppointmentRecordForm() {
     delete ui;
 }
 
 void AppointmentRecordForm::setEditEnabled(bool enabled) {
-    ui->editRecordBtn->setChecked(enabled);
     ui->fileTextEdit->setEnabled(enabled);
 }
 
-void AppointmentRecordForm::setText (const QString& text) {
+void AppointmentRecordForm::setText(const QString& text) {
     ui->fileTextEdit->setText(text);
 }
 
@@ -36,7 +58,7 @@ void AppointmentRecordForm::closeEvent(QCloseEvent* event) {
 
 void AppointmentRecordForm::on_newTabBtn_clicked() {
     changeButtonsVisibility(false);
-    setEditEnabled(true);
+    setGeometry(this->geometry().x(), this->geometry().y(), 400, 450);
     show();
 
     parentWidget()->adjustSize();
@@ -49,13 +71,8 @@ void AppointmentRecordForm::on_returnInWindow_clicked() {
     parentWidget()->adjustSize();
 }
 
-void AppointmentRecordForm::on_editRecordBtn_clicked() {
-    ui->fileTextEdit->setEnabled(!ui->fileTextEdit->isEnabled());
-}
-
 void AppointmentRecordForm::on_solutionBox_accepted() {
     on_returnInWindow_clicked();
-    setEditEnabled(false);
 }
 
 void AppointmentRecordForm::changeButtonsVisibility(bool isWidget) {

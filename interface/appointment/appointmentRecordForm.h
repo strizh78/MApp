@@ -20,12 +20,11 @@ public:
 
 protected:
     void closeEvent(QCloseEvent* event) override;
+    void resizeEvent(QResizeEvent *event) override;
 
 private slots:
     void on_newTabBtn_clicked();
     void on_returnInWindow_clicked();
-
-    void on_editRecordBtn_clicked();
 
     void on_solutionBox_accepted();
 

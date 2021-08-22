@@ -17,10 +17,12 @@ public:
                     std::optional<Appointment> appointment = std::nullopt,
                     QWidget *parent = nullptr);
     ~AppointmentForm();
-
 signals:
     void appointmentCreateSignal(const Appointment& created);
     void appointmentEditSignal(const Appointment& editedPatient);
+
+protected:
+    void closeEvent(QCloseEvent *event);
 
 private slots:
     void on_solutionBox_accepted();
@@ -48,11 +50,17 @@ private slots:
 
     void on_homeopathyViewBtn_clicked();
 
+    void on_conductAppointmentBtn_clicked();
+
 private:
     void setupCreateUi();
+    void setupAppointmentTimeType();
     void setupEditUi();
+    void setupStatus();
+
+    void setEditFieldsEnabled(bool enabled);
     void hideDrugs();
-    void hideRecording(bool hide);
+    void setRecordVisible(bool visible);
 
     void fillAppointmentInfo();
 
@@ -61,4 +69,6 @@ private:
     std::shared_ptr<DatabaseInterface> database_;
 
     Appointment currentAppointment_;
+
+    bool isHeldNow = false;
 };

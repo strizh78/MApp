@@ -7,6 +7,8 @@
 #include "interface/patient/patientsListForm.h"
 #include "interface/appointment/appointmentsListForm.h"
 
+#include "interface/timetable/timetableForm.h"
+
 MainWindow::MainWindow(std::shared_ptr<DatabaseInterface> database,
                        QWidget *parent)
     : QMainWindow(parent)
@@ -14,10 +16,24 @@ MainWindow::MainWindow(std::shared_ptr<DatabaseInterface> database,
     , database_(database)
 {
     ui->setupUi(this);
+
+    todayTimetable = new DailyTimetable;
+    todayTimetable->setDatabase(database);
+    ui->scrollArea->setWidget(todayTimetable);
+
+    QTimer *timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(update()));
+    timer->start(60);
 }
 
 MainWindow::~MainWindow() {
+    delete todayTimetable;
     delete ui;
+}
+
+void MainWindow::update() {
+    todayTimetable->setDate(QDate::currentDate());
+    QWidget::update();
 }
 
 void MainWindow::on_servicesList_clicked() {
@@ -48,4 +64,10 @@ void MainWindow::on_appointmentsList_clicked() {
     auto* appointmentsList = new AppointmentsListForm(database_);
     appointmentsList->setAttribute(Qt::WA_DeleteOnClose, true);
     appointmentsList->show();
+}
+
+void MainWindow::on_timetable_clicked() {
+    auto* timetableForm = new TimetableForm(database_);
+    timetableForm->setAttribute(Qt::WA_DeleteOnClose, true);
+    timetableForm->show();
 }

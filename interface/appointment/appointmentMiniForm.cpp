@@ -1,5 +1,5 @@
-#include "appointmentMiniForm.h"
-#include "ui_AppointmentMiniForm.h"
+#include "AppointmentMiniForm.h"
+#include "ui_appointmentMiniForm.h"
 
 #include "appointmentForm.h"
 

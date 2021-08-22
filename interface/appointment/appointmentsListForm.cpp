@@ -59,7 +59,7 @@ void AppointmentsListForm::editAppointment(const Appointment& editedAppointment)
 }
 
 void AppointmentsListForm::setupTableSettings() {
-    ui->appointmentTable->setHorizontalHeaderLabels({"Пациент", "Услуга", "Дата/время приёма"});
+    ui->appointmentTable->setHorizontalHeaderLabels({"Пациент", "Услуга", "Дата/время приёма", "Статус"});
     ui->appointmentTable->setMainTabLabel("Приёмы");
 
     connect(ui->appointmentTable, SIGNAL(onAddButtonClicked()),

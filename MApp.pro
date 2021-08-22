@@ -37,7 +37,12 @@ SOURCES += \
     interface/patient/patientsListForm.cpp \
     interface/service/serviceForm.cpp \
     interface/service/servicesListForm.cpp \
+    interface/timetable/dailyTimetable.cpp \
+    interface/timetable/entries/appointmentEntry.cpp \
+    interface/timetable/entries/eventEntry.cpp \
+    interface/timetable/entries/timetableEntry.cpp \
     interface/timetable/event/eventForm.cpp \
+    interface/timetable/timetableForm.cpp \
     interface/utils.cpp \
     main.cpp \
     \
@@ -84,7 +89,12 @@ HEADERS += \
     interface/patient/patientsListForm.h \
     interface/service/serviceForm.h \
     interface/service/servicesListForm.h \
+    interface/timetable/dailyTimetable.h \
+    interface/timetable/entries/appointmentEntry.h \
+    interface/timetable/entries/eventEntry.h \
+    interface/timetable/entries/timetableEntry.h \
     interface/timetable/event/eventForm.h \
+    interface/timetable/timetableForm.h \
     interface/utils.h \
     patient/patient.h \
     service/service.h \
@@ -126,7 +136,8 @@ FORMS += \
     \
     interface/service/serviceForm.ui \
     interface/service/servicesListForm.ui \
-    interface/timetable/event/eventForm.ui
+    interface/timetable/event/eventForm.ui \
+    interface/timetable/timetableForm.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

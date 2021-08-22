@@ -71,3 +71,6 @@ QList<QStandardItem*> createFileRow(const File& file);
 MAppTable* createSelectionForm(QWidget* parent);
 
 void showAsWindowModal(QWidget* form);
+
+// TODO: перенести в некий frontUtils?
+QColor getAppointmentColor(const Appointment& appointment);

@@ -8,6 +8,8 @@
 #include "file/file.h"
 #include "interface/basicForms/mappTable.h"
 
+#include <QPainter>
+
 namespace ErrorLog {
 void showItemFormWarning(QLabel* errorText, const std::vector<QString>& wrongFields) {
     if (wrongFields.empty()) {
@@ -120,7 +122,37 @@ QList<QStandardItem*> createAppointmentRow(const Appointment& appointment) {
     QStandardItem* serviceName = new QStandardItem(appointment.service.name);
     QStandardItem* dateTime = new QStandardItem(appointment.date.toString("d MMMM yyyy, h:mm"));
 
-    lst << patientName << serviceName << dateTime;
+    QString statusStr = "";
+    switch (appointment.getTimeType()) {
+    case Appointment::PAST:
+        if (appointment.isConducted)
+            statusStr = "Приём проведен.";
+        else
+            statusStr = "Приём пропущен.";
+        break;
+    case Appointment::PRESENT:
+        if (appointment.isConducted)
+            statusStr = "Приём проведен.";
+        else
+            statusStr = "Сейчас время приёма.";
+        break;
+    case Appointment::FUTURE:
+        statusStr = "Приём запланирован.";
+        break;
+    }
+
+    QPixmap pix(20, 20);
+
+    QPainter painter(&pix);
+    QColor color = getAppointmentColor(appointment);
+    painter.setPen(color);
+    painter.setBrush(color);
+    painter.drawRect(pix.rect());
+
+    QStandardItem* status = new QStandardItem(statusStr);
+    status->setIcon(pix);
+
+    lst << patientName << serviceName << dateTime << status;
     return lst;
 }
   
@@ -158,3 +190,27 @@ void showAsWindowModal(QWidget* form) {
     form->show();
 }
 
+QColor getAppointmentColor(const Appointment& appointment) {
+    QColor resultColor;
+
+    switch (appointment.getTimeType()) {
+    case Appointment::PAST:
+        if (appointment.isConducted) {
+            resultColor = {107, 211, 95};
+        } else {
+            resultColor = {237, 105, 94};
+        }
+        break;
+    case Appointment::PRESENT:
+        resultColor = {241, 153, 55};
+        if (appointment.isConducted) {
+            resultColor = {107, 211, 95};
+        }
+        break;
+    case Appointment::FUTURE:
+        resultColor = {153, 158, 248};
+        break;
+    }
+
+    return resultColor;
+}
