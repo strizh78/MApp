@@ -48,7 +48,7 @@ void HomeopathyDrugForm::on_buttonBox_accepted() {
                      ui->groupComboBox->currentData().value<Groups>(),
                      dilutions_);
 
-    if (currentDrug.isExists()) {
+    if (drug_.isExists()) {
         database_->editHomeopathyDrug(drug_, currentDrug);
         emit homeopathyDrugEditSignal(currentDrug);
     } else {
