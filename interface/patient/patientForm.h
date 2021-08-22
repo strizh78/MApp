@@ -37,7 +37,6 @@ private slots:
 
 private:
     void setupUi();
-    void setEditEnabled(bool enabled);
 
     void fillFormPatientInfo();
     void setupAppointmentsInfo();
@@ -55,4 +54,5 @@ private:
     bool isModified;
 
     friend class PatientTests;
+    void setupFilesInfo();
 };

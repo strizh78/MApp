@@ -9,16 +9,6 @@
 #include <QMessageBox>
 
 namespace {
-    QList<QStandardItem*> createInfoRow(const QString& key, const QString& value) {
-        QList<QStandardItem*> lst;
-        auto* keyItem = new QStandardItem;
-        keyItem->setText(key);
-        auto* valueItem = new QStandardItem;
-        valueItem->setText(value);
-        lst << keyItem << valueItem;
-        return lst;
-    }
-
     std::vector<QString> getInvalidFields(const Patient& patient) {
         std::vector<QString> wrongFields;
         if (patient.nameInfo.surname.isEmpty() ||
@@ -121,11 +111,6 @@ PatientForm::PatientForm(std::shared_ptr<DatabaseInterface> database,
 {
     setupUi();
     fillFormPatientInfo();
-    setupAppointmentsInfo();
-
-    ui->fileList->setupDatabase(database);
-    ui->fileList->fillTable(patient_);
-    ui->fileList->hideAddButton();
 
     isModified = false;
 }
@@ -200,29 +185,13 @@ void PatientForm::setupUi() {
     connect(ui->nameEdit, SIGNAL(textChanged(QString)), this, SLOT(fieldEdited()));
     connect(ui->dateEdit, SIGNAL(userDateChanged(QDate)), this, SLOT(fieldEdited()));
     connect(ui->addressEdit, SIGNAL(textChanged(QString)), this, SLOT(fieldEdited()));
+    connect(ui->additionalInfo, SIGNAL(textChanged(QString)), this, SLOT(fieldEdited()));
 
     if (patient_.isExists()) {
         setWindowTitle("Пациент " + patient_.nameInfo.getInitials());
     } else {
         setWindowTitle("Создание пациента");
     }
-}
-
-void PatientForm::setEditEnabled(bool enabled) {
-    ui->nameEdit->setEnabled(enabled);
-    ui->dateEdit->setEnabled(enabled);
-    ui->addressEdit->setEnabled(enabled);
-    ui->additionalInfo->setEnabled(enabled);
-
-    ui->solutionBox->clear();
-    if (!enabled) {
-        ui->solutionBox->addButton(QDialogButtonBox::Close);
-    } else {
-        ui->solutionBox->addButton(QDialogButtonBox::Cancel);
-        ui->solutionBox->addButton(QDialogButtonBox::Save);
-    }
-
-    adjustSize();
 }
 
 void PatientForm::fillFormPatientInfo() {
@@ -234,10 +203,19 @@ void PatientForm::fillFormPatientInfo() {
     ui->dateEdit->setDate(patient_.birthDate);
     ui->addressEdit->setText(patient_.address);
     ui->additionalInfo->setMarkdown(patient_.additionalInfo);
+
+    setupFilesInfo();
+    setupAppointmentsInfo();
+}
+
+void PatientForm::setupFilesInfo() {
+    ui->fileList->setupDatabase(database_);
+    ui->fileList->fillTable(patient_);
+    ui->fileList->hideAddButton();
 }
 
 void PatientForm::setupAppointmentsInfo() {
-    ui->appointments->setHidden(true);
+    ui->appointments->hide();
 
     if (!patient_.isExists()) {
         return;
@@ -250,7 +228,7 @@ void PatientForm::setupAppointmentsInfo() {
                   return a.date < b.date;
               });
 
-    int maxAppointmentsCount = 3;
+    const int maxAppointmentsCount = 3;
     int currentCount = 0;
     for (const auto& x : appointments) {
         if (x.patient == patient_) {
