@@ -16,7 +16,7 @@ TimetableAppointment::TimetableAppointment(const Appointment &appointment, const
 }
 
 void TimetableAppointment::openForm(std::shared_ptr<DatabaseInterface> database, QWidget *parent, bool show) const {
-    auto * appointmentViewForm = new AppointmentForm(database, AppointmentForm::EDIT, appointment, parent);
+    auto * appointmentViewForm = new AppointmentForm(database, appointment, parent);
     parent->connect(appointmentViewForm, SIGNAL(appointmentEditSignal(Appointment)),
                     parent, SLOT(update()));
     if (show)
@@ -44,7 +44,7 @@ bool TimetableAppointment::tryMoveEntry(const QTime &diff, std::shared_ptr<Datab
         return false;
     }
 
-    if (isTimeSlotAvailable(database.get(), appointmentNew, appointmentNew.date, appointmentNew.service.duration())) {
+    if (isTimeSlotAvailable(database.get(), appointmentNew, appointmentNew.date, appointmentNew.service.duration)) {
         database->editAppointment(appointmentNew);
         return true;
     }

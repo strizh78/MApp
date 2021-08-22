@@ -146,7 +146,7 @@ void DailyTimetable::mouseDoubleClickEvent(QMouseEvent *event) {
     Appointment newAppointment;
     newAppointment.date.setDate(date_);
     newAppointment.date.setTime(getTime(event->pos(), drawSettings_));
-    auto * appointmentViewForm = new AppointmentForm(database_, AppointmentForm::CREATE, newAppointment);
+    auto * appointmentViewForm = new AppointmentForm(database_, newAppointment);
     connect(appointmentViewForm, SIGNAL(appointmentCreateSignal(Appointment)),
             this, SLOT(update()));
 

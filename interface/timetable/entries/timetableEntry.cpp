@@ -8,9 +8,9 @@
 
 TimetableEntryDrawer::TimetableEntryDrawer(const Appointment &appointment, const TimetableDrawSettings& settings)
     : begin(appointment.date.time())
-    , duration(appointment.service.duration())
-    , entryTitle("Приём " + appointment.patient.nameInfo().getInitials())
-    , entryExtraComment(appointment.service.name())
+    , duration(appointment.service.duration)
+    , entryTitle("Приём " + appointment.patient.nameInfo.getInitials())
+    , entryExtraComment(appointment.service.name)
     , settings_(settings)
 {
     QColor baseColor = Qt::gray;

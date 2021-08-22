@@ -32,7 +32,7 @@ std::vector<QString> getInvalidFields(const Appointment& appointment, DatabaseIn
         wrongFields.push_back("Время приёма уже прошло");
     }
 
-    if (!isTimeSlotAvailable(db, appointment, appointment.date, appointment.service.duration())) {
+    if (!isTimeSlotAvailable(db, appointment, appointment.date, appointment.service.duration)) {
         wrongFields.push_back("Время для приёма уже занято");
     }
     return wrongFields;
@@ -270,7 +270,7 @@ void AppointmentForm::setupEditUi() {
 }
 
 void AppointmentForm::setupAppointmentTimeType() {
-    if (openMode_ == CREATE) {
+    if (!currentAppointment_.isExists()) {
         return;
     }
 
