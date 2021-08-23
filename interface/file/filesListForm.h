@@ -4,6 +4,8 @@
 #include "appointment/appointment.h"
 #include "patient/patient.h"
 #include "database/databaseinterface.h"
+#include "interface/basicForms/mappTable.h"
+#include "interface/utils.h"
 
 #include <QWidget>
 
@@ -22,7 +24,7 @@ public:
     void fillTable(const Appointment& parent);
     void fillTable(const Patient& parent);
     void fillTable();
-    void hideAddButton();
+    void setFlags(TableFlags flags);
 
 private slots:
     void onAddButtonClicked();

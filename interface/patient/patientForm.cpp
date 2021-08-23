@@ -3,6 +3,7 @@
 
 #include "interface/appointment/appointmentForm.h"
 #include "interface/appointment/appointmentMiniForm.h"
+#include "interface/basicForms/mappTable.h"
 
 #include "interface/utils.h"
 
@@ -111,7 +112,6 @@ PatientForm::PatientForm(std::shared_ptr<DatabaseInterface> database,
 {
     setupUi();
     fillFormPatientInfo();
-
     isModified = false;
 }
 
@@ -211,7 +211,7 @@ void PatientForm::fillFormPatientInfo() {
 void PatientForm::setupFilesInfo() {
     ui->fileList->setupDatabase(database_);
     ui->fileList->fillTable(patient_);
-    ui->fileList->hideAddButton();
+    ui->fileList->setFlags(TableFlag::NoAddButton);
 }
 
 void PatientForm::setupAppointmentsInfo() {

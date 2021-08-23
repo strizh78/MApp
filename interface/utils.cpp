@@ -169,9 +169,8 @@ QList<QStandardItem*> createFileRow(const File& file) {
 MAppTable* createSelectionForm(QWidget* parent) {
     auto* selectionForm = new MAppTable(parent);
 
-    selectionForm->setFlag(MAppTable::TableSettings::UseBin, false);
-    selectionForm->setFlag(MAppTable::TableSettings::UseButtons, false);
-    selectionForm->setFlag(MAppTable::TableSettings::UseSolutionBox, true);
+    selectionForm->setFlags(TableFlag::NoBin |
+                            TableFlag::SelectionForm);
 
 
     selectionForm->setWindowFlag(Qt::Window);

@@ -2,8 +2,6 @@
 #include "ui_filesListForm.h"
 #include "fileForm.h"
 
-#include "interface/utils.h"
-
 #include <QFileDialog>
 #include <QDir>
 #include <QFile>
@@ -47,8 +45,8 @@ void FilesListForm::fillTable() {
     fillFileTable(fileList);
 }
 
-void FilesListForm::hideAddButton() {
-    ui->fileTable->setFlag(MAppTable::TableSettings::UseAddButton, false);
+void FilesListForm::setFlags(TableFlags flags) {
+    ui->fileTable->setFlags(flags);
 }
 
 void FilesListForm::onAddButtonClicked() {
@@ -113,7 +111,7 @@ void FilesListForm::setupTableSettings() {
             this, SLOT(onEditButtonClicked(const QVariant&)));
     connect(table, SIGNAL(onDeleteButtonClicked(const QVariant&)),
             this, SLOT(onDeleteButtonClicked(const QVariant&)));
-    table->setFlag(MAppTable::TableSettings::UseBin, false);
+    table->setFlags(TableFlag::NoBin | TableFlag::NoAddButton);
     table->setMainTabLabel("Файлы");
 }
 

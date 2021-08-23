@@ -3,14 +3,12 @@
 
 #include "drugs/medicines.h"
 #include "interface/basicForms/mappTableSettingsForm.h"
-#include "interface/utils.h"
 
 #include <QSortFilterProxyModel>
 
 #include <optional>
 
 namespace {
-
 const MAppBaseObj* getData(const QStandardItemModel* model, int row) {
     return model->data(model->index(row, 0), Qt::UserRole).value<const MAppBaseObj*>();
 }
@@ -44,9 +42,7 @@ MAppTable::MAppTable(QWidget *parent)
     , ui(new Ui::MAppTable)
 {
     ui->setupUi(this);
-    ui->solutionBox->setHidden(true);
-
-    useBin_ = true;
+    ui->solutionBox->hide();
     setEmptyModel();
 }
 
@@ -62,62 +58,31 @@ void MAppTable::appendRow(const MAppBaseObj& data, const QList<QStandardItem*>& 
     setButtonsEnabled();
     setFocusOnLastRow(table);
 
-    if (scale_.empty())
+    if (scale_.empty()) {
         setScale(items.count());
-}
-
-bool MAppTable::editDataInTable(QStandardItemModel* firstModel,
-                                QStandardItemModel* secondModel,
-                                const MAppBaseObj& data,
-                                const QList<QStandardItem*>& list)
-{
-    auto index = indexInTable(firstModel, data);
-
-    if (!index.has_value())
-        return false;
-
-    int row = index.value().row();
-    removeRow(firstModel, row);
-
-    if (modelByData(data) == firstModel) {
-        firstModel->insertRow(row, list);
-        tableByData(data)->setCurrentIndex(firstModel->index(row, 0));
     }
-    else
-        secondModel->appendRow(list);
-
-    return true;
 }
 
-void MAppTable::editData(const MAppBaseObj& data, const QList<QStandardItem*>& list) {
-    bool e1 = editDataInTable(mainTableModel.get(), binTableModel.get(), data, list);
-    bool e2 = e1 || editDataInTable(binTableModel.get(), mainTableModel.get(), data, list);
-
-    if (!e2)
-        appendRow(data, list);
+void MAppTable::editData(const MAppBaseObj& data, const QList<QStandardItem*>& items) {
+    editDataInTable(data, items);
     setButtonsEnabled();
 }
 
-void MAppTable::setFlag(MAppTable::TableSettings flag, bool value) {
-    switch (flag) {
-        case MAppTable::TableSettings::UseBin:
-            setBinUsage(value);
-            break;
-        case MAppTable::TableSettings::UseButtons:
-            setButtonsVisible(value);
-            break;
-        case MAppTable::TableSettings::UseSolutionBox:
-            ui->solutionBox->setVisible(value);
-            break;
-        case MAppTable::TableSettings::UseAddButton:
-            ui->addBtn->setVisible(value);
-            break;
+void MAppTable::setFlags(TableFlags flags) {
+    state_ |= flags;
+    if (state_.testFlag(TableFlag::NoBin)) {
+        ui->tabWidget->tabBar()->hide();
+    }
+    if (state_.testFlag(TableFlag::NoAddButton)) {
+        ui->addBtn->hide();
+    }
+    if (state_.testFlag(TableFlag::SelectionForm)) {
+        makeSelectionForm();
     }
 }
 
-void MAppTable::setBinUsage(bool useBin) {
-    ui->tabWidget->tabBar()->setVisible(useBin);
-    useBin_ = useBin;
+void MAppTable::setMainTabLabel(QString label) {
+    ui->tabWidget->setTabText(0, label);
 }
 
 void MAppTable::setHorizontalHeaderLabels(const QStringList& headers) {
@@ -127,26 +92,29 @@ void MAppTable::setHorizontalHeaderLabels(const QStringList& headers) {
     mainTableModel.get()->setHorizontalHeaderLabels(headers);
     binTableModel.get()->setHorizontalHeaderLabels(headers);
 
-    if (scale_.empty() && isHeadersVisible)
+    if (scale_.empty() && isHeadersVisible) {
         setScale(headers.count());
-}
-
-void MAppTable::setMainTabLabel(QString label) {
-    ui->tabWidget->setTabText(0, label);
-}
-
-void MAppTable::setModel(const QStandardItemModel* model) {
-    for (int i = 0; i < model->rowCount(); ++i)
-        modelByData(*getData(model, i))->appendRow(takeRow(model, i));
-
-    setButtonsEnabled();
-    setFocusOnRow(getCurrentTable(), 0);
-    setScale(model->columnCount());
+    }
 }
 
 void MAppTable::setScale(const std::vector<int>& scale){
     scale_ = scale;
     dimension_ = std::accumulate(scale_.begin(), scale_.end(), 0);
+}
+
+void MAppTable::setItemSelected(const MAppBaseObj& item) {
+    auto* model = modelByData(item);
+    auto* table = tableByData(item);
+    auto index = indexInTable(model, item);
+
+    if (index.has_value()) {
+        table->selectRow(index->row());
+    }
+}
+
+void MAppTable::setSelectionMode(QAbstractItemView::SelectionMode mode) {
+    ui->mainTable->setSelectionMode(mode);
+    ui->binTable->setSelectionMode(mode);
 }
 
 void MAppTable::on_addBtn_clicked() {
@@ -155,7 +123,7 @@ void MAppTable::on_addBtn_clicked() {
 
 void MAppTable::on_editBtn_clicked() {
     QStandardItemModel* model = getCurrentModel();
-    QModelIndex index = model->index(getCurrentTable()->currentIndex().row(), 0);
+    auto index = model->index(getCurrentTable()->currentIndex().row(), 0);
     emit onEditButtonClicked(model->data(index, Qt::UserRole));
 }
 
@@ -211,6 +179,91 @@ void MAppTable::on_binTable_doubleClicked(const QModelIndex &index) {
     emit onTableDoubleClicked(binTableModel->data(curIndex, Qt::UserRole));
 }
 
+void MAppTable::on_solutionBox_accepted() {
+    auto* model = getCurrentModel();
+    auto* table = getCurrentTable();
+    switch (table->selectionMode()) {
+        case QAbstractItemView::SingleSelection:
+        {
+            auto index = model->index(table->currentIndex().row(), 0);
+            emit onChooseButtonClicked(model->data(index, Qt::UserRole));
+            break;
+        }
+        case QAbstractItemView::MultiSelection:
+        {
+            std::vector <QVariant> items;
+            auto selectedItems = table->selectionModel()->selectedRows(/*column*/ 0);
+            for (auto& x : selectedItems) {
+                items.push_back(model->data(x, Qt::UserRole));
+            }
+            emit onChooseButtonClicked(items);
+            break;
+        }
+        default:
+            throw "Selection mode is not supported";
+    }
+}
+
+void MAppTable::on_solutionBox_rejected() {
+    close();
+}
+
+void MAppTable::resizeEvent(QResizeEvent* event) {
+    if (!dimension_) {
+        return;
+    }
+
+    int columnCount = mainTableModel->columnCount();
+
+    if (scale_.empty()) {
+       setScale(columnCount);
+    }
+
+    int baseWidth = (ui->mainTable->width() - 10 * columnCount) / dimension_;
+
+    for (int column = 0; column < columnCount - 1; ++column) {
+        ui->mainTable->setColumnWidth(column, baseWidth * scale_[column]);
+        ui->binTable->setColumnWidth(column, baseWidth * scale_[column]);
+    }
+
+    QWidget::resizeEvent(event);
+}
+
+void MAppTable::showEvent(QShowEvent* event){
+    setFocusOnRow(ui->mainTable, 0);
+    setButtonsEnabled();
+    switchTabButtons();
+    QWidget::showEvent(event);
+}
+
+void MAppTable::editDataInTable(const MAppBaseObj& data,
+                                const QList<QStandardItem*>& list)
+{
+    auto* modelTo = modelByData(data);
+    auto* modelFrom = mainTableModel.get();
+    auto index = indexInTable(modelFrom, data);
+
+    if (!index.has_value()) {
+        modelFrom = binTableModel.get();
+        index = indexInTable(modelFrom, data);
+    }
+
+    if (!index.has_value()) {
+        appendRow(data, list);
+        return;
+    }
+
+    int row = index.value().row();
+    removeRow(modelFrom, row);
+
+    if (modelFrom == modelTo) {
+        modelTo->insertRow(row, list);
+        tableByData(data)->setCurrentIndex(index.value());
+    }
+    else
+        modelTo->appendRow(list);
+}
+
 QStandardItemModel* MAppTable::getCurrentModel() {
     if (ui->tabWidget->currentIndex() == 0)
         return mainTableModel.get();
@@ -235,17 +288,6 @@ QTableView* MAppTable::tableByData(const MAppBaseObj& data) {
     return ui->mainTable;
 }
 
-QList<QStandardItem*> MAppTable::takeRow(const QStandardItemModel* model, int row) {
-    QList<QStandardItem*> list;
-
-    for (int i = 0; i < model->columnCount(); ++i) {
-        list << (new QStandardItem(model->item(row, i)->text()));
-    }
-    (*list.begin())->setData(model->item(row, 0)->data(Qt::UserRole), Qt::UserRole);
-
-    return list;
-}
-
 void MAppTable::setButtonsEnabled() {
     bool hasRows = mainTableModel->rowCount() > 0;
 
@@ -258,32 +300,6 @@ void MAppTable::setButtonsEnabled() {
     ui->editBtn_2->setEnabled(hasRows);
 }
 
-void MAppTable::resizeEvent(QResizeEvent* event) {
-    if (!dimension_) {
-        return;
-    }
-
-    int columnCount = mainTableModel->columnCount();
-    int baseWidth = (ui->mainTable->width() - 10 * columnCount) / dimension_;
-
-    if (scale_.empty())
-        setScale(columnCount);
-
-    for (int column = 0; column < columnCount - 1; ++column) {
-        ui->mainTable->setColumnWidth(column, baseWidth * scale_[column]);
-        ui->binTable->setColumnWidth(column, baseWidth * scale_[column]);
-    }
-
-    QWidget::resizeEvent(event);
-}
-
-void MAppTable::showEvent(QShowEvent* event){
-    setFocusOnRow(ui->mainTable, 0);
-    setButtonsEnabled();
-    switchTabButtons();
-    QWidget::showEvent(event);
-}
-
 void MAppTable::setEmptyModel() {
     mainTableModel = std::make_shared<QStandardItemModel>();
     binTableModel = std::make_shared<QStandardItemModel>();
@@ -293,11 +309,7 @@ void MAppTable::setEmptyModel() {
 }
 
 void MAppTable::setScale(int columnCount) {
-    scale_.clear();
-
-    for (int i = 0; i < columnCount; ++i)
-        scale_.push_back(1);
-
+    scale_ = std::vector<int>(columnCount, 1);
     dimension_ = columnCount;
 }
 
@@ -313,50 +325,7 @@ void MAppTable::removeRow(QStandardItemModel* model, int row) {
     setButtonsEnabled();
 }
 
-void MAppTable::setButtonsVisible(bool isVisible) {
-    ui->buttonBar->setVisible(isVisible);
-}
-
-void MAppTable::on_solutionBox_accepted() {
-    switch (getCurrentTable()->selectionMode()) {
-        case QAbstractItemView::SingleSelection:
-        {
-            auto index = getCurrentModel()->index(ui->mainTable->currentIndex().row(), 0);
-            emit onChooseButtonClicked(getCurrentModel()->data(index, Qt::UserRole));
-            break;
-        }
-        case QAbstractItemView::MultiSelection:
-        {
-            std::vector <QVariant> items;
-            auto selectedItems = getCurrentTable()->selectionModel()->selectedRows(/*column*/ 0);
-            for (auto& x : selectedItems) {
-                items.push_back(getCurrentModel()->data(x, Qt::UserRole));
-            }
-            emit onChooseButtonClicked(items);
-            break;
-        }
-        default:
-            throw "Selection mode is not supported";
-    }
-}
-
-void MAppTable::on_solutionBox_rejected() {
-    close();
-}
-
-void MAppTable::setItemSelected(const MAppBaseObj& item) {
-    auto index = indexInTable(mainTableModel.get(), item);
-    if (index.has_value()) {
-        ui->mainTable->selectRow(index->row());
-    }
-
-    index = indexInTable(binTableModel.get(), item);
-    if (index.has_value()) {
-        ui->binTable->selectRow(index->row());
-    }
-}
-
-void MAppTable::setSelectionMode(QAbstractItemView::SelectionMode mode) {
-    ui->mainTable->setSelectionMode(mode);
-    ui->binTable->setSelectionMode(mode);
+void MAppTable::makeSelectionForm() {
+    ui->buttonBar->hide();
+    ui->solutionBox->show();
 }
