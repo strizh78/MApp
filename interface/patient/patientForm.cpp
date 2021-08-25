@@ -185,7 +185,6 @@ void PatientForm::setupUi() {
     connect(ui->nameEdit, SIGNAL(textChanged(QString)), this, SLOT(fieldEdited()));
     connect(ui->dateEdit, SIGNAL(userDateChanged(QDate)), this, SLOT(fieldEdited()));
     connect(ui->addressEdit, SIGNAL(textChanged(QString)), this, SLOT(fieldEdited()));
-    connect(ui->additionalInfo, SIGNAL(textChanged(QString)), this, SLOT(fieldEdited()));
 
     if (patient_.isExists()) {
         setWindowTitle("Пациент " + patient_.nameInfo.getInitials());
