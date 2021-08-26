@@ -81,12 +81,14 @@ void MedicineDrugForm::on_buttonBox_accepted() {
         return;
     }
 
-    medicine::Drug currentDrug(ui->activeSubstance->text(),
+    medicine::Drug currentDrug(ui->name->text(),
+                               ui->activeSubstance->text(),
                                ui->activeSubstanceLat->text(),
                                ui->prescription->isChecked(),
                                releaseForms_,
                                brands_,
                                getDosages(),
+                               ui->contraindications->toPlainText(),
                                ui->price->text().toFloat());
 
     if (drug_.isExists()) {
@@ -115,9 +117,11 @@ void MedicineDrugForm::fillLabelFromVector(QLabel* label, const std::vector<QStr
 void MedicineDrugForm::init() {
     if (drug_.isExists()) {
         setWindowTitle("Лекарство " + drug_.getFullName());
+        ui->name->setText(drug_.getFullName());
         ui->activeSubstance->setText(drug_.activeSubstance);
         ui->activeSubstanceLat->setText(drug_.activeSubstancetLat);
         ui->prescription->setChecked(drug_.isPrescription);
+        ui->contraindications->setText(drug_.contraindications);
         ui->price->setText(QString::number(drug_.price));
     } else {
         setWindowTitle("Добавление лекарства");

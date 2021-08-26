@@ -93,12 +93,13 @@ QList<QStandardItem*> createServiceRow(const Service& service) {
 QList<QStandardItem*> createMedicineDrugRow(const medicine::Drug& drug) {
     QList<QStandardItem*> list;
 
-    QStandardItem* brands = new QStandardItem(drug.getBrands(", "));
-    brands->setData(getModelData(drug), Qt::UserRole);
     QStandardItem* name = new QStandardItem(drug.getFullName());
+    name->setData(getModelData(drug), Qt::UserRole);
+    QStandardItem* brands = new QStandardItem(drug.getBrands(", "));
+    QStandardItem* actSubs = new QStandardItem(drug.getActiveSubstance());
     QStandardItem* price = new QStandardItem(QString::number(drug.price));
 
-    list << brands << name << price;
+    list << name << brands << actSubs << price;
 
     return list;
 }

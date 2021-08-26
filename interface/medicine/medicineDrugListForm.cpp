@@ -56,8 +56,8 @@ void MedicineDrugListForm::onDeleteButtonClicked(const QVariant &data) {
 }
 
 void MedicineDrugListForm::setupTableSettings() {
-    ui->medicineTable->setHorizontalHeaderLabels({"Торговые наименования", "Активное вещество", "Цена"});
-    ui->medicineTable->setScale({4, 4, 1});
+    ui->medicineTable->setHorizontalHeaderLabels({"Название", "Торговые наименования", "Активное вещество", "Цена"});
+    ui->medicineTable->setScale({4, 4, 4, 1});
     ui->medicineTable->setMainTabLabel("Лекарства");
 
     connect(ui->medicineTable, SIGNAL(onAddButtonClicked()),

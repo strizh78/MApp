@@ -126,21 +126,21 @@ void DatabaseTest::initMedicineDrugs() {
     const std::vector<QString> dosages4 = {
         "dos9"};
     const std::vector<medicine::Drug> medicines = {
-        Drug("actSubsA", "actSubsLatA", false, relForms1, brands1, dosages1, 3.14),
-        Drug("actSubsB", "", false, relForms2, brands1, dosages1, 2.71),
-        Drug("actSubsC", "actSubsLatC", false, relForms3, brands2, dosages2, 60.22),
-        Drug("actSubsD", "actSubsLatD", true, relForms4, brands1, dosages1, 59.7),
-        Drug("actSubsE", "actSubsLatE", false, relForms1, brands2, dosages2, 1989.1),
-        Drug("actSubsF", "actSubsLatF", false, relForms2, brands3, dosages3, 9.1),
-        Drug("actSubsG", "", false, relForms3, brands1, dosages1, 16.18),
-        Drug("actSubsH", "actSubsLatH", false, relForms4, brands2, dosages2, 141.42),
-        Drug("actSubsI", "actSubsLatI", true, relForms1, brands3, dosages3, 1202.05),
-        Drug("actSubsJ", "actSubsLatJ", false, relForms1, brands3, dosages4, 1997.11),
-        Drug("actSubsK", "", false, relForms2, brands2, dosages1, 379),
-        Drug("actSubsL", "actSubsLatL", false, relForms3, brands1, dosages2, 1248),
-        Drug("actSubsM", "actSubsLatM", false, relForms4, brands1, dosages3, 139),
-        Drug("actSubsO", "", false, relForms4, brands2, dosages4, 525),
-        Drug("actSubsP", "actSubsLatO", true, relForms1, brands3, dosages4, 636)};
+        Drug("name1", "actSubsA", "actSubsLatA", false, relForms1, brands1, dosages1, "", 3.14),
+        Drug("name2", "actSubsB", "", false, relForms2, brands1, dosages1, "", 2.71),
+        Drug("name3", "actSubsC", "actSubsLatC", false, relForms3, brands2, dosages2, "", 60.22),
+        Drug("name4", "actSubsD", "actSubsLatD", true, relForms4, brands1, dosages1, "", 59.7),
+        Drug("name5", "actSubsE", "actSubsLatE", false, relForms1, brands2, dosages2, "", 1989.1),
+        Drug("name6", "actSubsF", "actSubsLatF", false, relForms2, brands3, dosages3, "", 9.1),
+        Drug("name7", "actSubsG", "", false, relForms3, brands1, dosages1, "", 16.18),
+        Drug("name8", "actSubsH", "actSubsLatH", false, relForms4, brands2, dosages2, "", 141.42),
+        Drug("name9", "actSubsI", "actSubsLatI", true, relForms1, brands3, dosages3, "", 1202.05),
+        Drug("name10", "actSubsJ", "actSubsLatJ", false, relForms1, brands3, dosages4, "", 1997.11),
+        Drug("name11", "actSubsK", "", false, relForms2, brands2, dosages1, "", 379),
+        Drug("name12", "actSubsL", "actSubsLatL", false, relForms3, brands1, dosages2, "", 1248),
+        Drug("name13", "actSubsM", "actSubsLatM", false, relForms4, brands1, dosages3, "", 139),
+        Drug("name14", "actSubsO", "", false, relForms4, brands2, dosages4, "", 525),
+        Drug("name15", "actSubsP", "actSubsLatO", true, relForms1, brands3, dosages4, "", 636)};
 
     for (auto drug : medicines)
         addMedicineDrug(drug);
