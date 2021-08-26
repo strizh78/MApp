@@ -50,16 +50,16 @@ void DatabaseTest::initHomeopathyDrugs() {
         DILUTIONS[3],
         DILUTIONS[4]};
     const std::vector<homeopathy::Drug> homeopathyDrugs = {
-        Drug("nameA", "nameLatA", Groups::ANIMALS, d1),
-        Drug("nameB", "nameLatB", Groups::IMMATERIAL, d2),
-        Drug("nameC", "nameLatC", Groups::MINERALS, d3),
-        Drug("nameE", "nameLatE", Groups::ANIMALS, d4),
-        Drug("nameF", "nameLatF", Groups::IMMATERIAL, d3),
-        Drug("nameG", "nameLatG", Groups::MINERALS, d2),
-        Drug("nameH", "nameLatH", Groups::PLANTS, d1),
-        Drug("nameI", "nameLatI", Groups::ANIMALS, d1),
-        Drug("nameJ", "nameLatJ", Groups::IMMATERIAL, d2),
-        Drug("nameK", "nameLatK", Groups::MINERALS, d3)};
+        Drug("Арсеникум альбум", "Arsenicum album", Groups::PLANTS, d1),
+        Drug("Этиопс минералис", "Aethiops mineralis", Groups::MINERALS, d2),
+        Drug("Ульмус фульва", "Ulmus fulva", Groups::PLANTS, d3),
+        Drug("Прунус виргиниана", "Prunus virginiana", Groups::PLANTS, d4),
+        Drug("Хелоне глабра", "Chelone glabra", Groups::PLANTS, d3),
+        Drug("Ванадиум металликум", "Vanadium metallicum", Groups::MINERALS, d2),
+        Drug("Стронтиум нитрикум", "Strontium nitricum", Groups::MINERALS, d1),
+        Drug("Кониинум броматум", "Coniinum bromatum", Groups::MINERALS, d1),
+        Drug("Гомерия коллина", "Homeria collina", Groups::PLANTS, d2),
+        Drug("Симфитум оффицинале", "Symphytum officinale", Groups::PLANTS, d3)};
 
     for (auto drug : homeopathyDrugs)
         addHomeopathyDrug(drug);
@@ -86,61 +86,78 @@ void DatabaseTest::editHomeopathyDrug(const homeopathy::Drug& oldDrug, homeopath
 void DatabaseTest::initMedicineDrugs() {
     using namespace medicine;
 
-    const std::vector<ReleaseForm> relForms1 = {
-        RELEASE_FORMS[0],
-        RELEASE_FORMS[1],
-        RELEASE_FORMS[2]};
-    const std::vector<ReleaseForm> relForms2 = {
-        RELEASE_FORMS[2],
-        RELEASE_FORMS[5],
-        RELEASE_FORMS[1]};
-    const std::vector<ReleaseForm> relForms3 = {
-        RELEASE_FORMS[6],
-        RELEASE_FORMS[7],
-        RELEASE_FORMS[8]};
-    const std::vector<ReleaseForm> relForms4 = {
-        RELEASE_FORMS[4],
-        RELEASE_FORMS[9],
-        RELEASE_FORMS[10]};
-    const std::vector<QString> brands1 = {
-        "brandA",
-        "brandB",
-        "brandC"};
-    const std::vector<QString> brands2 = {
-        "brandA"};
-    const std::vector<QString> brands3 = {
-        "brandB",
-        "brandD"};
-    const std::vector<QString> dosages1 = {
-        "10-12, dos1",
-        "12-16, dos2",
-        "16+ dos3"};
-    const std::vector<QString> dosages2 = {
-        "1-12 мес., dos3",
-        "1-10, dos4",
-        "10-18+ dos5"};
-    const std::vector<QString> dosages3 = {
-        "2-3, dos6",
-        "3-4, dos7",
-        "4-16 dos8"};
-    const std::vector<QString> dosages4 = {
-        "dos9"};
+    const ReleaseForm capsule = RELEASE_FORMS[5];
+    const ReleaseForm powder = RELEASE_FORMS[9];
+    const ReleaseForm suspension = RELEASE_FORMS[10];
+    const ReleaseForm tablets = RELEASE_FORMS[12];
+
     const std::vector<medicine::Drug> medicines = {
-        Drug("name1", "actSubsA", "actSubsLatA", false, relForms1, brands1, dosages1, "", 3.14),
-        Drug("name2", "actSubsB", "", false, relForms2, brands1, dosages1, "", 2.71),
-        Drug("name3", "actSubsC", "actSubsLatC", false, relForms3, brands2, dosages2, "", 60.22),
-        Drug("name4", "actSubsD", "actSubsLatD", true, relForms4, brands1, dosages1, "", 59.7),
-        Drug("name5", "actSubsE", "actSubsLatE", false, relForms1, brands2, dosages2, "", 1989.1),
-        Drug("name6", "actSubsF", "actSubsLatF", false, relForms2, brands3, dosages3, "", 9.1),
-        Drug("name7", "actSubsG", "", false, relForms3, brands1, dosages1, "", 16.18),
-        Drug("name8", "actSubsH", "actSubsLatH", false, relForms4, brands2, dosages2, "", 141.42),
-        Drug("name9", "actSubsI", "actSubsLatI", true, relForms1, brands3, dosages3, "", 1202.05),
-        Drug("name10", "actSubsJ", "actSubsLatJ", false, relForms1, brands3, dosages4, "", 1997.11),
-        Drug("name11", "actSubsK", "", false, relForms2, brands2, dosages1, "", 379),
-        Drug("name12", "actSubsL", "actSubsLatL", false, relForms3, brands1, dosages2, "", 1248),
-        Drug("name13", "actSubsM", "actSubsLatM", false, relForms4, brands1, dosages3, "", 139),
-        Drug("name14", "actSubsO", "", false, relForms4, brands2, dosages4, "", 525),
-        Drug("name15", "actSubsP", "actSubsLatO", true, relForms1, brands3, dosages4, "", 636)};
+        Drug("", "Напроксен", "Naproxenum", true,
+            {tablets},
+            {"Aльгезир Ультра", "Мотрин", "Налгезин",
+                  "Напроксен", "Пенталгин моно", "Тералив 275"},
+            {},
+            "Повышенная чувствительность к напроксену, бронхиальная астма,\
+            крапивница или аллергические реакции после приема ацетисалициловой кислоты или других НПВС,\
+            периоперационная боль в условиях операции аортокоронарного шунтирования.",
+            125),
+        Drug("", "Парацетамол", "Paracetamolum ", false,
+            {tablets, suspension},
+            {"Апап", "Апотель", "Детский панадол", "Ифимол",
+            "Ксумапар", "Панадол", "Парацетамол", "Цефекон"},
+            {"от 12 лет - 0.5 - 1г 4 раза в сутки, курс 5-7  дней",
+             "6–12 лет — 240–480 мг", "1–6 лет — 120–240 мг",
+             "от 3 мес до 1 года — 24–120 мг до 4 раз в сутки в течение 3 дней"},
+            "Гиперчувствительность, нарушение функций почек и печени, \
+            алкоголизм, детский возраст (до 6 лет).",
+            25),
+        Drug("Мирамистин",
+            "Бензилдиметил[3-(миристоиламино)пропил]аммоний хлорид моногидрат",
+            "Benzyldimethyl[3-myristoilamine)-propyl]ammonium chloridi monohydratum",
+            false,
+            {suspension},
+            {"Мирамистин"},
+            {},
+            "Повышенная чувствительность к действующему веществу. \
+            Не рекомендуется применение препарата в форме спрея \
+            для орошения горла и миндалин у детей до 3 лет ввиду \
+            риска реактивного ларингоспазма.",
+            200),
+        Drug("Кардиомагнил ",
+            "Ацетилсалициловая кислота + Магния гидроксид",
+            "Acidum acetylsalicylicum + Magnesii hydroxydum",
+            false,
+            {tablets},
+            {"Ацетилсалициловая кислота + Магния гидроксид,"
+             "Кардевит", "ТромбоМАГ", "Кардиомагнил", "Магникардил"},
+            {},
+            "Повышенная чувствительность к ацетилсалициловой кислоте и другим НПВПС; \
+            кровоизлияние в головной мозг; \
+            склонность к кровотечению \
+            (недостаточность витамина К, тромбоцитопения, геморрагический диатез); \
+            эрозивно-язвенное поражение ЖКТ (в фазе обострения); \
+            желудочно-кишечное кровотечение; \
+            бронхиальная астма, индуцированная приемом салицилатов и других НПВС; \
+            полное или неполное сочетание бронхиальной астмы, \
+            рецидивирующего полипоза носа и околоносовых пазух \
+            с непереносимостью ацетилсалициловой кислоты \
+            или других НПВС, включая ингибиторы ЦОГ-2 (в т.ч. в анамнезе); \
+            одновременный прием метотрексата в дозе 15 мг/нед и более; \
+            тяжелая почечная недостаточность (Cl креатинина <30 мл/мин); \
+            тяжелая печеночная недостаточность (класс В и С по шкале Чайлд-Пью); \
+            хроническая сердечная недостаточность III и IV функционального класса по классификации NYHA; \
+            беременность (I и III триместры); кормление грудью; возраст до 18 лет.",
+            80),
+        Drug("Арбидол", "Умифеновир", "Umifenovirum ", false,
+            {tablets, capsule, powder},
+            {"Арбидол", "Арбидол Максимум", "Аперфлю",
+            "Алюдол", "Умифеновир"},
+            {"от 6 до 12 лет — 20 мл (100 мг)",
+            "старше 12 лет и взрослым — 40 мл (200 мг) 1 раз в день в течение 12–14 дней"},
+            "Повышенная чувствительность к умифеновиру; \
+            детский возраст до 2–12 лет в зависимости от показания и лекарственной формы.",
+            200),
+        };
 
     for (auto drug : medicines)
         addMedicineDrug(drug);
@@ -347,11 +364,10 @@ void DatabaseTest::initFiles() {
     }
 
     std::vector<FullFileData> fullList = {
-        FullFileData(File("fileTXT_en", "txt"), QString("qwerty_123").toLocal8Bit(), parentCode),
-        FullFileData(File("fileTXT_ru", "txt"), QString("кверти_123").toLocal8Bit(), parentCode),
-        FullFileData(File("fileTXT_en_ru", "txt"), QString("Qwerty_кверти_123").toLocal8Bit(), parentCode),
-        FullFileData(File("fileLONG_TXT_en", "txt"), longString.toLocal8Bit(), parentCode),
-        FullFileData(File("filePNG", "png"),pngBytes, parentCode)
+        FullFileData(File("Справка", "txt"),
+                     QString("Пациент здоров, The patient is healthy").toLocal8Bit(), parentCode),
+        FullFileData(File("Заключение", "txt"), longString.toLocal8Bit(), parentCode),
+        FullFileData(File("Рентген", "png"), pngBytes, parentCode)
     };
 
     for (auto& item : fullList) {
