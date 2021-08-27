@@ -119,4 +119,6 @@ void FilesListForm::fillFileTable(const std::vector<File>& fileList) {
     for (const File& file : fileList) {
         addFile(file);
     }
+
+    adjustSize();
 }

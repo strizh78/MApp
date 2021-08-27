@@ -69,6 +69,7 @@ AppointmentForm::AppointmentForm(std::shared_ptr<DatabaseInterface> database,
     fillAppointmentInfo();
     ui->fileTable->setupDatabase(database_);
     ui->fileTable->fillTable(currentAppointment_);
+
     adjustSize();
 }
 

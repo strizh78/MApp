@@ -171,7 +171,7 @@ void PatientForm::addAppointment(const Appointment& appointment) {
     auto* miniAppointmentForm = new AppointmentMiniForm(appointment, database_, this);
     ui->appointmentsList->insertWidget(2, miniAppointmentForm);
 
-    ui->appointments->setVisible(true);
+    ui->rightPart->setVisible(true);
 }
 
 void PatientForm::setupUi() {
@@ -205,6 +205,7 @@ void PatientForm::fillFormPatientInfo() {
 
     setupFilesInfo();
     setupAppointmentsInfo();
+    adjustSize();
 }
 
 void PatientForm::setupFilesInfo() {
@@ -214,7 +215,7 @@ void PatientForm::setupFilesInfo() {
 }
 
 void PatientForm::setupAppointmentsInfo() {
-    ui->appointments->hide();
+    ui->rightPart->hide();
 
     if (!patient_.isExists()) {
         return;
