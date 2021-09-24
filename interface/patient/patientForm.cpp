@@ -18,10 +18,6 @@ namespace {
             wrongFields.push_back("\"ФИО\"");
         }
 
-        if (patient.address.isEmpty()) {
-            wrongFields.push_back("\"Адрес\"");
-        }
-
         if (patient.birthDate > QDate::currentDate()) {
             wrongFields.push_back("\"Дата рождения\"");
         }
@@ -179,12 +175,20 @@ void PatientForm::setupUi() {
 
     ui->errorLabel->setVisible(false);
 
+    ui->adressesList->setMinimumWidth(ui->nameEdit->width());
+
+    ui->phonesList->setRegExp(QRegExp(Validators::PHONE_REGEX));
+    ui->phonesList->setMinimumWidth(150);
+
+    ui->emailsList->setRegExp(QRegExp(Validators::EMAIL_REGEX));
+    ui->emailsList->setMinimumWidth(200);
+
     setAgeLabelTextColor(palette(), ui->ageDataLabel);
     on_dateEdit_userDateChanged(ui->dateEdit->date());
 
     connect(ui->nameEdit, SIGNAL(textChanged(QString)), this, SLOT(fieldEdited()));
     connect(ui->dateEdit, SIGNAL(userDateChanged(QDate)), this, SLOT(fieldEdited()));
-    connect(ui->addressEdit, SIGNAL(textChanged(QString)), this, SLOT(fieldEdited()));
+    connect(ui->additionalInfo, SIGNAL(textChanged(QString)), this, SLOT(fieldEdited()));
 
     if (patient_.isExists()) {
         setWindowTitle("Пациент " + patient_.nameInfo.getInitials());
@@ -200,7 +204,11 @@ void PatientForm::fillFormPatientInfo() {
 
     ui->nameEdit->setText(patient_.nameInfo.getFullName());
     ui->dateEdit->setDate(patient_.birthDate);
-    ui->addressEdit->setText(patient_.address);
+
+    ui->adressesList->setDataList(patient_.address);
+    ui->phonesList->setDataList(patient_.phones);
+    ui->emailsList->setDataList(patient_.emails);
+
     ui->additionalInfo->setMarkdown(patient_.additionalInfo);
 
     setupFilesInfo();
@@ -249,8 +257,11 @@ Patient PatientForm::buildPatientFromFormData() {
     nameInfo.patronymic = (splittedName.size() >= 3) ? splittedName[2] : "";
 
     Patient result(nameInfo,
-                   ui->dateEdit->date(),
-                   ui->addressEdit->text());
+                   ui->dateEdit->date());
+
+    result.address = ui->adressesList->getDataList();
+    result.phones = ui->phonesList->getDataList();
+    result.emails = ui->emailsList->getDataList();
     result.additionalInfo = ui->additionalInfo->toMarkdown();
     return result;
 }

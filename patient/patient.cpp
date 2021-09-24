@@ -12,10 +12,9 @@ QString Patient::NameInfo::getInitials() const {
     return initials;
 }
 
-Patient::Patient(const NameInfo& nameInfo, QDate birthDate, const QString& address)
+Patient::Patient(const NameInfo& nameInfo, QDate birthDate)
     : nameInfo(nameInfo)
     , birthDate(birthDate)
-    , address(address)
 {
 }
 
@@ -23,10 +22,6 @@ bool Patient::isValid() const {
     if (nameInfo.name.isEmpty() ||
         nameInfo.surname.isEmpty())
     {
-        return false;
-    }
-
-    if (address.isEmpty()) {
         return false;
     }
 

@@ -56,8 +56,8 @@ void PatientsListForm::editPatient(const Patient& editedPatient) {
 }
 
 void PatientsListForm::setupTableSettings() {
-    ui->patientTable->setHorizontalHeaderLabels({"Фамилия И.О.", "Дата рождения", "Адрес"});
-    ui->patientTable->setScale({1, 1, 3});
+    ui->patientTable->setHorizontalHeaderLabels({"Фамилия И.О.", "Дата рождения", "Телефон", "Почта", "Адрес"});
+    ui->patientTable->setScale({1, 1, 1, 1, 2});
     ui->patientTable->setMainTabLabel("Пациенты");
 
     connect(ui->patientTable, SIGNAL(onAddButtonClicked()),

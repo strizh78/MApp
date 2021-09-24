@@ -243,6 +243,14 @@ void DatabaseTest::initPatients() {
                                       "г. Дивное, ул. Пионерская, дом 55, квартира 981",
                                       "ул. Старобельская, дом 169, квартира 282"};
 
+    std::vector<QString> phones = {"+7 (915) 715-00-85",
+                                   "+7 (971) 224-40-83",
+                                   "79819693396",
+                                   "7 (988) 635-24-34",
+                                   "+7 (935) 351-64-27",
+                                   "+7 971 653 40 69",
+                                   "7 926 2927499"};
+
     std::vector <QString> infos = {"Телефон для связи +7 (961) 873 27 43, почта grishina_eli@yandex.ru",
                                    "[Просила не звонить после 19!]",
                                    "",
@@ -253,7 +261,17 @@ void DatabaseTest::initPatients() {
 
     std::vector<Patient> patientsList;
     for (size_t i = 0; i < names.size(); ++i) {
-        patientsList.push_back(Patient(names[i], dates[i], addresses[i]));
+        Patient pat = Patient(names[i], dates[i]);
+        pat.address.push_back(addresses[i]);
+        pat.phones.push_back(phones[i]);
+
+        if (i == 0) {
+            pat.emails.push_back("grishina_eli@yandex.ru");
+            pat.emails.push_back("grishina_eli@outlook.com");
+        } else if (i == 1) {
+            pat.phones.push_back("+7 922 37 37");
+        }
+        patientsList.push_back(pat);
     }
 
     for (auto patient : patientsList)

@@ -23,6 +23,7 @@ SOURCES += \
     interface/basicForms/mappTable.cpp \
     interface/basicForms/mappTableSettingsForm.cpp \
     interface/basicForms/tableSettingsForm.cpp \
+    interface/basicForms/editableList/editableList.cpp \
     interface/file/fileForm.cpp \
     interface/file/filesListForm.cpp \
     interface/homeopathy/homeopathyDrugDilutionsSelectForm.cpp \
@@ -75,6 +76,7 @@ HEADERS += \
     interface/basicForms/mappTable.h \
     interface/basicForms/mappTableSettingsForm.h \
     interface/basicForms/tableSettingsForm.h \
+    interface/basicForms/editableList/editableList.h \
     interface/file/fileForm.h \
     interface/file/filesListForm.h \
     interface/homeopathy/homeopathyDrugDilutionsSelectForm.h \
@@ -119,6 +121,7 @@ FORMS += \
     interface/basicForms/mappTable.ui \
     interface/basicForms/mappTableSettingsForm.ui \
     interface/basicForms/tableSettingsForm.ui \
+    interface/basicForms/editableList/editableList.ui \
     interface/file/fileForm.ui \
     interface/file/filesListForm.ui \
     interface/homeopathy/homeopathyDrugDilutionsSelectForm.ui \

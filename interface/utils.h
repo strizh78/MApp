@@ -54,6 +54,9 @@ T* getValueFromModelData(const QVariant &variant) {
 }
 
 namespace Validators {
+const QString PHONE_REGEX = "^(\\s*)?(\\+)?([- _():+]?\\d[- _():+]?){10,14}(\\s*)?$";
+const QString EMAIL_REGEX = "^[A-Z0-9a-z._-]{1,}@(\\w+)(\\.(\\w+))(\\.(\\w+))?(\\.(\\w+))?$";
+
 void SetValidator(const QRegExp& regExp, QLineEdit* lineEdit);
 void setDoubleValidator(QLineEdit* lineEdit);
 void setEnglishValidator(QLineEdit* lineEdit);

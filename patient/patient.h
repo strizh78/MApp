@@ -19,14 +19,16 @@ public:
     };
 
     Patient() = default;
-    Patient(const NameInfo& nameInfo, QDate birthDate, const QString& address);
+    Patient(const NameInfo& nameInfo, QDate birthDate);
 
     bool isValid() const;
 
 public:
     NameInfo nameInfo;
     QDate birthDate;
-    QString address;
+    std::vector<QString> address;
+    std::vector<QString> phones;
+    std::vector<QString> emails;
     QString additionalInfo;
 };
 

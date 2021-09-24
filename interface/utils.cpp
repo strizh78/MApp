@@ -64,9 +64,12 @@ QList<QStandardItem*> createPatientRow(const Patient& patient) {
     initials->setData(getModelData(patient), Qt::UserRole);
 
     QStandardItem* birthDate = new QStandardItem(patient.birthDate.toString("d MMMM yyyy"));
-    QStandardItem* address = new QStandardItem(patient.address);
 
-    lst << initials << birthDate << address;
+    QStandardItem* addresses = new QStandardItem(toString(patient.address, "\n"));
+    QStandardItem* phones = new QStandardItem(toString(patient.phones, "\n"));
+    QStandardItem* emails = new QStandardItem(toString(patient.emails, "\n"));
+
+    lst << initials << birthDate << phones << emails << addresses;
     return lst;
 }
 
