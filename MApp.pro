@@ -38,6 +38,7 @@ SOURCES += \
     interface/patient/patientsListForm.cpp \
     interface/service/serviceForm.cpp \
     interface/service/servicesListForm.cpp \
+    interface/textEditor/textEditor.cpp \
     interface/timetable/dailyTimetable.cpp \
     interface/timetable/entries/appointmentEntry.cpp \
     interface/timetable/entries/eventEntry.cpp \
@@ -91,6 +92,7 @@ HEADERS += \
     interface/patient/patientsListForm.h \
     interface/service/serviceForm.h \
     interface/service/servicesListForm.h \
+    interface/textEditor/textEditor.h \
     interface/timetable/dailyTimetable.h \
     interface/timetable/entries/appointmentEntry.h \
     interface/timetable/entries/eventEntry.h \
@@ -115,7 +117,6 @@ HEADERS += \
 FORMS += \
     interface/appointment/appointmentForm.ui \
     interface/appointment/appointmentMiniForm.ui \
-    interface/appointment/appointmentMiniForm.ui \
     interface/appointment/appointmentRecordForm.ui \
     interface/appointment/appointmentsListForm.ui \
     interface/basicForms/mappTable.ui \
@@ -139,6 +140,7 @@ FORMS += \
     \
     interface/service/serviceForm.ui \
     interface/service/servicesListForm.ui \
+    interface/textEditor/textEditor.ui \
     interface/timetable/event/eventForm.ui \
     interface/timetable/timetableForm.ui
 

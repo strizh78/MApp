@@ -25,7 +25,7 @@ DatabaseTest::DatabaseTest() {
     initPatients();
     initServices();
     initEvents();
-    
+
     initAppointments();
     initFiles();
 }
@@ -251,13 +251,13 @@ void DatabaseTest::initPatients() {
                                    "+7 971 653 40 69",
                                    "7 926 2927499"};
 
-    std::vector <QString> infos = {"Телефон для связи +7 (961) 873 27 43, почта grishina_eli@yandex.ru",
-                                   "[Просила не звонить после 19!]",
-                                   "",
-                                   "Рост 177, вес 102",
-                                   "Аллергия на пенициллин и линкомицин",
-                                   "Хронических заболеваний нет, операций не было",
-                                   "Ана́мнез (от греч. ἀνάμνησις — воспоминание) — совокупность сведений, получаемых при медицинском обследовании путём расспроса самого обследуемого и/или знающих его лиц. Изучение анамнеза, как и расспрос в целом, не просто перечень вопросов и ответов на них. От стиля беседы врача и больного зависит та психологическая совместимость, которая во многом определяет конечную цель — облегчение состояния пациента."};
+    QByteArray htmlInfo;
+    QFile patientFile(":/test_files/patient_file");
+
+    if (patientFile.open(QIODevice::ReadOnly)) {
+        htmlInfo = patientFile.readAll();
+        patientFile.close();
+    }
 
     std::vector<Patient> patientsList;
     for (size_t i = 0; i < names.size(); ++i) {
@@ -276,7 +276,7 @@ void DatabaseTest::initPatients() {
 
     for (auto patient : patientsList)
         addPatient(patient);
-    patientsList_[0].additionalInfo = toString(infos, "\n\n");
+    patientsList_[0].additionalInfo = htmlInfo;
     editPatient(patientsList_[0], patientsList_[0]);
 }
 

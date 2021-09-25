@@ -209,7 +209,7 @@ void PatientForm::fillFormPatientInfo() {
     ui->phonesList->setDataList(patient_.phones);
     ui->emailsList->setDataList(patient_.emails);
 
-    ui->additionalInfo->setMarkdown(patient_.additionalInfo);
+    ui->additionalInfo->setHtml(patient_.additionalInfo);
 
     setupFilesInfo();
     setupAppointmentsInfo();
@@ -262,7 +262,7 @@ Patient PatientForm::buildPatientFromFormData() {
     result.address = ui->adressesList->getDataList();
     result.phones = ui->phonesList->getDataList();
     result.emails = ui->emailsList->getDataList();
-    result.additionalInfo = ui->additionalInfo->toMarkdown();
+    result.additionalInfo = ui->additionalInfo->toHtml();
     return result;
 }
 

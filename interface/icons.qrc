@@ -13,6 +13,9 @@
         <file>icons/appointment.png</file>
         <file>icons/transfer.png</file>
         <file>icons/copy.png</file>
+        <file>icons/number.png</file>
+        <file>icons/square.png</file>
+        <file>test_files/patient_file</file>
         <file>icons/left-arrow.png</file>
         <file>icons/right-arrow.png</file>
         <file>icons/start.png</file>
