@@ -111,7 +111,7 @@ void FilesListForm::setupTableSettings() {
             this, SLOT(onEditButtonClicked(const QVariant&)));
     connect(table, SIGNAL(onDeleteButtonClicked(const QVariant&)),
             this, SLOT(onDeleteButtonClicked(const QVariant&)));
-    table->setFlags(TableFlag::NoBin | TableFlag::NoAddButton);
+    table->setFlags(TableFlag::NoBin);
     table->setMainTabLabel("Файлы");
 }
 

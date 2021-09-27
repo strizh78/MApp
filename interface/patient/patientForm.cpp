@@ -183,6 +183,8 @@ void PatientForm::setupUi() {
     ui->emailsList->setRegExp(QRegExp(Validators::EMAIL_REGEX));
     ui->emailsList->setMinimumWidth(200);
 
+    ui->fileList->setFlags(TableFlag::NoAddButton);
+
     setAgeLabelTextColor(palette(), ui->ageDataLabel);
     on_dateEdit_userDateChanged(ui->dateEdit->date());
 
