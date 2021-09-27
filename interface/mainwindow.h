@@ -19,14 +19,16 @@ public:
     ~MainWindow();
 
 private slots:
-    void update();
-
     void on_servicesList_clicked();
     void on_patientsList_clicked();
     void on_medicineList_clicked();
     void on_homeopathyList_clicked();
     void on_appointmentsList_clicked();
     void on_timetable_clicked();
+
+private:
+    template <class T>
+    void openWidget();
 
 private:
     Ui::MainWindow *ui;

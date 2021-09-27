@@ -16,9 +16,7 @@ MainWindow::MainWindow(DatabasePtr database,
 {
     ui->setupUi(this);
 
-    todayTimetable = new DailyTimetable;
-    todayTimetable->setDatabase(database);
-    ui->scrollArea->setWidget(todayTimetable);
+    on_timetable_clicked();
 
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(update()));
@@ -26,47 +24,44 @@ MainWindow::MainWindow(DatabasePtr database,
 }
 
 MainWindow::~MainWindow() {
-    delete todayTimetable;
     delete ui;
 }
 
-void MainWindow::update() {
-    todayTimetable->setDate(QDate::currentDate());
-    QWidget::update();
+template <class T>
+void MainWindow::openWidget() {
+    if (!ui->formLayout->isEmpty()) {
+        auto* currentWidget = ui->formLayout->itemAt(0)->widget();
+        if (currentWidget) {
+            currentWidget->close();
+            ui->formLayout->removeWidget(currentWidget);
+            delete currentWidget;
+        }
+    }
+
+    QWidget* newWidget = new T(database_);
+    ui->formLayout->addWidget(newWidget);
 }
 
 void MainWindow::on_servicesList_clicked() {
-    auto* servicesList = new ServicesListForm(database_);
-    servicesList->setAttribute(Qt::WA_DeleteOnClose, true);
-    servicesList->show();
+    openWidget<ServicesListForm>();
 }
 
 void MainWindow::on_medicineList_clicked() {
-    auto* medicinesList = new MedicineDrugListForm(database_);
-    medicinesList->setAttribute(Qt::WA_DeleteOnClose, true);
-    medicinesList->show();
+    openWidget<MedicineDrugListForm>();
 }
 
 void MainWindow::on_patientsList_clicked() {
-    auto* patientsList = new PatientsListForm(database_);
-    patientsList->setAttribute(Qt::WA_DeleteOnClose, true);
-    patientsList->show();
+    openWidget<PatientsListForm>();
 }
 
 void MainWindow::on_homeopathyList_clicked() {
-    auto* homeopathyList = new HomeopathyDrugListForm(database_);
-    homeopathyList->setAttribute(Qt::WA_DeleteOnClose, true);
-    homeopathyList->show();
+    openWidget<HomeopathyDrugListForm>();
 }
 
 void MainWindow::on_appointmentsList_clicked() {
-    auto* appointmentsList = new AppointmentsListForm(database_);
-    appointmentsList->setAttribute(Qt::WA_DeleteOnClose, true);
-    appointmentsList->show();
+    openWidget<AppointmentsListForm>();
 }
 
 void MainWindow::on_timetable_clicked() {
-    auto* timetableForm = new TimetableForm(database_);
-    timetableForm->setAttribute(Qt::WA_DeleteOnClose, true);
-    timetableForm->show();
+    openWidget<TimetableForm>();
 }
