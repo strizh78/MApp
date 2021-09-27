@@ -3,7 +3,7 @@
 #include "patient/patient.h"
 #include "interface/basicForms/mappTable.h"
 
-#include "database/databaseinterface.h"
+#include "database/databaseInterface.h"
 
 #include <QStandardItemModel>
 #include <QWidget>
@@ -18,7 +18,7 @@ namespace Ui {
 class PatientsListForm : public QWidget {
     Q_OBJECT
 public:
-    explicit PatientsListForm(std::shared_ptr<DatabaseInterface> database,
+    explicit PatientsListForm(DatabasePtr database,
                          QWidget *parent = nullptr);
     ~PatientsListForm();
 
@@ -35,6 +35,6 @@ private:
 
 private:
     Ui::PatientsListForm *ui;
-    std::shared_ptr<DatabaseInterface> database_;
+    DatabasePtr database_;
     friend class PatientTests;
 };

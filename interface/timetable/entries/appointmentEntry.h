@@ -1,6 +1,7 @@
 #pragma once
 
 #include "timetableEntry.h"
+#include "appointment/appointment.h"
 
 class TimetableAppointment : public TimetableEntry {
 public:

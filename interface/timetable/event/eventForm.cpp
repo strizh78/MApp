@@ -28,7 +28,7 @@ namespace {
     }
 }
 
-EventForm::EventForm(std::shared_ptr<DatabaseInterface> database,
+EventForm::EventForm(DatabasePtr database,
                      std::optional<Event> event,
                      OpenMode mode,
                      QWidget *parent)
@@ -64,10 +64,10 @@ void EventForm::on_buttonBox_accepted() {
     }
 
     if (mode_ == EDIT) {
-        database_->editEvent(event_);
+        database_->event->edit(event_, event_);
         emit edited(event_);
     } else {
-        database_->addEvent(event_);
+        database_->event->add(event_);
         emit created(event_);
     }
 

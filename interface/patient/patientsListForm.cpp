@@ -4,7 +4,7 @@
 
 #include "interface/utils.h"
 
-PatientsListForm::PatientsListForm(std::shared_ptr<DatabaseInterface> database,
+PatientsListForm::PatientsListForm(DatabasePtr database,
                          QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::PatientsListForm)
@@ -13,7 +13,7 @@ PatientsListForm::PatientsListForm(std::shared_ptr<DatabaseInterface> database,
     ui->setupUi(this);
 
     std::vector<Patient> patientsList;
-    database_->patients(patientsList);
+    database_->patient->list(patientsList);
     setupTableSettings();
     fillPatientsTable(patientsList);
 }
@@ -43,7 +43,7 @@ void PatientsListForm::onEditButtonClicked(const QVariant& data) {
 
 void PatientsListForm::onDeleteButtonClicked(const QVariant& data) {
     auto value = *getValueFromModelData<Patient>(data);
-    database_->setDeletedMark(value, !value.isDeleted());
+    database_->patient->setDeletedMark(value, !value.isDeleted());
     editPatient(value);
 }
 
@@ -71,6 +71,7 @@ void PatientsListForm::setupTableSettings() {
 }
 
 void PatientsListForm::fillPatientsTable(const std::vector<Patient>& patientsList) {
-    for (const auto& patient : patientsList)
+    for (const auto& patient : patientsList) {
         addPatient(patient);
+    }
 }

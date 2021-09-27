@@ -4,7 +4,7 @@
 
 #include "interface/utils.h"
 
-ServicesListForm::ServicesListForm(std::shared_ptr<DatabaseInterface> database,
+ServicesListForm::ServicesListForm(DatabasePtr database,
                            QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::ServicesListForm)
@@ -13,7 +13,7 @@ ServicesListForm::ServicesListForm(std::shared_ptr<DatabaseInterface> database,
     ui->setupUi(this);
 
     std::vector<Service> servicesList;
-    database_->services(servicesList);
+    database_->service->list(servicesList);
     setupTableSettings();
     fillServicesTable(servicesList);
 }
@@ -42,7 +42,7 @@ void ServicesListForm::onEditButtonClicked(const QVariant& data) {
 
 void ServicesListForm::onDeleteButtonClicked(const QVariant& data) {
     auto value = *getValueFromModelData<Service>(data);
-    database_->setDeletedMark(value, !value.isDeleted());
+    database_->service->setDeletedMark(value, !value.isDeleted());
     editService(value);
 }
 

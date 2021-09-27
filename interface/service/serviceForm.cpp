@@ -19,7 +19,7 @@ std::vector<QString> getInvalidFields(const Service& service) {
 }
 }
 
-ServiceForm::ServiceForm(std::shared_ptr<DatabaseInterface> database,
+ServiceForm::ServiceForm(DatabasePtr database,
                          std::optional<Service> service,
                          QWidget *parent)
     : QWidget(parent)
@@ -84,10 +84,10 @@ void ServiceForm::on_solutionBox_accepted() {
     }
 
     if (service_.isExists()) {
-        database_->editService(service_, edited);
+        database_->service->edit(service_, edited);
         emit serviceEditSignal(edited);
     } else {
-        database_->addService(edited);
+        database_->service->add(edited);
         emit serviceCreateSignal(edited);
     }
     close();

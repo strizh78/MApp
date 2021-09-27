@@ -2,7 +2,7 @@
 
 #include "appointment/appointment.h"
 
-#include "database/databaseinterface.h"
+#include "database/databaseInterface.h"
 
 #include <QStandardItem>
 #include <QWidget>
@@ -15,7 +15,7 @@ class AppointmentsListForm : public QWidget {
     Q_OBJECT
 
 public:
-    explicit AppointmentsListForm(std::shared_ptr<DatabaseInterface> database,
+    explicit AppointmentsListForm(DatabasePtr database,
                                  QWidget *parent = nullptr);
     ~AppointmentsListForm();
 
@@ -33,5 +33,5 @@ private:
 
 private:
     Ui::AppointmentsListForm *ui;
-    std::shared_ptr<DatabaseInterface> database_;
+    DatabasePtr database_;
 };

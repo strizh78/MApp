@@ -6,7 +6,7 @@
 
 using namespace homeopathy;
 
-HomeopathyDrugForm::HomeopathyDrugForm(std::shared_ptr<DatabaseInterface> database,
+HomeopathyDrugForm::HomeopathyDrugForm(DatabasePtr database,
                                        std::optional<Drug> drug,
                                        QWidget* parent)
     : QWidget(parent)
@@ -49,10 +49,10 @@ void HomeopathyDrugForm::on_buttonBox_accepted() {
                      dilutions_);
 
     if (drug_.isExists()) {
-        database_->editHomeopathyDrug(drug_, currentDrug);
+        database_->homeopathy->edit(drug_, currentDrug);
         emit homeopathyDrugEditSignal(currentDrug);
     } else {
-        database_->addHomeopathyDrug(currentDrug);
+        database_->homeopathy->add(currentDrug);
         emit homeopathyDrugCreateSignal(currentDrug);
     }
 

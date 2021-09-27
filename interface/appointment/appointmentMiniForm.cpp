@@ -4,7 +4,7 @@
 #include "appointmentForm.h"
 
 AppointmentMiniForm::AppointmentMiniForm(const Appointment& appointment,
-                                         std::shared_ptr<DatabaseInterface> database,
+                                         DatabasePtr database,
                                          QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::AppointmentMiniForm)

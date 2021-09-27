@@ -1,6 +1,6 @@
 #include "interface/mainwindow.h"
 
-#include "database/databasetest.h"
+#include "database/test/databaseTest.h"
 
 #include <QApplication>
 #include <QTranslator>
@@ -9,7 +9,7 @@
 
 int main(int argc, char *argv[])
 {
-    std::shared_ptr<DatabaseInterface> database = std::make_shared<DatabaseTest>();
+    DatabasePtr database = std::make_shared<DatabaseTest>();
 
     QApplication a(argc, argv);
 

@@ -1,7 +1,8 @@
 #pragma once
 
 #include "patient/patient.h"
-#include "database/databaseinterface.h"
+#include "appointment/appointment.h"
+#include "database/databaseInterface.h"
 
 #include <QWidget>
 #include <QStandardItemModel>
@@ -14,7 +15,7 @@ class PatientForm : public QWidget {
     Q_OBJECT
 
 public:
-    PatientForm(std::shared_ptr<DatabaseInterface> database,
+    PatientForm(DatabasePtr database,
                 std::optional<Patient> patient = std::nullopt,
                 QWidget *parent = nullptr);
     ~PatientForm();
@@ -49,7 +50,7 @@ private:
     std::shared_ptr<QStandardItemModel> infoViewModel_;
 
     Patient patient_;
-    std::shared_ptr<DatabaseInterface> database_;
+    DatabasePtr database_;
 
     bool isModified;
 

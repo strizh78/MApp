@@ -1,6 +1,6 @@
 #pragma once
 
-#include "database/databaseinterface.h"
+#include "database/databaseInterface.h"
 
 #include "interface/timetable/dailyTimetable.h"
 
@@ -14,7 +14,7 @@ class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
-    MainWindow(std::shared_ptr<DatabaseInterface> database,
+    MainWindow(DatabasePtr database,
                QWidget *parent = nullptr);
     ~MainWindow();
 
@@ -30,7 +30,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    DailyTimetable* todayTimetable;
 
-    std::shared_ptr<DatabaseInterface> database_;
+    DatabasePtr database_;
+    DailyTimetable* todayTimetable;
 };

@@ -8,7 +8,7 @@
 #include <QBuffer>
 
 FileForm::FileForm(const File& file,
-                   std::shared_ptr<DatabaseInterface> database,
+                   DatabasePtr database,
                    QWidget* parent)
     : QWidget(parent)
     , ui(new Ui::FileForm)
@@ -26,7 +26,7 @@ FileForm::FileForm(const File& file,
     ui->appointmentLabel->hide();
 
     FileData data;
-    database_->fileData(file_, data);
+    database_->files->fileData(file_, data);
     setData(data);
 }
 
@@ -36,7 +36,7 @@ FileForm::~FileForm() {
 
 void FileForm::showAppointment() {
     Appointment app;
-    database_->appointmentByFile(file_, app);
+    database_->files->appointmentByFile(file_, app);
 //    TODO: Make label clickable
     ui->appointmentLabel->setText(app.patient.nameInfo.getInitials() + " " + app.date.toString());
     ui->appointmentLabel->show();
@@ -58,7 +58,7 @@ void FileForm::on_buttonBox_accepted() {
                         file_.extension,
                         file_.uploadTime,
                         QDateTime::currentDateTime());
-    database_->editFile(file_, newFile, getData());
+    database_->files->edit(file_, newFile, getData());
     emit fileEditSignal(newFile);
     close();
 }

@@ -6,7 +6,7 @@
 
 using namespace homeopathy;
 
-HomeopathyDrugListForm::HomeopathyDrugListForm(std::shared_ptr<DatabaseInterface> database,
+HomeopathyDrugListForm::HomeopathyDrugListForm(DatabasePtr database,
                                                QWidget *parent) :
     QWidget(parent),
     ui(new Ui::HomeopathyDrugListForm),
@@ -14,7 +14,7 @@ HomeopathyDrugListForm::HomeopathyDrugListForm(std::shared_ptr<DatabaseInterface
 {
     ui->setupUi(this);
     std::vector<Drug> homeopathyList;
-    database->homeopathyDrugs(homeopathyList);
+    database->homeopathy->list(homeopathyList);
     setupTableSettings();
     fillHomeopathyTable(homeopathyList);
 }
@@ -43,7 +43,7 @@ void HomeopathyDrugListForm::onEditButtonClicked(const QVariant &data) {
 
 void HomeopathyDrugListForm::onDeleteButtonClicked(const QVariant& data) {
     auto value = *getValueFromModelData<Drug>(data);
-    database_->setDeletedMark(value, !value.isDeleted());
+    database_->homeopathy->setDeletedMark(value, !value.isDeleted());
     editHomeopathyDrug(value);
 }
 

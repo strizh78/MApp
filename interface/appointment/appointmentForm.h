@@ -1,7 +1,7 @@
 #pragma once
 
 #include "appointment/appointment.h"
-#include "database/databaseinterface.h"
+#include "database/databaseInterface.h"
 
 #include <QWidget>
 
@@ -13,7 +13,7 @@ class AppointmentForm : public QWidget {
     Q_OBJECT
 
 public:
-    AppointmentForm(std::shared_ptr<DatabaseInterface> database,
+    AppointmentForm(DatabasePtr database,
                     std::optional<Appointment> appointment = std::nullopt,
                     QWidget *parent = nullptr);
     ~AppointmentForm();
@@ -66,7 +66,7 @@ private:
 
 private:
     Ui::AppointmentForm *ui;
-    std::shared_ptr<DatabaseInterface> database_;
+    DatabasePtr database_;
 
     Appointment currentAppointment_;
 

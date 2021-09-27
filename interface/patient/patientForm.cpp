@@ -97,7 +97,7 @@ namespace {
     }
 }
 
-PatientForm::PatientForm(std::shared_ptr<DatabaseInterface> database,
+PatientForm::PatientForm(DatabasePtr database,
                          std::optional<Patient> patient,
                          QWidget *parent)
     : QWidget(parent)
@@ -230,7 +230,7 @@ void PatientForm::setupAppointmentsInfo() {
     }
 
     std::vector<Appointment> appointments;
-    database_->appointments(appointments);
+    database_->appointment->list(appointments);
     std::sort(appointments.begin(), appointments.end(),
               [] (const Appointment& a, const Appointment& b) -> bool {
                   return a.date < b.date;
@@ -274,10 +274,10 @@ bool PatientForm::trySavePatient() {
     }
 
     if (patient_.isExists()) {
-        database_->editPatient(patient_, patient);
+        database_->patient->edit(patient_, patient);
         emit patientEditSignal(patient);
     } else {
-        database_->addPatient(patient);
+        database_->patient->add(patient);
         emit patientCreateSignal(patient);
     }
 

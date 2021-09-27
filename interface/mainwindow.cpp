@@ -6,10 +6,9 @@
 #include "interface/service/servicesListForm.h"
 #include "interface/patient/patientsListForm.h"
 #include "interface/appointment/appointmentsListForm.h"
-
 #include "interface/timetable/timetableForm.h"
 
-MainWindow::MainWindow(std::shared_ptr<DatabaseInterface> database,
+MainWindow::MainWindow(DatabasePtr database,
                        QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)

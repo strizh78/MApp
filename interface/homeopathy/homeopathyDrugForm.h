@@ -2,7 +2,7 @@
 
 #include "drugs/homeopathy.h"
 
-#include "database/databaseinterface.h"
+#include "database/databaseInterface.h"
 
 #include <QLabel>
 #include <QStandardItemModel>
@@ -18,7 +18,7 @@ class HomeopathyDrugForm : public QWidget {
     Q_OBJECT
 
 public:
-    explicit HomeopathyDrugForm(std::shared_ptr<DatabaseInterface> database,
+    explicit HomeopathyDrugForm(DatabasePtr database,
                                 std::optional<homeopathy::Drug> drug = std::nullopt,
                                 QWidget *parent = nullptr);
     ~HomeopathyDrugForm();
@@ -41,7 +41,7 @@ private:
 
 private:
     Ui::HomeopathyDrugForm *ui;
-    std::shared_ptr<DatabaseInterface> database_;
+    DatabasePtr database_;
     std::shared_ptr<QStandardItemModel> groupsModel_;
     std::vector<QString> dilutions_;
     homeopathy::Drug drug_;

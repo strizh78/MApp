@@ -6,7 +6,7 @@
 
 using namespace medicine;
 
-MedicineDrugListForm::MedicineDrugListForm(std::shared_ptr<DatabaseInterface> database,
+MedicineDrugListForm::MedicineDrugListForm(DatabasePtr database,
                                            QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::MedicineDrugListForm)
@@ -14,7 +14,7 @@ MedicineDrugListForm::MedicineDrugListForm(std::shared_ptr<DatabaseInterface> da
 {
     ui->setupUi(this);
     std::vector<Drug> medicinesList;
-    database->medicineDrugs(medicinesList);
+    database->medicine->list(medicinesList);
     setupTableSettings();
     fillMedicinesTable(medicinesList);
 }
@@ -51,7 +51,7 @@ void MedicineDrugListForm::onEditButtonClicked(const QVariant &data) {
 
 void MedicineDrugListForm::onDeleteButtonClicked(const QVariant &data) {
     auto value = *getValueFromModelData<Drug>(data);
-    database_->setDeletedMark(value, !value.isDeleted());
+    database_->medicine->setDeletedMark(value, !value.isDeleted());
     editMedicineDrug(value);
 }
 

@@ -1,6 +1,8 @@
 #pragma once
 
-#include "database/databaseinterface.h"
+#include "database/databaseInterface.h"
+
+#include "timetable/event.h"
 
 #include <QWidget>
 
@@ -18,7 +20,7 @@ public:
     };
 
 public:
-    explicit EventForm(std::shared_ptr<DatabaseInterface> database,
+    explicit EventForm(DatabasePtr database,
                        std::optional<Event> event = std::nullopt,
                        OpenMode mode = OpenMode::CREATE,
                        QWidget *parent = nullptr);
@@ -34,7 +36,7 @@ signals:
 
 private:
     Ui::EventForm *ui;
-    std::shared_ptr<DatabaseInterface> database_;
+    DatabasePtr database_;
 
     Event event_;
     OpenMode mode_;

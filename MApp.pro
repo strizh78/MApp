@@ -14,6 +14,18 @@ QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.15
 
 SOURCES += \
     appointment/appointment.cpp \
+    \
+    database/test/databaseTest.cpp \
+    \
+    database/test/appointmentTestDB.cpp \
+    database/test/eventTestDB.cpp \
+    database/test/fileTestDB.cpp \
+    database/test/homeopathyTestDB.cpp \
+    database/test/medicineTestDB.cpp \
+    database/test/patientTestDB.cpp \
+    database/test/serviceTestDB.cpp \
+    \
+    \
     file/file.cpp \
     interface/appointment/appointmentForm.cpp \
     interface/appointment/appointmentMiniForm.cpp \
@@ -53,8 +65,6 @@ SOURCES += \
     patient/patient.cpp \
     service/service.cpp \
     \
-    database/databaseinterface.cpp \
-    database/databasetest.cpp \
     \
     interface/mainwindow.cpp \
     \
@@ -65,6 +75,22 @@ SOURCES += \
 
 HEADERS += \
     appointment/appointment.h \
+    \
+    database/databaseInterface.h \
+    database/test/databaseTest.h \
+    \
+    database/test/appointmentTestDB.h \
+    database/test/eventTestDB.h \
+    database/test/fileTestDB.h \
+    database/test/itemTestInterface.h \
+    database/test/medicineTestDB.h \
+    database/test/patientTestDB.h \
+    database/test/serviceTestDB.h \
+    database/test/homeopathyTestDB.h \
+    \
+    \
+    database/itemDatabaseInterface.h \
+    \
     drugs/homeopathy.h \
     drugs/medicines.h \
     \
@@ -103,8 +129,6 @@ HEADERS += \
     patient/patient.h \
     service/service.h \
     \
-    database/databaseinterface.h \
-    database/databasetest.h \
     \
     interface/mainwindow.h \
     \

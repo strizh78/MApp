@@ -3,7 +3,7 @@
 #include "drugs/homeopathy.h"
 #include "interface/basicForms/mappTable.h"
 
-#include "database/databaseinterface.h"
+#include "database/databaseInterface.h"
 
 #include <QStandardItem>
 #include <QWidget>
@@ -16,7 +16,7 @@ class HomeopathyDrugListForm : public QWidget {
     Q_OBJECT
 
 public:
-    explicit HomeopathyDrugListForm(std::shared_ptr<DatabaseInterface> database,
+    explicit HomeopathyDrugListForm(DatabasePtr database,
                                     QWidget *parent = nullptr);
     ~HomeopathyDrugListForm();
 
@@ -33,6 +33,6 @@ private:
 
 private:
     Ui::HomeopathyDrugListForm *ui;
-    std::shared_ptr<DatabaseInterface> database_;
+    DatabasePtr database_;
     std::shared_ptr<QStandardItemModel> tableViewModel_;
 };

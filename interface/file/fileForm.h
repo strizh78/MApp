@@ -1,6 +1,7 @@
 #pragma once
 
-#include "database/databaseinterface.h"
+#include "database/databaseInterface.h"
+#include "file/file.h"
 
 #include <QWidget>
 
@@ -13,7 +14,7 @@ class FileForm : public QWidget {
 
 public:
     FileForm(const File& file,
-             std::shared_ptr<DatabaseInterface> database,
+             DatabasePtr database,
              QWidget *parent = nullptr);
    ~FileForm();
     void showAppointment();
@@ -33,7 +34,7 @@ private:
 
 private:
     Ui::FileForm *ui;
-    std::shared_ptr<DatabaseInterface> database_;
+    DatabasePtr database_;
     File file_;
     bool isModified_;
 };

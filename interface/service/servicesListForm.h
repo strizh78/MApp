@@ -2,7 +2,7 @@
 
 #include "service/service.h"
 
-#include "database/databaseinterface.h"
+#include "database/databaseInterface.h"
 
 #include <QStandardItem>
 #include <QStyledItemDelegate>
@@ -19,7 +19,7 @@ class ServicesListForm : public QWidget {
     Q_OBJECT
 
 public:
-    explicit ServicesListForm(std::shared_ptr<DatabaseInterface> database,
+    explicit ServicesListForm(DatabasePtr database,
                           QWidget *parent = nullptr);
     ~ServicesListForm();
 
@@ -36,5 +36,5 @@ private:
 
 private:
     Ui::ServicesListForm *ui;
-    std::shared_ptr<DatabaseInterface> database_;
+    DatabasePtr database_;
 };

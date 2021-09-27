@@ -7,7 +7,7 @@
 
 #include <QValidator>
 
-MedicineDrugForm::MedicineDrugForm(std::shared_ptr<DatabaseInterface> database,
+MedicineDrugForm::MedicineDrugForm(DatabasePtr database,
                                    std::optional<medicine::Drug> drug,
                                    QWidget* parent)
     : QWidget(parent)
@@ -92,10 +92,10 @@ void MedicineDrugForm::on_buttonBox_accepted() {
                                ui->price->text().toFloat());
 
     if (drug_.isExists()) {
-        database_->editMedicineDrug(drug_, currentDrug);
+        database_->medicine->edit(drug_, currentDrug);
         emit medicineDrugEditSignal(currentDrug);
     } else {
-        database_->addMedicineDrug(currentDrug);
+        database_->medicine->add(currentDrug);
         emit medicineDrugCreateSignal(currentDrug);
     }
     close();

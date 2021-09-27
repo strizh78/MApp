@@ -21,13 +21,13 @@ FilesListForm::~FilesListForm() {
     delete ui;
 }
 
-void FilesListForm::setupDatabase(std::shared_ptr<DatabaseInterface> database) {
+void FilesListForm::setupDatabase(DatabasePtr database) {
     database_ = database;
 }
 
 void FilesListForm::fillTable(const Appointment& parent) {
     std::vector<File> fileList;
-    database_->filesByAppointment(parent, fileList);
+    database_->files->filesByAppointment(parent, fileList);
     fillFileTable(fileList);
     parentAppointmentCode_ = parent.code();
     showFileWithAppointment_ = false;
@@ -35,13 +35,13 @@ void FilesListForm::fillTable(const Appointment& parent) {
 
 void FilesListForm::fillTable(const Patient& parent) {
     std::vector<File> fileList;
-    database_->filesByPatient(parent, fileList);
+    database_->files->filesByPatient(parent, fileList);
     fillFileTable(fileList);
 }
 
 void FilesListForm::fillTable() {
     std::vector<File> fileList;
-    database_->files(fileList);
+    database_->files->list(fileList);
     fillFileTable(fileList);
 }
 
@@ -68,7 +68,7 @@ void FilesListForm::onAddButtonClicked() {
     QByteArray data = qFile.readAll();
     QFileInfo info(qFile);
     file = File(info.baseName(), info.suffix());
-    database_->addFile(file, data, parentAppointmentCode_);
+    database_->files->add(file, data, parentAppointmentCode_);
     addFile(file);
 }
 
@@ -89,7 +89,7 @@ void FilesListForm::onEditButtonClicked(const QVariant& data){
 
 void FilesListForm::onDeleteButtonClicked(const QVariant& data) {
     auto value = *getValueFromModelData<File>(data);
-    database_->setDeletedMark(value, !value.isDeleted());
+    database_->files->setDeletedMark(value, !value.isDeleted());
     editFile(value);
 }
 

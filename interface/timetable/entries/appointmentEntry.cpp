@@ -45,7 +45,7 @@ bool TimetableAppointment::tryMoveEntry(const QTime &diff, std::shared_ptr<Datab
     }
 
     if (isTimeSlotAvailable(database.get(), appointmentNew, appointmentNew.date, appointmentNew.service.duration)) {
-        database->editAppointment(appointmentNew);
+        database->appointment->edit(appointmentNew, appointmentNew);
         return true;
     }
 

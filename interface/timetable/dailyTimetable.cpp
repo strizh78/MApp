@@ -44,11 +44,11 @@ void DailyTimetable::updateData() {
     timetableEntries_.clear();
 
     std::vector<Appointment> appointments;
-    database_->appointments(appointments);
+    database_->appointment->list(appointments);
     addEntries(appointments);
 
     std::vector<Event> events;
-    database_->events(events);
+    database_->event->list(events);
     addEntries(events);
 }
 

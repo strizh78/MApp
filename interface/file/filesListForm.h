@@ -3,7 +3,7 @@
 #include "file/file.h"
 #include "appointment/appointment.h"
 #include "patient/patient.h"
-#include "database/databaseinterface.h"
+#include "database/databaseInterface.h"
 #include "interface/basicForms/mappTable.h"
 #include "interface/utils.h"
 
@@ -20,7 +20,7 @@ public:
     explicit FilesListForm(QWidget *parent = nullptr);
     ~FilesListForm();
 
-    void setupDatabase(std::shared_ptr<DatabaseInterface> database);
+    void setupDatabase(DatabasePtr database);
     void fillTable(const Appointment& parent);
     void fillTable(const Patient& parent);
     void fillTable();
@@ -40,7 +40,7 @@ private:
 
 private:
     Ui::FilesListForm *ui;
-    std::shared_ptr<DatabaseInterface> database_;
+    DatabasePtr database_;
     int parentAppointmentCode_;
     bool showFileWithAppointment_;
 };

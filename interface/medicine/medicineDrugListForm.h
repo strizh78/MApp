@@ -3,7 +3,7 @@
 #include "drugs/medicines.h"
 #include "interface/basicForms/mappTable.h"
 
-#include "database/databaseinterface.h"
+#include "database/databaseInterface.h"
 
 #include <QStandardItemModel>
 #include <QWidget>
@@ -19,7 +19,7 @@ class MedicineDrugListForm : public QWidget {
     Q_OBJECT
 
 public:
-    explicit MedicineDrugListForm(std::shared_ptr<DatabaseInterface> database,
+    explicit MedicineDrugListForm(DatabasePtr database,
                            QWidget *parent = nullptr);
     ~MedicineDrugListForm();
 
@@ -35,6 +35,6 @@ private:
     void fillMedicinesTable(const std::vector<medicine::Drug>& medicinesList);
 
     Ui::MedicineDrugListForm *ui;
-    std::shared_ptr<DatabaseInterface> database_;
+    DatabasePtr database_;
 };
 

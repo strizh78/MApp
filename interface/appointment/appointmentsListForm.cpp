@@ -5,7 +5,7 @@
 
 #include "interface/utils.h"
 
-AppointmentsListForm::AppointmentsListForm(std::shared_ptr<DatabaseInterface> database,
+AppointmentsListForm::AppointmentsListForm(DatabasePtr database,
                                            QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::AppointmentsListForm)
@@ -15,7 +15,7 @@ AppointmentsListForm::AppointmentsListForm(std::shared_ptr<DatabaseInterface> da
     setupTableSettings();
 
     std::vector<Appointment> appointmentsList;
-    database_->appointments(appointmentsList);
+    database_->appointment->list(appointmentsList);
     fillAppointmentsTable(appointmentsList);
 }
 
@@ -45,8 +45,8 @@ void AppointmentsListForm::onEditButtonClicked(const QVariant& data) {
 
 void AppointmentsListForm::onDeleteButtonClicked(const QVariant& data) {
     auto value = *getValueFromModelData<Appointment>(data);
-    database_->setDeletedMark(value, !value.isDeleted());
-    database_->editAppointment(value);
+    database_->appointment->setDeletedMark(value, !value.isDeleted());
+    database_->appointment->edit(value, value);
     editAppointment(value);
 }
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "service/service.h"
-#include "database/databaseinterface.h"
+#include "database/databaseInterface.h"
 
 #include <QWidget>
 
@@ -15,7 +15,7 @@ class ServiceForm : public QWidget {
     Q_OBJECT
 
 public:
-    ServiceForm(std::shared_ptr<DatabaseInterface> database,
+    ServiceForm(DatabasePtr database,
                 std::optional<Service> service = std::nullopt,
                 QWidget *parent = nullptr);
     ~ServiceForm();
@@ -35,7 +35,7 @@ private:
     void setEditEnabled(bool enabled);
 
     Ui::ServiceForm *ui;
-    std::shared_ptr<DatabaseInterface> database_;
+    DatabasePtr database_;
 
     Service service_;
 

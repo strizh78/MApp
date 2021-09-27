@@ -1,6 +1,7 @@
 #pragma once
 
 #include "timetableEntry.h"
+#include "timetable/event.h"
 
 class TimetableEvent : public TimetableEntry {
 public:

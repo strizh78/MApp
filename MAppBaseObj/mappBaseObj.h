@@ -13,7 +13,8 @@ public:
     bool operator ==(const MAppBaseObj& other) const;
     bool operator !=(const MAppBaseObj& other) const;
 
-    friend class DatabaseInterface;
+    template <class BaseItem>
+    friend class ItemDBInterface;
 
 protected:
     int code_ = 0;

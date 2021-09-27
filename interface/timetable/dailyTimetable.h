@@ -1,7 +1,7 @@
 #pragma once
 
 #include "interface/timetable/entries/timetableEntry.h"
-#include "database/databaseinterface.h"
+#include "database/databaseInterface.h"
 
 #include <QTimer>
 #include <QWidget>

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "drugs/medicines.h"
-#include "database/databaseinterface.h"
+#include "database/databaseInterface.h"
 
 #include <QLabel>
 #include <QLineEdit>
@@ -19,7 +19,7 @@ class MedicineDrugForm : public QWidget {
     Q_OBJECT
 
 public:
-    MedicineDrugForm(std::shared_ptr<DatabaseInterface> database,
+    MedicineDrugForm(DatabasePtr database,
                      std::optional<medicine::Drug> drug = std::nullopt,
                      QWidget *parent = nullptr);
     ~MedicineDrugForm();
@@ -54,7 +54,7 @@ private:
 
 private:
     Ui::MedicineDrugForm *ui;
-    std::shared_ptr<DatabaseInterface> database_;
+    DatabasePtr database_;
     medicine::Drug drug_;
     std::vector <ReleaseForm> releaseForms_;
     std::vector <QString> brands_;

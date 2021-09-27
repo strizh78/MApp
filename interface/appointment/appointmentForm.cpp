@@ -48,7 +48,7 @@ QString getDrugsInfoString(const std::vector<T>& drugs) {
 }
 }
 
-AppointmentForm::AppointmentForm(std::shared_ptr<DatabaseInterface> database,
+AppointmentForm::AppointmentForm(DatabasePtr database,
                                  std::optional<Appointment> appointment,
                                  QWidget *parent)
     : QWidget(parent)
@@ -88,10 +88,10 @@ void AppointmentForm::on_solutionBox_accepted() {
     }
 
     if (currentAppointment_.isExists()) {
-        database_->editAppointment(currentAppointment_);
+        database_->appointment->edit(currentAppointment_, currentAppointment_);
         emit appointmentEditSignal(currentAppointment_);
     } else {
-        database_->addAppointment(currentAppointment_);
+        database_->appointment->add(currentAppointment_);
         emit appointmentCreateSignal(currentAppointment_);
     }
 
@@ -107,7 +107,7 @@ void AppointmentForm::on_patientChooseBtn_clicked() {
     auto* selectionForm = createSelectionForm(this);
 
     std::vector<Patient> patientsList;
-    database_->patients(patientsList);
+    database_->patient->list(patientsList);
     for (const auto& x : patientsList) {
         selectionForm->appendRow(x, CreateRows::createPatientRow(x));
     }
@@ -125,7 +125,7 @@ void AppointmentForm::on_serviceChooseBtn_clicked() {
     auto* selectionForm = createSelectionForm(this);
 
     std::vector<Service> servicesList;
-    database_->services(servicesList);
+    database_->service->list(servicesList);
     for (const auto& x : servicesList) {
         selectionForm->appendRow(x, CreateRows::createServiceRow(x));
     }
@@ -143,7 +143,7 @@ void AppointmentForm::on_homeopathyChooseBtn_clicked() {
     auto* selectionForm = createSelectionForm(this);
 
     std::vector<homeopathy::Drug> homeopathyList;
-    database_->homeopathyDrugs(homeopathyList);
+    database_->homeopathy->list(homeopathyList);
     for (const auto& x : homeopathyList) {
         selectionForm->appendRow(x, CreateRows::createHomeopathyDrugRow(x));
     }
@@ -161,7 +161,7 @@ void AppointmentForm::on_addMedicinesBtn_clicked() {
     auto* selectionForm = createSelectionForm(this);
 
     std::vector<medicine::Drug> medicinesList;
-    database_->medicineDrugs(medicinesList);
+    database_->medicine->list(medicinesList);
     for (const auto& x : medicinesList) {
         selectionForm->appendRow(x, CreateRows::createMedicineDrugRow(x));
     }
