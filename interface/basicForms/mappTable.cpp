@@ -306,6 +306,8 @@ void MAppTable::setEmptyModel() {
     ui->mainTable->setModel(mainTableModel.get());
     ui->binTable->setModel(binTableModel.get());
     setHorizontalHeaderLabels({});
+    mainTableModel->setColumnCount(1);
+    binTableModel->setColumnCount(1);
 }
 
 void MAppTable::setScale(int columnCount) {
