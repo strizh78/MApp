@@ -64,6 +64,10 @@ private:
 
     void fillAppointmentInfo();
 
+    template <class T, class CreateRowFunc, class RowChooseSlot>
+    void showSingleSelectionForm(ItemDBInterface<T>* databaseItem, CreateRowFunc createRowFunc,
+                                 RowChooseSlot chooseSlot, const T& itemSelected);
+
 private:
     Ui::AppointmentForm *ui;
     DatabasePtr database_;

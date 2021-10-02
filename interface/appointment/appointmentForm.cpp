@@ -103,58 +103,40 @@ void AppointmentForm::on_solutionBox_rejected() {
     close();
 }
 
-void AppointmentForm::on_patientChooseBtn_clicked() {
+template <class T, class CreateRowFunc, class RowChooseSlot>
+void AppointmentForm::showSingleSelectionForm(ItemDBInterface<T>* databaseItem, CreateRowFunc createRowFunc,
+                                              RowChooseSlot chooseSlot, const T& itemSelected)
+{
     auto* selectionForm = createSelectionForm(this);
 
-    std::vector<Patient> patientsList;
-    database_->patient->list(patientsList);
-    for (const auto& x : patientsList) {
-        selectionForm->appendRow(x, CreateRows::createPatientRow(x));
+    std::vector<T> dataList;
+    databaseItem->list(dataList);
+    for (const auto& x : dataList) {
+        selectionForm->appendRow(x, createRowFunc(x));
     }
 
     connect(selectionForm, SIGNAL(onChooseButtonClicked(QVariant)),
-            this, SLOT(patientChoosed(QVariant)));
+            this, chooseSlot);
     connect(selectionForm, SIGNAL(onTableDoubleClicked(QVariant)),
-            this, SLOT(patientChoosed(QVariant)));
+            this, chooseSlot);
 
     selectionForm->show();
-    selectionForm->setItemSelected(currentAppointment_.patient);
+    selectionForm->setItemSelected(itemSelected);
+}
+
+void AppointmentForm::on_patientChooseBtn_clicked() {
+    showSingleSelectionForm(database_->patient, CreateRows::createPatientRow,
+                            SLOT(patientChoosed(QVariant)), currentAppointment_.patient);
 }
 
 void AppointmentForm::on_serviceChooseBtn_clicked() {
-    auto* selectionForm = createSelectionForm(this);
-
-    std::vector<Service> servicesList;
-    database_->service->list(servicesList);
-    for (const auto& x : servicesList) {
-        selectionForm->appendRow(x, CreateRows::createServiceRow(x));
-    }
-
-    connect(selectionForm, SIGNAL(onChooseButtonClicked(QVariant)),
-            this, SLOT(serviceChoosed(QVariant)));
-    connect(selectionForm, SIGNAL(onTableDoubleClicked(QVariant)),
-            this, SLOT(serviceChoosed(QVariant)));
-
-    selectionForm->show();
-    selectionForm->setItemSelected(currentAppointment_.service);
+    showSingleSelectionForm(database_->service, CreateRows::createServiceRow,
+                            SLOT(serviceChoosed(QVariant)), currentAppointment_.service);
 }
 
 void AppointmentForm::on_homeopathyChooseBtn_clicked() {
-    auto* selectionForm = createSelectionForm(this);
-
-    std::vector<homeopathy::Drug> homeopathyList;
-    database_->homeopathy->list(homeopathyList);
-    for (const auto& x : homeopathyList) {
-        selectionForm->appendRow(x, CreateRows::createHomeopathyDrugRow(x));
-    }
-
-    connect(selectionForm, SIGNAL(onChooseButtonClicked(QVariant)),
-            this, SLOT(homeopathyChoosed(QVariant)));
-    connect(selectionForm, SIGNAL(onTableDoubleClicked(QVariant)),
-            this, SLOT(homeopathyChoosed(QVariant)));
-
-    selectionForm->show();
-    selectionForm->setItemSelected(currentAppointment_.homeopathy);
+    showSingleSelectionForm(database_->homeopathy, CreateRows::createHomeopathyDrugRow,
+                            SLOT(homeopathyChoosed(QVariant)), currentAppointment_.homeopathy);
 }
 
 void AppointmentForm::on_addMedicinesBtn_clicked() {
