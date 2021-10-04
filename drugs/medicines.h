@@ -1,13 +1,13 @@
 #pragma once
 
 #include "MAppBaseObj/mappBaseObj.h"
+#include "dosage.h"
 
 #include <QString>
 #include <QMetaType>
 
 #include <vector>
 
-using Dosage = QString;
 using ReleaseForm = QString;
 
 namespace medicine {

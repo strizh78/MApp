@@ -40,13 +40,15 @@ private slots:
     void on_buttonBox_rejected();
 
     void fillLabelFromVector(QLabel* label, const std::vector <QString>& data);
+    void dosageEdit(const Dosage& dosage);
+    void dosageEdit(QStandardItem* item);
 
 private:
     void init();
     void setWidgetsSettings();
     std::optional<std::vector<QString> > isValid();
     void fillDosagesList();
-    void addDosage(const Dosage& dosage = "");
+    void addDosage(const Dosage& dosage);
     QList<QStandardItem*> createDosageRow(size_t row, const Dosage& dosage);
     std::vector <Dosage> getDosages();
     void resizeEvent(QResizeEvent *event) override;

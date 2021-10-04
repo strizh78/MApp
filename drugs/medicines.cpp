@@ -8,7 +8,7 @@ Drug::Drug(const QString& name,
            bool isPrescription,
            const std::vector<ReleaseForm>& releaseForms,
            const std::vector<QString>& brandNames,
-           const std::vector<QString>& dosages,
+           const std::vector<Dosage>& dosages,
            const QString& contraindications,
            float price)
     : name(name)

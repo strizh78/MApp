@@ -25,7 +25,7 @@ SOURCES += \
     database/test/patientTestDB.cpp \
     database/test/serviceTestDB.cpp \
     \
-    \
+    drugs/dosage.cpp \
     file/file.cpp \
     interface/appointment/appointmentForm.cpp \
     interface/appointment/appointmentMiniForm.cpp \
@@ -41,6 +41,7 @@ SOURCES += \
     interface/homeopathy/homeopathyDrugDilutionsSelectForm.cpp \
     interface/homeopathy/homeopathyDrugForm.cpp \
     interface/homeopathy/homeopathyDrugListForm.cpp \
+    interface/medicine/dosageForm.cpp \
     interface/medicine/medicineDrugBrandSelectForm.cpp \
     interface/medicine/medicineDrugForm.cpp \
     interface/medicine/medicineDrugListForm.cpp \
@@ -91,6 +92,7 @@ HEADERS += \
     \
     database/itemDatabaseInterface.h \
     \
+    drugs/dosage.h \
     drugs/homeopathy.h \
     drugs/medicines.h \
     \
@@ -109,6 +111,7 @@ HEADERS += \
     interface/homeopathy/homeopathyDrugDilutionsSelectForm.h \
     interface/homeopathy/homeopathyDrugForm.h \
     interface/homeopathy/homeopathyDrugListForm.h \
+    interface/medicine/dosageForm.h \
     interface/medicine/medicineDrugBrandSelectForm.h \
     interface/medicine/medicineDrugForm.h \
     interface/medicine/medicineDrugListForm.h \
@@ -154,6 +157,7 @@ FORMS += \
     interface/homeopathy/homeopathyDrugListForm.ui \
     interface/mainwindow.ui \
     \
+    interface/medicine/dosageForm.ui \
     interface/medicine/medicineDrugBrandSelectForm.ui \
     interface/medicine/medicineDrugForm.ui \
     interface/medicine/medicineDrugListForm.ui \

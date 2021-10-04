@@ -3,9 +3,8 @@
 
 #include "medicineDrugReleaseFormSelectForm.h"
 #include "medicineDrugBrandSelectForm.h"
+#include "dosageForm.h"
 #include "interface/utils.h"
-
-#include <QValidator>
 
 MedicineDrugForm::MedicineDrugForm(DatabasePtr database,
                                    std::optional<medicine::Drug> drug,
@@ -18,6 +17,9 @@ MedicineDrugForm::MedicineDrugForm(DatabasePtr database,
     ui->setupUi(this);
     init();
     setWidgetsSettings();
+
+    connect(dosagesModel_.get(), SIGNAL(itemChanged(QStandardItem*)),
+            this, SLOT(dosageEdit(QStandardItem*)));
 }
 
 MedicineDrugForm::~MedicineDrugForm() {
@@ -49,7 +51,7 @@ void MedicineDrugForm::on_addReleaseFormsBtn_clicked() {
 }
 
 void MedicineDrugForm::on_addDosagesBtn_clicked() {
-    addDosage();
+    addDosage(Dosage());
     int rowCount = dosagesModel_->rowCount();
     ui->dosages->edit(dosagesModel_->index(rowCount - 1, 0));
 
@@ -71,7 +73,13 @@ void MedicineDrugForm::on_deleteDosageBtn_clicked() {
 }
 
 void MedicineDrugForm::on_editDosageBtn_clicked() {
-    ui->dosages->edit(ui->dosages->currentIndex());
+    auto data = ui->dosages->currentIndex().data(Qt::UserRole);
+    auto* dosageForm = new DosageForm(*data.value<const Dosage*>(), this);
+    connect(dosageForm,
+            SIGNAL(dosageEditSignal(const Dosage&)),
+            this,
+            SLOT(dosageEdit(const Dosage&)));
+    showAsWindowModal(dosageForm);
 }
 
 void MedicineDrugForm::on_buttonBox_accepted() {
@@ -112,6 +120,23 @@ void MedicineDrugForm::fillLabelFromVector(QLabel* label, const std::vector<QStr
         releaseForms_ = data;
     if (label == ui->brands)
         brands_ = data;
+}
+
+void MedicineDrugForm::dosageEdit(const Dosage &dosage) {
+    int row = ui->dosages->currentIndex().row();
+    auto dosageRow = createDosageRow(row, dosage);
+    dosagesModel_->removeRow(row);
+    dosagesModel_->insertRow(row, dosageRow);
+}
+
+void MedicineDrugForm::dosageEdit(QStandardItem* item) {
+    Dosage newDosage = Dosage(item->data(Qt::DisplayRole).toString());
+    Dosage curDosage = *(ui->dosages->currentIndex().data(Qt::UserRole)
+                           .value<const Dosage*>());
+    if (newDosage != curDosage) {
+        const Dosage* dosage = new Dosage(newDosage);
+        item->setData(QVariant::fromValue(dosage), Qt::UserRole);
+    }
 }
 
 void MedicineDrugForm::init() {
@@ -169,7 +194,6 @@ void MedicineDrugForm::fillDosagesList() {
 
     for (auto& dosage : drug_.dosages)
         addDosage(dosage);
-
     ui->dosages->setModel(dosagesModel_.get());
 }
 
@@ -186,11 +210,13 @@ QList<QStandardItem*> MedicineDrugForm::createDosageRow(size_t row, const Dosage
     QList<QStandardItem*> lst;
     QStandardItem* name = new QStandardItem(row, 0);
 
-    name->setText(dosage);
+    name->setText(dosage.toString());
+    const Dosage* dosagePtr = new Dosage(dosage);
+    name->setData(QVariant::fromValue(dosagePtr), Qt::UserRole);
     lst << name;
 
     return lst;
-}
+} 
 
 std::vector<Dosage> MedicineDrugForm::getDosages() {
     std::vector<Dosage> dosages;
