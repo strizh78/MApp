@@ -3,8 +3,7 @@
 
 #include "drugs/medicines.h"
 #include "interface/basicForms/mappTableSettingsForm.h"
-
-#include <QSortFilterProxyModel>
+#include "components/multiColumnSortFilterProxyModel/multiColumnSortFilterProxyModel.h"
 
 #include <optional>
 
@@ -144,14 +143,13 @@ void MAppTable::on_searchString_textEdited(const QString &searchRequest) {
     if (table->model() != model)
         delete table->model();
 
-    auto* proxyModel = new QSortFilterProxyModel();
+    auto* proxyModel = new MultiColumnSortFilterProxyModel();
     proxyModel->setSourceModel(model);
     table->setModel(proxyModel);
 
     QRegExp regExp(searchRequest,
                    Qt::CaseInsensitive,
                    QRegExp::PatternSyntax(QRegExp::RegExp));
-    proxyModel->setFilterKeyColumn(0);
     proxyModel->setFilterRegExp(regExp);
 }
 

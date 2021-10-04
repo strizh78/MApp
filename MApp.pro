@@ -32,6 +32,7 @@ SOURCES += \
     interface/appointment/appointmentRecordForm.cpp \
     interface/appointment/appointmentsListForm.cpp \
     MAppBaseObj/mappBaseObj.cpp \
+    interface/basicForms/components/multiColumnSortFilterProxyModel/multiColumnSortFilterProxyModel.cpp \
     interface/basicForms/mappTable.cpp \
     interface/basicForms/mappTableSettingsForm.cpp \
     interface/basicForms/tableSettingsForm.cpp \
@@ -102,6 +103,7 @@ HEADERS += \
     interface/appointment/appointmentRecordForm.h \
     interface/appointment/appointmentsListForm.h \
     MAppBaseObj/mappBaseObj.h \
+    interface/basicForms/components/multiColumnSortFilterProxyModel/multiColumnSortFilterProxyModel.h \
     interface/basicForms/mappTable.h \
     interface/basicForms/mappTableSettingsForm.h \
     interface/basicForms/tableSettingsForm.h \
