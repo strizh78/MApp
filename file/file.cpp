@@ -21,7 +21,7 @@ File::File(const QString& newName,
 }
 
 const std::vector<QString>& getSupportedExtensions() {
-    static const std::vector<QString> SUPPORTED_EXTENSIONS = {"Изображения (*.png *.jpg)",
-                                                       "Текст (*.txt)"};
+    static const std::vector<QString> SUPPORTED_EXTENSIONS = {"Изображения (*.png *.jpg *.jpeg)",
+                                                              "Текст (*.txt)"};
     return SUPPORTED_EXTENSIONS;
 }

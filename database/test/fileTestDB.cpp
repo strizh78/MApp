@@ -11,6 +11,19 @@ std::vector<int> FilesDBTest::parentAppointmentCode_ = {};
 std::vector<Appointment> FilesDBTest::appointments = {};
 int FilesDBTest::code_ = 0;
 
+namespace  {
+QByteArray getFileBytes(const QString& fileName) {
+    QByteArray bytes;
+    QFile file(fileName);
+
+    if (file.open(QIODevice::ReadOnly)) {
+        bytes = file.readAll();
+        file.close();
+    }
+    return bytes;
+}
+}
+
 FilesDBTest::FilesDBTest(ItemDBInterface<Appointment>* appointment) {
     struct FullFileData {
         File file;
@@ -34,19 +47,13 @@ FilesDBTest::FilesDBTest(ItemDBInterface<Appointment>* appointment) {
         longString.push_back('\n');
     }
 
-    QByteArray pngBytes;
-    QFile pngFile(":/icons/trash.png");
-
-    if (pngFile.open(QIODevice::ReadOnly)) {
-        pngBytes = pngFile.readAll();
-        pngFile.close();
-    }
-
     std::vector<FullFileData> fullList = {
         FullFileData(File("Справка", "txt"),
                      QString("Пациент здоров, The patient is healthy").toLocal8Bit(), parentCode),
         FullFileData(File("Заключение", "txt"), longString.toLocal8Bit(), parentCode),
-        FullFileData(File("Рентген", "png"), pngBytes, parentCode)
+        FullFileData(File("Рентген", "png"), getFileBytes(":/icons/trash.png"), parentCode),
+        FullFileData(File("Рецепт из братска от 2017", "jpeg"),
+                     getFileBytes(":/test_files/test_jpeg_image.jpeg"), parentCode)
     };
 
     for (auto& item : fullList) {

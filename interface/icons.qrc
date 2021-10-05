@@ -19,5 +19,6 @@
         <file>icons/left-arrow.png</file>
         <file>icons/right-arrow.png</file>
         <file>icons/start.png</file>
+        <file>test_files/test_jpeg_image.jpeg</file>
     </qresource>
 </RCC>

@@ -33,4 +33,5 @@ void FileDisplayManager::init() {
     viewTypes["PNG"] = FileViewType::IMAGE;
     viewTypes["TXT"] = FileViewType::TEXT;
     viewTypes["JPG"] = FileViewType::IMAGE;
+    viewTypes["JPEG"] = FileViewType::IMAGE;
 }
