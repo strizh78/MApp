@@ -14,6 +14,7 @@ FileForm::FileForm(const File& file,
     , ui(new Ui::FileForm)
     , database_(database)
     , file_(file)
+    , viewer(file)
 {
     ui->setupUi(this);
     setWindowTitle(file_.name);
@@ -22,12 +23,13 @@ FileForm::FileForm(const File& file,
     ui->extensionValue->setText(file_.extension);
     ui->uploadTimeValue->setText(file_.uploadTime.toString());
     ui->lastUpdTimeValue->setText(file_.lastEditTime.toString());
-    ui->tabWidget->tabBar()->hide();
     ui->appointmentLabel->hide();
 
     FileData data;
     database_->files->fileData(file_, data);
-    setData(data);
+    viewer.setData(data);
+
+    ui->allLayout->addWidget(viewer.getDisplayWidget());
 }
 
 FileForm::~FileForm() {
@@ -58,51 +60,13 @@ void FileForm::on_buttonBox_accepted() {
                         file_.extension,
                         file_.uploadTime,
                         QDateTime::currentDateTime());
-    database_->files->edit(file_, newFile, getData());
+    database_->files->edit(file_, newFile, viewer.getData());
     emit fileEditSignal(newFile);
     close();
 }
 
 void FileForm::on_buttonBox_rejected() {
     close();
-}
-
-void FileForm::setData(const FileData& data) {
-    QString ext = file_.extension;
-
-    if (ext == "txt") {
-        ui->textDisplay->setText(QString::fromLocal8Bit(data));
-        ui->tabWidget->setCurrentIndex(0);
-    }
-    else if (ext == "png" || ext == "jpg") {
-        QPixmap pixMap;
-
-        if (pixMap.loadFromData(data)) {
-            ui->pngDisplay->setPixmap(pixMap);
-            ui->tabWidget->setCurrentIndex(1);
-        }
-        else {
-            ErrorLog::showItemFormWarning(ui->errorLabel, "Не удалось открыть файл.");
-        }
-    }
-    ui->tabWidget->setTabVisible(ui->tabWidget->currentIndex(), true);
-}
-
-FileData FileForm::getData() {
-    FileData data;
-    switch (ui->tabWidget->currentIndex()) {
-    case 0:
-        data = ui->textDisplay->toPlainText().toLocal8Bit();
-        break;
-    case 1: {
-        QBuffer buffer(&data);
-        buffer.open(QIODevice::WriteOnly);
-        const char* upperExt = file_.extension.toUpper().toStdString().c_str();
-        ui->pngDisplay->pixmap(Qt::ReturnByValue).save(&buffer, upperExt);
-        break;
-    }
-    }
-    return data;
 }
 
 void FileForm::on_name_editingFinished() {

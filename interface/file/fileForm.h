@@ -3,6 +3,10 @@
 #include "database/databaseInterface.h"
 #include "file/file.h"
 
+#include "interface/file/displayWidgets/displayManager.h"
+
+#include "interface/utils.h"
+
 #include <QWidget>
 
 namespace Ui {
@@ -29,12 +33,10 @@ signals:
     void fileEditSignal(const File& file);
 
 private:
-    void setData(const FileData& data);
-    FileData getData();
-
-private:
     Ui::FileForm *ui;
     DatabasePtr database_;
     File file_;
     bool isModified_;
+
+    FileDisplayManager viewer;
 };

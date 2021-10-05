@@ -36,6 +36,10 @@ SOURCES += \
     interface/basicForms/mappTable.cpp \
     interface/basicForms/mappTableSettingsForm.cpp \
     interface/basicForms/tableSettingsForm.cpp \
+    interface/file/displayWidgets/displayManager.cpp \
+    interface/file/displayWidgets/imageViewer.cpp \
+    interface/file/displayWidgets/textViewer.cpp \
+    interface/file/displayWidgets/viewerInterface.cpp \
     interface/basicForms/editableList/editableList.cpp \
     interface/file/fileForm.cpp \
     interface/file/filesListForm.cpp \
@@ -107,6 +111,10 @@ HEADERS += \
     interface/basicForms/mappTable.h \
     interface/basicForms/mappTableSettingsForm.h \
     interface/basicForms/tableSettingsForm.h \
+    interface/file/displayWidgets/displayManager.h \
+    interface/file/displayWidgets/imageViewer.h \
+    interface/file/displayWidgets/textViewer.h \
+    interface/file/displayWidgets/viewerInterface.h \
     interface/basicForms/editableList/editableList.h \
     interface/file/fileForm.h \
     interface/file/filesListForm.h \
