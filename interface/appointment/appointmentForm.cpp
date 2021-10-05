@@ -88,7 +88,7 @@ void AppointmentForm::on_solutionBox_accepted() {
     }
 
     if (currentAppointment_.isExists()) {
-        database_->appointment->edit(currentAppointment_, currentAppointment_);
+        database_->appointment->update(currentAppointment_);
         emit appointmentEditSignal(currentAppointment_);
     } else {
         database_->appointment->add(currentAppointment_);

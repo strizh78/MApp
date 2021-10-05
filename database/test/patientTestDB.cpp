@@ -65,5 +65,5 @@ PatientDBTest::PatientDBTest() {
         add(patient);
 
     patientsList[0].additionalInfo = htmlInfo;
-    edit(patientsList[0], patientsList[0]);
+    update(patientsList[0]);
 }

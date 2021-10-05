@@ -43,17 +43,17 @@ void HomeopathyDrugForm::on_buttonBox_accepted() {
         return;
     }
 
-    Drug currentDrug(ui->name->text(),
-                     ui->nameLat->text(),
-                     ui->groupComboBox->currentData().value<Groups>(),
-                     dilutions_);
+    drug_.name = ui->name->text();
+    drug_.nameLat = ui->nameLat->text();
+    drug_.group = ui->groupComboBox->currentData().value<Groups>();
+    drug_.availableDilutions = dilutions_;
 
     if (drug_.isExists()) {
-        database_->homeopathy->edit(drug_, currentDrug);
-        emit homeopathyDrugEditSignal(currentDrug);
+        database_->homeopathy->update(drug_);
+        emit homeopathyDrugEditSignal(drug_);
     } else {
-        database_->homeopathy->add(currentDrug);
-        emit homeopathyDrugCreateSignal(currentDrug);
+        database_->homeopathy->add(drug_);
+        emit homeopathyDrugCreateSignal(drug_);
     }
 
     close();

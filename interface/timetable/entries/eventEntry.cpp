@@ -40,7 +40,7 @@ bool TimetableEvent::tryMoveEntry(const QTime &diff, std::shared_ptr<DatabaseInt
     }
 
     if (isTimeSlotAvailable(database.get(), eventNew, eventNew.dateTime, eventNew.duration)) {
-        database->event->edit(eventNew, eventNew);
+        database->event->update(eventNew);
         return true;
     }
     return false;

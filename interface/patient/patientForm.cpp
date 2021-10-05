@@ -258,32 +258,31 @@ Patient PatientForm::buildPatientFromFormData() {
     nameInfo.name = (splittedName.size() >= 2) ? splittedName[1] : "";
     nameInfo.patronymic = (splittedName.size() >= 3) ? splittedName[2] : "";
 
-    Patient result(nameInfo,
-                   ui->dateEdit->date());
+    patient_.nameInfo = nameInfo;
+    patient_.birthDate = ui->dateEdit->date();
 
-    result.address = ui->adressesList->getDataList();
-    result.phones = ui->phonesList->getDataList();
-    result.emails = ui->emailsList->getDataList();
-    result.additionalInfo = ui->additionalInfo->toHtml();
-    return result;
+    patient_.address = ui->adressesList->getDataList();
+    patient_.phones = ui->phonesList->getDataList();
+    patient_.emails = ui->emailsList->getDataList();
+    patient_.additionalInfo = ui->additionalInfo->toHtml();
+    return patient_;
 }
 
 bool PatientForm::trySavePatient() {
-    Patient patient = buildPatientFromFormData();
-    if (!patient.isValid()) {
-        ErrorLog::showItemFormWarning(ui->errorLabel, getInvalidFields(patient));
+    buildPatientFromFormData();
+    if (!patient_.isValid()) {
+        ErrorLog::showItemFormWarning(ui->errorLabel, getInvalidFields(patient_));
         return false;
     }
 
     if (patient_.isExists()) {
-        database_->patient->edit(patient_, patient);
-        emit patientEditSignal(patient);
+        database_->patient->update(patient_);
+        emit patientEditSignal(patient_);
     } else {
-        database_->patient->add(patient);
-        emit patientCreateSignal(patient);
+        database_->patient->add(patient_);
+        emit patientCreateSignal(patient_);
     }
 
-    patient_ = patient;
     isModified = false;
     return true;
 }

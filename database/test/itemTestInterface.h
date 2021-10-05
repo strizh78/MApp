@@ -18,12 +18,11 @@ public:
         ItemDBInterface<BaseItem>::setCode(item);
         list_.push_back(item);
     }
-    void edit(const BaseItem& oldItem, BaseItem& newItem) override {
-        auto it = std::find(list_.begin(), list_.end(), oldItem);
+    void update(const BaseItem& editedItem) override {
+        auto it = std::find(list_.begin(), list_.end(), editedItem);
 
         if (it != list_.end()) {
-            ItemDBInterface<BaseItem>::setCodeToEdit(newItem, oldItem.code());
-            *it = newItem;
+            *it = editedItem;
         }
     }
 

@@ -56,12 +56,11 @@ void FileForm::on_buttonBox_accepted() {
         return;
     }
 
-    File newFile = File(newName,
-                        file_.extension,
-                        file_.uploadTime,
-                        QDateTime::currentDateTime());
-    database_->files->edit(file_, newFile, viewer.getData());
-    emit fileEditSignal(newFile);
+    file_.name = newName;
+    file_.lastEditTime = QDateTime::currentDateTime();
+    database_->files->update(file_, viewer.getData());
+    emit fileEditSignal(file_);
+
     close();
 }
 

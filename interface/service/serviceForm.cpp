@@ -74,21 +74,22 @@ void ServiceForm::fillFormServiceInfo() {
 }
 
 void ServiceForm::on_solutionBox_accepted() {
-    Service edited(ui->nameEdit->text(),
-                    ui->priceEdit->text().toDouble(),
-                    ui->durationEdit->time(),
-                    !ui->switchActive->isChecked());
-    if (!edited.isValid()) {
-        ErrorLog::showItemFormWarning(ui->errorLabel, getInvalidFields(edited));
+    service_.name = ui->nameEdit->text();
+    service_.price = ui->priceEdit->text().toDouble();
+    service_.duration = ui->durationEdit->time();
+    service_.isDeprecated = !ui->switchActive->isChecked();
+
+    if (!service_.isValid()) {
+        ErrorLog::showItemFormWarning(ui->errorLabel, getInvalidFields(service_));
         return;
     }
 
     if (service_.isExists()) {
-        database_->service->edit(service_, edited);
-        emit serviceEditSignal(edited);
+        database_->service->update(service_);
+        emit serviceEditSignal(service_);
     } else {
-        database_->service->add(edited);
-        emit serviceCreateSignal(edited);
+        database_->service->add(service_);
+        emit serviceCreateSignal(service_);
     }
     close();
 }

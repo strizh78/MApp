@@ -46,7 +46,7 @@ void AppointmentsListForm::onEditButtonClicked(const QVariant& data) {
 void AppointmentsListForm::onDeleteButtonClicked(const QVariant& data) {
     auto value = *getValueFromModelData<Appointment>(data);
     database_->appointment->setDeletedMark(value, !value.isDeleted());
-    database_->appointment->edit(value, value);
+    database_->appointment->update(value);
     editAppointment(value);
 }
 

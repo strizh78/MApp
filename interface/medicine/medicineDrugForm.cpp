@@ -89,22 +89,22 @@ void MedicineDrugForm::on_buttonBox_accepted() {
         return;
     }
 
-    medicine::Drug currentDrug(ui->name->text(),
-                               ui->activeSubstance->text(),
-                               ui->activeSubstanceLat->text(),
-                               ui->prescription->isChecked(),
-                               releaseForms_,
-                               brands_,
-                               getDosages(),
-                               ui->contraindications->toPlainText(),
-                               ui->price->text().toFloat());
+    drug_.name = ui->name->text();
+    drug_.activeSubstance = ui->activeSubstance->text();
+    drug_.activeSubstancetLat = ui->activeSubstanceLat->text();
+    drug_.isPrescription = ui->prescription->isChecked();
+    drug_.releaseForms = releaseForms_;
+    drug_.brandNames = brands_;
+    drug_.dosages = getDosages();
+    drug_.contraindications = ui->contraindications->toPlainText();
+    drug_.price = ui->price->text().toFloat();
 
     if (drug_.isExists()) {
-        database_->medicine->edit(drug_, currentDrug);
-        emit medicineDrugEditSignal(currentDrug);
+        database_->medicine->update(drug_);
+        emit medicineDrugEditSignal(drug_);
     } else {
-        database_->medicine->add(currentDrug);
-        emit medicineDrugCreateSignal(currentDrug);
+        database_->medicine->add(drug_);
+        emit medicineDrugCreateSignal(drug_);
     }
     close();
 }

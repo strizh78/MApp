@@ -12,7 +12,7 @@ public:
     void appointmentByFile(const File& file, Appointment& urr) override;
     void fileData(const File& file, FileData& data) override;
     void add(File& file, FileData& data, int parentCode) override;
-    void edit(const File& oldFile, File& newFile, const FileData& data) override;
+    void update(const File& editedFile, const FileData& data) override;
     void list(std::vector<File>& receiver) override;
 
     int nextCode() override;

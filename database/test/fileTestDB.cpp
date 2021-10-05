@@ -76,15 +76,14 @@ void FilesDBTest::add(File& file, FileData& data, int parentCode) {
     parentAppointmentCode_.push_back(parentCode);
 }
 
-void FilesDBTest::edit(const File& oldFile, File& newFile, const FileData& data) {
-    auto it = std::find(list_.begin(), list_.end(), oldFile);
+void FilesDBTest::update(const File& editedFile, const FileData& data) {
+    auto it = std::find(list_.begin(), list_.end(), editedFile);
     if (it == list_.end()) {
         return;
     }
 
     int idx = it - list_.begin();
-    setCodeToEdit(newFile, oldFile.code());
-    list_[idx] = newFile;
+    list_[idx] = editedFile;
     dataList_[idx] = data;
 }
 

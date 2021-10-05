@@ -64,7 +64,7 @@ void EventForm::on_buttonBox_accepted() {
     }
 
     if (mode_ == EDIT) {
-        database_->event->edit(event_, event_);
+        database_->event->update(event_);
         emit edited(event_);
     } else {
         database_->event->add(event_);
