@@ -6,12 +6,12 @@ TextViewer::TextViewer(const QString& extension)
 
 FileData TextViewer::getData() {
     FileData data;
-    data = this->toPlainText().toLocal8Bit();
+    data = this->toHtml().toLocal8Bit();
     return data;
 }
 
 void TextViewer::setData(const FileData& data) {
-    this->setText(QString::fromLocal8Bit(data));
+    this->setHtml(QString::fromLocal8Bit(data));
 }
 
 QWidget* TextViewer::widget() {

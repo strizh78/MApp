@@ -2,9 +2,9 @@
 
 #include "viewerInterface.h"
 
-#include <QTextEdit>
+#include "interface/textEditor/textEditor.h"
 
-class TextViewer : public FileViewerInterface, public QTextEdit {
+class TextViewer : public FileViewerInterface, public TextEditor {
 public:
     TextViewer(const QString& extension);
 
