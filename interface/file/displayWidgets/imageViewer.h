@@ -2,9 +2,10 @@
 
 #include "viewerInterface.h"
 
+#include "interface/imageViewer/imageEditor.h"
 #include <QLabel>
 
-class ImageViewer : public FileViewerInterface, public QLabel {
+class ImageViewer : public FileViewerInterface, public ImageEditor {
 public:
     ImageViewer(const QString& extension);
 

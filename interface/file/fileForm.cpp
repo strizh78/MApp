@@ -30,6 +30,7 @@ FileForm::FileForm(const File& file,
     viewer.setData(data);
 
     ui->allLayout->addWidget(viewer.getDisplayWidget());
+    resize(width(), viewer.getDisplayWidget()->height());
 }
 
 FileForm::~FileForm() {
