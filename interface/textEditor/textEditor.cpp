@@ -68,7 +68,7 @@ void TextEditor::on_underline_clicked(){
     QTextCharFormat fmt = ui->textEdit->currentCharFormat();
 
     QFont font = fmt.font();
-    font.setUnderline(ui->under->isChecked());
+    font.setUnderline(ui->underline->isChecked());
 
     fmt.setFont(font);
     applyToSelected(fmt);
@@ -155,7 +155,7 @@ void TextEditor::on_textEdit_cursorPositionChanged() {
 
     ui->bold->setChecked(fmt.font().bold());
     ui->italic->setChecked(fmt.font().italic());
-    ui->under->setChecked(fmt.font().underline());
+    ui->underline->setChecked(fmt.font().underline());
     ui->cross->setChecked(fmt.font().strikeOut());
 }
 

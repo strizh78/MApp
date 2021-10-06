@@ -25,7 +25,6 @@ public:
 
 private slots:
     void on_name_editingFinished();
-    void on_textDisplay_textChanged();
     void on_buttonBox_accepted();
     void on_buttonBox_rejected();
 
