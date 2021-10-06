@@ -72,7 +72,3 @@ void FileForm::on_buttonBox_rejected() {
 void FileForm::on_name_editingFinished() {
     isModified_ = true;
 }
-
-void FileForm::on_textDisplay_textChanged() {
-    isModified_ = true;
-}

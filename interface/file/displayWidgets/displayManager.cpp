@@ -18,7 +18,7 @@ FileDisplayManager::FileDisplayManager(const File& file) {
 }
 
 FileData FileDisplayManager::getData() {
-    viewer_->getData();
+    return viewer_->getData();
 }
 
 void FileDisplayManager::setData(const FileData& data) {
