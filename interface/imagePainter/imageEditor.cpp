@@ -41,7 +41,6 @@ QPixmap ImageEditor::getPixmap() {
     return ui->graphicsView->getPixmap();
 }
 
-
 void ImageEditor::on_backToOriginal_clicked() {
     ui->graphicsView->clearAll();
 }

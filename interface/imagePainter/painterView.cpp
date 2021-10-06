@@ -27,6 +27,8 @@ QPixmap PainterView::getPixmap() {
 }
 
 void PainterView::clearAll() {
+    scale(1. / scaleFactor_, 1. / scaleFactor_);
+
     scene()->clear();
     scene()->addPixmap(pixmap_);
 
@@ -34,14 +36,14 @@ void PainterView::clearAll() {
     drawPoint = QPoint(-1, -1);
 }
 
-void PainterView::wheelEvent(QWheelEvent* event) {
-    qreal factor = qPow(1.2, event->angleDelta().x() / 240.0);
-    scaleFactor_ *= factor;
-    scale(factor, factor);
-}
-
 void PainterView::setLinesColor(QColor color) {
     linesPen_.setColor(color);
+}
+
+void PainterView::wheelEvent(QWheelEvent* event) {
+    qreal factor = qPow(1.2, event->angleDelta().x() / 10.);
+    scaleFactor_ *= factor;
+    scale(factor, factor);
 }
 
 void PainterView::mouseMoveEvent(QMouseEvent *event) {
@@ -56,9 +58,7 @@ void PainterView::mouseMoveEvent(QMouseEvent *event) {
         drawPoint = event->pos();
 
         scene()->addLine(line, linesPen_);
-        update();
     } else {
         drawPoint = QPoint(-1, -1);
     }
-
 }
