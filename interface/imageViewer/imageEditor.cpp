@@ -1,7 +1,7 @@
 #include "imageEditor.h"
 #include "ui_imageEditor.h"
 
-#include <QColorSpace>
+#include <QResizeEvent>
 
 ImageEditor::ImageEditor(QWidget *parent) :
     QWidget(parent),
@@ -14,37 +14,32 @@ ImageEditor::~ImageEditor() {
     delete ui;
 }
 
-QPixmap resizePixmap(const QPixmap& pix, int w, int h) {
-    QPixmap temp;
-    temp = pix.scaled(w, h, Qt::AspectRatioMode::KeepAspectRatio);
-    return temp;
-}
-#include <iostream>
 void ImageEditor::loadFile(const FileData& fileData) {
     pix.loadFromData(fileData);
-    QPixmap temp;
-    temp = resizePixmap(pix, ui->imageLabel->width(), ui->imageLabel->height());
+    QSize size = pix.rect().size();
+    if (size.width() > width() || size.height() > height()) {
+        size = {width(), height()};
+    }
+    resize(size);
+}
 
-    std::cout << "1 " << width() << ' ' << height() << std::endl;
-    ui->imageLabel->setPixmap(temp);
-    ui->imageLabel->resize(temp.rect().size());
-    ui->scrollArea->resize(temp.rect().width() + 2,
-                           temp.rect().height() + 2);
-
-    std::cout << "2 " << temp.rect().width() << ' ' << temp.rect().height() << std::endl;
-    scaleFactor = 1.0;
+QPixmap ImageEditor::getPixmap() {
+    return pix;
 }
 
 void ImageEditor::resizeEvent(QResizeEvent *event) {
-    QWidget::resizeEvent(event);
-
     QPixmap temp;
-    temp = resizePixmap(pix, ui->imageLabel->width(), ui->imageLabel->height());
+    temp = pix.scaled(event->size().width(),
+                      event->size().height(),
+                      Qt::AspectRatioMode::KeepAspectRatio);
 
     ui->imageLabel->setPixmap(temp);
     ui->imageLabel->resize(temp.rect().size());
-    ui->scrollArea->resize(temp.rect().width() + 2,
-                           temp.rect().height() + 2);
 
-    std::cout << "4 " << width() << ' ' << height() << std::endl;
+    if (width() != ui->imageLabel->width() || height() != ui->imageLabel->height()) {
+        resize(ui->imageLabel->width(), ui->imageLabel->height());
+        return;
+    }
+    QWidget::resizeEvent(event);
 }
+

@@ -1,10 +1,8 @@
-#ifndef IMAGEEDITOR_H
-#define IMAGEEDITOR_H
+#pragma once
+
+#include "file/file.h"
 
 #include <QWidget>
-#include <QImageReader>
-#include <QImage>
-#include "file/file.h"
 
 namespace Ui {
 class ImageEditor;
@@ -18,13 +16,11 @@ public:
     ~ImageEditor();
 
     void loadFile(const FileData& fileData);
+    QPixmap getPixmap();
 protected:
     void resizeEvent(QResizeEvent *event);
+
 private:
     Ui::ImageEditor *ui;
     QPixmap pix;
-
-    double scaleFactor = 1;
 };
-
-#endif // IMAGEEDITOR_H

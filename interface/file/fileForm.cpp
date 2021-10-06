@@ -30,14 +30,10 @@ FileForm::FileForm(const File& file,
     database_->files->fileData(file_, data);
     viewer.setData(data);
 
-    ui->allLayout->addWidget(viewer.getDisplayWidget());
-    //update();
-    std::cout << "urr" << std::endl;
-//    this->sets
-    resize(350 + viewer.getDisplayWidget()->width(),
-           std::max(200, viewer.getDisplayWidget()->height()));
-    //update();
-    std::cout << "URR" << std::endl;
+    layout()->addWidget(viewer.getDisplayWidget());
+
+    resize(ui->infoWidget->geometry().width() + viewer.getDisplayWidget()->geometry().width(),
+           viewer.getDisplayWidget()->geometry().height());
 }
 
 FileForm::~FileForm() {
