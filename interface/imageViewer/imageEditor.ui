@@ -6,9 +6,79 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>502</width>
-    <height>502</height>
+    <width>702</width>
+    <height>702</height>
    </rect>
+  </property>
+  <property name="sizeIncrement">
+   <size>
+    <width>0</width>
+    <height>0</height>
+   </size>
+  </property>
+  <property name="palette">
+   <palette>
+    <active>
+     <colorrole role="Base">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>30</red>
+        <green>30</green>
+        <blue>30</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Window">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>66</red>
+        <green>242</green>
+        <blue>71</blue>
+       </color>
+      </brush>
+     </colorrole>
+    </active>
+    <inactive>
+     <colorrole role="Base">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>30</red>
+        <green>30</green>
+        <blue>30</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Window">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>66</red>
+        <green>242</green>
+        <blue>71</blue>
+       </color>
+      </brush>
+     </colorrole>
+    </inactive>
+    <disabled>
+     <colorrole role="Base">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>66</red>
+        <green>242</green>
+        <blue>71</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Window">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>66</red>
+        <green>242</green>
+        <blue>71</blue>
+       </color>
+      </brush>
+     </colorrole>
+    </disabled>
+   </palette>
   </property>
   <property name="windowTitle">
    <string>Form</string>
@@ -42,8 +112,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>500</width>
-        <height>500</height>
+        <width>700</width>
+        <height>700</height>
        </rect>
       </property>
       <widget class="QLabel" name="imageLabel">
@@ -51,8 +121,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>500</width>
-         <height>500</height>
+         <width>700</width>
+         <height>700</height>
         </rect>
        </property>
        <property name="sizePolicy">

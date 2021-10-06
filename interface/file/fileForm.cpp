@@ -7,6 +7,7 @@
 #include <QTabBar>
 #include <QBuffer>
 
+#include <iostream>
 FileForm::FileForm(const File& file,
                    DatabasePtr database,
                    QWidget* parent)
@@ -30,7 +31,13 @@ FileForm::FileForm(const File& file,
     viewer.setData(data);
 
     ui->allLayout->addWidget(viewer.getDisplayWidget());
-    resize(viewer.getDisplayWidget()->width() + 350, viewer.getDisplayWidget()->height());
+    //update();
+    std::cout << "urr" << std::endl;
+//    this->sets
+    resize(350 + viewer.getDisplayWidget()->width(),
+           std::max(200, viewer.getDisplayWidget()->height()));
+    //update();
+    std::cout << "URR" << std::endl;
 }
 
 FileForm::~FileForm() {
