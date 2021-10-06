@@ -46,7 +46,8 @@ SOURCES += \
     interface/homeopathy/homeopathyDrugDilutionsSelectForm.cpp \
     interface/homeopathy/homeopathyDrugForm.cpp \
     interface/homeopathy/homeopathyDrugListForm.cpp \
-    interface/imageViewer/imageEditor.cpp \
+    interface/imagePainter/imageEditor.cpp \
+    interface/imagePainter/painterView.cpp \
     interface/medicine/dosageForm.cpp \
     interface/medicine/medicineDrugBrandSelectForm.cpp \
     interface/medicine/medicineDrugForm.cpp \
@@ -122,7 +123,8 @@ HEADERS += \
     interface/homeopathy/homeopathyDrugDilutionsSelectForm.h \
     interface/homeopathy/homeopathyDrugForm.h \
     interface/homeopathy/homeopathyDrugListForm.h \
-    interface/imageViewer/imageEditor.h \
+    interface/imagePainter/imageEditor.h \
+    interface/imagePainter/painterView.h \
     interface/medicine/dosageForm.h \
     interface/medicine/medicineDrugBrandSelectForm.h \
     interface/medicine/medicineDrugForm.h \
@@ -167,7 +169,7 @@ FORMS += \
     interface/homeopathy/homeopathyDrugDilutionsSelectForm.ui \
     interface/homeopathy/homeopathyDrugForm.ui \
     interface/homeopathy/homeopathyDrugListForm.ui \
-    interface/imageViewer/imageEditor.ui \
+    interface/imagePainter/imageEditor.ui \
     interface/mainwindow.ui \
     \
     interface/medicine/dosageForm.ui \

@@ -48,43 +48,47 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QScrollArea" name="scrollArea">
-     <property name="verticalScrollBarPolicy">
-      <enum>Qt::ScrollBarAsNeeded</enum>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="spacing">
+      <number>7</number>
      </property>
-     <property name="horizontalScrollBarPolicy">
-      <enum>Qt::ScrollBarAsNeeded</enum>
+     <property name="topMargin">
+      <number>0</number>
      </property>
-     <property name="widgetResizable">
-      <bool>true</bool>
-     </property>
-     <widget class="QWidget" name="scrollAreaWidgetContents">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>698</width>
-        <height>698</height>
-       </rect>
-      </property>
-      <widget class="QLabel" name="imageLabel">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>700</width>
-         <height>700</height>
-        </rect>
-       </property>
+     <item>
+      <widget class="QPushButton" name="backToOriginal">
        <property name="text">
-        <string>TextLabel</string>
+        <string>Вернуть к оригиналу</string>
        </property>
       </widget>
-     </widget>
-    </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="lineColor">
+       <property name="maximumSize">
+        <size>
+         <width>50</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="PainterView" name="graphicsView"/>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PainterView</class>
+   <extends>QGraphicsView</extends>
+   <header>interface/imagePainter/painterView.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

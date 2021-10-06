@@ -17,10 +17,11 @@ public:
 
     void loadFile(const FileData& fileData);
     QPixmap getPixmap();
-protected:
-    void resizeEvent(QResizeEvent *event);
+
+private slots:
+    void on_backToOriginal_clicked();
+    void on_lineColor_clicked();
 
 private:
     Ui::ImageEditor *ui;
-    QPixmap pixmap_;
 };
