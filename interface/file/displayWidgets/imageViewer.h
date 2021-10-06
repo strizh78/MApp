@@ -3,7 +3,6 @@
 #include "viewerInterface.h"
 
 #include "interface/imageViewer/imageEditor.h"
-#include <QLabel>
 
 class ImageViewer : public FileViewerInterface, public ImageEditor {
 public:

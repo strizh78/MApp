@@ -9,11 +9,11 @@ ImageViewer::ImageViewer(const QString& extension) : extension(extension) {}
 FileData ImageViewer::getData() {
     FileData data;
 
-    auto pix = getPixmap();
+    auto pixmap = getPixmap();
 
     QBuffer buffer(&data);
     buffer.open(QIODevice::WriteOnly);
-    pix.save(&buffer, extension.toStdString().c_str());
+    pixmap.save(&buffer, extension.toStdString().c_str());
 
     return data;
 }

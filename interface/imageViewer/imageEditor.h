@@ -22,5 +22,5 @@ protected:
 
 private:
     Ui::ImageEditor *ui;
-    QPixmap pix;
+    QPixmap pixmap_;
 };

@@ -4,10 +4,6 @@
 #include "interface/utils.h"
 #include "appointment/appointment.h"
 
-#include <QTabBar>
-#include <QBuffer>
-
-#include <iostream>
 FileForm::FileForm(const File& file,
                    DatabasePtr database,
                    QWidget* parent)

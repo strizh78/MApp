@@ -15,23 +15,23 @@ ImageEditor::~ImageEditor() {
 }
 
 void ImageEditor::loadFile(const FileData& fileData) {
-    pix.loadFromData(fileData);
-    QSize size = pix.rect().size();
-    if (size.width() > width() || size.height() > height()) {
+    pixmap_.loadFromData(fileData);
+    QSize size = pixmap_.rect().size();
+    if (size.width() > width() ||size.height() > height()) {
         size = {width(), height()};
     }
     resize(size);
 }
 
 QPixmap ImageEditor::getPixmap() {
-    return pix;
+    return pixmap_;
 }
 
 void ImageEditor::resizeEvent(QResizeEvent *event) {
     QPixmap temp;
-    temp = pix.scaled(event->size().width(),
-                      event->size().height(),
-                      Qt::AspectRatioMode::KeepAspectRatio);
+    temp = pixmap_.scaled(event->size().width(),
+                          event->size().height(),
+                          Qt::AspectRatioMode::KeepAspectRatio);
 
     ui->imageLabel->setPixmap(temp);
     ui->imageLabel->resize(temp.rect().size());
