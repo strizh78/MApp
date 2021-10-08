@@ -138,7 +138,11 @@ void MAppTable::on_recoverBtn_clicked() {
 
 void MAppTable::on_searchString_textEdited(const QString &searchRequest) {
     QTableView* table = getCurrentTable();
-    QStandardItemModel* model = getCurrentModel();
+//    QStandardItemModel* model = getCurrentModel();
+    QStandardItemModel* model;
+    if (ui->tabWidget->currentIndex() == 0)
+        model =  mainTableModel.get();
+    else model =  binTableModel.get();
 
     if (table->model() != model)
         delete table->model();
@@ -168,8 +172,9 @@ void MAppTable::on_tabWidget_currentChanged(int index) {
 }
 
 void MAppTable::on_mainTable_doubleClicked(const QModelIndex &index) {
-    QModelIndex curIndex = mainTableModel->index(index.row(), 0);
-    emit onTableDoubleClicked(mainTableModel->data(curIndex, Qt::UserRole));
+    auto model = getCurrentModel();
+    QModelIndex curIndex = model->index(index.row(), 0);
+    emit onTableDoubleClicked(model->data(curIndex, Qt::UserRole));
 }
 
 void MAppTable::on_binTable_doubleClicked(const QModelIndex &index) {
@@ -263,9 +268,11 @@ void MAppTable::editDataInTable(const MAppBaseObj& data,
 }
 
 QStandardItemModel* MAppTable::getCurrentModel() {
-    if (ui->tabWidget->currentIndex() == 0)
-        return mainTableModel.get();
-    return binTableModel.get();
+    auto table = getCurrentTable();
+    return (QStandardItemModel*) table->model();
+//    if (ui->tabWidget->currentIndex() == 0)
+//        return mainTableModel.get();
+//    return binTableModel.get();
 }
 
 QTableView* MAppTable::getCurrentTable() {
