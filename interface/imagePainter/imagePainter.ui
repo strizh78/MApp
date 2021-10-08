@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ImageEditor</class>
- <widget class="QWidget" name="ImageEditor">
+ <class>ImagePainter</class>
+ <widget class="QWidget" name="ImagePainter">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -78,15 +78,15 @@
     </layout>
    </item>
    <item>
-    <widget class="PainterView" name="graphicsView"/>
+    <widget class="ImageView" name="imageView"/>
    </item>
   </layout>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>PainterView</class>
+   <class>ImageView</class>
    <extends>QGraphicsView</extends>
-   <header>interface/imagePainter/painterView.h</header>
+   <header>interface/imagePainter/imageView.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

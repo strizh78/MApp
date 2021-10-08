@@ -1,54 +1,56 @@
-#include "painterView.h"
+#include "imageView.h"
 
 #include <QResizeEvent>
 #include <QGraphicsView>
 #include <QtMath>
 #include <QColorDialog>
 
-PainterView::PainterView(QWidget *parent)
+static const QPoint NO_DRAWING_POINT = QPoint(-1, -1);
+
+ImageView::ImageView(QWidget *parent)
     : QGraphicsView(parent)
 {
     linesPen_ = QPen();
     linesPen_.setWidth(2);
 
     scaleFactor_ = 1;
-    drawPoint = QPoint(-1, -1);
+    drawPoint = NO_DRAWING_POINT;
 }
 
-void PainterView::setPixmap(const FileData& fileData) {
+void ImageView::setPixmap(const FileData& fileData) {
     pixmap_.loadFromData(fileData);
     scene()->addPixmap(pixmap_);
 
     scene()->setSceneRect(0, 0, pixmap_.width(), pixmap_.height());
 }
 
-QPixmap PainterView::getPixmap() {
+QPixmap ImageView::getPixmap() {
     return pixmap_;
 }
 
-void PainterView::clearAll() {
+void ImageView::clearAll() {
     scale(1. / scaleFactor_, 1. / scaleFactor_);
 
     scene()->clear();
     scene()->addPixmap(pixmap_);
 
     scaleFactor_ = 1;
-    drawPoint = QPoint(-1, -1);
+    drawPoint = NO_DRAWING_POINT;
 }
 
-void PainterView::setLinesColor(QColor color) {
+void ImageView::setLinesColor(QColor color) {
     linesPen_.setColor(color);
 }
 
-void PainterView::wheelEvent(QWheelEvent* event) {
+void ImageView::wheelEvent(QWheelEvent* event) {
     qreal factor = qPow(1.2, event->angleDelta().x() / 10.);
     scaleFactor_ *= factor;
     scale(factor, factor);
 }
 
-void PainterView::mouseMoveEvent(QMouseEvent *event) {
+void ImageView::mouseMoveEvent(QMouseEvent *event) {
     if (event->modifiers() == Qt::CTRL) {
-        if (drawPoint == QPoint(-1, -1)) {
+        if (drawPoint == NO_DRAWING_POINT) {
             drawPoint = event->pos();
             return;
         }

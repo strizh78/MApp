@@ -5,9 +5,9 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 
-class PainterView : public QGraphicsView {
+class ImageView : public QGraphicsView {
 public:
-    PainterView(QWidget *parent = nullptr);
+    ImageView(QWidget *parent = nullptr);
 
     void setPixmap(const FileData& fileData);
     QPixmap getPixmap();
@@ -21,7 +21,7 @@ protected:
 private:
     QPixmap pixmap_;
 
-    double scaleFactor_ = 1;
-    QPoint drawPoint = {-1, -1};
+    double scaleFactor_;
+    QPoint drawPoint;
     QPen linesPen_;
 };

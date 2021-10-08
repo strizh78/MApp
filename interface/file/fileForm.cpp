@@ -26,10 +26,11 @@ FileForm::FileForm(const File& file,
     database_->files->fileData(file_, data);
     viewer.setData(data);
 
-    layout()->addWidget(viewer.getDisplayWidget());
+    auto* fileDisplayWidget = viewer.getDisplayWidget();
+    layout()->addWidget(fileDisplayWidget);
 
-    resize(ui->infoWidget->geometry().width() + viewer.getDisplayWidget()->geometry().width(),
-           viewer.getDisplayWidget()->geometry().height());
+    resize(ui->infoWidget->geometry().width() + fileDisplayWidget->geometry().width(),
+           fileDisplayWidget->geometry().height());
 }
 
 FileForm::~FileForm() {

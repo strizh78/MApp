@@ -2,9 +2,9 @@
 
 #include "viewerInterface.h"
 
-#include "interface/imageViewer/imageEditor.h"
+#include "interface/imagePainter/imagePainter.h"
 
-class ImageViewer : public FileViewerInterface, public ImageEditor {
+class ImageViewer : public FileViewerInterface, public ImagePainter {
 public:
     ImageViewer(const QString& extension);
 

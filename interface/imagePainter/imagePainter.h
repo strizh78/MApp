@@ -5,15 +5,15 @@
 #include <QWidget>
 
 namespace Ui {
-class ImageEditor;
+class ImagePainter;
 }
 
-class ImageEditor : public QWidget {
+class ImagePainter : public QWidget {
     Q_OBJECT
 
 public:
-    explicit ImageEditor(QWidget *parent = nullptr);
-    ~ImageEditor();
+    explicit ImagePainter(QWidget *parent = nullptr);
+    ~ImagePainter();
 
     void loadFile(const FileData& fileData);
     QPixmap getPixmap();
@@ -23,5 +23,5 @@ private slots:
     void on_lineColor_clicked();
 
 private:
-    Ui::ImageEditor *ui;
+    Ui::ImagePainter *ui;
 };
