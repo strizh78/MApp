@@ -78,7 +78,26 @@
     </layout>
    </item>
    <item>
-    <widget class="ImageView" name="imageView"/>
+    <widget class="ImageView" name="imageView">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAsNeeded</enum>
+     </property>
+     <property name="sizeAdjustPolicy">
+      <enum>QAbstractScrollArea::AdjustIgnored</enum>
+     </property>
+     <property name="dragMode">
+      <enum>QGraphicsView::NoDrag</enum>
+     </property>
+     <property name="transformationAnchor">
+      <enum>QGraphicsView::AnchorUnderMouse</enum>
+     </property>
+     <property name="viewportUpdateMode">
+      <enum>QGraphicsView::MinimalViewportUpdate</enum>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

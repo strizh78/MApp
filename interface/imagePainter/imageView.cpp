@@ -43,11 +43,16 @@ void ImageView::setLinesColor(QColor color) {
 }
 
 void ImageView::wheelEvent(QWheelEvent* event) {
+    setTransformationAnchor(QGraphicsView::AnchorViewCenter);
+
     qreal factor = qPow(1.2, event->angleDelta().x() / 10.);
     scaleFactor_ *= factor;
     scale(factor, factor);
-}
 
+    setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
+}
+#include <QGraphicsItem>
+#include <iostream>
 void ImageView::mouseMoveEvent(QMouseEvent *event) {
     if (event->modifiers() == Qt::CTRL) {
         if (drawPoint == NO_DRAWING_POINT) {
@@ -60,6 +65,14 @@ void ImageView::mouseMoveEvent(QMouseEvent *event) {
         drawPoint = event->pos();
 
         scene()->addLine(line, linesPen_);
+    } else if (event->modifiers() == Qt::ShiftModifier) {
+        QPointF point = mapToScene(event->pos());
+//        QRectF itemsRect(point.x() - 1, point.y() - 1, point.x() + 1, point.y() - 1);
+
+        foreach(auto item, scene()->items(point)) {
+            std::cout << item->type() << std::endl;
+            scene()->removeItem(item);
+        }
     } else {
         drawPoint = QPoint(-1, -1);
     }

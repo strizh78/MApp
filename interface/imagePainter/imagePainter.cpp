@@ -25,8 +25,6 @@ ImagePainter::ImagePainter(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->imageView->setScene(new QGraphicsScene());
-
-    ui->imageView->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
 }
 
 ImagePainter::~ImagePainter() {
