@@ -62,19 +62,6 @@
        </property>
       </widget>
      </item>
-     <item>
-      <widget class="QPushButton" name="lineColor">
-       <property name="maximumSize">
-        <size>
-         <width>50</width>
-         <height>30</height>
-        </size>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
     </layout>
    </item>
    <item>
@@ -92,7 +79,7 @@
       <enum>QGraphicsView::NoDrag</enum>
      </property>
      <property name="transformationAnchor">
-      <enum>QGraphicsView::AnchorUnderMouse</enum>
+      <enum>QGraphicsView::AnchorViewCenter</enum>
      </property>
      <property name="viewportUpdateMode">
       <enum>QGraphicsView::MinimalViewportUpdate</enum>

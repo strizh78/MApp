@@ -20,7 +20,6 @@ public:
 
 private slots:
     void on_backToOriginal_clicked();
-    void on_lineColor_clicked();
 
 private:
     Ui::ImagePainter *ui;
