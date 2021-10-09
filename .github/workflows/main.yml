@@ -1,0 +1,51 @@
+name: Tests
+
+on: [push, pull_request]
+
+jobs:
+  windows:
+    name: Windows Test
+    runs-on: windows-latest
+    steps:
+      - name: MSVC Environment Setup
+        uses: ilammy/msvc-dev-cmd@v1
+      - name: Checkout
+        uses: actions/checkout@v2-beta
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: '5.15.2'
+      - name: Run QMake
+        run: qmake AVS_avsV.pro
+      - name: Build
+        run: nmake
+      - name: Deploy
+        run: windeployqt.exe debug
+  linux:
+    name: Linux (Build only)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2-beta
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: '5.15.2'
+      - name: Run QMake
+        run: qmake AVS_avsV.pro
+      - name: Build
+        run: make
+  mac:
+    name: Mac (Build only)
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2-beta
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: '5.15.2'
+      - name: Run QMake
+        run: qmake AVS_avsV.pro
+      - name: Build
+        run: make
