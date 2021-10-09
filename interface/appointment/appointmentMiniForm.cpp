@@ -1,4 +1,4 @@
-#include "AppointmentMiniForm.h"
+#include "appointmentMiniForm.h"
 #include "ui_appointmentMiniForm.h"
 
 #include "appointmentForm.h"
