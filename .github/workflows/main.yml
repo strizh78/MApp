@@ -16,7 +16,7 @@ jobs:
         with:
           version: '5.15.2'
       - name: Run QMake
-        run: qmake AVS_avsV.pro
+        run: qmake MApp.pro
       - name: Build
         run: nmake
       - name: Deploy
@@ -32,7 +32,7 @@ jobs:
         with:
           version: '5.15.2'
       - name: Run QMake
-        run: qmake AVS_avsV.pro
+        run: qmake MApp.pro
       - name: Build
         run: make
   mac:
@@ -46,6 +46,6 @@ jobs:
         with:
           version: '5.15.2'
       - name: Run QMake
-        run: qmake AVS_avsV.pro
+        run: qmake MApp.pro
       - name: Build
         run: make
