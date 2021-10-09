@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   windows:
-    name: Windows Test
+    name: Windows
     runs-on: windows-latest
     steps:
       - name: MSVC Environment Setup
@@ -22,7 +22,7 @@ jobs:
       - name: Deploy
         run: windeployqt.exe debug
   linux:
-    name: Linux (Build only)
+    name: Linux
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -36,7 +36,7 @@ jobs:
       - name: Build
         run: make
   mac:
-    name: Mac (Build only)
+    name: Mac
     runs-on: macos-latest
     steps:
       - name: Checkout
