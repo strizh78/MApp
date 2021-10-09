@@ -43,6 +43,9 @@ MAppTable::MAppTable(QWidget *parent)
     ui->setupUi(this);
     ui->solutionBox->hide();
     setEmptyModel();
+
+    connect(ui->mainTable, &QTableView::doubleClicked, this, &MAppTable::on_table_doubleClicked);
+    connect(ui->binTable,  &QTableView::doubleClicked, this, &MAppTable::on_table_doubleClicked);
 }
 
 MAppTable::~MAppTable() {
@@ -138,17 +141,19 @@ void MAppTable::on_recoverBtn_clicked() {
 
 void MAppTable::on_searchString_textEdited(const QString &searchRequest) {
     QTableView* table = getCurrentTable();
-//    QStandardItemModel* model = getCurrentModel();
-    QStandardItemModel* model;
-    if (ui->tabWidget->currentIndex() == 0)
-        model =  mainTableModel.get();
-    else model =  binTableModel.get();
 
-    if (table->model() != model)
+    QStandardItemModel* baseModel;
+    if (ui->tabWidget->currentIndex() == 0) {
+        baseModel =  mainTableModel.get();
+    } else {
+        baseModel =  binTableModel.get();
+    }
+
+    if (table->model() != baseModel)
         delete table->model();
 
     auto* proxyModel = new MultiColumnSortFilterProxyModel();
-    proxyModel->setSourceModel(model);
+    proxyModel->setSourceModel(baseModel);
     table->setModel(proxyModel);
 
     QRegExp regExp(searchRequest,
@@ -171,15 +176,10 @@ void MAppTable::on_tabWidget_currentChanged(int index) {
     setFocusOnRow(getCurrentTable(), 0);
 }
 
-void MAppTable::on_mainTable_doubleClicked(const QModelIndex &index) {
+void MAppTable::on_table_doubleClicked(const QModelIndex &index) {
     auto model = getCurrentModel();
     QModelIndex curIndex = model->index(index.row(), 0);
     emit onTableDoubleClicked(model->data(curIndex, Qt::UserRole));
-}
-
-void MAppTable::on_binTable_doubleClicked(const QModelIndex &index) {
-    QModelIndex curIndex = binTableModel->index(index.row(), 0);
-    emit onTableDoubleClicked(binTableModel->data(curIndex, Qt::UserRole));
 }
 
 void MAppTable::on_solutionBox_accepted() {
@@ -268,11 +268,7 @@ void MAppTable::editDataInTable(const MAppBaseObj& data,
 }
 
 QStandardItemModel* MAppTable::getCurrentModel() {
-    auto table = getCurrentTable();
-    return (QStandardItemModel*) table->model();
-//    if (ui->tabWidget->currentIndex() == 0)
-//        return mainTableModel.get();
-//    return binTableModel.get();
+    return (QStandardItemModel*) getCurrentTable()->model();
 }
 
 QTableView* MAppTable::getCurrentTable() {
