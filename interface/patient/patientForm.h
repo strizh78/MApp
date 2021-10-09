@@ -27,8 +27,8 @@ signals:
 private slots:
     void fieldEdited();
 
-    void on_solutionBox_accepted();
-    void on_solutionBox_rejected();
+    void on_saveInfoBox_accepted();
+    void on_saveInfoBox_rejected();
 
     void on_dateEdit_userDateChanged(const QDate& date);
 

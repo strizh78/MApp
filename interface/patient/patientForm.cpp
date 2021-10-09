@@ -119,13 +119,13 @@ void PatientForm::fieldEdited() {
     isModified = true;
 }
 
-void PatientForm::on_solutionBox_accepted() {
+void PatientForm::on_saveInfoBox_accepted() {
     if (trySavePatient()) {
         close();
     }
 }
 
-void PatientForm::on_solutionBox_rejected() {
+void PatientForm::on_saveInfoBox_rejected() {
     close();
 }
 
@@ -165,7 +165,7 @@ void PatientForm::on_addAppointmentBtn_clicked() {
 
 void PatientForm::addAppointment(const Appointment& appointment) {
     auto* miniAppointmentForm = new AppointmentMiniForm(appointment, database_, this);
-    ui->appointmentsList->insertWidget(2, miniAppointmentForm);
+    ui->appointmentsList->insertWidget(/*after label and line*/ 2, miniAppointmentForm);
 
     ui->rightPart->setVisible(true);
 }
@@ -286,4 +286,3 @@ bool PatientForm::trySavePatient() {
     isModified = false;
     return true;
 }
-
