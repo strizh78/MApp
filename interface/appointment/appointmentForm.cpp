@@ -78,7 +78,7 @@ AppointmentForm::~AppointmentForm() {
 }
 
 void AppointmentForm::on_solutionBox_accepted() {
-    currentAppointment_.record = ui->appointmentRecord->getText();
+    currentAppointment_.record = ui->appointmentRecord->getHtml();
     currentAppointment_.isConducted |= isHeldNow;
 
     auto wrongFields = getInvalidFields(currentAppointment_, database_.get());
@@ -354,7 +354,7 @@ void AppointmentForm::fillAppointmentInfo() {
 
     ui->medicinesList->setText(getDrugsInfoString(currentAppointment_.medicines));
 
-    ui->appointmentRecord->setText(currentAppointment_.record);
+    ui->appointmentRecord->setHtml(currentAppointment_.record);
 }
 
 void AppointmentForm::on_conductAppointmentBtn_clicked() {

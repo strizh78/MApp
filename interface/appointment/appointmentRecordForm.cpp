@@ -12,29 +12,6 @@ AppointmentRecordForm::AppointmentRecordForm(QWidget *parent)
     setWindowModality(Qt::WindowModality::WindowModal);
 }
 
-void AppointmentRecordForm::resizeEvent(QResizeEvent *event) {
-    QWidget::resizeEvent(event);
-    int stringsNum = 0;
-    QString text = ui->fileTextEdit->toPlainText();
-    int currentLen = 0;
-    for (const auto& ch : text) {
-        if (ch == '\n') {
-            stringsNum++;
-            currentLen = 0;
-        } else {
-            if (++currentLen >= ui->scrollArea->width() / 15) {
-                stringsNum++;
-                currentLen = 0;
-            }
-        }
-    }
-
-    ui->fileTextEdit->setGeometry(ui->fileTextEdit->geometry().x(),
-                                  ui->fileTextEdit->geometry().y(),
-                                  ui->scrollArea->width(),
-                                  std::max(stringsNum * 17 + 15, ui->scrollArea->height()));
-}
-
 AppointmentRecordForm::~AppointmentRecordForm() {
     delete ui;
 }
@@ -43,12 +20,12 @@ void AppointmentRecordForm::setEditEnabled(bool enabled) {
     ui->fileTextEdit->setEnabled(enabled);
 }
 
-void AppointmentRecordForm::setText(const QString& text) {
-    ui->fileTextEdit->setText(text);
+void AppointmentRecordForm::setHtml(const QString& text) {
+    ui->fileTextEdit->setHtml(text);
 }
 
-QString AppointmentRecordForm::getText() {
-    return ui->fileTextEdit->toPlainText();
+QString AppointmentRecordForm::getHtml() {
+    return ui->fileTextEdit->toHtml();
 }
 
 void AppointmentRecordForm::closeEvent(QCloseEvent* event) {
@@ -58,7 +35,6 @@ void AppointmentRecordForm::closeEvent(QCloseEvent* event) {
 
 void AppointmentRecordForm::on_newTabBtn_clicked() {
     changeButtonsVisibility(false);
-    setGeometry(this->geometry().x(), this->geometry().y(), 400, 450);
     show();
 
     parentWidget()->adjustSize();
