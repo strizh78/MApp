@@ -4,9 +4,6 @@
 #include "interface/utils.h"
 #include "appointment/appointment.h"
 
-#include <QTabBar>
-#include <QBuffer>
-
 FileForm::FileForm(const File& file,
                    DatabasePtr database,
                    QWidget* parent)
@@ -29,7 +26,11 @@ FileForm::FileForm(const File& file,
     database_->files->fileData(file_, data);
     viewer.setData(data);
 
-    ui->allLayout->addWidget(viewer.getDisplayWidget());
+    auto* fileDisplayWidget = viewer.getDisplayWidget();
+    layout()->addWidget(fileDisplayWidget);
+
+    resize(ui->infoWidget->geometry().width() + fileDisplayWidget->geometry().width(),
+           fileDisplayWidget->geometry().height());
 }
 
 FileForm::~FileForm() {
