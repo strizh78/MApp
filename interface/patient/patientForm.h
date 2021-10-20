@@ -1,11 +1,9 @@
 #pragma once
 
 #include "patient/patient.h"
-#include "appointment/appointment.h"
 #include "database/databaseInterface.h"
 
 #include <QWidget>
-#include <QStandardItemModel>
 
 namespace Ui {
 class PatientForm;
@@ -47,7 +45,6 @@ private:
 
 private:
     Ui::PatientForm *ui;
-    std::shared_ptr<QStandardItemModel> infoViewModel_;
 
     Patient patient_;
     DatabasePtr database_;

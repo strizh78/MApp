@@ -20,5 +20,5 @@ private:
     void init();
 private:
     std::map <QString, FileViewType> viewTypes;
-    FileViewerInterface* viewer_;
+    std::shared_ptr<FileViewerInterface> viewer_;
 };

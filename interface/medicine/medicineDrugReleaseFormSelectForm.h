@@ -26,7 +26,7 @@ private slots:
      void on_buttonBox_rejected();
 
 private:
-    void fillForm(const std::vector<ReleaseForm>& selectedReleaseForms);
+    void fillForm(const std::vector<ReleaseForm>& selectedForms);
 
 private:
     Ui::MedicineDrugReleaseFormSelectForm *ui;

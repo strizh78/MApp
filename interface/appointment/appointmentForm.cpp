@@ -11,7 +11,6 @@
 #include "interface/utils.h"
 #include "timetable/timetableUtils.h"
 
-#include <QPixmap>
 #include <QPainter>
 #include <QMessageBox>
 #include <QCloseEvent>
@@ -79,7 +78,7 @@ AppointmentForm::~AppointmentForm() {
 
 void AppointmentForm::on_solutionBox_accepted() {
     currentAppointment_.record = ui->appointmentRecord->getHtml();
-    currentAppointment_.isConducted |= isHeldNow;
+    currentAppointment_.isConducted |= isHeldNow_;
 
     auto wrongFields = getInvalidFields(currentAppointment_, database_.get());
     if (!wrongFields.empty()) {
@@ -95,7 +94,7 @@ void AppointmentForm::on_solutionBox_accepted() {
         emit appointmentCreateSignal(currentAppointment_);
     }
 
-    isHeldNow = false;
+    isHeldNow_ = false;
     close();
 }
 
@@ -291,18 +290,16 @@ void AppointmentForm::setupStatus() {
     QString status = "";
     switch (currentAppointment_.getTimeType()) {
     case Appointment::PAST:
-        if (currentAppointment_.isConducted)
-            status = "Приём проведен.";
-        else
-            status = "Время приёма прошло. Приём не был проведён.";
+        status = currentAppointment_.isConducted ? "Приём проведен." : "Время приёма прошло. Приём не был проведён.";
         break;
     case Appointment::PRESENT:
-        if (currentAppointment_.isConducted)
+        if (currentAppointment_.isConducted) {
             status = "Приём проведен.";
-        else if (isHeldNow)
+        } else if (isHeldNow_) {
             status = "Приём проводится.";
-        else
+        } else{
             status = "Сейчас время приёма. Приём может быть проведён.";
+        }
         break;
     case Appointment::FUTURE:
         status = "Приём запланирован.";
@@ -358,7 +355,7 @@ void AppointmentForm::fillAppointmentInfo() {
 }
 
 void AppointmentForm::on_conductAppointmentBtn_clicked() {
-    isHeldNow = true;
+    isHeldNow_ = true;
     setEditFieldsEnabled(false);
     ui->conductAppointmentBtn->hide();
 
@@ -379,7 +376,7 @@ void AppointmentForm::on_conductAppointmentBtn_clicked() {
 }
 
 void AppointmentForm::closeEvent(QCloseEvent *event) {
-    if (isHeldNow) {
+    if (isHeldNow_) {
         auto button = QMessageBox::warning(this, "Сейчас проводится приём!", "Желаете сохранить изменения?",
                                            QDialogButtonBox::StandardButton::Save, QDialogButtonBox::StandardButton::Cancel);
         if (button == QDialogButtonBox::StandardButton::Save) {

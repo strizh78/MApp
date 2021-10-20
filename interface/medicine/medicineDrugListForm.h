@@ -27,7 +27,7 @@ private slots:
     void onAddButtonClicked();
     void onEditButtonClicked(const QVariant &data);
     void onDeleteButtonClicked(const QVariant &data);
-    void addMedicineDrug(const medicine::Drug& drug);
+    void addMedicineDrug(const medicine::Drug& newDrug);
     void editMedicineDrug(const medicine::Drug& drug);
 
 private:

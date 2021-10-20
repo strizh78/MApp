@@ -55,8 +55,9 @@ void MedicineDrugForm::on_addDosagesBtn_clicked() {
     int rowCount = dosagesModel_->rowCount();
     ui->dosages->edit(dosagesModel_->index(rowCount - 1, 0));
 
-    if (rowCount == 1)
+    if (rowCount == 1) {
         setButtonsEnabled(true);
+    }
 }
 
 void MedicineDrugForm::on_deleteDosageBtn_clicked() {
@@ -91,7 +92,7 @@ void MedicineDrugForm::on_buttonBox_accepted() {
 
     drug_.name = ui->name->text();
     drug_.activeSubstance = ui->activeSubstance->text();
-    drug_.activeSubstancetLat = ui->activeSubstanceLat->text();
+    drug_.activeSubstanceLat = ui->activeSubstanceLat->text();
     drug_.isPrescription = ui->prescription->isChecked();
     drug_.releaseForms = releaseForms_;
     drug_.brandNames = brands_;
@@ -116,10 +117,12 @@ void MedicineDrugForm::on_buttonBox_rejected() {
 void MedicineDrugForm::fillLabelFromVector(QLabel* label, const std::vector<QString>& data) {
     label->setText(toString(data, ", "));
 
-    if (label == ui->releaseForms)
+    if (label == ui->releaseForms) {
         releaseForms_ = data;
-    if (label == ui->brands)
+    }
+    if (label == ui->brands) {
         brands_ = data;
+    }
 }
 
 void MedicineDrugForm::dosageEdit(const Dosage &dosage) {
@@ -144,7 +147,7 @@ void MedicineDrugForm::init() {
         setWindowTitle("Лекарство " + drug_.getFullName());
         ui->name->setText(drug_.getFullName());
         ui->activeSubstance->setText(drug_.activeSubstance);
-        ui->activeSubstanceLat->setText(drug_.activeSubstancetLat);
+        ui->activeSubstanceLat->setText(drug_.activeSubstanceLat);
         ui->prescription->setChecked(drug_.isPrescription);
         ui->contraindications->setText(drug_.contraindications);
         ui->price->setText(QString::number(drug_.price));
@@ -181,9 +184,7 @@ std::optional<std::vector<QString>> MedicineDrugForm::isValid() {
         invalidFields.push_back(ui->activeSubstanceLatLabel->text());
     }
 
-    if (invalidFields.empty())
-        return std::nullopt;
-    return invalidFields;
+    return invalidFields.empty() ? std::nullopt : std::make_optional(invalidFields);
 }
 
 void MedicineDrugForm::fillDosagesList() {
@@ -224,8 +225,9 @@ std::vector<Dosage> MedicineDrugForm::getDosages() {
     for (int i = 0; i < dosagesModel_->rowCount(); ++i) {
         auto data = dosagesModel_->item(i, 0)->text();
 
-        if (!data.isEmpty())
+        if (!data.isEmpty()) {
             dosages.push_back(data);
+        }
     }
     return dosages;
 }

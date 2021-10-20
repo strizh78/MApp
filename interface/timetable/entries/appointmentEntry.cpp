@@ -19,8 +19,9 @@ void TimetableAppointment::openForm(std::shared_ptr<DatabaseInterface> database,
     auto * appointmentViewForm = new AppointmentForm(database, appointment, parent);
     parent->connect(appointmentViewForm, SIGNAL(appointmentEditSignal(Appointment)),
                     parent, SLOT(update()));
-    if (show)
+    if (show) {
         showAsWindowModal(appointmentViewForm);
+    }
     return;
 }
 

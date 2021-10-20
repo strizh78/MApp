@@ -19,7 +19,9 @@ void TimetableEvent::openForm(std::shared_ptr<DatabaseInterface> database, QWidg
     auto * eventViewForm = new EventForm(database, event, EventForm::EDIT, parent);
     parent->connect(eventViewForm, SIGNAL(edited(Event)),
                     parent, SLOT(update()));
-    if (show) showAsWindowModal(eventViewForm);
+    if (show) {
+        showAsWindowModal(eventViewForm);
+    }
     return;
 }
 

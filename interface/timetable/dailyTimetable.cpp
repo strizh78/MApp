@@ -11,8 +11,8 @@
 
 DailyTimetable::DailyTimetable(QWidget *parent)
     : QWidget(parent)
+    , date_(QDate::currentDate())
 {
-    date_ = QDate::currentDate();
 
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(update()));
@@ -116,7 +116,7 @@ void DailyTimetable::drawTimeLine(QPainter & painter, QTime time, QColor color, 
     painter.setPen(savedPen);
 }
 
-QTime getTime(const QPoint& point, TimetableDrawSettings& settings) {
+QTime getTime(const QPoint& point, const TimetableDrawSettings& settings) {
     int hour = ((point.y() - settings.startYCoordinate) / settings.oneHourHeight + settings.firstTimetableHour) % 24;
     QTime time(hour, 0);
 

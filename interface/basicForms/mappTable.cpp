@@ -149,8 +149,9 @@ void MAppTable::on_searchString_textEdited(const QString &searchRequest) {
         baseModel =  binTableModel.get();
     }
 
-    if (table->model() != baseModel)
+    if (table->model() != baseModel) {
         delete table->model();
+    }
 
     auto* proxyModel = new MultiColumnSortFilterProxyModel();
     proxyModel->setSourceModel(baseModel);
@@ -272,20 +273,23 @@ QStandardItemModel* MAppTable::getCurrentModel() {
 }
 
 QTableView* MAppTable::getCurrentTable() {
-    if (ui->tabWidget->currentIndex() == 0)
+    if (ui->tabWidget->currentIndex() == 0) {
         return ui->mainTable;
+    }
     return ui->binTable;
 }
 
 QStandardItemModel* MAppTable::modelByData(const MAppBaseObj& data) {
-    if (data.isDeleted())
+    if (data.isDeleted()) {
         return binTableModel.get();
+    }
     return mainTableModel.get();
 }
 
 QTableView* MAppTable::tableByData(const MAppBaseObj& data) {
-    if (data.isDeleted())
+    if (data.isDeleted()) {
         return ui->binTable;
+    }
     return ui->mainTable;
 }
 

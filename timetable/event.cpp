@@ -1,6 +1,6 @@
 #include "event.h"
 
-Event::Event(QString title, QDateTime dateTime, QTime duration)
+Event::Event(const QString& title, QDateTime dateTime, QTime duration)
     : title(title)
     , dateTime(dateTime)
     , duration(duration)

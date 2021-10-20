@@ -29,7 +29,7 @@ private slots:
 
 private:
     void setupTableSettings();
-    void fillHomeopathyTable(const std::vector<homeopathy::Drug> &homeopatyList);
+    void fillHomeopathyTable(const std::vector<homeopathy::Drug> &homeopathyList);
 
 private:
     Ui::HomeopathyDrugListForm *ui;

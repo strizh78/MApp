@@ -67,6 +67,8 @@ public:
     TimetableEntry(const T &t, const TimetableDrawSettings& settings)
         : drawer(t, settings)
     {}
+    virtual ~TimetableEntry() = default;
+
 
     void draw(QPainter& painter) const;
     bool rectContainsPoint(const QPoint &point) const;

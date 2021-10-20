@@ -47,8 +47,9 @@ void MedicineDrugBrandSelectForm::on_buttonBox_accepted() {
         auto index = listModel.get()->index(rowId);
         QString data = listModel.get()->data(index).toString();
 
-        if (!data.isEmpty())
+        if (!data.isEmpty()) {
             brands.push_back(data);
+        }
     }
     emit brandsSelectedSignal(label_, brands);
     close();

@@ -77,9 +77,7 @@ std::optional<std::vector<QString> > HomeopathyDrugForm::isValid() {
         invalidFields.push_back(ui->nameLabel->text());
     }
 
-    if (invalidFields.empty())
-        return std::nullopt;
-    return invalidFields;
+    return invalidFields.empty() ? std::nullopt : std::make_optional(invalidFields);
 }
 
 void HomeopathyDrugForm::init() {

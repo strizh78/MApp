@@ -102,7 +102,6 @@ PatientForm::PatientForm(DatabasePtr database,
                          QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::PatientForm)
-    , infoViewModel_(std::make_shared<QStandardItemModel>())
     , patient_(patient.value_or(Patient()))
     , database_(database)
 {
@@ -190,7 +189,6 @@ void PatientForm::setupUi() {
 
     connect(ui->nameEdit, SIGNAL(textChanged(QString)), this, SLOT(fieldEdited()));
     connect(ui->dateEdit, SIGNAL(userDateChanged(QDate)), this, SLOT(fieldEdited()));
-    connect(ui->additionalInfo, SIGNAL(textChanged(QString)), this, SLOT(fieldEdited()));
 
     if (patient_.isExists()) {
         setWindowTitle("Пациент " + patient_.nameInfo.getInitials());

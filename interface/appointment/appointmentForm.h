@@ -74,5 +74,5 @@ private:
 
     Appointment currentAppointment_;
 
-    bool isHeldNow = false;
+    bool isHeldNow_ = false;
 };

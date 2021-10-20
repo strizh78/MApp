@@ -129,16 +129,10 @@ QList<QStandardItem*> createAppointmentRow(const Appointment& appointment) {
     QString statusStr = "";
     switch (appointment.getTimeType()) {
     case Appointment::PAST:
-        if (appointment.isConducted)
-            statusStr = "Приём проведен.";
-        else
-            statusStr = "Приём пропущен.";
+        statusStr = appointment.isConducted ? "Приём проведен." : "Приём пропущен.";
         break;
     case Appointment::PRESENT:
-        if (appointment.isConducted)
-            statusStr = "Приём проведен.";
-        else
-            statusStr = "Сейчас время приёма.";
+        statusStr = appointment.isConducted ? "Приём проведен." : "Сейчас время приёма.";
         break;
     case Appointment::FUTURE:
         statusStr = "Приём запланирован.";

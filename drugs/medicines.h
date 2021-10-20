@@ -32,7 +32,7 @@ public:
     Drug() = default;
     Drug(const QString& name,
          const QString& activeSubstance,
-         const QString& activeSubstancetLat,
+         const QString& activeSubstanceLat,
          bool isPrescription,
          const std::vector<ReleaseForm>& releaseForms,
          const std::vector<QString>& brandNames,
@@ -47,7 +47,7 @@ public:
 public:
     QString name;
     QString activeSubstance;
-    QString activeSubstancetLat;
+    QString activeSubstanceLat;
     bool isPrescription;
     std::vector<ReleaseForm> releaseForms;
     std::vector<QString> brandNames;

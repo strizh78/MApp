@@ -51,7 +51,6 @@ std::optional<Dosage> fromParser(const QString& dosage) {
 }
 
 std::optional<Dosage> toParser(const QString& dosage) {
-    Dosage parseResult;
     if (!QRegExp("до \\d+ .{1,7} .+")
         .exactMatch(dosage.toLower()))
     {
