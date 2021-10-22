@@ -34,6 +34,8 @@ private slots:
 
     void addAppointment(const Appointment& appointment);
 
+    void on_nameEdit_editingFinished();
+
 private:
     void setupUi();
 

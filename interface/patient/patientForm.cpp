@@ -191,7 +191,7 @@ void PatientForm::setupUi() {
     connect(ui->dateEdit, SIGNAL(userDateChanged(QDate)), this, SLOT(fieldEdited()));
 
     if (patient_.isExists()) {
-        setWindowTitle("Пациент " + patient_.nameInfo.getInitials());
+        setWindowTitle("Пациент " + patient_.nameInfo.initials);
     } else {
         setWindowTitle("Создание пациента");
     }
@@ -203,6 +203,7 @@ void PatientForm::fillFormPatientInfo() {
     }
 
     ui->nameEdit->setText(patient_.nameInfo.getFullName());
+    ui->initialsEdit->setText(patient_.nameInfo.initials);
     ui->dateEdit->setDate(patient_.birthDate);
 
     ui->adressesList->setDataList(patient_.address);
@@ -249,14 +250,7 @@ void PatientForm::setupAppointmentsInfo() {
 }
 
 Patient PatientForm::buildPatientFromFormData() {
-    auto splittedName = ui->nameEdit->text().split(' ');
-
-    Patient::NameInfo nameInfo;
-    nameInfo.surname = (splittedName.size() >= 1) ? splittedName[0] : "";
-    nameInfo.name = (splittedName.size() >= 2) ? splittedName[1] : "";
-    nameInfo.patronymic = (splittedName.size() >= 3) ? splittedName[2] : "";
-
-    patient_.nameInfo = nameInfo;
+    patient_.nameInfo.initials = ui->initialsEdit->text();
     patient_.birthDate = ui->dateEdit->date();
 
     patient_.address = ui->adressesList->getDataList();
@@ -283,4 +277,9 @@ bool PatientForm::trySavePatient() {
 
     isModified = false;
     return true;
+}
+
+void PatientForm::on_nameEdit_editingFinished() {
+    patient_.nameInfo = Patient::NameInfo(ui->nameEdit->text());
+    ui->initialsEdit->setText(patient_.nameInfo.initials);
 }

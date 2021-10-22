@@ -10,12 +10,20 @@
 class Patient : public MAppBaseObj {
 public:
     struct NameInfo {
+        NameInfo() = default;
+        NameInfo(const QString& name, const QString& surname, const QString& patronymic);
+        NameInfo(const QString& fullName);
+
         QString getFullName() const;
         QString getInitials() const;
 
         QString name;
         QString surname;
         QString patronymic;
+        QString initials;
+
+        private:
+            void updateInitials();
     };
 
     Patient() = default;

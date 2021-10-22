@@ -60,7 +60,7 @@ namespace CreateRows {
 QList<QStandardItem*> createPatientRow(const Patient& patient) {
     QList<QStandardItem*> lst;
 
-    QStandardItem* initials = new QStandardItem(patient.nameInfo.getInitials());
+    QStandardItem* initials = new QStandardItem(patient.nameInfo.initials);
     initials->setData(getModelData(patient), Qt::UserRole);
 
     QStandardItem* birthDate = new QStandardItem(patient.birthDate.toString("d MMMM yyyy"));
@@ -120,7 +120,7 @@ QList<QStandardItem*> createHomeopathyDrugRow(const homeopathy::Drug& drug) {
 QList<QStandardItem*> createAppointmentRow(const Appointment& appointment) {
     QList<QStandardItem*> lst;
 
-    QStandardItem* patientName = new QStandardItem(appointment.patient.nameInfo.getInitials());
+    QStandardItem* patientName = new QStandardItem(appointment.patient.nameInfo.initials);
     patientName->setData(getModelData(appointment), Qt::UserRole);
 
     QStandardItem* serviceName = new QStandardItem(appointment.service.name);

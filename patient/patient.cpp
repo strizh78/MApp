@@ -1,15 +1,39 @@
 #include "patient.h"
 
+Patient::NameInfo::NameInfo(const QString& name,
+                            const QString& surname,
+                            const QString& patronymic)
+    : name(name)
+    , surname(surname)
+    , patronymic(patronymic)
+{
+    updateInitials();
+}
+
+Patient::NameInfo::NameInfo(const QString& fullName) {
+    auto splittedName = fullName.split(' ');
+
+    surname = (splittedName.size() >= 1) ? splittedName[0] : "";
+    name = (splittedName.size() >= 2) ? splittedName[1] : "";
+    patronymic = (splittedName.size() >= 3) ? splittedName[2] : "";
+
+    updateInitials();
+}
+
 QString Patient::NameInfo::getFullName() const {
     return surname + ' ' + name + ' ' + patronymic;
 }
 
-QString Patient::NameInfo::getInitials() const {
-    QString initials = surname + ' ' + name[0] + '.';
-    if (!patronymic.isEmpty()) {
-        initials += patronymic[0] + '.';
+void Patient::NameInfo::updateInitials() {
+    if (surname.isEmpty() || name.isEmpty()) {
+        initials = "";
+        return;
     }
-    return initials;
+
+    initials = surname + ' ' + name[0] + ".";
+    if (!patronymic.isEmpty()) {
+        initials += patronymic[0] + ".";
+    }
 }
 
 Patient::Patient(const NameInfo& nameInfo, QDate birthDate)

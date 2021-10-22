@@ -207,7 +207,7 @@ void AppointmentForm::on_copyAppointmentBtn_clicked() {
 
 void AppointmentForm::patientChoosed(QVariant data) {
     currentAppointment_.patient = *getValueFromModelData<Patient>(data);
-    ui->patientEdit->setText(currentAppointment_.patient.nameInfo.getInitials());
+    ui->patientEdit->setText(currentAppointment_.patient.nameInfo.initials);
     ((QWidget*)sender())->close();
 }
 
@@ -338,7 +338,7 @@ void AppointmentForm::setRecordHidden(bool visible) {
 
 void AppointmentForm::fillAppointmentInfo() {
     if (currentAppointment_.patient.isExists()) {
-        ui->patientEdit->setText(currentAppointment_.patient.nameInfo.getInitials());
+        ui->patientEdit->setText(currentAppointment_.patient.nameInfo.initials);
     }
     if (currentAppointment_.service.isExists()) {
         ui->serviceEdit->setText(currentAppointment_.service.name);
