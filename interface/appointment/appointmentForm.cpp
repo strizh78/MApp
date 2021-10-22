@@ -188,7 +188,7 @@ void AppointmentForm::on_homeopathyViewBtn_clicked() {
 }
 
 void AppointmentForm::on_openRecordBtn_clicked(bool checked) {
-    setRecordVisible(checked);
+    setRecordHidden(checked);
 }
 
 void AppointmentForm::on_copyAppointmentBtn_clicked() {
@@ -237,9 +237,10 @@ void AppointmentForm::medicineChoosed(std::vector<QVariant> data) {
 void AppointmentForm::setupCreateUi() {
     setWindowTitle("Создание приёма");
     hideDrugs();
-    setRecordVisible(false);
 
-    ui->openRecordBtn->setChecked(false);
+    setRecordHidden(true);
+    ui->openRecordBtn->hide();
+
     ui->copyAppointmentBtn->hide();
 
     ui->statusIcon->hide();
@@ -259,7 +260,7 @@ void AppointmentForm::setupAppointmentTimeType() {
     ui->conductAppointmentBtn->setVisible(currentAppointment_.getTimeType() == Appointment::PRESENT && !currentAppointment_.isConducted);
     setEditFieldsEnabled(!currentAppointment_.isConducted);
 
-    setRecordVisible(false);
+    setRecordHidden(false);
     ui->appointmentRecord->setEditEnabled(false);
 
     if (currentAppointment_.record.isEmpty()) {
@@ -324,7 +325,7 @@ void AppointmentForm::hideDrugs() {
     adjustSize();
 }
 
-void AppointmentForm::setRecordVisible(bool visible) {
+void AppointmentForm::setRecordHidden(bool visible) {
     if (!ui->openRecordBtn->isEnabled()) {
         return;
     }
@@ -364,7 +365,7 @@ void AppointmentForm::on_conductAppointmentBtn_clicked() {
     ui->openRecordBtn->setEnabled(true);
     ui->openRecordBtn->setIcon(QIcon(":/icons/transfer.png"));
     ui->openRecordBtn->setText("Открыть запись приёма");
-    setRecordVisible(false);
+    setRecordHidden(false);
 
     ui->homeopathyEdit->setEnabled(true);
     ui->homeopathyChooseBtn->setEnabled(true);
