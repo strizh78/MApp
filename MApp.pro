@@ -1,5 +1,6 @@
 QT       += core gui
 QT       += testlib
+QT       += webenginewidgets
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
@@ -38,6 +39,7 @@ SOURCES += \
     interface/basicForms/tableSettingsForm.cpp \
     interface/file/displayWidgets/displayManager.cpp \
     interface/file/displayWidgets/imageViewer.cpp \
+    interface/file/displayWidgets/pdfViewer.cpp \
     interface/file/displayWidgets/textViewer.cpp \
     interface/file/displayWidgets/viewerInterface.cpp \
     interface/basicForms/editableList/editableList.cpp \
@@ -115,6 +117,7 @@ HEADERS += \
     interface/basicForms/tableSettingsForm.h \
     interface/file/displayWidgets/displayManager.h \
     interface/file/displayWidgets/imageViewer.h \
+    interface/file/displayWidgets/pdfViewer.h \
     interface/file/displayWidgets/textViewer.h \
     interface/file/displayWidgets/viewerInterface.h \
     interface/basicForms/editableList/editableList.h \
@@ -191,6 +194,12 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+copydata.commands = $(COPY_DIR) $$PWD/contrib/pdf.js $$OUT_PWD
+first.depends = $(first) copydata
+export(first.depends)
+export(copydata.commands)
+QMAKE_EXTRA_TARGETS += first copydata
 
 RESOURCES += \
     interface/icons.qrc \

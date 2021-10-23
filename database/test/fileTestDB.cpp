@@ -53,7 +53,9 @@ FilesDBTest::FilesDBTest(ItemDBInterface<Appointment>* appointment) {
         FullFileData(File("Заключение", "txt"), longString.toLocal8Bit(), parentCode),
         FullFileData(File("Рентген", "png"), getFileBytes(":/icons/trash.png"), parentCode),
         FullFileData(File("Рецепт из братска от 2017", "jpeg"),
-                     getFileBytes(":/test_files/test_jpeg_image.jpeg"), parentCode)
+                     getFileBytes(":/test_files/test_jpeg_image.jpeg"), parentCode),
+        FullFileData(File("присланная медкарта", "pdf"),
+                     getFileBytes(":/test_files/присланная медкарта.pdf"), parentCode)
     };
 
     for (auto& item : fullList) {

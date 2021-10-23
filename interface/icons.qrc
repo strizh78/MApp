@@ -20,5 +20,6 @@
         <file>icons/right-arrow.png</file>
         <file>icons/start.png</file>
         <file>test_files/test_jpeg_image.jpeg</file>
+        <file>test_files/присланная медкарта.pdf</file>
     </qresource>
 </RCC>

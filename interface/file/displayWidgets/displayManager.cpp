@@ -2,6 +2,7 @@
 
 #include "imageViewer.h"
 #include "textViewer.h"
+#include "pdfViewer.h"
 
 FileDisplayManager::FileDisplayManager(const File& file) {
     init();
@@ -13,6 +14,9 @@ FileDisplayManager::FileDisplayManager(const File& file) {
         break;
     case FileViewType::TEXT:
         viewer_ = std::make_shared<TextViewer>(extension);
+        break;
+    case FileViewType::PDF:
+        viewer_ = new PdfViewer(extension);
         break;
     }
 }
@@ -34,4 +38,5 @@ void FileDisplayManager::init() {
     viewTypes["TXT"] = FileViewType::TEXT;
     viewTypes["JPG"] = FileViewType::IMAGE;
     viewTypes["JPEG"] = FileViewType::IMAGE;
+    viewTypes["PDF"] = FileViewType::PDF;
 }

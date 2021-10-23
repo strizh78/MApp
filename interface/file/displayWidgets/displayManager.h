@@ -14,7 +14,8 @@ public:
 private:
     enum class FileViewType {
         IMAGE,
-        TEXT
+        TEXT,
+        PDF
     };
 
     void init();
