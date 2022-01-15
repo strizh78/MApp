@@ -1,6 +1,6 @@
 QT       += core gui
 QT       += testlib
-QT       += webenginewidgets
+!win32: !win64: QT       += webenginewidgets
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
@@ -197,11 +197,13 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-copydata.commands = $(COPY_DIR) $$PWD/contrib/pdf.js $$OUT_PWD
-first.depends = $(first) copydata
-export(first.depends)
-export(copydata.commands)
-QMAKE_EXTRA_TARGETS += first copydata
+!win32: !win64 {
+    copydata.commands = $(COPY_DIR) $$PWD/contrib/pdf.js $$OUT_PWD
+    first.depends = $(first) copydata
+    export(first.depends)
+    export(copydata.commands)
+    QMAKE_EXTRA_TARGETS += first copydata
+}
 
 RESOURCES += \
     interface/icons.qrc \

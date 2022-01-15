@@ -2,6 +2,8 @@
 
 #include "viewerInterface.h"
 
+#include <memory>
+
 class FileDisplayManager {
 public:
     FileDisplayManager(const File& file);

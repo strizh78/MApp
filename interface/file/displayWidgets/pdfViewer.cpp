@@ -31,7 +31,9 @@ void PdfViewer::setData(const FileData& data) {
     tmpFile_.write(data);
 
     const QString pdfFileURL = QString("file://" +  tmpFile_.fileName());
+#ifndef Q_OS_WINDOWS
     load(QUrl::fromUserInput(pathToPDFjs_ + QString("?file=") + pdfFileURL));
+#endif
 }
 
 QWidget* PdfViewer::widget() {

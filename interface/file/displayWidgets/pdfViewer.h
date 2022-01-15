@@ -2,10 +2,20 @@
 
 #include "viewerInterface.h"
 
+#include <QWidget>
 #include <QTemporaryFile>
-#include <QWebEngineView>
 
-class PdfViewer : public FileViewerInterface, public QWebEngineView {
+#ifndef Q_OS_WINDOWS
+#include <QWebEngineView>
+#endif
+
+class PdfViewer : public FileViewerInterface
+        #ifndef Q_OS_WINDOWS
+            , public QWebEngineView
+        #else
+            , public QWidget
+        #endif
+{
 public:
     PdfViewer(const QString& extension);
 
