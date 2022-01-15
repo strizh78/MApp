@@ -2,7 +2,7 @@
 
 #include "interface/appointment/appointmentForm.h"
 
-#include "interface/utils.h"
+#include "interface/interfaceUtils.h"
 #include "timetable/timetableUtils.h"
 
 std::shared_ptr<TimetableEntry> getEntry(const Appointment& x, const TimetableDrawSettings& settings) {

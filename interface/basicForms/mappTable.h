@@ -1,7 +1,7 @@
 #pragma once
 
 #include "MAppBaseObj/mappBaseObj.h"
-#include "interface/utils.h"
+#include "interface/interfaceUtils.h"
 
 #include <QStandardItemModel>
 #include <QTableView>

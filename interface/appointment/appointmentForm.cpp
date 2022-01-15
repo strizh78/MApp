@@ -8,7 +8,8 @@
 
 #include "interface/basicForms/mappTable.h"
 
-#include "interface/utils.h"
+#include "utils/utils.h"
+#include "interface/interfaceUtils.h"
 #include "timetable/timetableUtils.h"
 
 #include <QPainter>

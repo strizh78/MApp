@@ -3,7 +3,7 @@
 #include "interface/appointment/appointmentForm.h"
 #include "interface/timetable/event/eventForm.h"
 
-#include "interface/utils.h"
+#include "interface/interfaceUtils.h"
 #include "timetable/timetableUtils.h"
 
 #include <QTime>

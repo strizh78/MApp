@@ -1,7 +1,7 @@
 #include "dosageForm.h"
 #include "ui_dosageForm.h"
 
-#include "interface/utils.h"
+#include "interface/interfaceUtils.h"
 
 DosageForm::DosageForm(const Dosage& dosage, QWidget* parent)
     : QWidget(parent)

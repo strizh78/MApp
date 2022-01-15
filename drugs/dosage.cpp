@@ -1,22 +1,13 @@
 #include "dosage.h"
 
+#include "utils/utils.h"
+
 #include <QStringList>
 #include <QRegExp>
 
 #include <optional>
 
 namespace {
-QString combineDosageText(QStringList::iterator begin, QStringList::iterator end) {
-    QString dosage = "";
-
-    for (auto it = begin; it != end; ++it) {
-        dosage.push_back(QString(*it) + ' ');
-    }
-    dosage.chop(1);
-
-    return dosage;
-}
-
 int parseAge(int age, const QString& ageType) {
     if (ageType.toLower().startsWith("мес")) {
         return age;
@@ -34,7 +25,7 @@ std::optional<Dosage> fullParser(const QString& dosage) {
     return Dosage(
             parseAge(words[1].toInt(), words[2]),
             parseAge(words[4].toInt(), words[5]),
-            combineDosageText(words.begin() + 6, words.end()));
+            toString(words.begin() + 6, words.end()));
 }
 
 std::optional<Dosage> fromParser(const QString& dosage) {
@@ -47,7 +38,7 @@ std::optional<Dosage> fromParser(const QString& dosage) {
     return Dosage(
             parseAge(words[1].toInt(), words[2]),
             DOSAGE_AGE_NO_VALUE,
-            combineDosageText(words.begin() + 3, words.end()));
+            toString(words.begin() + 3, words.end()));
 }
 
 std::optional<Dosage> toParser(const QString& dosage) {
@@ -60,7 +51,7 @@ std::optional<Dosage> toParser(const QString& dosage) {
     return Dosage(
             DOSAGE_AGE_NO_VALUE,
             parseAge(words[1].toInt(), words[2]),
-            combineDosageText(words.begin() + 3, words.end()));
+            toString(words.begin() + 3, words.end()));
 }
 }
 

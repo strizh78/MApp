@@ -3,7 +3,7 @@
 #include "timetable/event.h"
 #include "appointment/appointment.h"
 
-#include "interface/utils.h"
+#include "interface/interfaceUtils.h"
 #include "timetable/timetableUtils.h"
 
 TimetableEntryDrawer::TimetableEntryDrawer(const Appointment &appointment, const TimetableDrawSettings& settings)

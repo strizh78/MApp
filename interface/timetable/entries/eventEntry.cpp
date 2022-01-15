@@ -2,7 +2,7 @@
 
 #include "interface/timetable/event/eventForm.h"
 
-#include "interface/utils.h"
+#include "interface/interfaceUtils.h"
 #include "timetable/timetableUtils.h"
 
 std::shared_ptr<TimetableEntry> getEntry(const Event& x, const TimetableDrawSettings& settings) {

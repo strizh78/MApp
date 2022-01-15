@@ -3,7 +3,7 @@
 
 #include "event/eventForm.h"
 
-#include "interface/utils.h"
+#include "interface/interfaceUtils.h"
 
 TimetableForm::TimetableForm(std::shared_ptr<DatabaseInterface> database, QWidget *parent) :
     QWidget(parent),

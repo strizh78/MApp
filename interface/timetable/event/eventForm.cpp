@@ -1,7 +1,7 @@
 #include "eventForm.h"
 #include "ui_eventForm.h"
 
-#include "interface/utils.h"
+#include "interface/interfaceUtils.h"
 #include "timetable/timetableUtils.h"
 
 namespace {

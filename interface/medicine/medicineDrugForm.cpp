@@ -4,7 +4,9 @@
 #include "medicineDrugReleaseFormSelectForm.h"
 #include "medicineDrugBrandSelectForm.h"
 #include "dosageForm.h"
-#include "interface/utils.h"
+
+#include "utils/utils.h"
+#include "interface/interfaceUtils.h"
 
 MedicineDrugForm::MedicineDrugForm(DatabasePtr database,
                                    std::optional<medicine::Drug> drug,

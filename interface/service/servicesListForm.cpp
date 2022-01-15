@@ -2,7 +2,7 @@
 #include "ui_servicesListForm.h"
 #include "serviceForm.h"
 
-#include "interface/utils.h"
+#include "interface/interfaceUtils.h"
 
 ServicesListForm::ServicesListForm(DatabasePtr database,
                            QWidget *parent)

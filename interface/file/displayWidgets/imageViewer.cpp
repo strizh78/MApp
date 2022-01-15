@@ -1,6 +1,6 @@
 #include "imageViewer.h"
 
-#include "interface/utils.h"
+#include "interface/interfaceUtils.h"
 
 #include <QBuffer>
 

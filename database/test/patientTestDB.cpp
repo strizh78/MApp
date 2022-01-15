@@ -1,5 +1,4 @@
 #include "patientTestDB.h"
-#include "interface/utils.h"
 
 #include <QFile>
 

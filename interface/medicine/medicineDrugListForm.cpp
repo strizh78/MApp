@@ -2,7 +2,7 @@
 #include "ui_medicineDrugListForm.h"
 #include "medicineDrugForm.h"
 
-#include "interface/utils.h"
+#include "interface/interfaceUtils.h"
 
 using namespace medicine;
 

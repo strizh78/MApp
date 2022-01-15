@@ -1,4 +1,4 @@
-#include "utils.h"
+#include "interfaceUtils.h"
 
 #include "patient/patient.h"
 #include "service/service.h"
@@ -6,7 +6,10 @@
 #include "drugs/medicines.h"
 #include "appointment/appointment.h"
 #include "file/file.h"
+
 #include "interface/basicForms/mappTable.h"
+
+#include "utils/utils.h"
 
 #include <QPainter>
 
@@ -26,17 +29,6 @@ void showItemFormWarning(QLabel* errorLabel, const QString& errorText) {
     errorLabel->show();
     errorLabel->setText(errorText);
 }
-}
-
-QString toString(const std::vector<QString>& src, std::string sep) {
-    QString result;
-
-    for (const auto& x : src) {
-        result += x + QString::fromStdString(sep);
-    }
-    result.resize(result.size() - sep.size());
-
-    return result;
 }
 
 namespace Validators {

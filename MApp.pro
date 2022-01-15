@@ -50,6 +50,7 @@ SOURCES += \
     interface/homeopathy/homeopathyDrugListForm.cpp \
     interface/imagePainter/imagePainter.cpp \
     interface/imagePainter/imageView.cpp \
+    interface/interfaceUtils.cpp \
     interface/medicine/dosageForm.cpp \
     interface/medicine/medicineDrugBrandSelectForm.cpp \
     interface/medicine/medicineDrugForm.cpp \
@@ -67,7 +68,6 @@ SOURCES += \
     interface/timetable/entries/timetableEntry.cpp \
     interface/timetable/event/eventForm.cpp \
     interface/timetable/timetableForm.cpp \
-    interface/utils.cpp \
     main.cpp \
     \
     drugs/homeopathy.cpp \
@@ -81,7 +81,8 @@ SOURCES += \
     contrib/toggleSwitch/switch.cpp \
     \
     timetable/event.cpp \
-    timetable/timetableUtils.cpp
+    timetable/timetableUtils.cpp \
+    utils/utils.cpp
 
 HEADERS += \
     appointment/appointment.h \
@@ -128,6 +129,7 @@ HEADERS += \
     interface/homeopathy/homeopathyDrugListForm.h \
     interface/imagePainter/imagePainter.h \
     interface/imagePainter/imageView.h \
+    interface/interfaceUtils.h \
     interface/medicine/dosageForm.h \
     interface/medicine/medicineDrugBrandSelectForm.h \
     interface/medicine/medicineDrugForm.h \
@@ -145,7 +147,6 @@ HEADERS += \
     interface/timetable/entries/timetableEntry.h \
     interface/timetable/event/eventForm.h \
     interface/timetable/timetableForm.h \
-    interface/utils.h \
     patient/patient.h \
     service/service.h \
     \
@@ -156,7 +157,8 @@ HEADERS += \
     contrib/toggleSwitch/switch.h \
     \
     timetable/event.h \
-    timetable/timetableUtils.h
+    timetable/timetableUtils.h \
+    utils/utils.h
 
 FORMS += \
     interface/appointment/appointmentForm.ui \

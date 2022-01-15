@@ -1,7 +1,7 @@
 #include "serviceForm.h"
 #include "ui_serviceForm.h"
 
-#include "interface/utils.h"
+#include "interface/interfaceUtils.h"
 
 namespace {
 std::vector<QString> getInvalidFields(const Service& service) {

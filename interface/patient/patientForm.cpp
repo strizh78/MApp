@@ -5,7 +5,7 @@
 #include "interface/appointment/appointmentMiniForm.h"
 #include "interface/basicForms/mappTable.h"
 
-#include "interface/utils.h"
+#include "interface/interfaceUtils.h"
 
 #include <QMessageBox>
 

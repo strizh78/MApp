@@ -16,7 +16,7 @@ FileDisplayManager::FileDisplayManager(const File& file) {
         viewer_ = std::make_shared<TextViewer>(extension);
         break;
     case FileViewType::PDF:
-        viewer_ = new PdfViewer(extension);
+        viewer_ = std::make_shared<PdfViewer>(extension);
         break;
     }
 }
