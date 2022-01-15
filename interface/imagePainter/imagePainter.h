@@ -21,6 +21,8 @@ public:
 private slots:
     void on_backToOriginal_clicked();
 
+    void on_colorChooseButton_clicked();
+
 private:
     Ui::ImagePainter *ui;
 };

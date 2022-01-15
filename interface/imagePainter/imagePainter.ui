@@ -62,6 +62,67 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QRadioButton" name="penRButton">
+       <property name="maximumSize">
+        <size>
+         <width>45</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../icons.qrc">
+         <normaloff>:/icons/pen.png</normaloff>:/icons/pen.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="eraserRButton">
+       <property name="maximumSize">
+        <size>
+         <width>45</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../icons.qrc">
+         <normaloff>:/icons/eraser.png</normaloff>:/icons/eraser.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="widthSpinBox">
+       <property name="maximumSize">
+        <size>
+         <width>50</width>
+         <height>16777215</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="colorChooseButton">
+       <property name="maximumSize">
+        <size>
+         <width>45</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../icons.qrc">
+         <normaloff>:/icons/color_palette.png</normaloff>:/icons/color_palette.png</iconset>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
@@ -95,6 +156,8 @@
    <header>interface/imagePainter/imageView.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../icons.qrc"/>
+ </resources>
  <connections/>
 </ui>
