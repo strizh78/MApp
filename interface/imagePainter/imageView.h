@@ -14,7 +14,7 @@ public:
     ImageView(QWidget *parent = nullptr);
 
     void setPixmap(const FileData& fileData);
-    QPixmap getPixmap();
+    QPixmap getPixmap() const;
 
     void clearAll();
 
