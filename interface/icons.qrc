@@ -24,5 +24,13 @@
         <file>icons/color_palette.png</file>
         <file>icons/eraser.png</file>
         <file>icons/pen.png</file>
+        <file>icons/burgerMenu/drugs.png</file>
+        <file>icons/burgerMenu/hamburger.png</file>
+        <file>icons/burgerMenu/health-and-care.png</file>
+        <file>icons/burgerMenu/home.png</file>
+        <file>icons/burgerMenu/medical-history.png</file>
+        <file>icons/burgerMenu/patient.png</file>
+        <file>icons/burgerMenu/pills.png</file>
+        <file>icons/burgerMenu/close.png</file>
     </qresource>
 </RCC>

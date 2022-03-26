@@ -16,7 +16,24 @@ MainWindow::MainWindow(DatabasePtr database,
 {
     ui->setupUi(this);
 
-    on_timetable_clicked();
+    ui->widget->setBurgerIcons(QIcon(":/icons/burgerMenu/hamburger.png"),
+                              QIcon(":/icons/burgerMenu/close.png"));
+
+    QAction *mainAction = addActionToMenu(QIcon(":/icons/burgerMenu/home.png"), "Главная страница",
+                                          &MainWindow::on_timetable_clicked);
+    mainAction->trigger();
+
+    addActionToMenu(QIcon(":/icons/burgerMenu/health-and-care.png"), "Услуги",
+                    &MainWindow::on_servicesList_clicked);
+    addActionToMenu(QIcon(":/icons/burgerMenu/patient.png"), "Пациенты",
+                    &MainWindow::on_patientsList_clicked);
+    addActionToMenu(QIcon(":/icons/burgerMenu/pills.png"), "Лекарства",
+                    &MainWindow::on_medicineList_clicked);
+    addActionToMenu(QIcon(":/icons/burgerMenu/drugs.png"), "Гомеопатические препараты",
+                    &MainWindow::on_homeopathyList_clicked);
+    addActionToMenu(QIcon(":/icons/burgerMenu/medical-history.png"), "Приёмы",
+                    &MainWindow::on_appointmentsList_clicked);
+
 
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(update()));
@@ -64,4 +81,13 @@ void MainWindow::on_appointmentsList_clicked() {
 
 void MainWindow::on_timetable_clicked() {
     openWidget<TimetableForm>();
+}
+
+template <class F>
+QAction* MainWindow::addActionToMenu(const QIcon& icon, const QString& text, F slotName) {
+    QAction *action = new QAction(icon, text);
+    connect(action, &QAction::triggered, this, slotName);
+
+    ui->widget->addMenuAction(action);
+    return action;
 }
