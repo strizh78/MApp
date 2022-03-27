@@ -1,8 +1,11 @@
 #include "interface/mainwindow.h"
 
 #include "database/test/databaseTest.h"
+#include "utils/utils.h"
 
 #include <QApplication>
+#include <QDirIterator>
+#include <QFontDatabase>
 #include <QTranslator>
 #include <QGuiApplication>
 #include <QCoreApplication>
@@ -21,6 +24,19 @@ void setupScaleDpiUiFlags() {
     QGuiApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
 }
 
+void setApplicationFontFamily() {
+    QDirIterator it(getApplicatonDirectory() + "/fonts", QStringList() << "*.ttf", QDir::Files);
+    int id;
+    while (it.hasNext()) {
+        auto filename = it.next();
+        id = QFontDatabase::addApplicationFont(filename);
+    }
+    QString family = QFontDatabase::applicationFontFamilies(id).at(0);
+    QFont montserrat(family);
+
+    qApp->setFont(montserrat);
+}
+
 int main(int argc, char *argv[]) {
     setupScaleDpiUiFlags();
 
@@ -32,7 +48,10 @@ int main(int argc, char *argv[]) {
     qtTranslator.load(":/qtbase_ru.qm");
     a.installTranslator(&qtTranslator);
 
+    setApplicationFontFamily();
+
     MainWindow w(database);
     w.show();
+
     return a.exec();
 }

@@ -31,3 +31,13 @@ QString toString(const std::vector<QString>& src, std::string sep) {
 
     return result;
 }
+
+QString getApplicatonDirectory() {
+    QDir dir;
+
+#ifdef Q_OS_MACOS
+    dir.cd("../../..");
+#endif
+
+    return dir.absolutePath();
+}

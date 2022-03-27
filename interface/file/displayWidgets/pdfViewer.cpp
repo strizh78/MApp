@@ -1,18 +1,6 @@
 #include "pdfViewer.h"
 
-#include <QDir>
-
-namespace {
-QString getApplicatonDirectory() {
-    QDir dir;
-
-#ifdef Q_OS_MACOS
-    dir.cd("../../..");
-#endif
-
-    return dir.absolutePath();
-}
-}
+#include "utils/utils.h"
 
 PdfViewer::PdfViewer(const QString& extension)
     : extension(extension)

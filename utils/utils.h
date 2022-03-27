@@ -1,5 +1,6 @@
 #pragma once
 
+#include <QDir>
 #include <QString>
 #include <QVariant>
 
@@ -19,3 +20,5 @@ QString toString(const std::vector<T>& src, std::string sep = " ") {
     }
     return QString::fromStdString(oss.str());
 }
+
+QString getApplicatonDirectory();

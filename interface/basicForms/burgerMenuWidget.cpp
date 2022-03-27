@@ -43,7 +43,8 @@ public:
         connect(action_, SIGNAL(changed()), this, SLOT(update()));
         connect(this, &BurgerMenuElementButton::clicked, action_, &QAction::trigger);
 
-        setMinimumHeight(50);
+        setFixedHeight(65);
+        setMinimumWidth(50);
         setCursor(Qt::PointingHandCursor);
     }
 
@@ -58,29 +59,34 @@ public:
         const QRect contentsRect = style()->subElementRect(QStyle::SE_PushButtonContents, &opt, this);
 
         if (isExpanded) {
+            QFont f(font());
+            f.setPixelSize(18);
+
             if (action_->isChecked()) {
                 painter.setPen(CHECKED_COLOR);
                 painter.setBrush(CHECKED_COLOR);
 
-                QFont f(font());
-                f.setBold(true);
-                painter.setFont(f);
-
                 painter.drawRoundedRect(width() - higlightWidth, 0,
                                         higlightWidth, height(),
                                         higlightRadius, higlightRadius);
-            }
 
+                f.setWeight(QFont::Bold);
+            } else {
+                f.setWeight(QFont::Normal);
+
+                QColor textColor(140, 140, 140);
+                painter.setPen(textColor);
+                painter.setBrush(textColor);
+            }
+            painter.setFont(f);
             auto textRect = contentsRect.adjusted(iconSize_.width(), iconSize_.height() / 2., 0, 0);
+            textRect.setLeft(50);
             painter.drawText(textRect, 0, action_->text());
         } else {
             QIcon icon = (action_->isChecked()) ? checkedIcon : uncheckedIcon;
-            auto iconRect = contentsRect.adjusted(0,
-                                                  iconSize_.height() / 4,
-                                                  -width() + iconSize_.width() / 2,
-                                                  -height() + iconSize_.height() / 2);
-
-            painter.drawPixmap(iconRect, icon.pixmap(iconSize_));
+            painter.drawPixmap(contentsRect.center().x() - iconSize_.width() / 2,
+                               contentsRect.center().y() - iconSize_.height() / 2,
+                               icon.pixmap((iconSize_)));
         }
     }
 
@@ -97,40 +103,34 @@ BurgerMenuWidget::BurgerMenuWidget(QWidget* parent)
     : QWidget(parent)
     , menuExpandButton_(new QPushButton(this))
     , menuActionsGroup_(new QActionGroup(this))
-    , menuWidth_(0)
 {
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
 
-    menuExpandButton_->setFlat(true);
-    menuExpandButton_->setCheckable(true);
-    menuExpandButton_->setIconSize(QSize(32, 32));
-    menuExpandButton_->setFixedSize(32, 32);
-    menuExpandButton_->setCursor(Qt::PointingHandCursor);
+    setBackgroundRole(QPalette::Base);
+    setAutoFillBackground(true);
 
-    menuExpandButton_->setStyleSheet("""QPushButton:checked{ \
-                                            border: none;    \
-                                        }                    \
-                                        QPushButton:hover{   \
-                                            border: none;    \
-                                        }""");
+    menuExpandButton_->setCheckable(true);
+    menuExpandButton_->setCursor(Qt::PointingHandCursor);
+    menuExpandButton_->setStyleSheet("border: none;");
 
     menuActionsGroup_->setExclusive(true);
 
-
-    auto burgerLay = new QHBoxLayout();
-    burgerLay->setContentsMargins(0, 0, 0, /* space between expandButton and menu buttons */ 50);
-    burgerLay->setSpacing(0);
-    burgerLay->addWidget(menuExpandButton_);
-    burgerLay->addWidget(new QWidget(this));
+    burgerLay_ = new QHBoxLayout();
+    burgerLay_->addWidget(menuExpandButton_);
+    burgerLay_->addStretch();
 
     auto lay = new QVBoxLayout();
-    lay->setContentsMargins(0, 0, 0, 0);
-    lay->setSpacing(0);
-    lay->addLayout(burgerLay);
+    lay->setContentsMargins(0, 35, 0, 0);
+    lay->setSpacing(25);
+    lay->addLayout(burgerLay_);
     lay->addStretch();
 
-    setFixedWidth(40);
     setLayout(lay);
+
+    setMinimumWidth(50);
+    setMaximumWidth(50);
+
+    setExpanded(false);
 
     connect(menuExpandButton_, &QPushButton::toggled, this, &BurgerMenuWidget::setExpanded);
 }
@@ -140,22 +140,24 @@ void BurgerMenuWidget::setExpanded(bool expanded) {
 
     auto anim = new QPropertyAnimation(this, "minimumWidth", this);
     anim->setDuration(150);
-    anim->setStartValue(menuExpandButton_->width());
-    anim->setEndValue(menuExpandButton_->width() + menuWidth_);
+    anim->setStartValue(50);
+    anim->setEndValue(400);
     anim->setDirection(expanded ? QAbstractAnimation::Forward : QAbstractAnimation::Backward);
     anim->start(QAbstractAnimation::DeleteWhenStopped);
+
+    if (isExpanded) {
+        burgerLay_->setContentsMargins(45, 0, 0, 65);
+        menuExpandButton_->setIconSize(QSize(19, 19));
+        menuExpandButton_->setFixedSize(19, 19);
+    } else {
+        burgerLay_->setContentsMargins(7, 0, 0, 65);
+        menuExpandButton_->setIconSize(QSize(24, 19));
+        menuExpandButton_->setFixedSize(24, 19);
+    }
 }
 
 void BurgerMenuWidget::addMenuAction(QAction* action) {
     auto iconSize = QSize(20, 20);
-
-    QFont currentFont = font();
-    currentFont.setBold(true);
-    auto texpPixelsLengths = QFontMetrics(currentFont).boundingRect(action->text()).width();
-
-    int extraPixels = iconSize.width() + /* for highlight-line, when action activated */ 10;
-    menuWidth_ = std::max(menuWidth_,
-                          texpPixelsLengths + extraPixels);
 
     menuActionsGroup_->addAction(action);
 
@@ -167,8 +169,8 @@ void BurgerMenuWidget::addMenuAction(QAction* action) {
 void BurgerMenuWidget::setBurgerIcons(const QIcon& compressedStateIcon,
                                       const QIcon& expandedStateIcon)
 {
-    expandedStateIcon_ = changeIconColor(expandedStateIcon, Qt::black, UNCHECKED_COLOR);
-    compressedStateIcon_ = changeIconColor(compressedStateIcon, Qt::black, UNCHECKED_COLOR);
+    expandedStateIcon_ = expandedStateIcon;
+    compressedStateIcon_ = compressedStateIcon;
 }
 
 void BurgerMenuWidget::paintEvent(QPaintEvent*) {

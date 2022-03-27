@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QPushButton>
 #include <QActionGroup>
+#include <QHBoxLayout>
 
 class BurgerMenuWidget : public QWidget {
     Q_OBJECT
@@ -29,5 +30,5 @@ private:
     QPushButton*  menuExpandButton_;
     QActionGroup* menuActionsGroup_;
 
-    int menuWidth_;
+    QHBoxLayout* burgerLay_;
 };

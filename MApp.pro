@@ -207,6 +207,21 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
     QMAKE_EXTRA_TARGETS += first copydata
 }
 
+win32 {
+    COPY_FROM_PATH=$$shell_path($$PWD/fonts)
+    COPY_TO_PATH=$$shell_path($$OUT_PWD/fonts)
+} else {
+    COPY_FROM_PATH=$$PWD/fonts
+    COPY_TO_PATH=$$OUT_PWD/fonts
+}
+
+copydata.commands = $(COPY_DIR) $$COPY_FROM_PATH $$COPY_TO_PATH
+first.depends = $(first) copydata
+
+export(first.depends)
+export(copydata.commands)
+QMAKE_EXTRA_TARGETS += first copydata
+
 RESOURCES += \
     interface/icons.qrc \
     translations.qrc
