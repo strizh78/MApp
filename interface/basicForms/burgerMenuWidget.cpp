@@ -1,5 +1,7 @@
 #include "burgerMenuWidget.h"
 
+#include "interface/interfaceUtils.h"
+
 #include <QLayout>
 #include <QBitmap>
 #include <QPainter>
@@ -51,6 +53,7 @@ public:
     void paintEvent(QPaintEvent*) override {
         const int higlightWidth = 3;
         const int higlightRadius = 5;
+        const int fontSize = 18;
 
         QPainter painter(this);
         QStyleOptionButton opt;
@@ -59,9 +62,6 @@ public:
         const QRect contentsRect = style()->subElementRect(QStyle::SE_PushButtonContents, &opt, this);
 
         if (isExpanded) {
-            QFont f(font());
-            f.setPixelSize(18);
-
             if (action_->isChecked()) {
                 painter.setPen(CHECKED_COLOR);
                 painter.setBrush(CHECKED_COLOR);
@@ -70,15 +70,15 @@ public:
                                         higlightWidth, height(),
                                         higlightRadius, higlightRadius);
 
-                f.setWeight(QFont::Bold);
+                changeFont(&painter, fontSize, QFont::Bold);
             } else {
-                f.setWeight(QFont::Normal);
+                changeFont(&painter, fontSize, QFont::Normal);
 
                 QColor textColor(140, 140, 140);
                 painter.setPen(textColor);
                 painter.setBrush(textColor);
             }
-            painter.setFont(f);
+
             auto textRect = contentsRect.adjusted(iconSize_.width(), iconSize_.height() / 2., 0, 0);
             textRect.setLeft(50);
             painter.drawText(textRect, 0, action_->text());
@@ -109,6 +109,7 @@ BurgerMenuWidget::BurgerMenuWidget(QWidget* parent)
     setBackgroundRole(QPalette::Base);
     setAutoFillBackground(true);
 
+    menuExpandButton_->setFlat(true);
     menuExpandButton_->setCheckable(true);
     menuExpandButton_->setCursor(Qt::PointingHandCursor);
     menuExpandButton_->setStyleSheet("border: none;");
@@ -138,22 +139,20 @@ BurgerMenuWidget::BurgerMenuWidget(QWidget* parent)
 void BurgerMenuWidget::setExpanded(bool expanded) {
     isExpanded = expanded;
 
+    if (isExpanded) {
+        burgerLay_->setContentsMargins(45, 0, 0, 65);
+        menuExpandButton_->setIconSize(QSize(19, 19));
+    } else {
+        burgerLay_->setContentsMargins(7, 0, 0, 65);
+        menuExpandButton_->setIconSize(QSize(24, 19));
+    }
+
     auto anim = new QPropertyAnimation(this, "minimumWidth", this);
     anim->setDuration(150);
     anim->setStartValue(50);
     anim->setEndValue(400);
-    anim->setDirection(expanded ? QAbstractAnimation::Forward : QAbstractAnimation::Backward);
+    anim->setDirection(isExpanded ? QAbstractAnimation::Forward : QAbstractAnimation::Backward);
     anim->start(QAbstractAnimation::DeleteWhenStopped);
-
-    if (isExpanded) {
-        burgerLay_->setContentsMargins(45, 0, 0, 65);
-        menuExpandButton_->setIconSize(QSize(19, 19));
-        menuExpandButton_->setFixedSize(19, 19);
-    } else {
-        burgerLay_->setContentsMargins(7, 0, 0, 65);
-        menuExpandButton_->setIconSize(QSize(24, 19));
-        menuExpandButton_->setFixedSize(24, 19);
-    }
 }
 
 void BurgerMenuWidget::addMenuAction(QAction* action) {

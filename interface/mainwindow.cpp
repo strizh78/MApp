@@ -33,11 +33,6 @@ MainWindow::MainWindow(DatabasePtr database,
                     &MainWindow::on_homeopathyList_clicked);
     addActionToMenu(QIcon(":/icons/burgerMenu/medical-history.png"), "Приёмы",
                     &MainWindow::on_appointmentsList_clicked);
-
-
-    QTimer *timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(update()));
-    timer->start(60);
 }
 
 MainWindow::~MainWindow() {

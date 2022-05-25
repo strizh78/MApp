@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1200</width>
-    <height>751</height>
+    <width>1700</width>
+    <height>840</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -37,7 +37,11 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="BurgerMenuWidget" name="widget" native="true"/>
+     <widget class="BurgerMenuWidget" name="widget" native="true">
+      <property name="mouseTracking">
+       <bool>true</bool>
+      </property>
+     </widget>
     </item>
     <item>
      <layout class="QHBoxLayout" name="formLayout"/>
@@ -49,12 +53,11 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1200</width>
+     <width>1700</width>
      <height>24</height>
     </rect>
    </property>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <customwidgets>
   <customwidget>

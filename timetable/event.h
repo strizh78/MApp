@@ -8,6 +8,7 @@
 
 class Event : public MAppBaseObj {
 public:
+    Event() = default;
     Event(const QString& title, QDateTime dateTime, QTime duration);
 
     bool operator < (const Event& other) const;

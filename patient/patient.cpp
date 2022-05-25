@@ -24,6 +24,10 @@ QString Patient::NameInfo::getFullName() const {
     return surname + ' ' + name + ' ' + patronymic;
 }
 
+QString Patient::NameInfo::getInitials() const {
+    return initials;
+}
+
 void Patient::NameInfo::updateInitials() {
     if (surname.isEmpty() || name.isEmpty()) {
         initials = "";

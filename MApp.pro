@@ -34,6 +34,7 @@ SOURCES += \
     interface/appointment/appointmentsListForm.cpp \
     MAppBaseObj/mappBaseObj.cpp \
     interface/basicForms/burgerMenuWidget.cpp \
+    interface/basicForms/comboBox.cpp \
     interface/basicForms/components/multiColumnSortFilterProxyModel/multiColumnSortFilterProxyModel.cpp \
     interface/basicForms/mappTable.cpp \
     interface/basicForms/mappTableSettingsForm.cpp \
@@ -63,12 +64,17 @@ SOURCES += \
     interface/service/serviceForm.cpp \
     interface/service/servicesListForm.cpp \
     interface/textEditor/textEditor.cpp \
-    interface/timetable/dailyTimetable.cpp \
-    interface/timetable/entries/appointmentEntry.cpp \
-    interface/timetable/entries/eventEntry.cpp \
-    interface/timetable/entries/timetableEntry.cpp \
+    interface/timetable/calendarWidget/calendarWidget.cpp \
+    interface/timetable/dailyTimetable/dailyTimetable.cpp \
+    interface/timetable/dailyTimetable/events/dailyTimetableArchive.cpp \
+    interface/timetable/dailyTimetable/events/dailyTimetableEvent.cpp \
     interface/timetable/event/eventForm.cpp \
+    interface/timetable/timetableEvent.cpp \
     interface/timetable/timetableForm.cpp \
+    interface/timetable/timetableTop/dailyTimeline/dailyTimeline.cpp \
+    interface/timetable/timetableTop/dailyTimeline/widgets/dailyTimelineForm.cpp \
+    interface/timetable/timetableTop/dailyTimeline/widgets/dailyTimelineLine.cpp \
+    interface/timetable/timetableTop/timetableTop.cpp \
     main.cpp \
     \
     drugs/homeopathy.cpp \
@@ -114,6 +120,7 @@ HEADERS += \
     interface/appointment/appointmentsListForm.h \
     MAppBaseObj/mappBaseObj.h \
     interface/basicForms/burgerMenuWidget.h \
+    interface/basicForms/comboBox.h \
     interface/basicForms/components/multiColumnSortFilterProxyModel/multiColumnSortFilterProxyModel.h \
     interface/basicForms/mappTable.h \
     interface/basicForms/mappTableSettingsForm.h \
@@ -143,12 +150,17 @@ HEADERS += \
     interface/service/serviceForm.h \
     interface/service/servicesListForm.h \
     interface/textEditor/textEditor.h \
-    interface/timetable/dailyTimetable.h \
-    interface/timetable/entries/appointmentEntry.h \
-    interface/timetable/entries/eventEntry.h \
-    interface/timetable/entries/timetableEntry.h \
+    interface/timetable/calendarWidget/calendarWidget.h \
+    interface/timetable/dailyTimetable/dailyTimetable.h \
+    interface/timetable/dailyTimetable/events/dailyTimetableArchive.h \
+    interface/timetable/dailyTimetable/events/dailyTimetableEvent.h \
     interface/timetable/event/eventForm.h \
+    interface/timetable/timetableEvent.h \
     interface/timetable/timetableForm.h \
+    interface/timetable/timetableTop/dailyTimeline/dailyTimeline.h \
+    interface/timetable/timetableTop/dailyTimeline/widgets/dailyTimelineForm.h \
+    interface/timetable/timetableTop/dailyTimeline/widgets/dailyTimelineLine.h \
+    interface/timetable/timetableTop/timetableTop.h \
     patient/patient.h \
     service/service.h \
     \

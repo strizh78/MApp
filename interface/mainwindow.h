@@ -2,7 +2,7 @@
 
 #include "database/databaseInterface.h"
 
-#include "interface/timetable/dailyTimetable.h"
+#include "interface/timetable/dailyTimetable/dailyTimetable.h"
 
 #include <QMainWindow>
 

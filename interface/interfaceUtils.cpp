@@ -11,6 +11,8 @@
 
 #include "utils/utils.h"
 
+#include <QLayout>
+#include <QLayoutItem>
 #include <QPainter>
 
 namespace ErrorLog {
@@ -202,4 +204,53 @@ QColor getAppointmentColor(const Appointment& appointment) {
     }
 
     return resultColor;
+}
+
+QFont getFontByParams(QFont baseFont, int pixelSize, QFont::Weight weight, bool isItalic) {
+    QFont newFont = baseFont;
+    newFont.setPixelSize(pixelSize);
+    newFont.setWeight(weight);
+    newFont.setItalic(isItalic);
+
+#ifdef Q_OS_WIN
+    switch(weight) {
+    case QFont::Medium : newFont.setFamily("Montserrat Medium");
+        break;
+    case QFont::DemiBold : newFont.setFamily("Montserrat SemiBold");
+        break;
+    case QFont::Light : newFont.setFamily("Montserrat Light");
+        break;
+    case QFont::Thin : newFont.setFamily("Montserrat Thin");
+        break;
+    default:
+        newFont.setFamily("Montserrat");
+    }
+#endif
+
+    return newFont;
+}
+
+void changeFont(QWidget* widget, int pixelSize, QFont::Weight weight, bool isItalic) {
+    widget->setFont(getFontByParams(widget->font(), pixelSize, weight, isItalic));
+}
+void changeFont(QPainter* painter, int pixelSize, QFont::Weight weight, bool isItalic) {
+    painter->setFont(getFontByParams(painter->font(), pixelSize, weight, isItalic));
+}
+
+void clearLayout(QLayout *layout) {
+    if (layout == nullptr) {
+        return;
+    }
+
+    QLayoutItem *item;
+    while(layout->count() > 0 && (item = layout->takeAt(0))) {
+        if (item->layout()) {
+            clearLayout(item->layout());
+            delete item->layout();
+        }
+        if (item->widget()) {
+            delete item->widget();
+        }
+        delete item;
+    }
 }

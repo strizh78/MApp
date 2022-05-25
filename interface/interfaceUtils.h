@@ -59,3 +59,8 @@ template <class T>
 T* getValueFromModelData(const QVariant &variant) {
     return (T*)variant.value<const MAppBaseObj*>();
 }
+
+void changeFont(QWidget* widget, int pixelSize, QFont::Weight weight, bool isItalic = false);
+void changeFont(QPainter* painter, int pixelSize, QFont::Weight weight, bool isItalic = false);
+
+void clearLayout(QLayout *layout);
