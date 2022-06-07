@@ -2,6 +2,8 @@
 
 #include "viewerInterface.h"
 
+#include <memory>
+
 class FileDisplayManager {
 public:
     FileDisplayManager(const File& file);
@@ -14,11 +16,12 @@ public:
 private:
     enum class FileViewType {
         IMAGE,
-        TEXT
+        TEXT,
+        PDF
     };
 
     void init();
 private:
     std::map <QString, FileViewType> viewTypes;
-    FileViewerInterface* viewer_;
+    std::shared_ptr<FileViewerInterface> viewer_;
 };

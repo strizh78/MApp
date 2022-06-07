@@ -8,10 +8,10 @@
 
 #include "interface/basicForms/mappTable.h"
 
-#include "interface/utils.h"
+#include "utils/utils.h"
+#include "interface/interfaceUtils.h"
 #include "timetable/timetableUtils.h"
 
-#include <QPixmap>
 #include <QPainter>
 #include <QMessageBox>
 #include <QCloseEvent>
@@ -78,8 +78,8 @@ AppointmentForm::~AppointmentForm() {
 }
 
 void AppointmentForm::on_solutionBox_accepted() {
-    currentAppointment_.record = ui->appointmentRecord->getText();
-    currentAppointment_.isConducted |= isHeldNow;
+    currentAppointment_.record = ui->appointmentRecord->getHtml();
+    currentAppointment_.isConducted |= isHeldNow_;
 
     auto wrongFields = getInvalidFields(currentAppointment_, database_.get());
     if (!wrongFields.empty()) {
@@ -95,7 +95,7 @@ void AppointmentForm::on_solutionBox_accepted() {
         emit appointmentCreateSignal(currentAppointment_);
     }
 
-    isHeldNow = false;
+    isHeldNow_ = false;
     close();
 }
 
@@ -189,7 +189,7 @@ void AppointmentForm::on_homeopathyViewBtn_clicked() {
 }
 
 void AppointmentForm::on_openRecordBtn_clicked(bool checked) {
-    setRecordVisible(checked);
+    setRecordHidden(checked);
 }
 
 void AppointmentForm::on_copyAppointmentBtn_clicked() {
@@ -208,7 +208,7 @@ void AppointmentForm::on_copyAppointmentBtn_clicked() {
 
 void AppointmentForm::patientChoosed(QVariant data) {
     currentAppointment_.patient = *getValueFromModelData<Patient>(data);
-    ui->patientEdit->setText(currentAppointment_.patient.nameInfo.getInitials());
+    ui->patientEdit->setText(currentAppointment_.patient.nameInfo.initials);
     ((QWidget*)sender())->close();
 }
 
@@ -238,9 +238,10 @@ void AppointmentForm::medicineChoosed(std::vector<QVariant> data) {
 void AppointmentForm::setupCreateUi() {
     setWindowTitle("Создание приёма");
     hideDrugs();
-    setRecordVisible(false);
 
-    ui->openRecordBtn->setChecked(false);
+    setRecordHidden(true);
+    ui->openRecordBtn->hide();
+
     ui->copyAppointmentBtn->hide();
 
     ui->statusIcon->hide();
@@ -260,7 +261,7 @@ void AppointmentForm::setupAppointmentTimeType() {
     ui->conductAppointmentBtn->setVisible(currentAppointment_.getTimeType() == Appointment::PRESENT && !currentAppointment_.isConducted);
     setEditFieldsEnabled(!currentAppointment_.isConducted);
 
-    setRecordVisible(false);
+    setRecordHidden(false);
     ui->appointmentRecord->setEditEnabled(false);
 
     if (currentAppointment_.record.isEmpty()) {
@@ -291,18 +292,16 @@ void AppointmentForm::setupStatus() {
     QString status = "";
     switch (currentAppointment_.getTimeType()) {
     case Appointment::PAST:
-        if (currentAppointment_.isConducted)
-            status = "Приём проведен.";
-        else
-            status = "Время приёма прошло. Приём не был проведён.";
+        status = currentAppointment_.isConducted ? "Приём проведен." : "Время приёма прошло. Приём не был проведён.";
         break;
     case Appointment::PRESENT:
-        if (currentAppointment_.isConducted)
+        if (currentAppointment_.isConducted) {
             status = "Приём проведен.";
-        else if (isHeldNow)
+        } else if (isHeldNow_) {
             status = "Приём проводится.";
-        else
+        } else{
             status = "Сейчас время приёма. Приём может быть проведён.";
+        }
         break;
     case Appointment::FUTURE:
         status = "Приём запланирован.";
@@ -327,7 +326,7 @@ void AppointmentForm::hideDrugs() {
     adjustSize();
 }
 
-void AppointmentForm::setRecordVisible(bool visible) {
+void AppointmentForm::setRecordHidden(bool visible) {
     if (!ui->openRecordBtn->isEnabled()) {
         return;
     }
@@ -340,7 +339,7 @@ void AppointmentForm::setRecordVisible(bool visible) {
 
 void AppointmentForm::fillAppointmentInfo() {
     if (currentAppointment_.patient.isExists()) {
-        ui->patientEdit->setText(currentAppointment_.patient.nameInfo.getInitials());
+        ui->patientEdit->setText(currentAppointment_.patient.nameInfo.initials);
     }
     if (currentAppointment_.service.isExists()) {
         ui->serviceEdit->setText(currentAppointment_.service.name);
@@ -354,11 +353,11 @@ void AppointmentForm::fillAppointmentInfo() {
 
     ui->medicinesList->setText(getDrugsInfoString(currentAppointment_.medicines));
 
-    ui->appointmentRecord->setText(currentAppointment_.record);
+    ui->appointmentRecord->setHtml(currentAppointment_.record);
 }
 
 void AppointmentForm::on_conductAppointmentBtn_clicked() {
-    isHeldNow = true;
+    isHeldNow_ = true;
     setEditFieldsEnabled(false);
     ui->conductAppointmentBtn->hide();
 
@@ -367,7 +366,7 @@ void AppointmentForm::on_conductAppointmentBtn_clicked() {
     ui->openRecordBtn->setEnabled(true);
     ui->openRecordBtn->setIcon(QIcon(":/icons/transfer.png"));
     ui->openRecordBtn->setText("Открыть запись приёма");
-    setRecordVisible(false);
+    setRecordHidden(false);
 
     ui->homeopathyEdit->setEnabled(true);
     ui->homeopathyChooseBtn->setEnabled(true);
@@ -379,7 +378,7 @@ void AppointmentForm::on_conductAppointmentBtn_clicked() {
 }
 
 void AppointmentForm::closeEvent(QCloseEvent *event) {
-    if (isHeldNow) {
+    if (isHeldNow_) {
         auto button = QMessageBox::warning(this, "Сейчас проводится приём!", "Желаете сохранить изменения?",
                                            QDialogButtonBox::StandardButton::Save, QDialogButtonBox::StandardButton::Cancel);
         if (button == QDialogButtonBox::StandardButton::Save) {

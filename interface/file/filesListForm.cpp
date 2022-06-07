@@ -2,6 +2,9 @@
 #include "ui_filesListForm.h"
 #include "fileForm.h"
 
+#include "interface/interfaceUtils.h"
+#include "utils/utils.h"
+
 #include <QFileDialog>
 #include <QDir>
 #include <QFile>

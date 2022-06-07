@@ -2,7 +2,8 @@
 #include "ui_homeopathyDrugForm.h"
 #include "homeopathyDrugDilutionsSelectForm.h"
 
-#include "interface/utils.h"
+#include "utils/utils.h"
+#include "interface/interfaceUtils.h"
 
 using namespace homeopathy;
 
@@ -77,9 +78,7 @@ std::optional<std::vector<QString> > HomeopathyDrugForm::isValid() {
         invalidFields.push_back(ui->nameLabel->text());
     }
 
-    if (invalidFields.empty())
-        return std::nullopt;
-    return invalidFields;
+    return invalidFields.empty() ? std::nullopt : std::make_optional(invalidFields);
 }
 
 void HomeopathyDrugForm::init() {

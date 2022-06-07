@@ -1,5 +1,6 @@
 QT       += core gui
 QT       += testlib
+!win32: !win64: QT       += webenginewidgets
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
@@ -32,12 +33,15 @@ SOURCES += \
     interface/appointment/appointmentRecordForm.cpp \
     interface/appointment/appointmentsListForm.cpp \
     MAppBaseObj/mappBaseObj.cpp \
+    interface/basicForms/burgerMenuWidget.cpp \
+    interface/basicForms/comboBox.cpp \
     interface/basicForms/components/multiColumnSortFilterProxyModel/multiColumnSortFilterProxyModel.cpp \
     interface/basicForms/mappTable.cpp \
     interface/basicForms/mappTableSettingsForm.cpp \
     interface/basicForms/tableSettingsForm.cpp \
     interface/file/displayWidgets/displayManager.cpp \
     interface/file/displayWidgets/imageViewer.cpp \
+    interface/file/displayWidgets/pdfViewer.cpp \
     interface/file/displayWidgets/textViewer.cpp \
     interface/file/displayWidgets/viewerInterface.cpp \
     interface/basicForms/editableList/editableList.cpp \
@@ -46,6 +50,9 @@ SOURCES += \
     interface/homeopathy/homeopathyDrugDilutionsSelectForm.cpp \
     interface/homeopathy/homeopathyDrugForm.cpp \
     interface/homeopathy/homeopathyDrugListForm.cpp \
+    interface/imagePainter/imagePainter.cpp \
+    interface/imagePainter/imageView.cpp \
+    interface/interfaceUtils.cpp \
     interface/medicine/dosageForm.cpp \
     interface/medicine/medicineDrugBrandSelectForm.cpp \
     interface/medicine/medicineDrugForm.cpp \
@@ -57,13 +64,17 @@ SOURCES += \
     interface/service/serviceForm.cpp \
     interface/service/servicesListForm.cpp \
     interface/textEditor/textEditor.cpp \
-    interface/timetable/dailyTimetable.cpp \
-    interface/timetable/entries/appointmentEntry.cpp \
-    interface/timetable/entries/eventEntry.cpp \
-    interface/timetable/entries/timetableEntry.cpp \
+    interface/timetable/calendarWidget/calendarWidget.cpp \
+    interface/timetable/dailyTimetable/dailyTimetable.cpp \
+    interface/timetable/dailyTimetable/events/dailyTimetableArchive.cpp \
+    interface/timetable/dailyTimetable/events/dailyTimetableEvent.cpp \
     interface/timetable/event/eventForm.cpp \
+    interface/timetable/timetableEvent.cpp \
     interface/timetable/timetableForm.cpp \
-    interface/utils.cpp \
+    interface/timetable/timetableTop/dailyTimeline/dailyTimeline.cpp \
+    interface/timetable/timetableTop/dailyTimeline/widgets/dailyTimelineForm.cpp \
+    interface/timetable/timetableTop/dailyTimeline/widgets/dailyTimelineLine.cpp \
+    interface/timetable/timetableTop/timetableTop.cpp \
     main.cpp \
     \
     drugs/homeopathy.cpp \
@@ -77,7 +88,8 @@ SOURCES += \
     contrib/toggleSwitch/switch.cpp \
     \
     timetable/event.cpp \
-    timetable/timetableUtils.cpp
+    timetable/timetableUtils.cpp \
+    utils/utils.cpp
 
 HEADERS += \
     appointment/appointment.h \
@@ -107,12 +119,15 @@ HEADERS += \
     interface/appointment/appointmentRecordForm.h \
     interface/appointment/appointmentsListForm.h \
     MAppBaseObj/mappBaseObj.h \
+    interface/basicForms/burgerMenuWidget.h \
+    interface/basicForms/comboBox.h \
     interface/basicForms/components/multiColumnSortFilterProxyModel/multiColumnSortFilterProxyModel.h \
     interface/basicForms/mappTable.h \
     interface/basicForms/mappTableSettingsForm.h \
     interface/basicForms/tableSettingsForm.h \
     interface/file/displayWidgets/displayManager.h \
     interface/file/displayWidgets/imageViewer.h \
+    interface/file/displayWidgets/pdfViewer.h \
     interface/file/displayWidgets/textViewer.h \
     interface/file/displayWidgets/viewerInterface.h \
     interface/basicForms/editableList/editableList.h \
@@ -121,6 +136,9 @@ HEADERS += \
     interface/homeopathy/homeopathyDrugDilutionsSelectForm.h \
     interface/homeopathy/homeopathyDrugForm.h \
     interface/homeopathy/homeopathyDrugListForm.h \
+    interface/imagePainter/imagePainter.h \
+    interface/imagePainter/imageView.h \
+    interface/interfaceUtils.h \
     interface/medicine/dosageForm.h \
     interface/medicine/medicineDrugBrandSelectForm.h \
     interface/medicine/medicineDrugForm.h \
@@ -132,13 +150,17 @@ HEADERS += \
     interface/service/serviceForm.h \
     interface/service/servicesListForm.h \
     interface/textEditor/textEditor.h \
-    interface/timetable/dailyTimetable.h \
-    interface/timetable/entries/appointmentEntry.h \
-    interface/timetable/entries/eventEntry.h \
-    interface/timetable/entries/timetableEntry.h \
+    interface/timetable/calendarWidget/calendarWidget.h \
+    interface/timetable/dailyTimetable/dailyTimetable.h \
+    interface/timetable/dailyTimetable/events/dailyTimetableArchive.h \
+    interface/timetable/dailyTimetable/events/dailyTimetableEvent.h \
     interface/timetable/event/eventForm.h \
+    interface/timetable/timetableEvent.h \
     interface/timetable/timetableForm.h \
-    interface/utils.h \
+    interface/timetable/timetableTop/dailyTimeline/dailyTimeline.h \
+    interface/timetable/timetableTop/dailyTimeline/widgets/dailyTimelineForm.h \
+    interface/timetable/timetableTop/dailyTimeline/widgets/dailyTimelineLine.h \
+    interface/timetable/timetableTop/timetableTop.h \
     patient/patient.h \
     service/service.h \
     \
@@ -149,7 +171,8 @@ HEADERS += \
     contrib/toggleSwitch/switch.h \
     \
     timetable/event.h \
-    timetable/timetableUtils.h
+    timetable/timetableUtils.h \
+    utils/utils.h
 
 FORMS += \
     interface/appointment/appointmentForm.ui \
@@ -165,6 +188,7 @@ FORMS += \
     interface/homeopathy/homeopathyDrugDilutionsSelectForm.ui \
     interface/homeopathy/homeopathyDrugForm.ui \
     interface/homeopathy/homeopathyDrugListForm.ui \
+    interface/imagePainter/imagePainter.ui \
     interface/mainwindow.ui \
     \
     interface/medicine/dosageForm.ui \
@@ -186,6 +210,29 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+!win32: !win64 {
+    copydata.commands = $(COPY_DIR) $$PWD/contrib/pdf.js $$OUT_PWD
+    first.depends = $(first) copydata
+    export(first.depends)
+    export(copydata.commands)
+    QMAKE_EXTRA_TARGETS += first copydata
+}
+
+win32 {
+    COPY_FROM_PATH=$$shell_path($$PWD/fonts)
+    COPY_TO_PATH=$$shell_path($$OUT_PWD/fonts)
+} else {
+    COPY_FROM_PATH=$$PWD/fonts
+    COPY_TO_PATH=$$OUT_PWD/fonts
+}
+
+copydata.commands = $(COPY_DIR) $$COPY_FROM_PATH $$COPY_TO_PATH
+first.depends = $(first) copydata
+
+export(first.depends)
+export(copydata.commands)
+QMAKE_EXTRA_TARGETS += first copydata
 
 RESOURCES += \
     interface/icons.qrc \

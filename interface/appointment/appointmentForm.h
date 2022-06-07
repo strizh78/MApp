@@ -60,7 +60,7 @@ private:
 
     void setEditFieldsEnabled(bool enabled);
     void hideDrugs();
-    void setRecordVisible(bool visible);
+    void setRecordHidden(bool hidden);
 
     void fillAppointmentInfo();
 
@@ -74,5 +74,5 @@ private:
 
     Appointment currentAppointment_;
 
-    bool isHeldNow = false;
+    bool isHeldNow_ = false;
 };

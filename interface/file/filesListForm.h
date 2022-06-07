@@ -5,7 +5,7 @@
 #include "patient/patient.h"
 #include "database/databaseInterface.h"
 #include "interface/basicForms/mappTable.h"
-#include "interface/utils.h"
+#include "interface/interfaceUtils.h"
 
 #include <QWidget>
 

@@ -2,7 +2,7 @@
 #include "ui_homeopathyDrugListForm.h"
 #include "homeopathyDrugForm.h"
 
-#include "interface/utils.h"
+#include "interface/interfaceUtils.h"
 
 using namespace homeopathy;
 

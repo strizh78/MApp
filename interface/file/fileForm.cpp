@@ -1,11 +1,8 @@
 #include "fileForm.h"
 #include "ui_fileForm.h"
 
-#include "interface/utils.h"
+#include "interface/interfaceUtils.h"
 #include "appointment/appointment.h"
-
-#include <QTabBar>
-#include <QBuffer>
 
 FileForm::FileForm(const File& file,
                    DatabasePtr database,
@@ -29,7 +26,11 @@ FileForm::FileForm(const File& file,
     database_->files->fileData(file_, data);
     viewer.setData(data);
 
-    ui->allLayout->addWidget(viewer.getDisplayWidget());
+    auto* fileDisplayWidget = viewer.getDisplayWidget();
+    layout()->addWidget(fileDisplayWidget);
+
+    resize(ui->infoWidget->geometry().width() + fileDisplayWidget->geometry().width(),
+           fileDisplayWidget->geometry().height());
 }
 
 FileForm::~FileForm() {
@@ -40,7 +41,7 @@ void FileForm::showAppointment() {
     Appointment app;
     database_->files->appointmentByFile(file_, app);
 //    TODO: Make label clickable
-    ui->appointmentLabel->setText(app.patient.nameInfo.getInitials() + " " + app.date.toString());
+    ui->appointmentLabel->setText(app.patient.nameInfo.initials + " " + app.date.toString());
     ui->appointmentLabel->show();
 }
 

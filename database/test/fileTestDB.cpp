@@ -30,10 +30,10 @@ FilesDBTest::FilesDBTest(ItemDBInterface<Appointment>* appointment) {
         FileData data;
         int parentCode;
 
-        FullFileData(File _file, FileData _data, int _parentCode)
-            : file(_file)
-            , data(_data)
-            , parentCode (_parentCode)
+        FullFileData(File file, FileData data, int parentCode)
+            : file(file)
+            , data(data)
+            , parentCode (parentCode)
         {}
     };
 
@@ -53,7 +53,9 @@ FilesDBTest::FilesDBTest(ItemDBInterface<Appointment>* appointment) {
         FullFileData(File("Заключение", "txt"), longString.toLocal8Bit(), parentCode),
         FullFileData(File("Рентген", "png"), getFileBytes(":/icons/trash.png"), parentCode),
         FullFileData(File("Рецепт из братска от 2017", "jpeg"),
-                     getFileBytes(":/test_files/test_jpeg_image.jpeg"), parentCode)
+                     getFileBytes(":/test_files/test_jpeg_image.jpeg"), parentCode),
+        FullFileData(File("присланная медкарта", "pdf"),
+                     getFileBytes(":/test_files/присланная медкарта.pdf"), parentCode)
     };
 
     for (auto& item : fullList) {
@@ -99,9 +101,10 @@ void FilesDBTest::appointmentByFile(const File& file, Appointment& receiver) {
     if (it != list_.end()) {
         int code = parentAppointmentCode_[it - list_.begin()];
 
-        for (auto app : appointments) {
-            if (app.code() != code)
+        for (const auto& app : appointments) {
+            if (app.code() != code) {
                 continue;
+            }
             receiver = app;
             break;
         }
@@ -109,14 +112,18 @@ void FilesDBTest::appointmentByFile(const File& file, Appointment& receiver) {
 }
 
 void FilesDBTest::filesByPatient(const Patient& patient, std::vector<File>& receiver) {
-    for (const Appointment& appointment : appointments)
-        if (appointment.patient == patient)
+    for (const Appointment& appointment : appointments) {
+        if (appointment.patient == patient) {
             filesByAppointment(appointment, receiver);
+        }
+    }
 }
 
 void FilesDBTest::filesByAppointment(const Appointment& appointment, std::vector<File>& receiver) {
     int parentCode = appointment.code();
-    for (int i = 0; i < list_.size(); ++i)
-        if (parentAppointmentCode_[i] == parentCode)
+    for (int i = 0; i < list_.size(); ++i) {
+        if (parentAppointmentCode_[i] == parentCode) {
             receiver.push_back(list_[i]);
+        }
+    }
 }

@@ -18,13 +18,15 @@ bool Drug::isAvailable() const {
 }
 
 QString Drug::getFullName() const {
-    if (name.isEmpty())
+    if (name.isEmpty()) {
         return  nameLat;
+    }
 
     QString fullName = name;
 
-    if (!nameLat.isEmpty())
+    if (!nameLat.isEmpty()) {
         fullName += " (" + nameLat + ")";
+    }
 
     return fullName;
 }
