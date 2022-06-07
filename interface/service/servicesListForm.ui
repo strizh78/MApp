@@ -38,7 +38,7 @@
   <customwidget>
    <class>MAppTable</class>
    <extends>QTableView</extends>
-   <header>interface/basicForms/mapptable.h</header>
+   <header>interface/basicForms/mappTable.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
