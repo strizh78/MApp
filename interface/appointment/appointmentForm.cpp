@@ -16,8 +16,6 @@
 #include <QMessageBox>
 #include <QCloseEvent>
 
-#include <optional>
-
 namespace {
 std::vector<QString> getInvalidFields(const Appointment& appointment, DatabaseInterface* db) {
     std::vector<QString> wrongFields;
