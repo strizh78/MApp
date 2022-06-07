@@ -25,7 +25,7 @@ void setupScaleDpiUiFlags() {
 }
 
 void setApplicationFontFamily() {
-    QDirIterator it(getApplicatonDirectory() + "/fonts", QStringList() << "*.ttf", QDir::Files);
+    QDirIterator it(getApplicatonDirectory() + "/app_fonts", QStringList() << "*.ttf", QDir::Files);
     int id;
     while (it.hasNext()) {
         auto filename = it.next();
