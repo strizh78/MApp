@@ -29,7 +29,7 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v2
         with:
-          modules: webenginewidgets
+          modules: 'qtcharts qtwebengine'
           version: '5.15.2'
       - name: Run QMake
         run: qmake MApp.pro
@@ -44,7 +44,7 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v2
         with:
-          modules: webenginewidgets
+          modules: 'qtcharts qtwebengine'
           version: '5.15.2'
       - name: Run QMake
         run: qmake MApp.pro
