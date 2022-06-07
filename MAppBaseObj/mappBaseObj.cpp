@@ -4,7 +4,7 @@ int MAppBaseObj::code() const {
     return code_;
 }
 
-bool MAppBted() const {
+bool MAppBaseObj::isDeleted() const {
     return isDeleted_;
 }
 
