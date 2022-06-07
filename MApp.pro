@@ -224,7 +224,7 @@ win32 {
     COPY_TO_PATH=$$shell_path($$OUT_PWD/app_fonts)
 } else {
     COPY_FROM_PATH=$$PWD/fonts
-    COPY_TO_PATH=$$OUT_PWD/fonts
+    COPY_TO_PATH=$$OUT_PWD/app_fonts
 }
 
 copydata.commands = $(COPY_DIR) $$COPY_FROM_PATH $$COPY_TO_PATH
