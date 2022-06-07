@@ -5,6 +5,8 @@
 
 #include <QWidget>
 
+#include <optional>
+
 namespace Ui {
 class AppointmentForm;
 }
