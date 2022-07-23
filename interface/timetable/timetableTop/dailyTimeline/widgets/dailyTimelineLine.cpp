@@ -26,8 +26,10 @@ void DailyTimelineLine::setDatabase(DatabasePtr database) {
 
 void DailyTimelineLine::updateData(const std::vector<TimetableEvent>& tevents) {
     events_ = tevents;
-
-    lastHour_ = std::max(20, events_.back().end.hour() + 1 * (events_.back().end.minute() != 0));
+    lastHour_ = std::max(
+        20,
+        events_.empty() ? -1 : events_.back().end.hour() + 1 * (events_.back().end.minute() != 0)
+    );
     numberOfHours_ = lastHour_ - firstHour_;
 
     repaint();

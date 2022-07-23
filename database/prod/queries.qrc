@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>create_tables_queries.txt</file>
+    </qresource>
+</RCC>

@@ -1,6 +1,7 @@
 QT       += core gui
 QT       += testlib
 !win32: !win64: QT       += webenginewidgets
+QT       += sql
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
@@ -16,6 +17,16 @@ QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.15
 SOURCES += \
     appointment/appointment.cpp \
     \
+    database/prod/appointmentDB.cpp \
+    database/prod/databaseSQL.cpp \
+    database/prod/dbUtils/dbUtils.cpp \
+    database/prod/eventDB.cpp \
+    database/prod/fileDB.cpp \
+    database/prod/homeopathyDB.cpp \
+    database/prod/medicineDB.cpp \
+    database/prod/patientDB.cpp \
+    database/prod/query.cpp \
+    database/prod/serviceDB.cpp \
     database/test/databaseTest.cpp \
     \
     database/test/appointmentTestDB.cpp \
@@ -95,6 +106,19 @@ HEADERS += \
     appointment/appointment.h \
     \
     database/databaseInterface.h \
+    database/databaseInterface.h \
+    database/prod/appointmentDB.h \
+    database/prod/config.h \
+    database/prod/databaseSQL.h \
+    database/prod/dbUtils/dbUtils.h \
+    database/prod/eventDB.h \
+    database/prod/fileDB.h \
+    database/prod/homeopathyDB.h \
+    database/prod/itemProdInterface.h \
+    database/prod/medicineDB.h \
+    database/prod/patientDB.h \
+    database/prod/query.h \
+    database/prod/serviceDB.h \
     database/test/databaseTest.h \
     \
     database/test/appointmentTestDB.h \
@@ -235,6 +259,7 @@ export(copydata.commands)
 QMAKE_EXTRA_TARGETS += first copydata
 
 RESOURCES += \
+    database/prod/queries.qrc \
     interface/icons.qrc \
     translations.qrc
 

@@ -15,12 +15,13 @@ public:
     void update(const File& editedFile, const FileData& data) override;
     void list(std::vector<File>& receiver) override;
 
-    int nextCode() override;
-
 protected:
     static std::vector<File> list_;
     static std::vector<QByteArray> dataList_;
     static std::vector<int> parentAppointmentCode_;
     static std::vector<Appointment> appointments;
     static int code_;
+
+private:
+    int nextCode();
 };

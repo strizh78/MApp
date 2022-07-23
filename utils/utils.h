@@ -10,6 +10,8 @@
 QString toString(const std::vector<QString>& src, std::string sep = " ");
 QString toString(QStringList::iterator begin, QStringList::iterator end, const std::string& sep = " ");
 
+std::vector<QString> split(const QString& str, const std::string& sep = " ");
+
 template <class T>
 QString toString(const std::vector<T>& src, std::string sep = " ") {
     std::ostringstream oss;

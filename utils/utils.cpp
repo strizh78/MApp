@@ -32,6 +32,20 @@ QString toString(const std::vector<QString>& src, std::string sep) {
     return result;
 }
 
+
+std::vector<QString> qStringListToVector(const QStringList list) {
+    std::vector<QString> result;
+
+    for (const auto& str : list) {
+        result.push_back(str);
+    }
+    return result;
+}
+
+std::vector<QString> split(const QString& str, const std::string& sep) {
+    return qStringListToVector(str.split(QString::fromStdString(sep)));
+}
+
 QString getApplicatonDirectory() {
     QDir dir;
 
