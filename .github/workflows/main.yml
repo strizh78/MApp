@@ -27,7 +27,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2-beta
       - name: Install Qt
-        uses: jurplel/install-qt-action@v2
+        uses: jurplel/install-qt-action@v2.9.0
         with:
           modules: 'qtcharts qtwebengine'
           version: '5.15.2'
@@ -42,7 +42,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2-beta
       - name: Install Qt
-        uses: jurplel/install-qt-action@v2
+        uses: jurplel/install-qt-action@v2.9.0
         with:
           modules: 'qtcharts qtwebengine'
           version: '5.15.2'
