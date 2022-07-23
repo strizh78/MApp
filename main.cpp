@@ -1,6 +1,7 @@
 #include "interface/mainwindow.h"
 
 #include "database/test/databaseTest.h"
+#include "database/prod/databaseSQL.h"
 #include "utils/utils.h"
 
 #include <memory>
@@ -40,7 +41,7 @@ void setApplicationFontFamily() {
 int main(int argc, char *argv[]) {
     setupScaleDpiUiFlags();
 
-    DatabasePtr database = std::make_shared<DatabaseTest>();
+    DatabasePtr database = std::make_shared<DatabaseSQL>();
 
     QApplication a(argc, argv);
 

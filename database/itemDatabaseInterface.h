@@ -10,10 +10,11 @@ public:
     ItemDBInterface() = default;
     virtual ~ItemDBInterface() = default;
 
-    virtual int nextCode() = 0;
-
-    void setCode(BaseItem& item) {
-        item.setCode(nextCode());
+    void setCode(BaseItem& item, int code) {
+        item.setCode(code);
+    }
+    void setDeleted(BaseItem& item, bool isDeleted) {
+        item.setDeleted(isDeleted);
     }
 
     void setDeletedMark(BaseItem& item, bool isDeleted) {
@@ -35,9 +36,8 @@ public:
     ItemDBInterface() = default;
     virtual ~ItemDBInterface() = default;
 
-    virtual int nextCode() = 0;
-    virtual void setCode(File& item) final {
-        item.setCode(nextCode());
+    virtual void setCode(File& item, int code) final {
+        item.setCode(code);
     }
 
     virtual void setDeletedMark(File& item, bool isDeleted) final {

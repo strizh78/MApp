@@ -72,7 +72,7 @@ void FilesDBTest::list(std::vector<File>& receiver) {
 }
 
 void FilesDBTest::add(File& file, FileData& data, int parentCode) {
-    setCode(file);
+    setCode(file, nextCode());
     list_.push_back(file);
     dataList_.push_back(data);
     parentAppointmentCode_.push_back(parentCode);
