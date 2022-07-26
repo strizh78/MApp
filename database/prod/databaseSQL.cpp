@@ -82,15 +82,18 @@ void createDatabaseIfNotExist() {
     switch (query.size()) {
     case -1:
         qCritical() << query.lastError();
+        break;
     case 0:
         // Database not exists, have to create it and tables.
         createDatabase(db);
         createTables(db);
+        break;
     case 1:
 //        Database exists,
 //        but the composition of the tables may have changed
 //        TODO: Сhange the processing of updating the composition/structure of tables
         createTables(db);
+        break;
     default:
         qCritical() << QString("Found multiple databases with name %1").arg(DATABASE_NAME);
     }
