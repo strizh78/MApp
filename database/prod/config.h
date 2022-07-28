@@ -14,7 +14,7 @@
     const QString ROOT_USER = "root";
     const QString ROOT_PASSWORD = "S9kTZm~LG";
 #else
-    const QString DATABASE_NAME = "mapp-test-v2";
+    const QString DATABASE_NAME = "mapp-test";
     const QString HOST = "localhost";
     const QString ROOT_USER = "root";
     const QString ROOT_PASSWORD = "S9kTZm~LG";
