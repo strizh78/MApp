@@ -13,7 +13,7 @@ Drug::Drug(const QString& name,
            float price)
     : name(name)
     , activeSubstance(activeSubstance)
-    , activeSubstancetLat(activeSubstanceLat)
+    , activeSubstanceLat(activeSubstanceLat)
     , isPrescription(isPrescription)
     , releaseForms(releaseForms)
     , brandNames(brandNames)
@@ -24,19 +24,22 @@ Drug::Drug(const QString& name,
 }
 
 QString Drug::getFullName() const {
-    if (name.isEmpty())
+    if (name.isEmpty()) {
         return getActiveSubstance();
+    }
     return name;
 }
 
 QString Drug::getActiveSubstance() const {
-    if (activeSubstance.isEmpty())
-        return  activeSubstancetLat;
+    if (activeSubstance.isEmpty()) {
+        return  activeSubstanceLat;
+    }
 
     QString fullName = activeSubstance;
 
-    if (!activeSubstancetLat.isEmpty())
-        fullName += " (" + activeSubstancetLat + ")";
+    if (!activeSubstanceLat.isEmpty()) {
+        fullName += " (" + activeSubstanceLat + ")";
+    }
 
     return fullName;
 }

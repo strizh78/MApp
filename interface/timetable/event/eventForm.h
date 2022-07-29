@@ -6,6 +6,8 @@
 
 #include <QWidget>
 
+#include <optional>
+
 namespace Ui {
 class EventForm;
 }

@@ -10,10 +10,11 @@ public:
     ItemDBInterface() = default;
     virtual ~ItemDBInterface() = default;
 
-    virtual int nextCode() = 0;
-
-    void setCode(BaseItem& item) {
-        item.setCode(nextCode());
+    void setCode(BaseItem& item, int code) {
+        item.setCode(code);
+    }
+    void setDeleted(BaseItem& item, bool isDeleted) {
+        item.setDeleted(isDeleted);
     }
 
     void setDeletedMark(BaseItem& item, bool isDeleted) {
@@ -21,7 +22,7 @@ public:
         update(item);
     }
 
-    virtual void list(std::vector<BaseItem>& ) = 0;
+    virtual void list(std::vector<BaseItem>& receiver) = 0;
     virtual void add(BaseItem& item) = 0;
     virtual void update(const BaseItem& editedItem) = 0;
 };
@@ -35,19 +36,17 @@ public:
     ItemDBInterface() = default;
     virtual ~ItemDBInterface() = default;
 
-    virtual int nextCode() = 0;
-    virtual void setCode(File& item) final {
-        item.setCode(nextCode());
+    virtual void setCode(File& item, int code) final {
+        item.setCode(code);
     }
 
     virtual void setDeletedMark(File& item, bool isDeleted) final {
         item.setDeleted(isDeleted);
     }
 
-    virtual void list(std::vector<File>& ) = 0;
-    virtual void add(File& item, FileData&, int) = 0;
-    virtual void update(const File& editedFile, const FileData&) = 0;
-    virtual void fileData(const File&, FileData&) = 0;
+    virtual void list(std::vector<File>&) = 0;
+    virtual void add(File& item, int) = 0;
+    virtual void update(const File&) = 0;
     virtual void appointmentByFile(const File&, Appointment&) = 0;
     virtual void filesByPatient(const Patient&, std::vector<File>&) = 0;
     virtual void filesByAppointment(const Appointment&, std::vector<File>&) = 0;

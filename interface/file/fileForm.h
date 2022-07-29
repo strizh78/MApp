@@ -5,7 +5,7 @@
 
 #include "interface/file/displayWidgets/displayManager.h"
 
-#include "interface/utils.h"
+#include "interface/interfaceUtils.h"
 
 #include <QWidget>
 

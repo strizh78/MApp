@@ -1,7 +1,7 @@
 #pragma once
 
 #include "MAppBaseObj/mappBaseObj.h"
-#include "interface/utils.h"
+#include "interface/interfaceUtils.h"
 
 #include <QStandardItemModel>
 #include <QTableView>
@@ -51,8 +51,7 @@ private slots:
     void on_searchString_textEdited(const QString &searchRequest);
     void on_tableSettingsBtn_clicked();
     void on_tabWidget_currentChanged(int index);
-    void on_mainTable_doubleClicked(const QModelIndex &index);
-    void on_binTable_doubleClicked(const QModelIndex &index);
+    void on_table_doubleClicked(const QModelIndex &index);
     void on_solutionBox_accepted();
     void on_solutionBox_rejected();
 

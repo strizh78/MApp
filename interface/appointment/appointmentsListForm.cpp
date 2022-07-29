@@ -3,7 +3,7 @@
 
 #include "appointmentForm.h"
 
-#include "interface/utils.h"
+#include "interface/interfaceUtils.h"
 
 AppointmentsListForm::AppointmentsListForm(DatabasePtr database,
                                            QWidget *parent)

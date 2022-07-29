@@ -5,7 +5,7 @@
 #include "interface/appointment/appointmentMiniForm.h"
 #include "interface/basicForms/mappTable.h"
 
-#include "interface/utils.h"
+#include "interface/interfaceUtils.h"
 
 #include <QMessageBox>
 
@@ -102,7 +102,6 @@ PatientForm::PatientForm(DatabasePtr database,
                          QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::PatientForm)
-    , infoViewModel_(std::make_shared<QStandardItemModel>())
     , patient_(patient.value_or(Patient()))
     , database_(database)
 {
@@ -119,13 +118,13 @@ void PatientForm::fieldEdited() {
     isModified = true;
 }
 
-void PatientForm::on_solutionBox_accepted() {
+void PatientForm::on_saveInfoBox_accepted() {
     if (trySavePatient()) {
         close();
     }
 }
 
-void PatientForm::on_solutionBox_rejected() {
+void PatientForm::on_saveInfoBox_rejected() {
     close();
 }
 
@@ -165,7 +164,7 @@ void PatientForm::on_addAppointmentBtn_clicked() {
 
 void PatientForm::addAppointment(const Appointment& appointment) {
     auto* miniAppointmentForm = new AppointmentMiniForm(appointment, database_, this);
-    ui->appointmentsList->insertWidget(2, miniAppointmentForm);
+    ui->appointmentsList->insertWidget(/*after label and line*/ 2, miniAppointmentForm);
 
     ui->rightPart->setVisible(true);
 }
@@ -190,10 +189,9 @@ void PatientForm::setupUi() {
 
     connect(ui->nameEdit, SIGNAL(textChanged(QString)), this, SLOT(fieldEdited()));
     connect(ui->dateEdit, SIGNAL(userDateChanged(QDate)), this, SLOT(fieldEdited()));
-    connect(ui->additionalInfo, SIGNAL(textChanged(QString)), this, SLOT(fieldEdited()));
 
     if (patient_.isExists()) {
-        setWindowTitle("Пациент " + patient_.nameInfo.getInitials());
+        setWindowTitle("Пациент " + patient_.nameInfo.initials);
     } else {
         setWindowTitle("Создание пациента");
     }
@@ -205,6 +203,7 @@ void PatientForm::fillFormPatientInfo() {
     }
 
     ui->nameEdit->setText(patient_.nameInfo.getFullName());
+    ui->initialsEdit->setText(patient_.nameInfo.initials);
     ui->dateEdit->setDate(patient_.birthDate);
 
     ui->adressesList->setDataList(patient_.address);
@@ -251,14 +250,7 @@ void PatientForm::setupAppointmentsInfo() {
 }
 
 Patient PatientForm::buildPatientFromFormData() {
-    auto splittedName = ui->nameEdit->text().split(' ');
-
-    Patient::NameInfo nameInfo;
-    nameInfo.surname = (splittedName.size() >= 1) ? splittedName[0] : "";
-    nameInfo.name = (splittedName.size() >= 2) ? splittedName[1] : "";
-    nameInfo.patronymic = (splittedName.size() >= 3) ? splittedName[2] : "";
-
-    patient_.nameInfo = nameInfo;
+    patient_.nameInfo.initials = ui->initialsEdit->text();
     patient_.birthDate = ui->dateEdit->date();
 
     patient_.address = ui->adressesList->getDataList();
@@ -287,3 +279,7 @@ bool PatientForm::trySavePatient() {
     return true;
 }
 
+void PatientForm::on_nameEdit_editingFinished() {
+    patient_.nameInfo = Patient::NameInfo(ui->nameEdit->text());
+    ui->initialsEdit->setText(patient_.nameInfo.initials);
+}

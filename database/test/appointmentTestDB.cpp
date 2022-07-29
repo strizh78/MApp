@@ -23,16 +23,29 @@ AppointmentDBTest::AppointmentDBTest(ItemDBInterface<Service>* service,
         Appointment(patients[6], services[2], QDateTime(today, {9, 00})),
         Appointment(patients[1], services[1], QDateTime(today, {11, 00})),
         Appointment(patients[1], services[1], QDateTime(today, {11, 30})),
+
+        Appointment(patients[5], services[6], QDateTime(today, {12, 00})),
+        Appointment(patients[2], services[8], QDateTime(today, {13, 00})),
+
         Appointment(patients[3], services[5], QDateTime(today, {14, 10})),
+
+        Appointment(patients[1], services[0], QDateTime(today, {15, 00})),
+        Appointment(patients[2], services[1], QDateTime(today, {15, 20})),
+        Appointment(patients[3], services[0], QDateTime(today, {15, 50})),
+        Appointment(patients[4], services[0], QDateTime(today, {16, 10})),
+        Appointment(patients[5], services[1], QDateTime(today, {17, 00})),
+        Appointment(patients[5], services[0], QDateTime(today, {17, 30})),
+        Appointment(patients[5], services[1], QDateTime(today, {17, 50})),
+
         Appointment(patients[4], services[2], QDateTime(today, {19, 00})),
-        Appointment(patients[5], services[4], QDateTime(today, {21, 45})),
+        Appointment(patients[5], services[3], QDateTime(today, {20, 30})),
 
         Appointment(patients[1], services[8], QDateTime(yesterday, {8, 10})),
         Appointment(patients[3], services[8], QDateTime(yesterday, {9, 45})),
         Appointment(patients[0], services[1], QDateTime(yesterday, {14, 10})),
         Appointment(patients[5], services[2], QDateTime(yesterday, {16, 00})),
         Appointment(patients[2], services[8], QDateTime(yesterday, {20, 00})),
-        Appointment(patients[1], services[7], QDateTime(yesterday, {21, 45})),
+        Appointment(patients[1], services[7], QDateTime(yesterday, {21, 35})),
 
         Appointment(patients[2], services[0], QDateTime(tomorrow, {8, 10})),
         Appointment(patients[4], services[1], QDateTime(tomorrow, {12, 45})),

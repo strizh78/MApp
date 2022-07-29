@@ -1,0 +1,99 @@
+CREATE TABLE IF NOT EXISTS `medicines` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `isDeleted` tinyint unsigned NOT NULL DEFAULT '0',
+  `name` varchar(127) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `activeSubstance` varchar(127) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `activeSubstanceLat` varchar(127) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `isPrescription` tinyint unsigned NOT NULL DEFAULT '0',
+  `contraindications` varchar(4095) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `price` float DEFAULT '0',
+  `releaseForms`varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `dosages` text COLLATE utf8_unicode_ci,
+  `brands` text COLLATE utf8_unicode_ci,
+  PRIMARY KEY (`id`)
+);
+CREATE TABLE IF NOT EXISTS `events` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `isDeleted` tinyint unsigned NOT NULL DEFAULT '0',
+  `title` varchar(127) COLLATE utf8_unicode_ci NOT NULL,
+  `date` datetime DEFAULT NULL,
+  `duration` time NOT NULL,
+  `comment` text COLLATE utf8_unicode_ci,
+  PRIMARY KEY (`id`)
+);
+CREATE TABLE IF NOT EXISTS `homeopathy` (
+  `id` int NOT NULL AUTO_INCREMENT,
+   `isDeleted` tinyint unsigned NOT NULL DEFAULT '0',
+  `name` varchar(127) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `nameLat` varchar(127) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `group` varchar(127) COLLATE utf8_unicode_ci NOT NULL,
+  `dilution` varchar(127) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+CREATE TABLE IF NOT EXISTS `patients` (
+  `id` int NOT NULL AUTO_INCREMENT,
+   `isDeleted` tinyint unsigned NOT NULL DEFAULT '0',
+  `name` varchar(127) COLLATE utf8_unicode_ci NOT NULL,
+  `surname` varchar(127) COLLATE utf8_unicode_ci NOT NULL,
+  `patronymic` varchar(127) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `initials` varchar(127) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `birthDate` date DEFAULT NULL,
+  `address` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `phones` varchar(127) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `emails` varchar(127) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `additionalInfo` text COLLATE utf8_unicode_ci,
+  PRIMARY KEY (`id`)
+);
+CREATE TABLE IF NOT EXISTS `services` (
+  `id` int NOT NULL AUTO_INCREMENT,
+   `isDeleted` tinyint NOT NULL DEFAULT '0',
+  `name` varchar(127) COLLATE utf8_unicode_ci NOT NULL,
+  `price` float unsigned NOT NULL DEFAULT '0',
+  `duration` time NOT NULL,
+  `isDeprecated` tinyint NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+);
+CREATE TABLE IF NOT EXISTS `appointments` (
+  `id` int NOT NULL AUTO_INCREMENT,
+   `isDeleted` tinyint NOT NULL DEFAULT '0',
+  `patient` int NOT NULL,
+  `service` int NOT NULL,
+  `homeopathy` int DEFAULT NULL,
+  `date` datetime DEFAULT NULL,
+  `record` mediumtext COLLATE utf8_unicode_ci,
+  `isConducted` tinyint DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `appointmentHomeppathyFK_idx` (`homeopathy`),
+  KEY `appointmentServiceFK_idx` (`service`),
+  KEY `appointmentPatientFK_idx` (`patient`),
+  CONSTRAINT `appointmentHomeppathyFK` FOREIGN KEY (`homeopathy`) REFERENCES `homeopathy` (`id`),
+  CONSTRAINT `appointmentPatientFK` FOREIGN KEY (`patient`) REFERENCES `patients` (`id`),
+  CONSTRAINT `appointmentServiceFK` FOREIGN KEY (`service`) REFERENCES `services` (`id`)
+);
+CREATE TABLE IF NOT EXISTS `prescribed_medications` (
+  `medicine` int NOT NULL,
+  `appointment` int NOT NULL,
+  KEY `prescribedMedicationMedicineFK_idx` (`medicine`),
+  KEY `prescribedMedicationAppointmentFK_idx` (`appointment`),
+  CONSTRAINT `prescribedMedicationMedicineFK` FOREIGN KEY (`medicine`) REFERENCES `medicines` (`id`),
+  CONSTRAINT `prescribedMedicationAppointmentFK` FOREIGN KEY (`appointment`) REFERENCES `appointments` (`id`)
+);
+CREATE TABLE IF NOT EXISTS `files` (
+  `id` int NOT NULL AUTO_INCREMENT,
+   `isDeleted` tinyint NOT NULL DEFAULT '0',
+  `name` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
+  `extension` tinytext COLLATE utf8_unicode_ci,
+  `uploadTime` datetime NOT NULL,
+  `lastEditTime` datetime NOT NULL,
+  `data` mediumblob,
+  PRIMARY KEY (`id`)
+);
+CREATE TABLE IF NOT EXISTS `appointment_files` (
+    `file` int NOT NULL,
+    `appointment` int NOT NULL,
+    PRIMARY KEY (`file`, `appointment`),
+    KEY `appointmentFilesFileFK_idx` (`file`),
+    KEY `appointmentFilesAppointmentFK_idx` (`appointment`),
+    CONSTRAINT `appointmentFilesFileFK` FOREIGN KEY (`file`) REFERENCES `files` (`id`),
+    CONSTRAINT `appointmentFilesAppointmentFK` FOREIGN KEY (`appointment`) REFERENCES `appointments` (`id`)
+);

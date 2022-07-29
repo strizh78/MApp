@@ -1,11 +1,11 @@
 #pragma once
 
 #include "patient/patient.h"
-#include "appointment/appointment.h"
 #include "database/databaseInterface.h"
 
 #include <QWidget>
-#include <QStandardItemModel>
+
+#include <optional>
 
 namespace Ui {
 class PatientForm;
@@ -27,14 +27,16 @@ signals:
 private slots:
     void fieldEdited();
 
-    void on_solutionBox_accepted();
-    void on_solutionBox_rejected();
+    void on_saveInfoBox_accepted();
+    void on_saveInfoBox_rejected();
 
     void on_dateEdit_userDateChanged(const QDate& date);
 
     void on_addAppointmentBtn_clicked();
 
     void addAppointment(const Appointment& appointment);
+
+    void on_nameEdit_editingFinished();
 
 private:
     void setupUi();
@@ -47,7 +49,6 @@ private:
 
 private:
     Ui::PatientForm *ui;
-    std::shared_ptr<QStandardItemModel> infoViewModel_;
 
     Patient patient_;
     DatabasePtr database_;

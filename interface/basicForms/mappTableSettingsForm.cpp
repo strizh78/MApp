@@ -29,8 +29,9 @@ void MAppTableSettingsForm::on_solutionBox_accepted() {
     bool useBin = ui->useBinSwitch->isChecked();
     tabs_->tabBar()->setVisible(useBin);
 
-    if (!useBin)
+    if (!useBin) {
         tabs_->setCurrentIndex(0);
+    }
     ui->columnSettings->accept();
     close();
 }

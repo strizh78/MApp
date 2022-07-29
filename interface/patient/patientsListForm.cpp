@@ -2,7 +2,7 @@
 #include "ui_patientsListForm.h"
 #include "patientForm.h"
 
-#include "interface/utils.h"
+#include "interface/interfaceUtils.h"
 
 PatientsListForm::PatientsListForm(DatabasePtr database,
                          QWidget *parent)

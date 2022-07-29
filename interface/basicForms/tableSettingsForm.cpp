@@ -39,8 +39,9 @@ void TableSettingsForm::setHeaders(QHeaderView* headerView) {
 }
 
 void TableSettingsForm::accept() {
-    if (headerView_->isVisible())
+    if (headerView_->isVisible()) {
         hideSections();
+    }
     close();
 }
 

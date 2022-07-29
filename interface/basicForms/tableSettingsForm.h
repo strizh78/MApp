@@ -27,7 +27,7 @@ signals:
     void signalChangeColumnsDisplay(std::vector<bool> columns);
 
 private:
-    void addCheckBox(const QString& text, int num);
+    void addCheckBox(const QString& prefix, int number);
     void hideSections();
 
 private:

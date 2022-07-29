@@ -2,7 +2,7 @@
 
 #include "database/databaseInterface.h"
 
-#include "interface/timetable/dailyTimetable.h"
+#include "interface/timetable/dailyTimetable/dailyTimetable.h"
 
 #include <QMainWindow>
 
@@ -29,6 +29,10 @@ private slots:
 private:
     template <class T>
     void openWidget();
+
+    template <class F>
+    QAction* addActionToMenu(const QIcon& icon, const QString& text,
+                             F slotName);
 
 private:
     Ui::MainWindow *ui;

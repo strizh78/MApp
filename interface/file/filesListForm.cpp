@@ -2,6 +2,9 @@
 #include "ui_filesListForm.h"
 #include "fileForm.h"
 
+#include "interface/interfaceUtils.h"
+#include "utils/utils.h"
+
 #include <QFileDialog>
 #include <QDir>
 #include <QFile>
@@ -65,10 +68,10 @@ void FilesListForm::onAddButtonClicked() {
         errorMessage.showMessage("Произошла ошибка при добавлении фалйа.");
         return;
     }
-    QByteArray data = qFile.readAll();
     QFileInfo info(qFile);
     file = File(info.baseName(), info.suffix());
-    database_->files->add(file, data, parentAppointmentCode_);
+    file.data = qFile.readAll();
+    database_->files->add(file, parentAppointmentCode_);
     addFile(file);
 }
 

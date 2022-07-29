@@ -6,7 +6,6 @@
 #include <algorithm>
 
 std::vector<File> FilesDBTest::list_ = {};
-std::vector<QByteArray> FilesDBTest::dataList_ = {};
 std::vector<int> FilesDBTest::parentAppointmentCode_ = {};
 std::vector<Appointment> FilesDBTest::appointments = {};
 int FilesDBTest::code_ = 0;
@@ -27,14 +26,14 @@ QByteArray getFileBytes(const QString& fileName) {
 FilesDBTest::FilesDBTest(ItemDBInterface<Appointment>* appointment) {
     struct FullFileData {
         File file;
-        FileData data;
         int parentCode;
 
-        FullFileData(File _file, FileData _data, int _parentCode)
-            : file(_file)
-            , data(_data)
-            , parentCode (_parentCode)
-        {}
+        FullFileData(const File& file, const FileData& data, int parentCode)
+            : file(file)
+            , parentCode(parentCode)
+        {
+            this->file.data = data;
+        }
     };
 
     appointment->list(appointments);
@@ -53,11 +52,13 @@ FilesDBTest::FilesDBTest(ItemDBInterface<Appointment>* appointment) {
         FullFileData(File("Заключение", "txt"), longString.toLocal8Bit(), parentCode),
         FullFileData(File("Рентген", "png"), getFileBytes(":/icons/trash.png"), parentCode),
         FullFileData(File("Рецепт из братска от 2017", "jpeg"),
-                     getFileBytes(":/test_files/test_jpeg_image.jpeg"), parentCode)
+                     getFileBytes(":/test_files/test_jpeg_image.jpeg"), parentCode),
+        FullFileData(File("присланная медкарта", "pdf"),
+                     getFileBytes(":/test_files/присланная медкарта.pdf"), parentCode)
     };
 
     for (auto& item : fullList) {
-        add(item.file, item.data, item.parentCode);
+        add(item.file, item.parentCode);
     }
 }
 
@@ -69,14 +70,13 @@ void FilesDBTest::list(std::vector<File>& receiver) {
     receiver = list_;
 }
 
-void FilesDBTest::add(File& file, FileData& data, int parentCode) {
-    setCode(file);
+void FilesDBTest::add(File& file, int parentCode) {
+    setCode(file, nextCode());
     list_.push_back(file);
-    dataList_.push_back(data);
     parentAppointmentCode_.push_back(parentCode);
 }
 
-void FilesDBTest::update(const File& editedFile, const FileData& data) {
+void FilesDBTest::update(const File& editedFile) {
     auto it = std::find(list_.begin(), list_.end(), editedFile);
     if (it == list_.end()) {
         return;
@@ -84,14 +84,6 @@ void FilesDBTest::update(const File& editedFile, const FileData& data) {
 
     int idx = it - list_.begin();
     list_[idx] = editedFile;
-    dataList_[idx] = data;
-}
-
-void FilesDBTest::fileData(const File& file, FileData& data) {
-    auto it = std::find(list_.begin(), list_.end(), file);
-    if (it != list_.end()) {
-        data = dataList_[it - list_.begin()];
-    }
 }
 
 void FilesDBTest::appointmentByFile(const File& file, Appointment& receiver) {
@@ -99,9 +91,10 @@ void FilesDBTest::appointmentByFile(const File& file, Appointment& receiver) {
     if (it != list_.end()) {
         int code = parentAppointmentCode_[it - list_.begin()];
 
-        for (auto app : appointments) {
-            if (app.code() != code)
+        for (const auto& app : appointments) {
+            if (app.code() != code) {
                 continue;
+            }
             receiver = app;
             break;
         }
@@ -109,14 +102,18 @@ void FilesDBTest::appointmentByFile(const File& file, Appointment& receiver) {
 }
 
 void FilesDBTest::filesByPatient(const Patient& patient, std::vector<File>& receiver) {
-    for (const Appointment& appointment : appointments)
-        if (appointment.patient == patient)
+    for (const Appointment& appointment : appointments) {
+        if (appointment.patient == patient) {
             filesByAppointment(appointment, receiver);
+        }
+    }
 }
 
 void FilesDBTest::filesByAppointment(const Appointment& appointment, std::vector<File>& receiver) {
     int parentCode = appointment.code();
-    for (int i = 0; i < list_.size(); ++i)
-        if (parentAppointmentCode_[i] == parentCode)
+    for (int i = 0; i < list_.size(); ++i) {
+        if (parentAppointmentCode_[i] == parentCode) {
             receiver.push_back(list_[i]);
+        }
+    }
 }

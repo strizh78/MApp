@@ -7,15 +7,11 @@ class ItemDBTestInterface : public ItemDBInterface<BaseItem> {
 public:
     ItemDBTestInterface() = default;
 
-    int nextCode() override {
-        return ++code_;
-    }
-
     void list(std::vector<BaseItem>& receiver) override {
         receiver = list_;
     }
     void add(BaseItem& item) override {
-        ItemDBInterface<BaseItem>::setCode(item);
+        ItemDBInterface<BaseItem>::setCode(item, nextCode());
         list_.push_back(item);
     }
     void update(const BaseItem& editedItem) override {
@@ -29,4 +25,10 @@ public:
 protected:
     static std::vector<BaseItem> list_;
     static int code_;
+
+private:
+    int nextCode() {
+        return ++code_;
+    }
+
 };

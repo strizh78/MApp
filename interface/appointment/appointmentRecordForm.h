@@ -15,12 +15,11 @@ public:
 
     void setEditEnabled(bool enabled);
 
-    void setText(const QString& text);
-    QString getText();
+    void setHtml(const QString& text);
+    QString getHtml();
 
 protected:
     void closeEvent(QCloseEvent* event) override;
-    void resizeEvent(QResizeEvent *event) override;
 
 private slots:
     void on_newTabBtn_clicked();

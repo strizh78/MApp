@@ -17,11 +17,14 @@ public:
     File(const QString& newName,
          const QString& extension,
          const QDateTime& upload,
-         const QDateTime& lastEdit);
+         const QDateTime& lastEdit,
+         const FileData& data = FileData()
+    );
 
 public:
     QString name;
     QString extension;
     QDateTime uploadTime;
     QDateTime lastEditTime;
+    FileData data;
 };

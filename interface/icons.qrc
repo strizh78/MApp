@@ -20,5 +20,21 @@
         <file>icons/right-arrow.png</file>
         <file>icons/start.png</file>
         <file>test_files/test_jpeg_image.jpeg</file>
+        <file>test_files/присланная медкарта.pdf</file>
+        <file>icons/color_palette.png</file>
+        <file>icons/eraser.png</file>
+        <file>icons/pen.png</file>
+        <file>icons/circle.png</file>
+        <file>icons/bottom_arrow.png</file>
+        <file>icons/top_arrow.png</file>
+        <file>icons/bottom_arrow_violet.png</file>
+        <file>icons/burgerMenu/drugs.png</file>
+        <file>icons/burgerMenu/hamburger.png</file>
+        <file>icons/burgerMenu/health-and-care.png</file>
+        <file>icons/burgerMenu/home.png</file>
+        <file>icons/burgerMenu/medical-history.png</file>
+        <file>icons/burgerMenu/patient.png</file>
+        <file>icons/burgerMenu/pills.png</file>
+        <file>icons/burgerMenu/close.png</file>
     </qresource>
 </RCC>

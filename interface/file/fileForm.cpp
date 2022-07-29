@@ -1,11 +1,8 @@
 #include "fileForm.h"
 #include "ui_fileForm.h"
 
-#include "interface/utils.h"
+#include "interface/interfaceUtils.h"
 #include "appointment/appointment.h"
-
-#include <QTabBar>
-#include <QBuffer>
 
 FileForm::FileForm(const File& file,
                    DatabasePtr database,
@@ -25,11 +22,13 @@ FileForm::FileForm(const File& file,
     ui->lastUpdTimeValue->setText(file_.lastEditTime.toString());
     ui->appointmentLabel->hide();
 
-    FileData data;
-    database_->files->fileData(file_, data);
-    viewer.setData(data);
+    viewer.setData(file_.data);
 
-    ui->allLayout->addWidget(viewer.getDisplayWidget());
+    auto* fileDisplayWidget = viewer.getDisplayWidget();
+    layout()->addWidget(fileDisplayWidget);
+
+    resize(ui->infoWidget->geometry().width() + fileDisplayWidget->geometry().width(),
+           fileDisplayWidget->geometry().height());
 }
 
 FileForm::~FileForm() {
@@ -40,7 +39,7 @@ void FileForm::showAppointment() {
     Appointment app;
     database_->files->appointmentByFile(file_, app);
 //    TODO: Make label clickable
-    ui->appointmentLabel->setText(app.patient.nameInfo.getInitials() + " " + app.date.toString());
+    ui->appointmentLabel->setText(app.patient.nameInfo.initials + " " + app.date.toString());
     ui->appointmentLabel->show();
 }
 
@@ -58,7 +57,8 @@ void FileForm::on_buttonBox_accepted() {
 
     file_.name = newName;
     file_.lastEditTime = QDateTime::currentDateTime();
-    database_->files->update(file_, viewer.getData());
+    file_.data = viewer.getData();
+    database_->files->update(file_);
     emit fileEditSignal(file_);
 
     close();
