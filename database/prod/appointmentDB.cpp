@@ -25,8 +25,8 @@ void AppointmentDB::list(std::vector<Appointment>& receiver) {
     query.leftJoin(homeopathyDb_->getTableName(), "id", "homeopathy");
     query.leftJoin(serviceDb_->getTableName(), "id", "service");
     query.leftJoin(patientDb_->getTableName(), "id", "patient");
-    query.leftJoin("prescribed medications", "appointment", "id");
-    query.leftJoin(medicineDb_->getTableName(), "id", "prescribed medications", "medicine");
+    query.leftJoin("prescribed_medications", "appointment", "id");
+    query.leftJoin(medicineDb_->getTableName(), "id", "prescribed_medications", "medicine");
 
     if (query.exec()) {
         handleListResult(query, receiver);
@@ -34,6 +34,11 @@ void AppointmentDB::list(std::vector<Appointment>& receiver) {
 }
 
 void AppointmentDB::handleListResult(QSqlQuery& query, std::vector<Appointment>& receiver) {
+    auto pushIfNotEmpty = [&](const Appointment& appointment) {
+        if (appointment != Appointment()) {
+            receiver.push_back(appointment);
+        }
+    };
     Appointment current;
 
     while (query.next()) {
@@ -44,10 +49,10 @@ void AppointmentDB::handleListResult(QSqlQuery& query, std::vector<Appointment>&
             continue;
         }
 
-        receiver.push_back(current);
+        pushIfNotEmpty(current);
         current = next;
     }
-    receiver.push_back(current);
+    pushIfNotEmpty(current);
 }
 
 Appointment AppointmentDB::rowToItem(const QSqlQuery& row, int startPos) {

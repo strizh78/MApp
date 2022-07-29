@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS `medicines` (
   `activeSubstance` varchar(127) COLLATE utf8_unicode_ci DEFAULT NULL,
   `activeSubstanceLat` varchar(127) COLLATE utf8_unicode_ci DEFAULT NULL,
   `isPrescription` tinyint unsigned NOT NULL DEFAULT '0',
-  `contraindications` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `contraindications` varchar(4095) COLLATE utf8_unicode_ci DEFAULT NULL,
   `price` float DEFAULT '0',
   `releaseForms`varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `dosages` text COLLATE utf8_unicode_ci,

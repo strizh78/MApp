@@ -22,9 +22,7 @@ FileForm::FileForm(const File& file,
     ui->lastUpdTimeValue->setText(file_.lastEditTime.toString());
     ui->appointmentLabel->hide();
 
-    FileData data;
-    database_->files->fileData(file_, data);
-    viewer.setData(data);
+    viewer.setData(file_.data);
 
     auto* fileDisplayWidget = viewer.getDisplayWidget();
     layout()->addWidget(fileDisplayWidget);
@@ -59,7 +57,8 @@ void FileForm::on_buttonBox_accepted() {
 
     file_.name = newName;
     file_.lastEditTime = QDateTime::currentDateTime();
-    database_->files->update(file_, viewer.getData());
+    file_.data = viewer.getData();
+    database_->files->update(file_);
     emit fileEditSignal(file_);
 
     close();

@@ -12,11 +12,13 @@ File::File(const QString& name, const QString& extension)
 File::File(const QString& newName,
            const QString& extension,
            const QDateTime& upload,
-           const QDateTime& lastEdit)
+           const QDateTime& lastEdit,
+           const FileData& fileData)
     : name(newName)
     , extension(extension)
     , uploadTime(upload)
     , lastEditTime(lastEdit)
+    , data(fileData)
 {
 }
 

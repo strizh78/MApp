@@ -6,10 +6,9 @@ FileDB::FileDB(AppointmentDB* appointmentDb) {
     appointmentDb_ = appointmentDb;
     tableName_ = "files";
     columns_ = {"id"};
-    for (const auto& item: valuesToUpsert(File(), FileData())) {
+    for (const auto& item: valuesToUpsert(File())) {
         columns_.push_back(item.first);
     }
-    columns_.pop_back();
 }
 
 void FileDB::list(std::vector<File>& receiver) {
@@ -20,8 +19,8 @@ void FileDB::list(std::vector<File>& receiver) {
     }
 }
 
-void FileDB::add(File& file, FileData& data, int parentCode) {
-    InsertQuery query(tableName_, valuesToUpsert(file, data));
+void FileDB::add(File& file, int parentCode) {
+    InsertQuery query(tableName_, valuesToUpsert(file));
 
     if (!query.exec() || !query.first()) {
         return;
@@ -42,10 +41,10 @@ void FileDB::add(File& file, FileData& data, int parentCode) {
     }).exec();
 };
 
-void FileDB::update(const File& editedFile, const FileData& data) {
-    UpdateQuery query(tableName_, valuesToUpsert(editedFile, data));
+void FileDB::update(const File& editedItem) {
+    UpdateQuery query(tableName_, valuesToUpsert(editedItem));
 
-    query.addWhereStatement("id", SQL_OPERATORS::EQ, editedFile.code());
+    query.addWhereStatement("id", SQL_OPERATORS::EQ, editedItem.code());
     query.exec();
 };
 
@@ -90,15 +89,6 @@ void FileDB::appointmentByFile(const File& file, Appointment& appointment) {
     }
 }
 
-void FileDB::fileData(const File& file, FileData& data) {
-    SelectQuery query(tableName_, {"data"});
-    query.addWhereStatement("id", SQL_OPERATORS::EQ, file.code());
-
-    if (query.exec() && query.first()) {
-        data = query.value(0).toByteArray();
-    }
-}
-
 void FileDB::link(const File& file, const Appointment& appointment) {
     InsertQuery(appoinmentFilesTable_, {
         {"file", QVariant(file.code())},
@@ -126,18 +116,19 @@ File FileDB::rowToItem(const QSqlQuery& row, int startPos) {
     result.extension = row.value(startPos + 3).toString();
     result.uploadTime = row.value(startPos + 4).toDateTime();
     result.lastEditTime = row.value(startPos + 5).toDateTime();
+    result.data = row.value(startPos + 6).toByteArray();
 
     return result;
 }
 
-ValueByColumn FileDB::valuesToUpsert(const File& item, const FileData& data) {
+ValueByColumn FileDB::valuesToUpsert(const File& item) {
     return {
         {"isDeleted", QVariant(item.isDeleted())},
         {"name", QVariant(item.name)},
         {"extension", QVariant(item.extension)},
         {"uploadTime", QVariant(item.uploadTime)},
         {"lastEditTime", QVariant(item.lastEditTime)},
-        {"data", QVariant(data)}
+        {"data", QVariant(item.data)}
     };
 }
 

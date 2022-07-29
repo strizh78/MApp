@@ -22,7 +22,7 @@ public:
         update(item);
     }
 
-    virtual void list(std::vector<BaseItem>& ) = 0;
+    virtual void list(std::vector<BaseItem>& receiver) = 0;
     virtual void add(BaseItem& item) = 0;
     virtual void update(const BaseItem& editedItem) = 0;
 };
@@ -44,10 +44,9 @@ public:
         item.setDeleted(isDeleted);
     }
 
-    virtual void list(std::vector<File>& ) = 0;
-    virtual void add(File& item, FileData&, int) = 0;
-    virtual void update(const File& editedFile, const FileData&) = 0;
-    virtual void fileData(const File&, FileData&) = 0;
+    virtual void list(std::vector<File>&) = 0;
+    virtual void add(File& item, int) = 0;
+    virtual void update(const File&) = 0;
     virtual void appointmentByFile(const File&, Appointment&) = 0;
     virtual void filesByPatient(const Patient&, std::vector<File>&) = 0;
     virtual void filesByAppointment(const Appointment&, std::vector<File>&) = 0;
