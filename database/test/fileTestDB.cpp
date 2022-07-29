@@ -6,7 +6,6 @@
 #include <algorithm>
 
 std::vector<File> FilesDBTest::list_ = {};
-std::vector<QByteArray> FilesDBTest::dataList_ = {};
 std::vector<int> FilesDBTest::parentAppointmentCode_ = {};
 std::vector<Appointment> FilesDBTest::appointments = {};
 int FilesDBTest::code_ = 0;
@@ -27,14 +26,14 @@ QByteArray getFileBytes(const QString& fileName) {
 FilesDBTest::FilesDBTest(ItemDBInterface<Appointment>* appointment) {
     struct FullFileData {
         File file;
-        FileData data;
         int parentCode;
 
-        FullFileData(File file, FileData data, int parentCode)
+        FullFileData(const File& file, const FileData& data, int parentCode)
             : file(file)
-            , data(data)
-            , parentCode (parentCode)
-        {}
+            , parentCode(parentCode)
+        {
+            this->file.data = data;
+        }
     };
 
     appointment->list(appointments);
@@ -59,7 +58,7 @@ FilesDBTest::FilesDBTest(ItemDBInterface<Appointment>* appointment) {
     };
 
     for (auto& item : fullList) {
-        add(item.file, item.data, item.parentCode);
+        add(item.file, item.parentCode);
     }
 }
 
@@ -71,14 +70,13 @@ void FilesDBTest::list(std::vector<File>& receiver) {
     receiver = list_;
 }
 
-void FilesDBTest::add(File& file, FileData& data, int parentCode) {
+void FilesDBTest::add(File& file, int parentCode) {
     setCode(file, nextCode());
     list_.push_back(file);
-    dataList_.push_back(data);
     parentAppointmentCode_.push_back(parentCode);
 }
 
-void FilesDBTest::update(const File& editedFile, const FileData& data) {
+void FilesDBTest::update(const File& editedFile) {
     auto it = std::find(list_.begin(), list_.end(), editedFile);
     if (it == list_.end()) {
         return;
@@ -86,14 +84,6 @@ void FilesDBTest::update(const File& editedFile, const FileData& data) {
 
     int idx = it - list_.begin();
     list_[idx] = editedFile;
-    dataList_[idx] = data;
-}
-
-void FilesDBTest::fileData(const File& file, FileData& data) {
-    auto it = std::find(list_.begin(), list_.end(), file);
-    if (it != list_.end()) {
-        data = dataList_[it - list_.begin()];
-    }
 }
 
 void FilesDBTest::appointmentByFile(const File& file, Appointment& receiver) {
