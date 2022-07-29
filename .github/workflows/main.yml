@@ -7,7 +7,7 @@ jobs:
     name: Windows
     runs-on: windows-latest
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v2-beta
       - name: Install Qt
         uses: jurplel/install-qt-action@v2.9.0
